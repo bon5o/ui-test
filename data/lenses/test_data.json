@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "id": "super-takumar-55mm-f18",
+    "name": "Super-Takumar 55mm f1.8",
+    "slug": "super-takumar-55mm-f18",
+    "manufacturer_id": "pentax",
+    "mount_id": "m42",
+    "release_year": 1964,
+    "production_period": "1964-1971",
+    "country": "Japan"
+  },
+
+  "classification": {
+    "focal_length_type": "standard",
+    "design_type": "double-gauss",
+    "era": "1960s",
+    "category_tags": [
+      "portrait",
+      "radioactive-glass",
+      "classic-standard"
+    ]
+  },
+
+  "optical_construction": {
+    "elements": 6,
+    "groups": 5,
+    "diagram_notes": "Modified Double Gauss"
+  },
+
+  "coating": {
+    "type": "single-coating",
+    "multi_layer": false,
+    "notes": "初期型はトリウム含有による黄変あり"
+  },
+
+  "specifications": {
+    "focal_length_mm": 55,
+    "max_aperture": 1.8,
+    "min_aperture": 16,
+    "aperture_blades": 6,
+    "min_focus_distance_m": 0.45,
+    "filter_diameter_mm": 49,
+    "weight_g": 200,
+    "focus_type": "manual",
+    "aperture_control": "manual"
+  },
+
+  "rendering_characteristics": {
+    "sharpness": {
+      "wide_open": "center good, edges soft",
+      "stopped_down": "very sharp"
+    },
+    "bokeh": "slightly firm but natural",
+    "contrast": "moderate-low",
+    "color": "warm tendency",
+    "flare_resistance": "weak",
+    "ghosting": "visible under strong backlight"
+  },
+
+  "aberrations": {
+    "chromatic_aberration": "low",
+    "spherical_aberration": "present at wide open",
+    "distortion": "minimal",
+    "vignetting": "moderate at f1.8"
+  },
+
+  "market_info": {
+    "price_range_jpy": {
+      "min": 8000,
+      "max": 15000
+    },
+    "availability": "common",
+    "common_issues": [
+      "yellowing",
+      "fungus",
+      "oil on aperture blades"
+    ]
+  },
+
+  "compatibility": {
+    "adaptable_to": [
+      "sony-e",
+      "canon-rf",
+      "nikon-z",
+      "micro-four-thirds"
+    ],
+    "infinity_focus_possible": true
+  },
+
+  "media": {
+    "sample_images": [
+      "/images/lenses/super-takumar/sample1.jpg"
+    ],
+    "optical_diagram": "/images/lenses/super-takumar/diagram.svg"
+  },
+
+  "editorial": {
+    "summary": "1960年代を代表するクラシック標準レンズ",
+    "historical_notes": "戦後日本の光学設計の成熟期を象徴するモデル"
+  }
+}

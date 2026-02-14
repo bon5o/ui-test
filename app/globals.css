@@ -1,0 +1,24 @@
+/* 変更点:
+ * - dark 背景用の surface-dark を削除
+ * - body のデフォルト文字色を #111111 に設定
+ * - container-page に max-w-6xl mx-auto px-4 を適用（sm:, lg: でレスポンシブ）
+ */
+@import "tailwindcss";
+
+@theme {
+  --color-surface: oklch(100% 0 0);
+  --color-accent: oklch(55% 0.18 250);
+}
+
+@layer base {
+  body {
+    font-feature-settings: "palt" 1;
+    color: #111111;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+}
