@@ -10,7 +10,7 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   if (!items) return null;
   const arr = Array.isArray(items) ? items : [items];
   return (
-              <ul className="space-y-2.5 text-[15px] leading-[1.95] text-gray-600">
+    <ul className="space-y-2 text-base font-normal leading-relaxed text-gray-700">
       {arr.map((item, i) => (
         <li key={i}>{item.text}</li>
       ))}
@@ -54,8 +54,8 @@ function renderOpticalCharacteristics(data: Record<string, unknown> | undefined)
     <CollapsibleSection title="光学特性">
       <div className="space-y-5">
         {items.map(({ label, content }) => (
-          <div key={label} className="pl-4">
-            <h4 className="mb-2 text-[15px] font-normal text-gray-500">{label}</h4>
+          <div key={label} className="pl-6 space-y-3">
+            <h4 className="text-lg font-medium text-gray-800">{label}</h4>
             {content}
           </div>
         ))}
@@ -146,17 +146,17 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* Origin */}
         {meta.origin && (
           <CollapsibleSection title="由来">
-            <dl className="space-y-5 pl-4 text-[15px] leading-[1.95]">
+            <dl className="pl-6 space-y-3">
               {meta.origin.base_design && (
-                <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-[15px] font-normal text-gray-500">基本設計</dt>
-                  <dd className="text-gray-600">{meta.origin.base_design}</dd>
+                <div className="space-y-1">
+                  <dt className="text-lg font-medium text-gray-800">基本設計</dt>
+                  <dd className="text-base font-normal leading-relaxed text-gray-700">{meta.origin.base_design}</dd>
                 </div>
               )}
               {meta.origin.photographic_adaptation && (
-                <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-[15px] font-normal text-gray-500">写真用適応</dt>
-                  <dd className="text-gray-600">{meta.origin.photographic_adaptation}</dd>
+                <div className="space-y-1">
+                  <dt className="text-lg font-medium text-gray-800">写真用適応</dt>
+                  <dd className="text-base font-normal leading-relaxed text-gray-700">{meta.origin.photographic_adaptation}</dd>
                 </div>
               )}
             </dl>
@@ -166,21 +166,23 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* Historical Development — Timeline */}
         {meta.historical_development && meta.historical_development.length > 0 && (
           <CollapsibleSection title="歴史的発展">
-            <div className="relative ml-3 border-l border-[#88A3D4]/30 pl-7">
-              {meta.historical_development.map((item, i) => (
-                <div key={i} className="relative pb-7 last:pb-0">
-                  <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#88A3D4]/50 bg-white" />
-                  <p className="text-sm font-medium text-gray-900">
-                    {item.year ?? item.period}
-                    {item.designer && (
-                      <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
-                    )}
-                  </p>
-                  <p className="mt-1.5 text-[15px] leading-[1.95] text-gray-600">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
+            <div className="pl-6 space-y-3">
+              <div className="relative ml-3 border-l border-[#88A3D4]/30 pl-7">
+                {meta.historical_development.map((item, i) => (
+                  <div key={i} className="relative pb-7 last:pb-0">
+                    <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#88A3D4]/50 bg-white" />
+                    <p className="text-lg font-medium text-gray-800">
+                      {item.year ?? item.period}
+                      {item.designer && (
+                        <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
+                      )}
+                    </p>
+                    <p className="mt-1.5 text-base font-normal leading-relaxed text-gray-700">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </CollapsibleSection>
         )}
@@ -189,7 +191,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {basic_structure?.typical_configurations &&
           basic_structure.typical_configurations.length > 0 && (
             <CollapsibleSection title="典型構成">
-              <ul className="space-y-2.5 pl-4 text-[15px] leading-[1.95] text-gray-600">
+              <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
                 {basic_structure.typical_configurations.map((config, i) => (
                   <li key={i} className="flex gap-3">
                     <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#88A3D4]/50" />
@@ -203,7 +205,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* Symmetry */}
         {basic_structure?.symmetry && (
           <CollapsibleSection title="対称性">
-            <p className="pl-4 text-[15px] leading-[1.95] text-gray-600">
+            <p className="pl-6 text-base font-normal leading-relaxed text-gray-700">
               {basic_structure.symmetry.text}
             </p>
           </CollapsibleSection>
@@ -215,8 +217,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
             <CollapsibleSection title="設計思想">
               <div className="space-y-5">
                 {basic_structure.design_philosophy.map((item, i) => (
-                  <div key={i} className="pl-4">
-                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">{item.section}</h4>
+                  <div key={i} className="pl-6 space-y-3">
+                    <h4 className="text-lg font-medium text-gray-800">{item.section}</h4>
                     {renderTextItems(item.points)}
                   </div>
                 ))}
@@ -239,8 +241,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
                   color_rendering: "色再現"
                 };
                 return (
-                  <div key={key} className="pl-4">
-                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
+                  <div key={key} className="pl-6 space-y-3">
+                    <h4 className="text-lg font-medium text-gray-800">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -262,8 +264,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
                   manufacturing_cost: "製造コスト"
                 };
                 return (
-                  <div key={key} className="pl-4">
-                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
+                  <div key={key} className="pl-6 space-y-3">
+                    <h4 className="text-lg font-medium text-gray-800">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -279,8 +281,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
           <CollapsibleSection title="バリエーション">
             <div className="space-y-5">
               {variants.map((v, i) => (
-                <div key={i} className="pl-4">
-                  <h4 className="mb-2 text-[15px] font-normal text-gray-500">{v.name}</h4>
+                <div key={i} className="pl-6 space-y-3">
+                  <h4 className="text-lg font-medium text-gray-800">{v.name}</h4>
                   {renderTextItems(v.description)}
                 </div>
               ))}
@@ -298,8 +300,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
                   current_position: "現代的地位"
                 };
                 return (
-                  <div key={key} className="pl-4">
-                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
+                  <div key={key} className="pl-6 space-y-3">
+                    <h4 className="text-lg font-medium text-gray-800">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -313,9 +315,9 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* References */}
         {references && references.length > 0 && (
           <CollapsibleSection title="参考文献">
-            <ol className="space-y-3 pl-4 text-sm leading-[1.85]">
+            <ol className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {references.map((ref) => (
-                <li key={ref.id} className="flex gap-3 text-gray-600">
+                <li key={ref.id} className="flex gap-3">
                   <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
                   <span>
                     {ref.url ? (
@@ -323,12 +325,12 @@ export default async function DesignDetailPage({ params }: PageProps) {
                         href={ref.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 underline decoration-[#88A3D4]/25 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/50"
+                        className="text-gray-700 underline decoration-[#88A3D4]/25 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/50"
                       >
                         {ref.title}
                       </a>
                     ) : (
-                      <span className="text-gray-600">{ref.title}</span>
+                      <span className="text-gray-700">{ref.title}</span>
                     )}
                     <span className="ml-1 text-gray-400"> &mdash; {ref.author_or_source}</span>
                   </span>
