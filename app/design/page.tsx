@@ -10,10 +10,6 @@ export default function DesignPage() {
       <h1 className="mb-6 text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
         設計タイプ一覧
       </h1>
-      <p className="mb-6 text-gray-600">
-        レンズの光学設計タイプ一覧です。各構成型の概要・由来・基本構成を参照できます。
-      </p>
-
       <ul className="space-y-2">
         {designs.map((design) => (
           <li key={design.id}>
