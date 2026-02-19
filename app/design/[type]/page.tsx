@@ -61,12 +61,10 @@ const SUBSECTION_LABELS: Record<string, Record<string, string>> = {
 };
 
 function renderDescriptionWithTermLinks(description: string | unknown): React.ReactNode {
-  // 安全に文字列に変換
   let descriptionStr: string;
   if (typeof description === "string") {
     descriptionStr = description;
   } else if (typeof description === "object" && description !== null && "text" in description) {
-    // {text, citations} 形式の場合
     const textValue = (description as { text: unknown }).text;
     descriptionStr = typeof textValue === "string" ? textValue : String(textValue ?? "");
   } else {
@@ -103,14 +101,12 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   return (
     <ul className="space-y-2 text-base font-normal leading-relaxed text-gray-700">
       {arr.map((item, i) => {
-        // 安全に text を取得（オブジェクトの場合は text プロパティを取得）
         let textContent: string;
         if (typeof item === "object" && item !== null && "text" in item) {
           const textValue = (item as { text: unknown }).text;
           if (typeof textValue === "string") {
             textContent = textValue;
           } else if (typeof textValue === "object" && textValue !== null && "text" in textValue) {
-            // ネストされた {text, citations} 形式の場合
             textContent = String((textValue as { text: string }).text);
           } else {
             textContent = String(textValue ?? "");
@@ -119,7 +115,6 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
           textContent = String(item ?? "");
         }
         
-        // citations を安全に取得
         const citations = typeof item === "object" && item !== null && "citations" in item
           ? (item as { citations?: unknown }).citations
           : undefined;
@@ -164,55 +159,31 @@ function isReferenceItem(val: unknown): val is { id: number; title: string; auth
 
 function renderDesignSection(key: string, value: unknown): React.ReactNode {
   if (value == null) {
-    // デバッグ: null/undefined の場合
-    if (key === "lens_list") {
-      console.log("[DEBUG] lens_list is null/undefined");
-    }
     return null;
   }
 
   const title = SECTION_TITLES[key] ?? key.replace(/_/g, " ");
 
   // lens_list: array of {name, slug?} - link to lens detail pages
-  // 最初にチェックして確実に実行されるようにする
   if (key === "lens_list") {
-    console.log("[DEBUG] lens_list processing:", { 
-      key, 
-      value, 
-      isArray: Array.isArray(value), 
-      length: Array.isArray(value) ? value.length : 0,
-      type: typeof value
-    });
-    
-    if (Array.isArray(value)) {
-      if (value.length === 0) {
-        console.log("[DEBUG] lens_list is empty array");
-        return null;
-      }
-      
+    if (Array.isArray(value) && value.length > 0) {
       const first = value[0];
-      console.log("[DEBUG] lens_list first item:", first, "has name:", first && typeof first === "object" && "name" in first);
-      
       if (typeof first === "object" && first !== null && "name" in first) {
-        console.log("[DEBUG] lens_list rendering section");
         return (
           <CollapsibleSection key={key} title={title}>
             <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {value.map((item, i) => {
                 const lensItem = item as { name: unknown; slug?: unknown; description?: unknown; [key: string]: unknown };
                 
-                // name を安全に文字列に変換
                 let displayName: string;
                 if (typeof lensItem.name === "string") {
                   displayName = lensItem.name;
                 } else if (typeof lensItem.name === "object" && lensItem.name !== null && "text" in lensItem.name) {
-                  // {text, citations} 形式の場合
                   displayName = String((lensItem.name as { text: string }).text);
                 } else {
                   displayName = String(lensItem.name ?? "");
                 }
                 
-                // slug を安全に文字列に変換
                 const slug = typeof lensItem.slug === "string" ? lensItem.slug : undefined;
                 
                 return (
@@ -233,12 +204,9 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
             </ul>
           </CollapsibleSection>
         );
-      } else {
-        console.log("[DEBUG] lens_list first item does not have 'name' property");
       }
-    } else {
-      console.log("[DEBUG] lens_list is not an array, type:", typeof value);
     }
+    return null;
   }
 
   // historical_development: timeline
@@ -430,15 +398,12 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
               
               if (nameKey && nameKey in item) {
                 const nameValue = (item as Record<string, unknown>)[nameKey];
-                // {text, citations} 形式の場合は text を取得
                 if (typeof nameValue === "object" && nameValue !== null && "text" in nameValue) {
                   return <li key={i}>{String((nameValue as { text: string }).text)}</li>;
                 }
-                // 文字列またはプリミティブの場合
                 return <li key={i}>{String(nameValue)}</li>;
               }
               
-              // フォールバック: JSON.stringify
               return <li key={i}>{JSON.stringify(item)}</li>;
             })}
           </ul>
@@ -466,7 +431,6 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
         <CollapsibleSection key={key} title={title}>
           <dl className="pl-6 space-y-2 text-base font-normal leading-relaxed text-gray-700">
             {entries.map(([k, v]) => {
-              // {text, citations} 形式の場合は text を取得
               let displayValue: React.ReactNode;
               if (typeof v === "object" && v !== null && !Array.isArray(v) && "text" in v) {
                 displayValue = String((v as { text: string }).text);
@@ -516,17 +480,6 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
   const designEntries = Object.entries(design).filter(([key]) => key !== "meta");
 
-  // デバッグ: design オブジェクトと lens_list の確認（サーバー側ログ）
-  console.log("[DEBUG] design object keys:", Object.keys(design));
-  console.log("[DEBUG] designEntries:", designEntries.map(([k]) => k));
-  const lensListData = (design as Record<string, unknown>).lens_list;
-  console.log("[DEBUG] lens_list data:", lensListData);
-
-  // 強制的なデバッグ表示（ブラウザで確認可能）
-  const lensListExists = lensListData != null;
-  const lensListIsArray = Array.isArray(lensListData);
-  const lensListLength = lensListIsArray ? lensListData.length : 0;
-
   return (
     <PageContainer className="!max-w-[800px]">
       <header className="pb-10">
@@ -538,18 +491,6 @@ export default async function DesignDetailPage({ params }: PageProps) {
             {meta.english_name}
           </p>
         )}
-        {/* 強制的なデバッグ表示 */}
-        <div className="mt-4 rounded border-2 border-red-300 bg-red-50 p-4 text-sm">
-          <p className="font-bold text-red-800">[DEBUG] lens_list データ確認:</p>
-          <p className="text-red-700">存在: {lensListExists ? "✓" : "✗"}</p>
-          <p className="text-red-700">配列: {lensListIsArray ? "✓" : "✗"}</p>
-          <p className="text-red-700">長さ: {lensListLength}</p>
-          <p className="text-red-700">全キー: {Object.keys(design).join(", ")}</p>
-          <p className="text-red-700">designEntries: {designEntries.map(([k]) => k).join(", ")}</p>
-          <pre className="mt-2 overflow-auto text-xs text-red-600">
-            {JSON.stringify(lensListData, null, 2)}
-          </pre>
-        </div>
       </header>
 
       {media?.optical_formula && media.optical_formula.length > 0 && (
@@ -599,17 +540,9 @@ export default async function DesignDetailPage({ params }: PageProps) {
           </CollapsibleSection>
         )}
 
-        {designEntries.map(([key, value]) => {
-          // デバッグ: 各エントリの処理確認
-          if (key === "lens_list") {
-            console.log("[DEBUG] Processing lens_list entry:", { key, value, type: typeof value });
-          }
-          const rendered = renderDesignSection(key, value);
-          if (key === "lens_list" && rendered === null) {
-            console.log("[DEBUG] lens_list rendered null");
-          }
-          return <React.Fragment key={key}>{rendered}</React.Fragment>;
-        })}
+        {designEntries.map(([key, value]) => (
+          <React.Fragment key={key}>{renderDesignSection(key, value)}</React.Fragment>
+        ))}
       </div>
 
       <div className="h-16" />
