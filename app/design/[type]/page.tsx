@@ -1,52 +1,93 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { getAllLenses } from "../../../lib/lenses";
+import { getDesignById, getAllDesignIds } from "../../../lib/designs";
+import { PageContainer } from "../../../components/ui/PageContainer";
+import { SectionHeading } from "../../../components/ui/SectionHeading";
 
 export async function generateStaticParams() {
-  const lenses = getAllLenses();
-  const types = [...new Set(lenses.map((l) => l.classification.design_type))];
-  return types.map((type) => ({
-    type,
-  }));
+  const ids = getAllDesignIds();
+  return ids.map((type) => ({ type }));
 }
 
 interface PageProps {
   params: Promise<{ type: string }>;
 }
 
-export default async function DesignTypePage({ params }: PageProps) {
+export default async function DesignDetailPage({ params }: PageProps) {
   const { type } = await params;
-  const lenses = getAllLenses();
+  const design = getDesignById(type);
 
-  const filteredLenses = lenses.filter(
-    (l) => l.classification.design_type === type
-  );
-
-  if (filteredLenses.length === 0) {
+  if (!design) {
     notFound();
   }
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-      <h1 className="mb-6 text-2xl font-bold text-[#111111] sm:text-3xl">
-        {type} のレンズ一覧
-      </h1>
+  const { meta, basic_structure } = design;
 
-      <ul className="space-y-2">
-        {filteredLenses.map((lens) => (
-          <li key={lens.meta.slug}>
-            <Link
-              href={`/lenses/${lens.meta.slug}`}
-              className="text-blue-500 hover:underline"
-            >
-              {lens.meta.name}
-            </Link>
-            <span className="ml-2 text-sm text-gray-600">
-              ({lens.meta.release_year})
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
+  return (
+    <PageContainer className="max-w-3xl">
+      <h1 className="mb-2 text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
+        {meta.name}
+      </h1>
+      {meta.english_name && (
+        <p className="mb-6 text-gray-600">{meta.english_name}</p>
+      )}
+
+      {meta.origin && (
+        <section className="mb-8">
+          <SectionHeading>由来</SectionHeading>
+          <dl className="space-y-2 text-sm">
+            {meta.origin.base_design && (
+              <div>
+                <dt className="font-medium text-gray-600">基本設計</dt>
+                <dd className="mt-0.5 text-[#111111]">{meta.origin.base_design}</dd>
+              </div>
+            )}
+            {meta.origin.photographic_adaptation && (
+              <div>
+                <dt className="font-medium text-gray-600">写真用への適応</dt>
+                <dd className="mt-0.5 text-[#111111]">
+                  {meta.origin.photographic_adaptation}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </section>
+      )}
+
+      {meta.historical_development && meta.historical_development.length > 0 && (
+        <section className="mb-8">
+          <SectionHeading>歴史的発展</SectionHeading>
+          <ul className="space-y-3 text-sm">
+            {meta.historical_development.map((item, i) => (
+              <li key={i} className="border-l-2 border-gray-200 pl-4">
+                <span className="font-medium text-gray-600">
+                  {item.year ?? item.period}
+                  {item.designer && ` - ${item.designer}`}
+                </span>
+                <p className="mt-0.5 text-[#111111]">{item.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {basic_structure?.typical_configurations &&
+        basic_structure.typical_configurations.length > 0 && (
+          <section className="mb-8">
+            <SectionHeading>典型構成</SectionHeading>
+            <ul className="list-inside list-disc space-y-1 text-sm text-[#111111]">
+              {basic_structure.typical_configurations.map((config, i) => (
+                <li key={i}>{config}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+      {basic_structure?.symmetry && (
+        <section>
+          <SectionHeading>対称性</SectionHeading>
+          <p className="text-sm text-[#111111]">{basic_structure.symmetry.text}</p>
+        </section>
+      )}
+    </PageContainer>
   );
 }

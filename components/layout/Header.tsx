@@ -3,7 +3,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const navItems: { href: string; label: string }[] = [
   { href: "/", label: "ホーム" },
-  { href: "/design", label: "構成型で探す" },
+  { href: "/design", label: "構成型" },
   { href: "/era", label: "年代で探す" },
   { href: "/maker", label: "メーカーで探す" },
   { href: "/character", label: "描写傾向で探す" },

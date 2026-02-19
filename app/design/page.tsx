@@ -1,25 +1,27 @@
 import Link from "next/link";
-import { getAllLenses } from "../../lib/lenses";
+import { getAllDesigns } from "../../lib/designs";
 import { PageContainer } from "../../components/ui/PageContainer";
 
 export default function DesignPage() {
-  const lenses = getAllLenses();
-  const designTypes = [...new Set(lenses.map((l) => l.classification.design_type))].sort();
+  const designs = getAllDesigns();
 
   return (
     <PageContainer className="max-w-3xl">
       <h1 className="mb-6 text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
         設計タイプ一覧
       </h1>
+      <p className="mb-6 text-gray-600">
+        レンズの光学設計タイプ一覧です。各構成型の概要・由来・基本構成を参照できます。
+      </p>
 
       <ul className="space-y-2">
-        {designTypes.map((type) => (
-          <li key={type}>
+        {designs.map((design) => (
+          <li key={design.id}>
             <Link
-              href={`/design/${type}`}
+              href={`/design/${design.id}`}
               className="rounded-lg px-3 py-2 text-[#111111] transition-colors hover:bg-gray-100 hover:text-blue-500"
             >
-              {type}
+              {design.name}
             </Link>
           </li>
         ))}
