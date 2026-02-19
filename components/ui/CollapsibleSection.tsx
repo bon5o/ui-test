@@ -45,7 +45,7 @@ export function CollapsibleSection({
         className="group flex w-full cursor-pointer items-center justify-between py-6 pl-5 pr-2 text-left transition-colors hover:bg-[#88A3D4]/[0.03]"
         aria-expanded={isOpen}
       >
-        <h2 className="text-[17px] font-semibold tracking-tight text-gray-900">
+        <h2 className="text-xl font-normal tracking-tight text-gray-900">
           {title}
         </h2>
         <svg

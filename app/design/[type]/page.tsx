@@ -1,14 +1,7 @@
 import { notFound } from "next/navigation";
-import { Sawarabi_Mincho } from "next/font/google";
 import { getDesignById, getAllDesignIds } from "../../../lib/designs";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
-
-const sawarabiMincho = Sawarabi_Mincho({
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 type TextItem = { text: string; citations?: number[] };
 type TextItems = TextItem | TextItem[];
@@ -62,7 +55,7 @@ function renderOpticalCharacteristics(data: Record<string, unknown> | undefined)
       <div className="space-y-5">
         {items.map(({ label, content }) => (
           <div key={label} className="pl-4">
-            <h4 className="mb-1.5 text-sm font-medium text-gray-400">{label}</h4>
+            <h4 className="mb-2 text-[15px] font-normal text-gray-500">{label}</h4>
             {content}
           </div>
         ))}
@@ -106,7 +99,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
   }> | undefined;
 
   return (
-    <PageContainer className={`!max-w-[800px] ${sawarabiMincho.className}`}>
+    <PageContainer className="!max-w-[800px]">
       {/* ── Header ── */}
       <header className="pb-10">
         <h1 className="text-3xl font-normal tracking-tight text-gray-900 sm:text-[2.25rem] sm:leading-[1.3] text-balance">
@@ -156,13 +149,13 @@ export default async function DesignDetailPage({ params }: PageProps) {
             <dl className="space-y-5 pl-4 text-[15px] leading-[1.95]">
               {meta.origin.base_design && (
                 <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-sm font-medium text-gray-400">基本設計</dt>
+                  <dt className="text-[15px] font-normal text-gray-500">基本設計</dt>
                   <dd className="text-gray-600">{meta.origin.base_design}</dd>
                 </div>
               )}
               {meta.origin.photographic_adaptation && (
                 <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-sm font-medium text-gray-400">写真用適応</dt>
+                  <dt className="text-[15px] font-normal text-gray-500">写真用適応</dt>
                   <dd className="text-gray-600">{meta.origin.photographic_adaptation}</dd>
                 </div>
               )}
@@ -223,7 +216,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
               <div className="space-y-5">
                 {basic_structure.design_philosophy.map((item, i) => (
                   <div key={i} className="pl-4">
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-400">{item.section}</h4>
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">{item.section}</h4>
                     {renderTextItems(item.points)}
                   </div>
                 ))}
@@ -247,7 +240,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 };
                 return (
                   <div key={key} className="pl-4">
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-400">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -270,7 +263,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 };
                 return (
                   <div key={key} className="pl-4">
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-400">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -287,7 +280,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
             <div className="space-y-5">
               {variants.map((v, i) => (
                 <div key={i} className="pl-4">
-                  <h4 className="mb-1.5 text-sm font-medium text-gray-400">{v.name}</h4>
+                  <h4 className="mb-2 text-[15px] font-normal text-gray-500">{v.name}</h4>
                   {renderTextItems(v.description)}
                 </div>
               ))}
@@ -306,7 +299,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 };
                 return (
                   <div key={key} className="pl-4">
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-400">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
