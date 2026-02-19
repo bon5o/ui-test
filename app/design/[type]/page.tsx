@@ -1,7 +1,34 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDesignById, getAllDesignIds } from "../../../lib/designs";
+import { TERM_LINKS } from "../../../lib/termLinks";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
+
+function renderDescriptionWithTermLinks(description: string): React.ReactNode {
+  const regex = new RegExp(`(${TERM_LINKS.map((t) => t.term).join("|")})`, "g");
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+  while ((match = regex.exec(description)) !== null) {
+    parts.push(<span key={key++}>{description.slice(lastIndex, match.index)}</span>);
+    const term = match[0];
+    const linkDef = TERM_LINKS.find((t) => t.term === term);
+    parts.push(
+      <Link
+        key={key++}
+        href={`/terms/${linkDef?.slug ?? ""}`}
+        className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
+      >
+        {term}
+      </Link>
+    );
+    lastIndex = regex.lastIndex;
+  }
+  parts.push(<span key={key++}>{description.slice(lastIndex)}</span>);
+  return <>{parts}</>;
+}
 
 type TextItem = { text: string; citations?: number[] };
 type TextItems = TextItem | TextItem[];
@@ -192,7 +219,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                       )}
                     </p>
                     <p className="mt-1.5 text-base font-normal leading-relaxed text-gray-700">
-                      {item.description}
+                      {renderDescriptionWithTermLinks(item.description)}
                     </p>
                   </div>
                 ))}
