@@ -109,8 +109,45 @@
   "editorial": {
     "summary": "1960年代を代表する、オールドレンズの入門として最も愛される一本。ニュートラルな描写と単層コートの柔らかさが共存している。",
     "historical_notes": "1962年登場。一般的に「前期型」は、銘板がSuper-Takumar表記で単層コート、絞りリングのローレットが細かいタイプを指す。50mm F1.4と異なりトリウムガラスは原則不採用とされ、黄変は経年変化によるものとする説が有力である。",
-    "citations": [2, 10, 9, 4]
+    "design_philosophy": {
+      "concept": "「真の標準レンズ」としての万能性と実用第一の設計思想。",
+      "details": [
+        {
+          "point": "万能性の追求",
+          "description": "メーカー資料では「明るいフルサイズ対応の標準単焦点レンズ」「際立って実用的な標準レンズ」「真にあらゆる用途に対応する高品質な光学系」と紹介されている。遠近どの距離でも均一で歪曲のない描写を目指した「一本で全てをこなす」設計である。",
+          "citations": [11]
+        },
+        {
+          "point": "性能と携行性の両立",
+          "description": "「最新の高速6枚構成レンズ」として、F1.8の明るさによるピント合わせの容易さと、高い解像力・階調再現を両立。同時に「最小限の大きさと重さ」を強調し、常用できる軽量さを目標とした。",
+          "citations": [11]
+        },
+        {
+          "point": "カラー写真への最適化",
+          "description": "「カラー写真での結果は素晴らしい」「素晴らしい色再現のために特に推奨される」と明言されており、普及し始めたカラーフィルムでの発色とコントラストを重視したコーティング設計がなされている。",
+          "citations": [11]
+        },
+        {
+          "point": "システムの入口",
+          "description": "「交換レンズシステムへの第一歩」「スーパータクマー・シリーズへの入門」と位置づけられ、最短0.45mから無限遠まで対応する基幹レンズとして設計された。",
+          "citations": [11, 14]
+        },
+        {
+          "point": "55mmという焦点距離",
+          "description": "「他の50mmレンズに比べて、わずかに長い55mmの焦点距離と、少し狭い43度の画角を好む人もいるかもしれない」と言及されており、自然なパースペクティブと望遠感のバランス、および一眼レフ設計上の画質確保の妥協点として選択された。",
+          "citations": [11, 15, 14]
+        }
+      ]
+    },
+    "historical_context": {
+      "evolution": "プリセット絞りのTakumar 55mm F2.2やセミオートのAuto-Takumarを経て、1962年に完全自動絞りのSuper-Takumarとして完成された「第三世代のM42標準レンズ」である。",
+      "market_era": "1960年代の一眼レフ大衆化時代において、明るいファインダーとコンパクトさを求めるアマチュア層の要求に応える形で普及。希土類ガラスを用いた最新の光学技術が投入された。",
+      "technical_transition": "ガウスタイプとして成熟した設計を持つが、1971年のマルチコート化（SMC）直前の「単層コート完成期」の製品であり、クラシックな色調とフレアの出やすさが同居している。",
+      "citations": [11, 12, 13, 15, 16, 17, 18]
+    }
   },
+
+    
 
   "references": [
     {
@@ -192,6 +229,65 @@
       "url": "https://www.reddit.com/r/VintageLenses/comments/1j5khwp/supertakumar_55mm_f18/",
       "type": "Forum",
       "reliability": 3
-    }
+    },
+    { "id": 11, 
+    "title": "Asahi Super-Takumar 55mm F/1.8", 
+    "author_or_source": "Lens-DB", 
+    "url": "https://lens-db.com/asahi-super-takumar-55mm-f18-1965/", 
+    "type": "Database", 
+    "reliability": 5 },
+    { "id": 12, 
+    "title": "PENTAX 55ｍｍの歴史", 
+    "author_or_source": "dynamicreiji (Ameblo)", 
+    "url": "https://ameblo.jp/dynamicreiji/entry-12642114608.html", 
+    "type": "Blog", "reliability": 4 },
+    { "id": 13, 
+    "title": "ペンタックス Super Takumar 55mm F1.8 | ShaSha", 
+    "author_or_source": "カメラのキタムラ", 
+    "url": "https://www.kitamura.jp/shasha/article/484936130-20220108/", 
+    "type": "Review", 
+    "reliability": 5 },
+    { "id": 14, 
+    "title": "Takumar Tales: Pentax 55s - Unsung, Yet So, So Good", 
+    "author_or_source": "678 Vintage Cameras", 
+    "url": "https://www.678vintagecameras.ca/blog/takumar-tales-pentax-55s-unsung-yet-so-so-good", 
+    "type": "Article", 
+    "reliability": 4 },
+    { "id": 15, 
+    "title": "Repair: Asahi Super-Takumar 55mm f/1.8", 
+    "author_or_source": "Richard Haw",
+     "url": "https://richardhaw.com/2021/06/29/repair-super-takumar-55mm-f-1-8/", 
+     "type": "Technical Review", 
+     "reliability": 5 },
+    { "id": 16,
+     "title": "1 : 1.8 f=55 - Takumar Field Guide", 
+     "author_or_source": "Takumar Guide", 
+     "url": "https://takumarguide.weebly.com/1--18-f55.html", 
+     "type": "Database", 
+     "reliability": 5 },
+    { "id": 17, 
+    "title": "1 : 1.8 - 22 f=55 (332) - Takumar Field Guide", 
+    "author_or_source": "Takumar Guide", 
+    "url": "https://takumarguide.weebly.com/1--18---22-f55-332.html", 
+    "type": "Database", 
+    "reliability": 5 },
+    { "id": 18, 
+    "title": "「ペンタックス スーパータクマー55mm F1.8」と...", 
+    "author_or_source": "新宿 北村写真機店", 
+    "url": "https://www.kitamuracamera.jp/ja/feature/collaboration-shasha-junk-sakaida-vol1/", 
+    "type": "Review", 
+    "reliability": 5 },
+    { "id": 19, 
+    "title": "Pentax Super-Takumar 55mm F1.8 機種の見分け方と整備方法", 
+    "author_or_source": "Japan Lens Association", 
+    "url": "https://japanlensassociation.com/how-to-identify-pentax-super-takumar-55mm-f1-8-model/",
+     "type": "Guide",
+      "reliability": 4 },
+    { "id": 20, 
+    "title": "PENTAX Super Takumar 55mm F1.8 撮り比べ", 
+    "author_or_source": "サンライズカメラ", 
+    "url": "https://blog.sunrise-camera.net/selections/feature-oldlens/takumar55-sony-a7/", 
+    "type": "Review",
+    "reliability": 4 }
   ]
 }
