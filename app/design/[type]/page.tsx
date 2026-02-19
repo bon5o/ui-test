@@ -83,7 +83,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
   }
 
   const { meta, basic_structure } = design;
-  const media = (design as Record<string, unknown>).media as {
+  const media = meta.media as {
     optical_formula?: Array<{ src: string; caption?: string; elements?: number; groups?: number }>;
   } | undefined;
   const optical_characteristics = (design as Record<string, unknown>).optical_characteristics as Record<string, unknown> | undefined;

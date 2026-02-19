@@ -7,6 +7,9 @@ export interface DesignMeta {
   id: string;
   name: string;
   english_name?: string;
+  media?: {
+    optical_formula?: Array<{ src: string; caption?: string; elements?: number; groups?: number }>;
+  };
   origin?: {
     base_design?: string;
     photographic_adaptation?: string;
