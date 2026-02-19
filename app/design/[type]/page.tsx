@@ -131,6 +131,53 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
 
   const title = SECTION_TITLES[key] ?? key.replace(/_/g, " ");
 
+  // デバッグ: lens_list のデータ確認
+  if (key === "lens_list") {
+    console.log("[DEBUG] lens_list detected:", { key, value, isArray: Array.isArray(value), length: Array.isArray(value) ? value.length : 0 });
+  }
+
+  // lens_list: array of {name, slug?} - link to lens detail pages
+  // variants より前に配置して確実に実行されるようにする
+  if (key === "lens_list") {
+    console.log("[DEBUG] lens_list processing:", { key, value, isArray: Array.isArray(value) });
+    if (Array.isArray(value) && value.length > 0) {
+      const first = value[0];
+      console.log("[DEBUG] lens_list first item:", first);
+      if (typeof first === "object" && first !== null && "name" in first) {
+        return (
+          <CollapsibleSection key={key} title={title}>
+            <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
+              {value.map((item, i) => {
+                const lensItem = item as { name: string; slug?: string; [key: string]: unknown };
+                const displayName = lensItem.name;
+                const slug = lensItem.slug;
+                return (
+                  <li key={i}>
+                    {slug ? (
+                      <Link
+                        href={`/lenses/${slug}`}
+                        className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
+                      >
+                        {displayName}
+                      </Link>
+                    ) : (
+                      <span>{displayName}</span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </CollapsibleSection>
+        );
+      }
+    }
+    // lens_list が空配列または不正な形式の場合も null を返さず、空のセクションを表示
+    if (Array.isArray(value) && value.length === 0) {
+      console.log("[DEBUG] lens_list is empty array");
+      return null;
+    }
+  }
+
   // historical_development: timeline
   if (Array.isArray(value) && value.length > 0 && isTimelineItem(value[0])) {
     return (
@@ -304,37 +351,6 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     );
   }
 
-  // lens_list: array of {name, slug?} - link to lens detail pages
-  if (key === "lens_list" && Array.isArray(value) && value.length > 0) {
-    const first = value[0];
-    if (typeof first === "object" && first !== null && "name" in first) {
-      return (
-        <CollapsibleSection key={key} title={title}>
-          <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
-            {value.map((item, i) => {
-              const lensItem = item as { name: string; slug?: string; [key: string]: unknown };
-              const displayName = lensItem.name;
-              const slug = lensItem.slug;
-              return (
-                <li key={i}>
-                  {slug ? (
-                    <Link
-                      href={`/lenses/${slug}`}
-                      className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
-                    >
-                      {displayName}
-                    </Link>
-                  ) : (
-                    <span>{displayName}</span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </CollapsibleSection>
-      );
-    }
-  }
 
   // Fallback: array of strings or primitives
   if (Array.isArray(value) && value.length > 0) {
@@ -411,6 +427,12 @@ export default async function DesignDetailPage({ params }: PageProps) {
   } | undefined;
 
   const designEntries = Object.entries(design).filter(([key]) => key !== "meta");
+
+  // デバッグ: design オブジェクトと lens_list の確認
+  console.log("[DEBUG] design object keys:", Object.keys(design));
+  console.log("[DEBUG] designEntries:", designEntries.map(([k]) => k));
+  const lensListData = (design as Record<string, unknown>).lens_list;
+  console.log("[DEBUG] lens_list data:", lensListData);
 
   return (
     <PageContainer className="!max-w-[800px]">

@@ -32,10 +32,16 @@ export interface DesignBasicStructure {
   }>;
 }
 
+export interface LensListItem {
+  name: string;
+  slug?: string;
+}
+
 export interface Design {
   meta: DesignMeta;
   historical_development?: HistoricalDevelopmentItem[];
   basic_structure?: DesignBasicStructure;
+  lens_list?: LensListItem[];
   [key: string]: unknown;
 }
 
