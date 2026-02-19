@@ -60,14 +60,26 @@ const SUBSECTION_LABELS: Record<string, Record<string, string>> = {
   }
 };
 
-function renderDescriptionWithTermLinks(description: string): React.ReactNode {
+function renderDescriptionWithTermLinks(description: string | unknown): React.ReactNode {
+  // 安全に文字列に変換
+  let descriptionStr: string;
+  if (typeof description === "string") {
+    descriptionStr = description;
+  } else if (typeof description === "object" && description !== null && "text" in description) {
+    // {text, citations} 形式の場合
+    const textValue = (description as { text: unknown }).text;
+    descriptionStr = typeof textValue === "string" ? textValue : String(textValue ?? "");
+  } else {
+    descriptionStr = String(description ?? "");
+  }
+  
   const regex = new RegExp(`(${TERM_LINKS.map((t) => t.term).join("|")})`, "g");
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match;
   let key = 0;
-  while ((match = regex.exec(description)) !== null) {
-    parts.push(<span key={key++}>{description.slice(lastIndex, match.index)}</span>);
+  while ((match = regex.exec(descriptionStr)) !== null) {
+    parts.push(<span key={key++}>{descriptionStr.slice(lastIndex, match.index)}</span>);
     const term = match[0];
     const linkDef = TERM_LINKS.find((t) => t.term === term);
     parts.push(
@@ -81,7 +93,7 @@ function renderDescriptionWithTermLinks(description: string): React.ReactNode {
     );
     lastIndex = regex.lastIndex;
   }
-  parts.push(<span key={key++}>{description.slice(lastIndex)}</span>);
+  parts.push(<span key={key++}>{descriptionStr.slice(lastIndex)}</span>);
   return <>{parts}</>;
 }
 
@@ -90,22 +102,46 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   const arr = Array.isArray(items) ? items : [items];
   return (
     <ul className="space-y-2 text-base font-normal leading-relaxed text-gray-700">
-      {arr.map((item, i) => (
-        <li key={i}>
-          {item.text}
-          {item.citations && item.citations.length > 0 && (
-            <span className="ml-1 whitespace-nowrap">
-              {item.citations.map((n) => (
-                <sup key={n} className="text-xs align-super text-[#88A3D4]">
-                  <a href={`#ref-${n}`} className="no-underline hover:underline">
-                    [{n}]
-                  </a>
-                </sup>
-              ))}
-            </span>
-          )}
-        </li>
-      ))}
+      {arr.map((item, i) => {
+        // 安全に text を取得（オブジェクトの場合は text プロパティを取得）
+        let textContent: string;
+        if (typeof item === "object" && item !== null && "text" in item) {
+          const textValue = (item as { text: unknown }).text;
+          if (typeof textValue === "string") {
+            textContent = textValue;
+          } else if (typeof textValue === "object" && textValue !== null && "text" in textValue) {
+            // ネストされた {text, citations} 形式の場合
+            textContent = String((textValue as { text: string }).text);
+          } else {
+            textContent = String(textValue ?? "");
+          }
+        } else {
+          textContent = String(item ?? "");
+        }
+        
+        // citations を安全に取得
+        const citations = typeof item === "object" && item !== null && "citations" in item
+          ? (item as { citations?: unknown }).citations
+          : undefined;
+        const citationsArray = Array.isArray(citations) ? citations : undefined;
+        
+        return (
+          <li key={i}>
+            {textContent}
+            {citationsArray && citationsArray.length > 0 && (
+              <span className="ml-1 whitespace-nowrap">
+                {citationsArray.map((n) => (
+                  <sup key={n} className="text-xs align-super text-[#88A3D4]">
+                    <a href={`#ref-${n}`} className="no-underline hover:underline">
+                      [{n}]
+                    </a>
+                  </sup>
+                ))}
+              </span>
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -114,7 +150,7 @@ function isTextItemArray(val: unknown): val is TextItem[] {
   return Array.isArray(val) && val.length > 0 && typeof val[0] === "object" && val[0] !== null && "text" in val[0];
 }
 
-function isTimelineItem(val: unknown): val is { year?: number; period?: string; designer?: string; description: string } {
+function isTimelineItem(val: unknown): val is { year?: number; period?: string; designer?: string; description: string | { text: string; citations?: number[] } } {
   return typeof val === "object" && val !== null && "description" in val;
 }
 
@@ -163,9 +199,22 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
           <CollapsibleSection key={key} title={title}>
             <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {value.map((item, i) => {
-                const lensItem = item as { name: string; slug?: string; [key: string]: unknown };
-                const displayName = lensItem.name;
-                const slug = lensItem.slug;
+                const lensItem = item as { name: unknown; slug?: unknown; description?: unknown; [key: string]: unknown };
+                
+                // name を安全に文字列に変換
+                let displayName: string;
+                if (typeof lensItem.name === "string") {
+                  displayName = lensItem.name;
+                } else if (typeof lensItem.name === "object" && lensItem.name !== null && "text" in lensItem.name) {
+                  // {text, citations} 形式の場合
+                  displayName = String((lensItem.name as { text: string }).text);
+                } else {
+                  displayName = String(lensItem.name ?? "");
+                }
+                
+                // slug を安全に文字列に変換
+                const slug = typeof lensItem.slug === "string" ? lensItem.slug : undefined;
+                
                 return (
                   <li key={i}>
                     {slug ? (
@@ -374,13 +423,24 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
       return (
         <CollapsibleSection key={key} title={title}>
           <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
-            {value.map((item, i) => (
-              <li key={i}>
-                {nameKey && item && typeof item === "object" && nameKey in item
-                  ? String((item as Record<string, unknown>)[nameKey])
-                  : JSON.stringify(item)}
-              </li>
-            ))}
+            {value.map((item, i) => {
+              if (!item || typeof item !== "object") {
+                return <li key={i}>{String(item)}</li>;
+              }
+              
+              if (nameKey && nameKey in item) {
+                const nameValue = (item as Record<string, unknown>)[nameKey];
+                // {text, citations} 形式の場合は text を取得
+                if (typeof nameValue === "object" && nameValue !== null && "text" in nameValue) {
+                  return <li key={i}>{String((nameValue as { text: string }).text)}</li>;
+                }
+                // 文字列またはプリミティブの場合
+                return <li key={i}>{String(nameValue)}</li>;
+              }
+              
+              // フォールバック: JSON.stringify
+              return <li key={i}>{JSON.stringify(item)}</li>;
+            })}
           </ul>
         </CollapsibleSection>
       );
@@ -389,7 +449,9 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
       <CollapsibleSection key={key} title={title}>
         <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
           {value.map((item, i) => (
-            <li key={i}>{String(item)}</li>
+            <li key={i}>
+              {typeof item === "object" && item !== null ? JSON.stringify(item) : String(item)}
+            </li>
           ))}
         </ul>
       </CollapsibleSection>
@@ -397,18 +459,30 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
   }
 
   // Fallback: object
-  if (typeof value === "object" && value !== null) {
+  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     const entries = Object.entries(value).filter(([, v]) => v != null);
     if (entries.length > 0) {
       return (
         <CollapsibleSection key={key} title={title}>
           <dl className="pl-6 space-y-2 text-base font-normal leading-relaxed text-gray-700">
-            {entries.map(([k, v]) => (
-              <div key={k}>
-                <dt className="font-medium text-gray-800">{k.replace(/_/g, " ")}</dt>
-                <dd className="mt-0.5">{typeof v === "object" ? JSON.stringify(v) : String(v)}</dd>
-              </div>
-            ))}
+            {entries.map(([k, v]) => {
+              // {text, citations} 形式の場合は text を取得
+              let displayValue: React.ReactNode;
+              if (typeof v === "object" && v !== null && !Array.isArray(v) && "text" in v) {
+                displayValue = String((v as { text: string }).text);
+              } else if (typeof v === "object" && v !== null) {
+                displayValue = JSON.stringify(v);
+              } else {
+                displayValue = String(v);
+              }
+              
+              return (
+                <div key={k}>
+                  <dt className="font-medium text-gray-800">{k.replace(/_/g, " ")}</dt>
+                  <dd className="mt-0.5">{displayValue}</dd>
+                </div>
+              );
+            })}
           </dl>
         </CollapsibleSection>
       );

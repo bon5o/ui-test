@@ -33,8 +33,10 @@ export interface DesignBasicStructure {
 }
 
 export interface LensListItem {
-  name: string;
+  name: string | { text: string; citations?: number[] };
   slug?: string;
+  description?: string | { text: string; citations?: number[] };
+  [key: string]: unknown;
 }
 
 export interface Design {
