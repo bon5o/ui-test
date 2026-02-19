@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getDesignById, getAllDesignIds } from "../../../lib/designs";
 import { PageContainer } from "../../../components/ui/PageContainer";
-import { SectionHeading } from "../../../components/ui/SectionHeading";
+import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
 
 type TextItem = { text: string; citations?: number[] };
 type TextItems = TextItem | TextItem[];
@@ -10,7 +10,7 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   if (!items) return null;
   const arr = Array.isArray(items) ? items : [items];
   return (
-    <ul className="space-y-2.5 text-[15px] leading-relaxed text-[#333]">
+    <ul className="space-y-2 text-[15px] leading-7 text-gray-700">
       {arr.map((item, i) => (
         <li key={i}>{item.text}</li>
       ))}
@@ -51,17 +51,16 @@ function renderOpticalCharacteristics(data: Record<string, unknown> | undefined)
   }
   if (items.length === 0) return null;
   return (
-    <section>
-      <SectionHeading>光学特性</SectionHeading>
-      <div className="mt-6 space-y-6">
+    <CollapsibleSection title="光学特性">
+      <div className="space-y-5">
         {items.map(({ label, content }) => (
           <div key={label}>
-            <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#666]">{label}</h4>
+            <h4 className="mb-1.5 text-sm font-medium text-gray-500">{label}</h4>
             {content}
           </div>
         ))}
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
@@ -102,20 +101,20 @@ export default async function DesignDetailPage({ params }: PageProps) {
   return (
     <PageContainer className="!max-w-[800px]">
       {/* ── Header ── */}
-      <header className="pb-10 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-[#111] sm:text-5xl">
+      <header className="pb-8">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-balance">
           {meta.name}
         </h1>
         {meta.english_name && (
-          <p className="mt-3 text-lg tracking-wide text-[#888]">
+          <p className="mt-2 text-base tracking-wide text-gray-400">
             {meta.english_name}
           </p>
         )}
       </header>
 
-      {/* ── Optical Diagram (hero position) ── */}
+      {/* ── Optical Diagram (always visible, near top) ── */}
       {media?.optical_formula && media.optical_formula.length > 0 && (
-        <figure className="mb-14">
+        <figure className="mb-10 border-b border-gray-200 pb-10">
           {media.optical_formula.map((item, i) => (
             <div key={i}>
               {item.src && (
@@ -123,15 +122,15 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 <img
                   src={item.src}
                   alt={item.caption ?? "Optical diagram"}
-                  className="mx-auto max-w-full rounded-lg border border-[#e5e5e5] bg-[#fafafa] p-4"
+                  className="max-w-full rounded border border-gray-100 bg-gray-50/50 p-3"
                 />
               )}
-              <figcaption className="mt-3 space-y-0.5 text-center">
+              <figcaption className="mt-2.5 space-y-0.5">
                 {item.caption && (
-                  <p className="text-xs leading-relaxed text-[#999]">{item.caption}</p>
+                  <p className="text-xs leading-relaxed text-gray-400">{item.caption}</p>
                 )}
                 {(item.elements || item.groups) && (
-                  <p className="text-xs font-medium text-[#666]">
+                  <p className="text-xs font-medium text-gray-500">
                     {item.elements}枚{item.groups ? ` / ${item.groups}群` : ""}
                   </p>
                 )}
@@ -141,94 +140,88 @@ export default async function DesignDetailPage({ params }: PageProps) {
         </figure>
       )}
 
-      {/* ── Content sections ── */}
-      <div className="space-y-14">
+      {/* ── Collapsible content sections ── */}
+      <div className="divide-y divide-gray-200 border-t border-gray-200">
 
         {/* Origin */}
         {meta.origin && (
-          <section>
-            <SectionHeading>由来</SectionHeading>
-            <dl className="mt-6 space-y-4 text-[15px] leading-relaxed">
+          <CollapsibleSection title="由来">
+            <dl className="space-y-4 text-[15px] leading-7">
               {meta.origin.base_design && (
                 <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-sm font-semibold text-[#666]">基本設計</dt>
-                  <dd className="text-[#333]">{meta.origin.base_design}</dd>
+                  <dt className="text-sm font-medium text-gray-500">基本設計</dt>
+                  <dd className="text-gray-700">{meta.origin.base_design}</dd>
                 </div>
               )}
               {meta.origin.photographic_adaptation && (
                 <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-sm font-semibold text-[#666]">写真用適応</dt>
-                  <dd className="text-[#333]">{meta.origin.photographic_adaptation}</dd>
+                  <dt className="text-sm font-medium text-gray-500">写真用適応</dt>
+                  <dd className="text-gray-700">{meta.origin.photographic_adaptation}</dd>
                 </div>
               )}
             </dl>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Historical Development — Timeline */}
         {meta.historical_development && meta.historical_development.length > 0 && (
-          <section>
-            <SectionHeading>歴史的発展</SectionHeading>
-            <div className="relative mt-8 ml-4 border-l-2 border-[#e0e0e0] pl-8">
+          <CollapsibleSection title="歴史的発展">
+            <div className="relative ml-3 border-l border-[#88A3D4]/30 pl-7">
               {meta.historical_development.map((item, i) => (
-                <div key={i} className="relative pb-8 last:pb-0">
-                  {/* Timeline dot */}
-                  <span className="absolute -left-[calc(2rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#bbb] bg-white" />
-                  <p className="text-sm font-semibold tracking-wide text-[#555]">
+                <div key={i} className="relative pb-7 last:pb-0">
+                  <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#88A3D4]/50 bg-white" />
+                  <p className="text-sm font-medium text-gray-900">
                     {item.year ?? item.period}
                     {item.designer && (
-                      <span className="ml-2 font-normal text-[#999]">{item.designer}</span>
+                      <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
                     )}
                   </p>
-                  <p className="mt-1.5 text-[15px] leading-relaxed text-[#333]">
+                  <p className="mt-1 text-[15px] leading-7 text-gray-700">
                     {item.description}
                   </p>
                 </div>
               ))}
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Typical Configurations */}
         {basic_structure?.typical_configurations &&
           basic_structure.typical_configurations.length > 0 && (
-            <section>
-              <SectionHeading>典型構成</SectionHeading>
-              <ul className="mt-6 space-y-2.5 text-[15px] leading-relaxed text-[#333]">
+            <CollapsibleSection title="典型構成">
+              <ul className="space-y-2 text-[15px] leading-7 text-gray-700">
                 {basic_structure.typical_configurations.map((config, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#ccc]" />
+                    <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#88A3D4]/50" />
                     <span>{config}</span>
                   </li>
                 ))}
               </ul>
-            </section>
+            </CollapsibleSection>
           )}
 
         {/* Symmetry */}
         {basic_structure?.symmetry && (
-          <section>
-            <SectionHeading>対称性</SectionHeading>
-            <p className="mt-6 text-[15px] leading-relaxed text-[#333]">
+          <CollapsibleSection title="対称性">
+            <p className="text-[15px] leading-7 text-gray-700">
               {basic_structure.symmetry.text}
             </p>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Design Philosophy */}
         {basic_structure?.design_philosophy &&
           basic_structure.design_philosophy.length > 0 && (
-            <section>
-              <SectionHeading>設計思想</SectionHeading>
-              <div className="mt-6 space-y-8">
+            <CollapsibleSection title="設計思想">
+              <div className="space-y-6">
                 {basic_structure.design_philosophy.map((item, i) => (
                   <div key={i}>
-                    <h4 className="mb-3 text-base font-semibold text-[#222]">{item.section}</h4>
+                    <h4 className="mb-2 text-sm font-semibold text-gray-900">{item.section}</h4>
                     {renderTextItems(item.points)}
                   </div>
                 ))}
               </div>
-            </section>
+            </CollapsibleSection>
           )}
 
         {/* Optical Characteristics */}
@@ -236,9 +229,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
         {/* Rendering Character */}
         {rendering_character && (
-          <section>
-            <SectionHeading>描写特性</SectionHeading>
-            <div className="mt-6 space-y-6">
+          <CollapsibleSection title="描写特性">
+            <div className="space-y-5">
               {Object.entries(rendering_character).map(([key, value]) => {
                 const labelMap: Record<string, string> = {
                   bokeh: "ボケ",
@@ -248,7 +240,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 };
                 return (
                   <div key={key}>
-                    <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#666]">
+                    <h4 className="mb-1.5 text-sm font-medium text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -256,14 +248,13 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 );
               })}
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Operational Characteristics */}
         {operational_characteristics && (
-          <section>
-            <SectionHeading>使用面での特性</SectionHeading>
-            <div className="mt-6 space-y-6">
+          <CollapsibleSection title="使用面での特性">
+            <div className="space-y-5">
               {Object.entries(operational_characteristics).map(([key, value]) => {
                 const labelMap: Record<string, string> = {
                   size_and_weight: "サイズ・重量",
@@ -272,7 +263,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 };
                 return (
                   <div key={key}>
-                    <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#666]">
+                    <h4 className="mb-1.5 text-sm font-medium text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -280,29 +271,27 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 );
               })}
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Variants */}
         {variants && variants.length > 0 && (
-          <section>
-            <SectionHeading>バリエーション</SectionHeading>
-            <div className="mt-6 space-y-6">
+          <CollapsibleSection title="バリエーション">
+            <div className="space-y-5">
               {variants.map((v, i) => (
-                <div key={i} className="rounded-lg border border-[#e8e8e8] bg-[#fcfcfc] px-6 py-5">
-                  <h4 className="mb-3 text-base font-semibold text-[#222]">{v.name}</h4>
+                <div key={i}>
+                  <h4 className="mb-2 text-sm font-semibold text-gray-900">{v.name}</h4>
                   {renderTextItems(v.description)}
                 </div>
               ))}
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Modern Evolution */}
         {modern_evolution && (
-          <section>
-            <SectionHeading>現代的展開</SectionHeading>
-            <div className="mt-6 space-y-6">
+          <CollapsibleSection title="現代的展開">
+            <div className="space-y-5">
               {Object.entries(modern_evolution).map(([key, value]) => {
                 const labelMap: Record<string, string> = {
                   digital_optimization: "デジタル最適化",
@@ -310,7 +299,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 };
                 return (
                   <div key={key}>
-                    <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#666]">
+                    <h4 className="mb-1.5 text-sm font-medium text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -318,41 +307,39 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 );
               })}
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* References */}
         {references && references.length > 0 && (
-          <section>
-            <SectionHeading>参考文献</SectionHeading>
-            <ol className="mt-6 space-y-3 text-sm leading-relaxed">
+          <CollapsibleSection title="参考文献">
+            <ol className="space-y-2.5 text-sm leading-relaxed">
               {references.map((ref) => (
-                <li key={ref.id} className="flex gap-3 text-[#444]">
-                  <span className="shrink-0 font-mono text-xs text-[#aaa]">[{ref.id}]</span>
+                <li key={ref.id} className="flex gap-3 text-gray-600">
+                  <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
                   <span>
                     {ref.url ? (
                       <a
                         href={ref.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#2563eb] underline decoration-[#2563eb]/30 underline-offset-2 transition-colors hover:decoration-[#2563eb]"
+                        className="text-gray-700 underline decoration-[#88A3D4]/30 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/60"
                       >
                         {ref.title}
                       </a>
                     ) : (
-                      <span className="text-[#222]">{ref.title}</span>
+                      <span className="text-gray-700">{ref.title}</span>
                     )}
-                    <span className="ml-1 text-[#999]"> &mdash; {ref.author_or_source}</span>
+                    <span className="ml-1 text-gray-400"> &mdash; {ref.author_or_source}</span>
                   </span>
                 </li>
               ))}
             </ol>
-          </section>
+          </CollapsibleSection>
         )}
       </div>
 
-      {/* Bottom spacer */}
-      <div className="h-16" />
+      <div className="h-12" />
     </PageContainer>
   );
 }
