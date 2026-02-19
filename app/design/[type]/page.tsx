@@ -304,6 +304,38 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     );
   }
 
+  // lens_list: array of {name, slug?} - link to lens detail pages
+  if (key === "lens_list" && Array.isArray(value) && value.length > 0) {
+    const first = value[0];
+    if (typeof first === "object" && first !== null && "name" in first) {
+      return (
+        <CollapsibleSection key={key} title={title}>
+          <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
+            {value.map((item, i) => {
+              const lensItem = item as { name: string; slug?: string; [key: string]: unknown };
+              const displayName = lensItem.name;
+              const slug = lensItem.slug;
+              return (
+                <li key={i}>
+                  {slug ? (
+                    <Link
+                      href={`/lenses/${slug}`}
+                      className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
+                    >
+                      {displayName}
+                    </Link>
+                  ) : (
+                    <span>{displayName}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </CollapsibleSection>
+      );
+    }
+  }
+
   // Fallback: array of strings or primitives
   if (Array.isArray(value) && value.length > 0) {
     const first = value[0];
