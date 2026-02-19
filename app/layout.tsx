@@ -4,8 +4,15 @@
  * - dark: 背景・文字色を削除（白背景・黒文字に統一）
  */
 import type { Metadata } from "next";
+import { Sawarabi_Mincho } from "next/font/google";
 import "./globals.css";
 import { SiteLayout } from "../components/layout/SiteLayout";
+
+const sawarabiMincho = Sawarabi_Mincho({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "オールドレンズ構成の歴史と描写研究",
@@ -20,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className="min-h-screen bg-white text-[#111111]">
+      <body className={`min-h-screen bg-white text-[#111111] ${sawarabiMincho.className}`}>
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>

@@ -10,7 +10,7 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   if (!items) return null;
   const arr = Array.isArray(items) ? items : [items];
   return (
-    <ul className="space-y-2 text-[15px] leading-7 text-gray-700">
+              <ul className="space-y-2.5 text-[15px] leading-[1.95] text-gray-600">
       {arr.map((item, i) => (
         <li key={i}>{item.text}</li>
       ))}
@@ -54,8 +54,8 @@ function renderOpticalCharacteristics(data: Record<string, unknown> | undefined)
     <CollapsibleSection title="光学特性">
       <div className="space-y-5">
         {items.map(({ label, content }) => (
-          <div key={label}>
-            <h4 className="mb-1.5 text-sm font-medium text-gray-500">{label}</h4>
+          <div key={label} className="pl-4">
+            <h4 className="mb-2 text-[15px] font-normal text-gray-500">{label}</h4>
             {content}
           </div>
         ))}
@@ -101,12 +101,12 @@ export default async function DesignDetailPage({ params }: PageProps) {
   return (
     <PageContainer className="!max-w-[800px]">
       {/* ── Header ── */}
-      <header className="pb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-balance">
+      <header className="pb-10">
+        <h1 className="text-3xl font-normal tracking-tight text-gray-900 sm:text-[2.25rem] sm:leading-[1.3] text-balance">
           {meta.name}
         </h1>
         {meta.english_name && (
-          <p className="mt-2 text-base tracking-wide text-gray-400">
+          <p className="mt-3 text-[15px] tracking-[0.04em] text-gray-400 font-sans">
             {meta.english_name}
           </p>
         )}
@@ -114,7 +114,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
       {/* ── Optical Diagram (always visible, near top) ── */}
       {media?.optical_formula && media.optical_formula.length > 0 && (
-        <figure className="mb-10 border-b border-gray-200 pb-10">
+        <figure className="mb-12 border-b border-gray-100 pb-12">
           {media.optical_formula.map((item, i) => (
             <div key={i}>
               {item.src && (
@@ -141,22 +141,22 @@ export default async function DesignDetailPage({ params }: PageProps) {
       )}
 
       {/* ── Collapsible content sections ── */}
-      <div className="divide-y divide-gray-200 border-t border-gray-200">
+      <div className="divide-y divide-gray-100 border-t border-gray-100">
 
         {/* Origin */}
         {meta.origin && (
           <CollapsibleSection title="由来">
-            <dl className="space-y-4 text-[15px] leading-7">
+            <dl className="space-y-5 pl-4 text-[15px] leading-[1.95]">
               {meta.origin.base_design && (
                 <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-sm font-medium text-gray-500">基本設計</dt>
-                  <dd className="text-gray-700">{meta.origin.base_design}</dd>
+                  <dt className="text-[15px] font-normal text-gray-500">基本設計</dt>
+                  <dd className="text-gray-600">{meta.origin.base_design}</dd>
                 </div>
               )}
               {meta.origin.photographic_adaptation && (
                 <div className="grid grid-cols-[7rem_1fr] gap-4">
-                  <dt className="text-sm font-medium text-gray-500">写真用適応</dt>
-                  <dd className="text-gray-700">{meta.origin.photographic_adaptation}</dd>
+                  <dt className="text-[15px] font-normal text-gray-500">写真用適応</dt>
+                  <dd className="text-gray-600">{meta.origin.photographic_adaptation}</dd>
                 </div>
               )}
             </dl>
@@ -176,7 +176,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
                       <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
                     )}
                   </p>
-                  <p className="mt-1 text-[15px] leading-7 text-gray-700">
+                  <p className="mt-1.5 text-[15px] leading-[1.95] text-gray-600">
                     {item.description}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {basic_structure?.typical_configurations &&
           basic_structure.typical_configurations.length > 0 && (
             <CollapsibleSection title="典型構成">
-              <ul className="space-y-2 text-[15px] leading-7 text-gray-700">
+              <ul className="space-y-2.5 pl-4 text-[15px] leading-[1.95] text-gray-600">
                 {basic_structure.typical_configurations.map((config, i) => (
                   <li key={i} className="flex gap-3">
                     <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#88A3D4]/50" />
@@ -203,7 +203,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* Symmetry */}
         {basic_structure?.symmetry && (
           <CollapsibleSection title="対称性">
-            <p className="text-[15px] leading-7 text-gray-700">
+            <p className="pl-4 text-[15px] leading-[1.95] text-gray-600">
               {basic_structure.symmetry.text}
             </p>
           </CollapsibleSection>
@@ -213,10 +213,10 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {basic_structure?.design_philosophy &&
           basic_structure.design_philosophy.length > 0 && (
             <CollapsibleSection title="設計思想">
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {basic_structure.design_philosophy.map((item, i) => (
-                  <div key={i}>
-                    <h4 className="mb-2 text-sm font-semibold text-gray-900">{item.section}</h4>
+                  <div key={i} className="pl-4">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">{item.section}</h4>
                     {renderTextItems(item.points)}
                   </div>
                 ))}
@@ -239,8 +239,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
                   color_rendering: "色再現"
                 };
                 return (
-                  <div key={key}>
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-500">
+                  <div key={key} className="pl-4">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -262,8 +262,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
                   manufacturing_cost: "製造コスト"
                 };
                 return (
-                  <div key={key}>
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-500">
+                  <div key={key} className="pl-4">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -279,8 +279,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
           <CollapsibleSection title="バリエーション">
             <div className="space-y-5">
               {variants.map((v, i) => (
-                <div key={i}>
-                  <h4 className="mb-2 text-sm font-semibold text-gray-900">{v.name}</h4>
+                <div key={i} className="pl-4">
+                  <h4 className="mb-2 text-[15px] font-normal text-gray-500">{v.name}</h4>
                   {renderTextItems(v.description)}
                 </div>
               ))}
@@ -298,8 +298,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
                   current_position: "現代的地位"
                 };
                 return (
-                  <div key={key}>
-                    <h4 className="mb-1.5 text-sm font-medium text-gray-500">
+                  <div key={key} className="pl-4">
+                    <h4 className="mb-2 text-[15px] font-normal text-gray-500">
                       {labelMap[key] ?? key}
                     </h4>
                     {renderTextItems(value)}
@@ -313,7 +313,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* References */}
         {references && references.length > 0 && (
           <CollapsibleSection title="参考文献">
-            <ol className="space-y-2.5 text-sm leading-relaxed">
+            <ol className="space-y-3 pl-4 text-sm leading-[1.85]">
               {references.map((ref) => (
                 <li key={ref.id} className="flex gap-3 text-gray-600">
                   <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
@@ -323,12 +323,12 @@ export default async function DesignDetailPage({ params }: PageProps) {
                         href={ref.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-700 underline decoration-[#88A3D4]/30 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/60"
+                        className="text-gray-600 underline decoration-[#88A3D4]/25 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/50"
                       >
                         {ref.title}
                       </a>
                     ) : (
-                      <span className="text-gray-700">{ref.title}</span>
+                      <span className="text-gray-600">{ref.title}</span>
                     )}
                     <span className="ml-1 text-gray-400"> &mdash; {ref.author_or_source}</span>
                   </span>
@@ -339,7 +339,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         )}
       </div>
 
-      <div className="h-12" />
+      <div className="h-16" />
     </PageContainer>
   );
 }
