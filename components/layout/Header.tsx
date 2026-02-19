@@ -20,10 +20,10 @@ export function Header() {
           <div className="h-9 w-9 shrink-0 rounded-xl bg-gradient-to-br from-sky-200 to-blue-300 shadow-sm sm:h-10 sm:w-10" />
           <div className="flex min-w-0 flex-col">
             <span className="text-sm font-bold tracking-wide text-[#111111]">
-              レンズ沼。
+              ここが沼地。
             </span>
             <span className="text-xs text-gray-600">
-              ここが沼地
+              現状、構成型のページが一番詳しく書いてある
             </span>
           </div>
         </Link>

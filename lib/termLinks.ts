@@ -5,5 +5,6 @@
 export const TERM_LINKS: { term: string; slug: string }[] = [
   { term: "正メニスカス", slug: "positive_meniscus" },
   { term: "負メニスカス", slug: "negative_meniscus" },
-  { term: "アクロマート", slug: "achromat" }
+  { term: "アクロマート", slug: "achromat" },
+  { term: "Super-Takumar 55mm f1.8", slug: "super-takumar-55mm-f18" }
 ];
