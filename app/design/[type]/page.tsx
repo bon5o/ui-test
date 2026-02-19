@@ -166,10 +166,10 @@ export default async function DesignDetailPage({ params }: PageProps) {
         {/* Historical Development — Timeline */}
         {meta.historical_development && meta.historical_development.length > 0 && (
           <CollapsibleSection title="歴史的発展">
-            <div className="relative ml-3 border-l border-gray-200 pl-7">
+            <div className="relative ml-3 border-l border-[#88A3D4]/30 pl-7">
               {meta.historical_development.map((item, i) => (
                 <div key={i} className="relative pb-7 last:pb-0">
-                  <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-gray-300 bg-white" />
+                  <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#88A3D4]/50 bg-white" />
                   <p className="text-sm font-medium text-gray-900">
                     {item.year ?? item.period}
                     {item.designer && (
@@ -192,7 +192,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
               <ul className="space-y-2 text-[15px] leading-7 text-gray-700">
                 {basic_structure.typical_configurations.map((config, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-gray-300" />
+                    <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#88A3D4]/50" />
                     <span>{config}</span>
                   </li>
                 ))}
@@ -316,14 +316,14 @@ export default async function DesignDetailPage({ params }: PageProps) {
             <ol className="space-y-2.5 text-sm leading-relaxed">
               {references.map((ref) => (
                 <li key={ref.id} className="flex gap-3 text-gray-600">
-                  <span className="shrink-0 font-mono text-xs text-gray-300">[{ref.id}]</span>
+                  <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
                   <span>
                     {ref.url ? (
                       <a
                         href={ref.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-700 underline decoration-gray-300 underline-offset-2 transition-colors hover:text-gray-900 hover:decoration-gray-500"
+                        className="text-gray-700 underline decoration-[#88A3D4]/30 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/60"
                       >
                         {ref.title}
                       </a>
