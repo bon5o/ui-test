@@ -1,13 +1,14 @@
 {
   "meta": {
     "id": "super-takumar-55mm-f18",
-    "name": "Super-Takumar 55mm f1.8",
+    "name": "Super-Takumar 55mm f1.8 (前期型)",
     "slug": "super-takumar-55mm-f18",
-    "manufacturer_id": "pentax",
+    "manufacturer_id": "asahi_pentax",
     "mount_id": "m42",
-    "release_year": 1964,
-    "production_period": "1964-1971",
-    "country": "Japan"
+    "release_year": 1962,
+    "production_period": "1962-1971",
+    "country": "Japan",
+    "citations": [2]
   },
 
   "classification": {
@@ -16,21 +17,25 @@
     "era": "1960s",
     "category_tags": [
       "portrait",
-      "radioactive-glass",
-      "classic-standard"
-    ]
+      "classic-standard",
+      "monocoat-vintage",
+      "m42-legend"
+    ],
+    "citations": [1, 2, 3]
   },
 
   "optical_construction": {
     "elements": 6,
     "groups": 5,
-    "diagram_notes": "Modified Double Gauss"
+    "diagram_notes": "6群5枚のダブルガウスタイプ。当時の高性能標準レンズで定番の対称型（プラナー型系統）に属する。",
+    "citations": [1, 2, 5, 3]
   },
 
   "coating": {
     "type": "single-coating",
     "multi_layer": false,
-    "notes": "初期型はトリウム含有による黄変あり"
+    "notes": "単層コーティング（モノコート）世代。銘板に「Super-Multi-Coated」の記載がないものが前期・中期の仕様とされる。",
+    "citations": [2]
   },
 
   "specifications": {
@@ -40,41 +45,51 @@
     "aperture_blades": 6,
     "min_focus_distance_m": 0.45,
     "filter_diameter_mm": 49,
-    "weight_g": 200,
+    "weight_g": 210,
     "focus_type": "manual",
-    "aperture_control": "manual"
+    "aperture_control": "A/M切り替えスイッチ付き自動絞り",
+    "physical_size": {
+      "length_mm": 41,
+      "diameter_mm": 60
+    },
+    "citations": [2, 5, 4, 3]
   },
 
   "rendering_characteristics": {
     "sharpness": {
-      "wide_open": "center good, edges soft",
-      "stopped_down": "very sharp"
+      "wide_open": "中心解像は開放から芯があるが少し柔らかい。F1.8〜F2.8ではわずかな球面収差の滲みが乗り、ポートレートに適する。",
+      "stopped_down": "F4〜5.6まで絞るとコントラスト・解像ともにグッと上がり、現代レンズに近いシャープな描写になる。",
+      "citations": [1, 2, 6]
     },
-    "bokeh": "slightly firm but natural",
-    "contrast": "moderate-low",
-    "color": "warm tendency",
-    "flare_resistance": "weak",
-    "ghosting": "visible under strong backlight"
+    "bokeh": "前後ボケとも比較的おとなしく素直だが、背景の線状被写体ではわずかに二線ボケ気味になる場合がある。絞ると六角形の玉ボケが出る。",
+    "contrast": "単層コートらしい柔らかいコントラスト。斜光では映画的と評価される眠いコントラストを見せる。",
+    "color": "わずかに暖色（アンバー）寄り。派手さよりも「渋い」「枯れた」色合いが特徴。",
+    "flare_resistance": "弱め。強い逆光ではコントラスト低下と白っぽいベールフレアが出やすい。",
+    "ghosting": "素直なサークルゴーストが出現し、ホワイトアウト気味になるシーンもある。",
+    "citations": [1, 2, 6]
   },
 
   "aberrations": {
-    "chromatic_aberration": "low",
-    "spherical_aberration": "present at wide open",
-    "distortion": "minimal",
-    "vignetting": "moderate at f1.8"
+    "chromatic_aberration": "良好に補正されているが、極端な輝度差では発生する場合がある。",
+    "spherical_aberration": "開放付近でわずかに存在し、これが独特の滲みと柔らかさを生んでいる。",
+    "distortion": "極めて少ない。",
+    "vignetting": "フルサイズ開放で1〜1.5段程度の落ち込みがあるが、F2.8〜4でほぼ解消する。",
+    "citations": [2]
   },
 
   "market_info": {
     "price_range_jpy": {
-      "min": 8000,
-      "max": 15000
+      "min": 7500,
+      "max": 22000
     },
     "availability": "common",
     "common_issues": [
-      "yellowing",
-      "fungus",
-      "oil on aperture blades"
-    ]
+      "前群のクモリ（カビ・ヘイズ）",
+      "後群接合部のバルサム切れ",
+      "絞り羽根の油染み",
+      "経年によるわずかな黄変（トリウム由来ではないとされる）"
+    ],
+    "citations": [4, 3, 10, 9]
   },
 
   "compatibility": {
@@ -82,20 +97,101 @@
       "sony-e",
       "canon-rf",
       "nikon-z",
+      "l-mount",
+      "fujifilm-x",
       "micro-four-thirds"
     ],
-    "infinity_focus_possible": true
-  },
-
-  "media": {
-    "sample_images": [
-      "/images/lenses/super-takumar/sample1.jpg"
-    ],
-    "optical_diagram": "/images/lenses/super-takumar/diagram.svg"
+    "infinity_focus_possible": true,
+    "notes": "後玉の突出は控えめで、一般的なミラーレス一眼での干渉事例はほぼ報告されていない。",
+    "citations": [2, 4]
   },
 
   "editorial": {
-    "summary": "1960年代を代表するクラシック標準レンズ",
-    "historical_notes": "戦後日本の光学設計の成熟期を象徴するモデル"
-  }
+    "summary": "1960年代を代表する、オールドレンズの入門として最も愛される一本。ニュートラルな描写と単層コートの柔らかさが共存している。",
+    "historical_notes": "1962年登場。一般的に「前期型」は、銘板がSuper-Takumar表記で単層コート、絞りリングのローレットが細かいタイプを指す。50mm F1.4と異なりトリウムガラスは原則不採用とされ、黄変は経年変化によるものとする説が有力である。",
+    "citations": [2, 10, 9, 4]
+  },
+
+  "references": [
+    {
+      "id": 1,
+      "title": "鉄板オールドレンズ Super Takumar 55mm F1.8",
+      "author_or_source": "1GOU (note)",
+      "url": "https://note.com/rangmang/n/n6a3c4a6d4cf3",
+      "type": "Review",
+      "reliability": 4
+    },
+    {
+      "id": 2,
+      "title": "Asahi Super-Takumar 55mm F/1.8 (1965)",
+      "author_or_source": "Lens-DB",
+      "url": "https://lens-db.com/asahi-super-takumar-55mm-f18-1965/",
+      "type": "Database",
+      "reliability": 5
+    },
+    {
+      "id": 3,
+      "title": "Pentax 55mm f1.8 Super-Takumar - Lens",
+      "author_or_source": "Kamerastore",
+      "url": "https://kamerastore.com/en-us/products/pentax-55mm-f1-8-super-takumar",
+      "type": "Store/Archive",
+      "reliability": 5
+    },
+    {
+      "id": 4,
+      "title": "Pentax Super Takumar (Late) 55mm F1.8 M42 Mount 1965 Version",
+      "author_or_source": "Black Market Camera",
+      "url": "https://www.blackmarketcamera.com/product-page/pentax-super-takumar-late-55mm-f1-8-m42-mount-1965-version-used",
+      "type": "Store",
+      "reliability": 4
+    },
+    {
+      "id": 5,
+      "title": "Pentax 55mm f1.8 Super-Takumar Specifications",
+      "author_or_source": "Kamerastore (FI)",
+      "url": "https://kamerastore.com/en-fi/products/pentax-55mm-f1-8-super-takumar",
+      "type": "Database",
+      "reliability": 5
+    },
+    {
+      "id": 6,
+      "title": "Super Takumar 55mm F1.8: Vintage Lens Review",
+      "author_or_source": "IndieFilmHustle",
+      "url": "https://indiefilmhustle.com/super-takumar-55mm-f1-8/",
+      "type": "Review",
+      "reliability": 4
+    },
+    {
+      "id": 7,
+      "title": "Is my super takumar 55mm f1.8 radioactive",
+      "author_or_source": "r/analog (Reddit)",
+      "url": "https://www.reddit.com/r/analog/comments/1d1legx/is_my_super_takumar_55mm_f18_radioactive/",
+      "type": "Forum",
+      "reliability": 3
+    },
+    {
+      "id": 8,
+      "title": "These Lenses Are Radioactive! The Legendary Super-Takumar 55m f1.8",
+      "author_or_source": "YouTube",
+      "url": "https://www.youtube.com/watch?v=QIm350aXsug",
+      "type": "Video",
+      "reliability": 3
+    },
+    {
+      "id": 9,
+      "title": "Yellowing Super-Tak == SMC?",
+      "author_or_source": "PentaxForums",
+      "url": "https://www.pentaxforums.com/forums/10-pentax-slr-lens-discussion/70818-yellowing-super-tak-smc.html",
+      "type": "Forum",
+      "reliability": 4
+    },
+    {
+      "id": 10,
+      "title": "Super-takumar 55mm f1.8 Thorium Discussion",
+      "author_or_source": "r/VintageLenses (Reddit)",
+      "url": "https://www.reddit.com/r/VintageLenses/comments/1j5khwp/supertakumar_55mm_f18/",
+      "type": "Forum",
+      "reliability": 3
+    }
+  ]
 }

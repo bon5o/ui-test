@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDesignById, getAllDesignIds } from "../../../lib/designs";
 import { TERM_LINKS } from "../../../lib/termLinks";
+import { getLensBySlug } from "../../../lib/lenses";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
 
@@ -184,13 +185,34 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
                   displayName = String(lensItem.name ?? "");
                 }
                 
-                const slug = typeof lensItem.slug === "string" ? lensItem.slug : undefined;
+                // JSONにslugが明示的に指定されている場合はそれを使用
+                const explicitSlug = typeof lensItem.slug === "string" ? lensItem.slug : undefined;
+                
+                // TERM_LINKSから一致するtermを検索
+                const termLink = TERM_LINKS.find((link) => link.term === displayName);
+                
+                // リンク先を決定
+                let linkHref: string | null = null;
+                if (explicitSlug) {
+                  // 明示的なslugが指定されている場合はそれを優先
+                  linkHref = `/lenses/${explicitSlug}`;
+                } else if (termLink) {
+                  // TERM_LINKSに一致するtermが見つかった場合
+                  const lensExists = getLensBySlug(termLink.slug) !== null;
+                  if (lensExists) {
+                    // data/lenses/に存在する場合はレンズ詳細ページへ
+                    linkHref = `/lenses/${termLink.slug}`;
+                  } else {
+                    // 存在しない場合は用語ページへ
+                    linkHref = `/terms/${termLink.slug}`;
+                  }
+                }
                 
                 return (
                   <li key={i}>
-                    {slug ? (
+                    {linkHref ? (
                       <Link
-                        href={`/lenses/${slug}`}
+                        href={linkHref}
                         className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
                       >
                         {displayName}

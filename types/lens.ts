@@ -15,6 +15,7 @@ export interface LensMeta {
   release_year: number;
   production_period: string;
   country: string;
+  citations?: number[];
 }
 
 /**
@@ -25,6 +26,7 @@ export interface LensClassification {
   design_type: string;
   era: string;
   category_tags: string[];
+  citations?: number[];
 }
 
 /**
@@ -34,6 +36,7 @@ export interface OpticalConstruction {
   elements: number;
   groups: number;
   diagram_notes?: string;
+  citations?: number[];
 }
 
 /**
@@ -43,6 +46,15 @@ export interface Coating {
   type: string;
   multi_layer: boolean;
   notes?: string;
+  citations?: number[];
+}
+
+/**
+ * 物理サイズ
+ */
+export interface PhysicalSize {
+  length_mm: number;
+  diameter_mm: number;
 }
 
 /**
@@ -58,6 +70,8 @@ export interface Specifications {
   weight_g: number;
   focus_type: string;
   aperture_control: string;
+  physical_size?: PhysicalSize;
+  citations?: number[];
 }
 
 /**
@@ -66,6 +80,7 @@ export interface Specifications {
 export interface Sharpness {
   wide_open: string;
   stopped_down: string;
+  citations?: number[];
 }
 
 /**
@@ -78,6 +93,7 @@ export interface RenderingCharacteristics {
   color: string;
   flare_resistance: string;
   ghosting: string;
+  citations?: number[];
 }
 
 /**
@@ -88,6 +104,7 @@ export interface Aberrations {
   spherical_aberration: string;
   distortion: string;
   vignetting: string;
+  citations?: number[];
 }
 
 /**
@@ -105,6 +122,7 @@ export interface MarketInfo {
   price_range_jpy: PriceRange;
   availability: string;
   common_issues: string[];
+  citations?: number[];
 }
 
 /**
@@ -113,14 +131,28 @@ export interface MarketInfo {
 export interface Compatibility {
   adaptable_to: string[];
   infinity_focus_possible: boolean;
+  notes?: string;
+  citations?: number[];
 }
 
 /**
  * メディア情報
  */
 export interface Media {
-  sample_images: string[];
+  sample_images?: string[];
   optical_diagram?: string;
+}
+
+/**
+ * 参考文献
+ */
+export interface Reference {
+  id: number;
+  title: string;
+  author_or_source: string;
+  url: string;
+  type: string;
+  reliability: number;
 }
 
 /**
@@ -129,6 +161,7 @@ export interface Media {
 export interface Editorial {
   summary: string;
   historical_notes?: string;
+  citations?: number[];
 }
 
 /**
@@ -144,6 +177,7 @@ export interface Lens {
   aberrations: Aberrations;
   market_info: MarketInfo;
   compatibility: Compatibility;
-  media: Media;
+  media?: Media;
   editorial: Editorial;
+  references?: Reference[];
 }
