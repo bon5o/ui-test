@@ -6,7 +6,7 @@
     "media": {
       "optical_formula": [
         {
-          "src": "/images/double-gauss-classic.svg",
+          "src": "/DoubleGauss1text.svg",
           "variant": "classic_6e4g",
           "elements": 6,
           "groups": 4,
