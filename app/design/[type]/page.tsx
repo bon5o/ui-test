@@ -110,6 +110,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
     url?: string;
     type?: string;
   }> | undefined;
+  const historical_development = design.historical_development;
 
   return (
     <PageContainer className="!max-w-[800px]">
@@ -177,11 +178,11 @@ export default async function DesignDetailPage({ params }: PageProps) {
         )}
 
         {/* Historical Development — Timeline */}
-        {meta.historical_development && meta.historical_development.length > 0 && (
+        {historical_development && historical_development.length > 0 && (
           <CollapsibleSection title="歴史的発展">
             <div className="pl-6 space-y-3">
               <div className="relative ml-3 border-l border-[#88A3D4]/30 pl-7">
-                {meta.historical_development.map((item, i) => (
+                {historical_development.map((item, i) => (
                   <div key={i} className="relative pb-7 last:pb-0">
                     <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#88A3D4]/50 bg-white" />
                     <p className="text-lg font-medium text-gray-800">

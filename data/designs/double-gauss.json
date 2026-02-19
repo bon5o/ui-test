@@ -18,27 +18,95 @@
       "base_design": "1810年代のガウス望遠鏡対物レンズ（正メニスカス＋負メニスカスのアクロマート）",
       "photographic_adaptation": "前後対称に2組配置した写真用設計",
       "citations": [2, 3]
-    },
-    "historical_development": [
-      {
-        "year": 1888,
-        "designer": "Alvan Graham Clark",
-        "description": "対称な4群4枚ダブルガウスを特許化。コマ・ディストーション低減。",
-        "citations": [3, 4]
-      },
-      {
-        "year": 1896,
-        "designer": "Paul Rudolph (Carl Zeiss)",
-        "description": "Carl Zeiss の Paul Rudolph が内部負メニスカスを厚肉化し、クロマティック補正用の「埋没面（buried surface）」を持つ貼り合わせダブレットに変更、Zeiss Planar を完成。",
-        "citations": [1,2,3,4,7]
-      },
-      {
-        "period": "1920年代以降",
-        "description": "Taylor, Taylor & Hobson の Opic、Leitz の Summar/Summitar、Zeiss Biotar など、多数の改良型が登場し、35mm 用標準レンズの主流設計へ発展",
-        "citations": [2,3,7,5]
-      }
-    ]
+    }
   },
+  
+  "historical_development": [
+    {
+      "year": 1817,
+      "designer": "Carl Friedrich Gauss",
+      "description": "正メニスカス＋負メニスカスから成る2枚構成アクロマートを望遠鏡用対物レンズとして提案。後のガウス・ダブルガウス型の基礎となるガウスレンズの原点。",
+      "citations": [1]
+    },
+    {
+      "year": 1888,
+      "designer": "Alvan Graham Clark（Bausch & Lomb と協働）",
+      "description": "ガウスの2枚構成対物レンズを前後対称に配置し、中央に絞りを置いた4群4枚の対称ダブルガウスを特許化。コマやディストーションなどの諸収差を対称性で低減したが、写真用としては性能不十分と評価された。",
+      "citations": [2,3,1,4]
+    },
+    {
+      "year": 1895,
+      "designer": "Paul Rudolph（Carl Zeiss Jena）",
+      "description": "Clark 型ダブルガウスを基礎に、内部負メニスカスを厚肉化し空気間隔を縮小する案を検討。球面収差および中間画角での非点収差・像面湾曲の低減を目的とした改良の下地を整える。",
+      "citations": [2,3,1,4,5]
+    },
+    {
+      "year": 1896,
+      "designer": "Paul Rudolph（Carl Zeiss Jena）",
+      "description": "内部負メニスカスを厚肉化し、同屈折率・異アッベ数の2種ガラスで構成された貼り合わせダブレットとすることで「埋没面（buried surface）」を導入。6枚4群の対称ダブルガウス Zeiss Planar f/4.5 を完成させ、色収差と非点収差を大幅に改善した。",
+      "citations": [2,3,1,4,5]
+    },
+    {
+      "year": 1920,
+      "designer": "Horace William Lee（Taylor, Taylor & Hobson）",
+      "description": "Rudolph の対称 Planar をわずかに非対称化し、片側のパワー配分と空気間隔を変えることで大口径化と収差バランス改善を図った Lee Opic（Series 0）f/2 を設計。現代的非対称ダブルガウスの基本形となる。",
+      "citations": [1,6,4]
+    },
+    {
+      "year": 1920,
+      "designer": "Horace William Lee（Taylor, Taylor & Hobson）",
+      "description": "Opic と同時期の非対称ダブルガウス設計を通じて、高速標準レンズの実用化に向けた設計パラダイム（対称性を崩してでも大口径化と画面全域の実用画質を優先する思想）を確立。",
+      "citations": [1,4]
+    },
+    {
+      "year": 1927,
+      "designer": "Horace William Lee（Taylor, Taylor & Hobson）",
+      "description": "Opic を発展させた Ultra Panchro f/1.4 を開発。ダブルガウス系で f/1.4 クラスの開放を達成し、以後のシネ用・静止画用高速標準レンズの先駆けとなる。",
+      "citations": [1]
+    },
+    {
+      "year": 1930,
+      "designer": "Horace William Lee（Taylor, Taylor & Hobson）",
+      "description": "7枚5群構成でさらに大口径化した Super Speed Panchro f/1.5 を設計。高速ダブルガウスの設計指針として多くのメーカーに参照され、1960年代までの各社標準レンズに強い影響を与えた。",
+      "citations": [1]
+    },
+    {
+      "year": 1930,
+      "designer": "Carl Zeiss（Biotar 系設計陣）",
+      "description": "Lee の非対称ダブルガウス理念を取り入れた Zeiss Biotar 系設計を展開。大口径標準・中望遠レンズにおいて非対称ダブルガウスを採用し、高い開放性能と特徴的な周辺ボケ（いわゆる渦巻きボケ）を持つ描写を実現。",
+      "citations": [1,4]
+    },
+    {
+      "year": 1950,
+      "designer": "各社設計者（Zeiss, Schneider, Leica など）",
+      "description": "戦後の光学ガラスとコーティング技術の進歩を背景に、Planar・Xenon などの6枚4群ダブルガウスが各社標準レンズの主流に。f/1.5〜f/2 クラスで画面全域の高解像と低歪曲を両立する設計が一般化。",
+      "citations": [3,1,7]
+    },
+    {
+      "year": 1966,
+      "designer": "Asahi Pentax",
+      "description": "Super Speed Panchro 型と Xenon 型を折衷した 7枚6群ダブルガウス、Super Takumar 50mm f/1.4（第二型）を開発。大口径・高画質を両立した標準レンズとして、その構成が多くのメーカーに模倣される。",
+      "citations": [1]
+    },
+    {
+      "year": 1970,
+      "designer": "Leitz（Leica）",
+      "description": "Summicron 50mm f/2 系を通じて、6枚4群〜6枚5群の非対称ダブルガウスに近距離補正やコーティング最適化を組み込み、高いコントラストとニュートラルな色再現を備えた「現代標準レンズ」としてのダブルガウス像を確立。",
+      "citations": [8,1,6]
+    },
+    {
+      "year": 1980,
+      "designer": "各社設計者（Contax/Zeiss, Nikon, Canon など）",
+      "description": "コンピュータ設計の普及により、ダブルガウス系での諸収差最適化が高度化。7〜8枚構成の Planar/Ultron 風ダブルガウスが一般的となり、f/1.4 クラスで開放から高い周辺画質と低ディストーションを実現する設計が主流となる。",
+      "citations": [3,1,9,7]
+    },
+    {
+      "year": 2000,
+      "designer": "各社設計者（デジタル対応設計）",
+      "description": "デジタルセンサーのテレセントリック性要求に応じ、後群のパワーバランスと後玉径を見直した「デジタル最適化ダブルガウス」が登場。フローティング機構や非球面を組み込んだ変形ダブルガウスにより、近距離・周辺画質と逆光耐性を大幅に改善。",
+      "citations": [3,1,10,9]
+    }
+  ],
 
   "basic_structure": {
     "typical_configurations": [

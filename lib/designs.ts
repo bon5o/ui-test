@@ -14,12 +14,13 @@ export interface DesignMeta {
     base_design?: string;
     photographic_adaptation?: string;
   };
-  historical_development?: Array<{
-    year?: number;
-    period?: string;
-    designer?: string;
-    description: string;
-  }>;
+}
+
+export interface HistoricalDevelopmentItem {
+  year?: number;
+  period?: string;
+  designer?: string;
+  description: string;
 }
 
 export interface DesignBasicStructure {
@@ -33,6 +34,7 @@ export interface DesignBasicStructure {
 
 export interface Design {
   meta: DesignMeta;
+  historical_development?: HistoricalDevelopmentItem[];
   basic_structure?: DesignBasicStructure;
   [key: string]: unknown;
 }
