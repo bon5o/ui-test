@@ -23,7 +23,7 @@ export function Header() {
               レンズ沼。
             </span>
             <span className="text-xs text-gray-600">
-              ほぼAIと作った
+              ここが沼地
             </span>
           </div>
         </Link>
