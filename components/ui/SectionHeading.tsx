@@ -5,10 +5,11 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ children, className = "" }: SectionHeadingProps) {
   return (
-    <h2
-      className={`border-b border-gray-200 pb-3 text-lg font-semibold text-[#111111] ${className}`}
-    >
-      {children}
-    </h2>
+    <div className={`flex items-center gap-4 ${className}`}>
+      <h2 className="shrink-0 text-xl font-bold tracking-tight text-[#111]">
+        {children}
+      </h2>
+      <span className="h-px grow bg-[#e0e0e0]" aria-hidden="true" />
+    </div>
   );
 }
