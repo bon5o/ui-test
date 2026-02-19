@@ -127,23 +127,38 @@ function isReferenceItem(val: unknown): val is { id: number; title: string; auth
 }
 
 function renderDesignSection(key: string, value: unknown): React.ReactNode {
-  if (value == null) return null;
+  if (value == null) {
+    // デバッグ: null/undefined の場合
+    if (key === "lens_list") {
+      console.log("[DEBUG] lens_list is null/undefined");
+    }
+    return null;
+  }
 
   const title = SECTION_TITLES[key] ?? key.replace(/_/g, " ");
 
-  // デバッグ: lens_list のデータ確認
-  if (key === "lens_list") {
-    console.log("[DEBUG] lens_list detected:", { key, value, isArray: Array.isArray(value), length: Array.isArray(value) ? value.length : 0 });
-  }
-
   // lens_list: array of {name, slug?} - link to lens detail pages
-  // variants より前に配置して確実に実行されるようにする
+  // 最初にチェックして確実に実行されるようにする
   if (key === "lens_list") {
-    console.log("[DEBUG] lens_list processing:", { key, value, isArray: Array.isArray(value) });
-    if (Array.isArray(value) && value.length > 0) {
+    console.log("[DEBUG] lens_list processing:", { 
+      key, 
+      value, 
+      isArray: Array.isArray(value), 
+      length: Array.isArray(value) ? value.length : 0,
+      type: typeof value
+    });
+    
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        console.log("[DEBUG] lens_list is empty array");
+        return null;
+      }
+      
       const first = value[0];
-      console.log("[DEBUG] lens_list first item:", first);
+      console.log("[DEBUG] lens_list first item:", first, "has name:", first && typeof first === "object" && "name" in first);
+      
       if (typeof first === "object" && first !== null && "name" in first) {
+        console.log("[DEBUG] lens_list rendering section");
         return (
           <CollapsibleSection key={key} title={title}>
             <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
@@ -169,12 +184,11 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
             </ul>
           </CollapsibleSection>
         );
+      } else {
+        console.log("[DEBUG] lens_list first item does not have 'name' property");
       }
-    }
-    // lens_list が空配列または不正な形式の場合も null を返さず、空のセクションを表示
-    if (Array.isArray(value) && value.length === 0) {
-      console.log("[DEBUG] lens_list is empty array");
-      return null;
+    } else {
+      console.log("[DEBUG] lens_list is not an array, type:", typeof value);
     }
   }
 
@@ -428,11 +442,16 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
   const designEntries = Object.entries(design).filter(([key]) => key !== "meta");
 
-  // デバッグ: design オブジェクトと lens_list の確認
+  // デバッグ: design オブジェクトと lens_list の確認（サーバー側ログ）
   console.log("[DEBUG] design object keys:", Object.keys(design));
   console.log("[DEBUG] designEntries:", designEntries.map(([k]) => k));
   const lensListData = (design as Record<string, unknown>).lens_list;
   console.log("[DEBUG] lens_list data:", lensListData);
+
+  // 強制的なデバッグ表示（ブラウザで確認可能）
+  const lensListExists = lensListData != null;
+  const lensListIsArray = Array.isArray(lensListData);
+  const lensListLength = lensListIsArray ? lensListData.length : 0;
 
   return (
     <PageContainer className="!max-w-[800px]">
@@ -445,6 +464,18 @@ export default async function DesignDetailPage({ params }: PageProps) {
             {meta.english_name}
           </p>
         )}
+        {/* 強制的なデバッグ表示 */}
+        <div className="mt-4 rounded border-2 border-red-300 bg-red-50 p-4 text-sm">
+          <p className="font-bold text-red-800">[DEBUG] lens_list データ確認:</p>
+          <p className="text-red-700">存在: {lensListExists ? "✓" : "✗"}</p>
+          <p className="text-red-700">配列: {lensListIsArray ? "✓" : "✗"}</p>
+          <p className="text-red-700">長さ: {lensListLength}</p>
+          <p className="text-red-700">全キー: {Object.keys(design).join(", ")}</p>
+          <p className="text-red-700">designEntries: {designEntries.map(([k]) => k).join(", ")}</p>
+          <pre className="mt-2 overflow-auto text-xs text-red-600">
+            {JSON.stringify(lensListData, null, 2)}
+          </pre>
+        </div>
       </header>
 
       {media?.optical_formula && media.optical_formula.length > 0 && (
@@ -494,9 +525,17 @@ export default async function DesignDetailPage({ params }: PageProps) {
           </CollapsibleSection>
         )}
 
-        {designEntries.map(([key, value]) => (
-          <React.Fragment key={key}>{renderDesignSection(key, value)}</React.Fragment>
-        ))}
+        {designEntries.map(([key, value]) => {
+          // デバッグ: 各エントリの処理確認
+          if (key === "lens_list") {
+            console.log("[DEBUG] Processing lens_list entry:", { key, value, type: typeof value });
+          }
+          const rendered = renderDesignSection(key, value);
+          if (key === "lens_list" && rendered === null) {
+            console.log("[DEBUG] lens_list rendered null");
+          }
+          return <React.Fragment key={key}>{rendered}</React.Fragment>;
+        })}
       </div>
 
       <div className="h-16" />
