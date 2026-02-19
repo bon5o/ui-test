@@ -10,7 +10,7 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   if (!items) return null;
   const arr = Array.isArray(items) ? items : [items];
   return (
-    <ul className="space-y-2 text-sm text-[#111111]">
+    <ul className="space-y-2.5 text-[15px] leading-relaxed text-[#333]">
       {arr.map((item, i) => (
         <li key={i}>{item.text}</li>
       ))}
@@ -51,12 +51,12 @@ function renderOpticalCharacteristics(data: Record<string, unknown> | undefined)
   }
   if (items.length === 0) return null;
   return (
-    <section className="mb-8">
+    <section>
       <SectionHeading>光学特性</SectionHeading>
-      <div className="space-y-4">
+      <div className="mt-6 space-y-6">
         {items.map(({ label, content }) => (
           <div key={label}>
-            <h4 className="mb-1 font-medium text-gray-600">{label}</h4>
+            <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#666]">{label}</h4>
             {content}
           </div>
         ))}
