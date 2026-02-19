@@ -22,6 +22,10 @@ export interface DesignMeta {
 export interface DesignBasicStructure {
   typical_configurations?: string[];
   symmetry?: { text: string };
+  design_philosophy?: Array<{
+    section: string;
+    points: Array<{ text: string; citations?: number[] }>;
+  }>;
 }
 
 export interface Design {
