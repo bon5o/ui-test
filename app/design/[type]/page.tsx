@@ -12,7 +12,20 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
   return (
     <ul className="space-y-2 text-base font-normal leading-relaxed text-gray-700">
       {arr.map((item, i) => (
-        <li key={i}>{item.text}</li>
+        <li key={i}>
+          {item.text}
+          {item.citations && item.citations.length > 0 && (
+            <span className="ml-1 whitespace-nowrap">
+              {item.citations.map((n) => (
+                <sup key={n} className="text-xs align-super text-[#88A3D4]">
+                  <a href={`#ref-${n}`} className="no-underline hover:underline">
+                    [{n}]
+                  </a>
+                </sup>
+              ))}
+            </span>
+          )}
+        </li>
       ))}
     </ul>
   );
@@ -317,7 +330,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
           <CollapsibleSection title="参考文献">
             <ol className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {references.map((ref) => (
-                <li key={ref.id} className="flex gap-3">
+                <li key={ref.id} id={`ref-${ref.id}`} className="flex gap-3 scroll-mt-4">
                   <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
                   <span>
                     {ref.url ? (
