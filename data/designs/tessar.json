@@ -1,0 +1,360 @@
+{
+  "meta": {
+    "id": "tessar",
+    "name": "テッサー型",
+    "english_name": "Tessar",
+    "media": {
+      "optical_formula": [
+        {
+          "src": "/TessarClassic38mmF55.svg",
+          "variant": "classic_3g4e",
+          "era": "classic",
+          "caption": "Carl Zeiss Tessar 38mm f/5.5 の典型的な3群4枚構成。物体側から凸レンズ・凹レンズ・後群ダブレット（凹凸貼り合わせ）の配置。"
+        }
+      ],
+      "citations": [25, 30]
+    },
+    "origin": {
+      "base_design": "1902年に Carl Zeiss の Paul Rudolph が設計した 3群4枚構成のアナスチグマートレンズ。トリプレットの後玉を凹凸貼り合わせダブレットに発展させたものと見なされる。",
+      "photographic_adaptation": "当初は製版用レンズとして開発されたが、その後標準レンズ・マクロレンズ・パンケーキレンズなど幅広い用途に応用された。",
+      "citations": [25, 29, 30]
+    }
+  },
+
+  "historical_development": [
+    {
+      "year": 1902,
+      "designer": "Paul Rudolph（Carl Zeiss）",
+      "description": "3群4枚構成の Tessar を完成。当初の開放 F 値は f/6.3 で、製版用に設計されたが、解像力・コントラスト・歪曲性能の高さから写真用レンズとしても評価される。",
+      "citations": [25, 29, 30]
+    },
+    {
+      "year": 1917,
+      "designer": "Ernst Wandersleb（Carl Zeiss）",
+      "description": "開放 F 値を f/4.5 まで明るくした Tessar を開発。より実用的な標準レンズとして普及が進む。",
+      "citations": [27, 29]
+    },
+    {
+      "year": 1930,
+      "designer": "Willi Walter Merte（Carl Zeiss）",
+      "description": "f/3.5、さらに f/2.8 まで大口径化した Tessar を設計。戦前・戦後を通じて多くのカメラメーカーがライセンス供与や模倣設計を行った。",
+      "citations": [27, 29, 32]
+    },
+    {
+      "year": 1950,
+      "designer": "各社設計者（Leica, Voigtländer, Kodak など）",
+      "description": "エルマー、スコパー、エクターなど「テッサータイプ」と呼ばれる派生設計が多数登場し、標準レンズ・広角・望遠・マクロ用途に展開される。",
+      "citations": [27, 31, 33]
+    },
+    {
+      "year": 1970,
+      "designer": "各社設計者（コンパクトカメラ用）",
+      "description": "3群4枚のシンプル構成がコンパクトカメラやパンケーキレンズに採用され、小型・軽量・低コストを重視した設計が主流化。",
+      "citations": [28, 30, 33]
+    },
+    {
+      "year": 2000,
+      "designer": "各社設計者（デジタル対応設計）",
+      "description": "非球面レンズやマルチコーティングを組み合わせたデジタル用テッサータイプが登場し、逆光耐性・周辺画質・テレセントリック性を改善。",
+      "citations": [28, 30]
+    }
+  ],
+
+  "basic_structure": {
+    "typical_configurations": [
+      "3群4枚（凸レンズ・凹レンズ・後群凹凸貼り合わせダブレット）",
+      "3群4枚変形（前群ダブレット追加、非球面追加など）",
+      "3群3枚（トリプレットベースの簡易テッサータイプ）"
+    ],
+    "symmetry": {
+      "text": "前後対称性を持たないが、対称型に近い構造で収差バランスを取る設計。",
+      "citations": [30, 33]
+    },
+    "design_philosophy": [
+      {
+        "section": "少ない枚数での高効率補正",
+        "points": [
+          {
+            "text": "3群4枚というシンプルな構成で、球面収差・コマ・非点・像面湾曲・歪曲・色収差を効率的に補正する設計思想。",
+            "citations": [25, 29, 30]
+          }
+        ]
+      },
+      {
+        "section": "トリプレットからの発展",
+        "points": [
+          {
+            "text": "トリプレットの後玉を凹凸貼り合わせダブレットに置き換え、周辺画質と歪曲性能を改善。",
+            "citations": [25, 29, 33]
+          }
+        ]
+      },
+      {
+        "section": "製版用レンズとしての設計",
+        "points": [
+          {
+            "text": "等倍（1:1）設計基準で、製版用に最適化された高解像・高コントラスト・低歪曲を特徴とする。",
+            "citations": [25, 29]
+          }
+        ]
+      }
+    ]
+  },
+
+  "optical_characteristics": {
+    "sharpness": {
+      "center": [
+        {
+          "text": "開放付近でも中心解像は十分高く、絞るとさらにシャープネスが向上。",
+          "citations": [28, 29]
+        }
+      ],
+      "peripheral": [
+        {
+          "text": "周辺画角では像面湾曲や非点収差が残ることが多く、開放では周辺解像が低下しやすい。",
+          "citations": [28, 29]
+        }
+      ]
+    },
+    "contrast": [
+      {
+        "text": "コントラストが高く、シャープに見える描写。",
+          "citations": [28, 29]
+      }
+    ],
+    "aberrations": {
+      "spherical": [
+        {
+          "text": "球面収差は比較的小さく、点像再現性は良好。",
+          "citations": [28, 29]
+        }
+      ],
+      "coma": [
+        {
+          "text": "コマ収差は少ないが、後期型では周辺でやや増加。",
+          "citations": [28, 29]
+        }
+      ],
+      "astigmatism_and_field_curvature": [
+        {
+          "text": "像面湾曲と非点収差は良好に補正されるが、開放近傍では中〜周辺部に残る場合がある。",
+          "citations": [28, 29]
+        }
+      ]
+    },
+    "chromatic_aberration": [
+      {
+        "text": "色収差は小さく、強い逆光以外ではほとんど問題ない。",
+          "citations": [28, 29]
+      }
+    ],
+    "field_curvature": [
+      {
+          "text": "像面は比較的平坦で、画面隅までしっかり描写。",
+          "citations": [28, 29]
+      }
+    ],
+    "distortion": [
+      {
+          "text": "歪曲は非常に小さく、直線はほぼまっすぐ。",
+          "citations": [28, 29]
+      }
+    ],
+    "maximum_aperture_evolution": [
+      {
+          "text": "初期は f/6.3、その後 f/4.5、f/3.5、f/2.8 まで大口径化。",
+          "citations": [27, 29]
+      }
+    ],
+    "vignetting": [
+      {
+          "text": "周辺減光は少なく、画面隅まで明るさが保たれる。",
+          "citations": [28, 29]
+      }
+    ]
+  },
+
+  "rendering_character": {
+    "bokeh": [
+      {
+          "text": "ボケは整っており、玉ボケの輪郭が硬くなりすぎない。",
+          "citations": [28, 29]
+      }
+    ],
+    "three_dimensionality": [
+      {
+          "text": "中心解像と周辺ソフトネスのバランスが良く、立体感のある描写。",
+          "citations": [28, 29]
+      }
+    ],
+    "flare_resistance": [
+      {
+          "text": "ガラス面数が少なく、フレアに強く、逆光耐性が高い。",
+          "citations": [28, 29]
+      }
+    ],
+    "color_rendering": [
+      {
+          "text": "カラーバランスが最適化されており、彩度が穏やか。",
+          "citations": [25, 29]
+      }
+    ]
+  },
+
+  "operational_characteristics": {
+    "size_and_weight": [
+      {
+          "text": "3群4枚構成のためコンパクトで軽量。",
+          "citations": [28, 30]
+      }
+    ],
+    "typical_focal_length": [
+      {
+          "text": "標準画角（50mm前後）が主流。",
+          "citations": [28, 29]
+      }
+    ],
+    "manufacturing_cost": [
+      {
+          "text": "ガラス面数が少なく、大量生産しやすい。",
+          "citations": [28, 30]
+      }
+    ]
+  },
+
+  "variants": [
+    {
+      "name": "Tessar",
+      "description": [
+        {
+          "text": "Carl Zeiss のオリジナル 3群4枚構成。",
+          "citations": [25, 29]
+        }
+      ]
+    },
+    {
+      "name": "Elmar",
+      "description": [
+        {
+          "text": "Leica のテッサータイプ。",
+          "citations": [27, 31]
+        }
+      ]
+    },
+    {
+      "name": "Skopar",
+      "description": [
+        {
+          "text": "Voigtländer のテッサータイプ。",
+          "citations": [27, 31]
+        }
+      ]
+    },
+    {
+      "name": "Ektar",
+      "description": [
+        {
+          "text": "Kodak のテッサータイプ。",
+          "citations": [27, 31]
+        }
+      ]
+    }
+  ],
+
+  "modern_evolution": {
+    "digital_optimization": [
+      {
+          "text": "非球面レンズやマルチコーティングを組み合わせたデジタル用テッサータイプが主流。",
+          "citations": [28, 30]
+      }
+    ],
+    "current_position": [
+      {
+          "text": "コンパクトカメラ・パンケーキレンズの基盤として重要な設計思想。",
+          "citations": [28, 30]
+      }
+    ]
+  },
+
+  "lens_list": [
+    {
+      "name": "Carl Zeiss Tessar 50mm f/2.8"
+    },
+    {
+      "name": "Leica Elmar 50mm f/3.5"
+    },
+    {
+      "name": "Voigtländer Skopar 50mm f/3.5"
+    },
+    {
+      "name": "Kodak Ektar 50mm f/3.5"
+    }
+  ],
+
+  "references": [
+    {
+      "id": 25,
+      "title": "テッサー - Wikipedia",
+      "author_or_source": "Wikipedia",
+      "url": "https://ja.wikipedia.org/wiki/%E3%83%86%E3%83%83%E3%82%B5%E3%83%BC",
+      "type": "encyclopedia",
+      "reliability": "medium"
+    },
+    {
+      "id": 27,
+      "title": "レンズ構成の話 テッサータイプ",
+      "author_or_source": "カメラのキタムラ",
+      "url": "https://www.kitamura.jp/photo/tanekiyo/2013/ta132.html",
+      "type": "technical-article",
+      "reliability": "medium"
+    },
+    {
+      "id": 28,
+      "title": "レンズ探求 #38 時空を超えるレンズ その2 Tessar 50mm F2.8",
+      "author_or_source": "sstylery",
+      "url": "https://sstylery.blog.jp/archives/86267530.html",
+      "type": "technical-article",
+      "reliability": "medium"
+    },
+    {
+      "id": 29,
+      "title": "Tessarとは Carl Zeissのレンズ設計士パウル・ルドルフが ...",
+      "author_or_source": "oldlens.jp",
+      "url": "https://oldlens.jp/tessar-rudolph/",
+      "type": "technical-article",
+      "reliability": "medium"
+    },
+    {
+      "id": 30,
+      "title": "歴史的レンズ解説 Carl Zeiss Tessar 38mm F5 ... - LENS Review",
+      "author_or_source": "LENS Review",
+      "url": "https://lensreview.xyz/heritage-carl-zeiss-tessar-38mm-f5-5/",
+      "type": "technical-article",
+      "reliability": "medium"
+    },
+    {
+      "id": 31,
+      "title": "初心者でもよく分かるテッサータイプ対決（序章）：ヤシカContax ...",
+      "author_or_source": "pochilog.jp",
+      "url": "https://pochilog.jp/5004",
+      "type": "technical-article",
+      "reliability": "medium"
+    },
+    {
+      "id": 32,
+      "title": "【オールドレンズの王道】Tessarの超解説w その魅力と ...",
+      "author_or_source": "paraiso.mundanoz.com",
+      "url": "https://paraiso.mundanoz.com/what-is-tessar/",
+      "type": "technical-article",
+      "reliability": "medium"
+    },
+    {
+      "id": 33,
+      "title": "第2話：3枚玉と4枚玉",
+      "author_or_source": "masupi.com",
+      "url": "http://masupi.com/phase11.htm",
+      "type": "technical-article",
+      "reliability": "medium"
+    }
+  ]
+}

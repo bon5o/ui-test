@@ -10,6 +10,21 @@ import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
 type TextItem = { text: string; citations?: number[] };
 type TextItems = TextItem | TextItem[];
 
+type VariantDescriptionItem = { text: string; citations?: number[] };
+type VariantItem = {
+  name: string;
+  description: VariantDescriptionItem[];
+};
+
+/** optical_characteristics の新形式: sections + citations */
+type OpticalSectionParagraph = { type: "paragraph"; text: string };
+type OpticalSectionList = { type: "list"; items: string[] };
+type OpticalSection = OpticalSectionParagraph | OpticalSectionList;
+type OpticalCharacteristicSubsection = {
+  sections: OpticalSection[];
+  citations?: number[];
+};
+
 const SECTION_TITLES: Record<string, string> = {
   origin: "由来",
   historical_development: "歴史的発展",
@@ -30,19 +45,25 @@ const SUBSECTION_LABELS: Record<string, Record<string, string>> = {
     design_philosophy: "設計思想"
   },
   optical_characteristics: {
-    center: "中心",
-    peripheral: "周辺",
-    spherical: "球面収差",
-    coma: "コマ収差",
+    center_resolution: "中心解像",
+    peripheral_resolution: "周辺解像",
+    contrast: "コントラスト",
+    spherical_aberration: "球面収差",
+    coma_aberration: "コマ収差",
     astigmatism_and_field_curvature: "非点収差・像面湾曲",
     chromatic_aberration: "色収差",
     field_curvature: "像面湾曲",
     distortion: "歪曲",
-    maximum_aperture_evolution: "最大F値の変遷",
-    vignetting: "周辺減光",
-    contrast: "コントラスト",
+    maximum_f_number_evolution: "最大F値の変遷",
+    peripheral_light_loss: "周辺減光",
+    sharpness: "シャープネス",
+    center: "中心",
+    peripheral: "周辺",
     aberrations: "収差",
-    sharpness: "シャープネス"
+    spherical: "球面収差",
+    coma: "コマ収差",
+    maximum_aperture_evolution: "最大F値の変遷",
+    vignetting: "周辺減光"
   },
   rendering_character: {
     bokeh: "ボケ",
@@ -96,31 +117,32 @@ function renderDescriptionWithTermLinks(description: string | unknown): React.Re
   return <>{parts}</>;
 }
 
+/** オブジェクトから表示用テキストを安全に取得 */
+function extractTextContent(item: unknown): string {
+  if (item == null) return "";
+  if (typeof item === "string") return item;
+  if (typeof item === "object" && item !== null && "text" in item) {
+    const textVal = (item as { text: unknown }).text;
+    if (typeof textVal === "string") return textVal;
+  }
+  return "";
+}
+
+/** オブジェクトから citations 配列を安全に取得 */
+function extractCitations(item: unknown): number[] | undefined {
+  if (typeof item !== "object" || item == null || !("citations" in item)) return undefined;
+  const c = (item as { citations?: unknown }).citations;
+  return Array.isArray(c) ? c : undefined;
+}
+
 function renderTextItems(items: TextItems | undefined): React.ReactNode {
   if (!items) return null;
   const arr = Array.isArray(items) ? items : [items];
   return (
     <ul className="space-y-2 text-base font-normal leading-relaxed text-gray-700">
       {arr.map((item, i) => {
-        let textContent: string;
-        if (typeof item === "object" && item !== null && "text" in item) {
-          const textValue = (item as { text: unknown }).text;
-          if (typeof textValue === "string") {
-            textContent = textValue;
-          } else if (typeof textValue === "object" && textValue !== null && "text" in textValue) {
-            textContent = String((textValue as { text: string }).text);
-          } else {
-            textContent = String(textValue ?? "");
-          }
-        } else {
-          textContent = String(item ?? "");
-        }
-        
-        const citations = typeof item === "object" && item !== null && "citations" in item
-          ? (item as { citations?: unknown }).citations
-          : undefined;
-        const citationsArray = Array.isArray(citations) ? citations : undefined;
-        
+        const textContent = extractTextContent(item);
+        const citationsArray = extractCitations(item);
         return (
           <li key={i}>
             {textContent}
@@ -146,12 +168,59 @@ function isTextItemArray(val: unknown): val is TextItem[] {
   return Array.isArray(val) && val.length > 0 && typeof val[0] === "object" && val[0] !== null && "text" in val[0];
 }
 
-function isTimelineItem(val: unknown): val is { year?: number; period?: string; designer?: string; description: string | { text: string; citations?: number[] } } {
-  return typeof val === "object" && val !== null && "description" in val;
+function isOpticalCharacteristicSubsection(val: unknown): val is OpticalCharacteristicSubsection {
+  if (typeof val !== "object" || val === null || !("sections" in val)) return false;
+  const s = (val as OpticalCharacteristicSubsection).sections;
+  return Array.isArray(s);
 }
 
-function isVariantItem(val: unknown): val is { name: string; description: TextItem[] } {
-  return typeof val === "object" && val !== null && "name" in val && "description" in val;
+function renderOpticalCharacteristicSubsection(sub: OpticalCharacteristicSubsection): React.ReactNode {
+  const citations =
+    Array.isArray(sub.citations) && sub.citations.length > 0
+      ? sub.citations.filter((n): n is number => typeof n === "number")
+      : undefined;
+
+  return (
+    <div className="space-y-3">
+      {sub.sections.map((sec, i) => {
+        if (typeof sec !== "object" || sec === null) return null;
+        const s = sec as { type?: unknown; text?: unknown; items?: unknown };
+        const sectionKey = `${String(s.type ?? "section")}-${i}`;
+        if (s.type === "paragraph" && typeof s.text === "string") {
+          return (
+            <p key={sectionKey} className="text-base font-normal leading-relaxed text-gray-700">
+              {renderDescriptionWithTermLinks(s.text)}
+            </p>
+          );
+        }
+        if (s.type === "list" && Array.isArray(s.items)) {
+          return (
+            <ul key={sectionKey} className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700">
+              {(s.items as unknown[]).map((item, j) => (
+                <li key={j}>{typeof item === "string" ? renderDescriptionWithTermLinks(item) : null}</li>
+              ))}
+            </ul>
+          );
+        }
+        return null;
+      })}
+      {citations && citations.length > 0 && (
+        <span className="ml-1 whitespace-nowrap">
+          {citations.map((n, nIdx) => (
+            <sup key={nIdx} className="text-xs align-super text-[#88A3D4]">
+              <a href={`#ref-${n}`} className="no-underline hover:underline">
+                [{n}]
+              </a>
+            </sup>
+          ))}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function isTimelineItem(val: unknown): val is { year?: number; period?: string; designer?: string; description: string | { text: string; citations?: number[] } } {
+  return typeof val === "object" && val !== null && "description" in val;
 }
 
 function isReferenceItem(val: unknown): val is { id: number; title: string; author_or_source: string; url?: string } {
@@ -231,8 +300,58 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     return null;
   }
 
+  // variants: array of VariantItem - key-based, must come before timeline (timeline items also have "description")
+  if (key === "variants" && Array.isArray(value)) {
+    const items = value.filter(
+      (v): v is VariantItem =>
+        typeof v === "object" &&
+        v !== null &&
+        "name" in v &&
+        typeof (v as VariantItem).name === "string" &&
+        "description" in v &&
+        Array.isArray((v as VariantItem).description)
+    );
+    if (items.length > 0) {
+      return (
+        <CollapsibleSection key={key} title={title}>
+          <div className="space-y-5">
+            {items.map((v, i) => (
+              <div key={i} className="pl-6 space-y-3">
+                <h4 className="text-lg font-medium text-gray-800">{v.name}</h4>
+                <ul className="space-y-2 text-base font-normal leading-relaxed text-gray-700">
+                  {v.description.map((descItem, j) => {
+                    const text = typeof descItem.text === "string" ? descItem.text : "";
+                    const citations = Array.isArray(descItem.citations)
+                      ? descItem.citations.filter((n): n is number => typeof n === "number")
+                      : undefined;
+                    return (
+                      <li key={j}>
+                        {renderDescriptionWithTermLinks(text)}
+                        {citations && citations.length > 0 && (
+                          <span className="ml-1 whitespace-nowrap">
+                            {citations.map((n, nIdx) => (
+                              <sup key={`${j}-${nIdx}`} className="text-xs align-super text-[#88A3D4]">
+                                <a href={`#ref-${n}`} className="no-underline hover:underline">
+                                  [{n}]
+                                </a>
+                              </sup>
+                            ))}
+                          </span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CollapsibleSection>
+      );
+    }
+  }
+
   // historical_development: timeline
-  if (Array.isArray(value) && value.length > 0 && isTimelineItem(value[0])) {
+  if (key === "historical_development" && Array.isArray(value) && value.length > 0 && isTimelineItem(value[0])) {
     return (
       <CollapsibleSection key={key} title={title}>
         <div className="pl-6 space-y-3">
@@ -252,22 +371,6 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
               </div>
             ))}
           </div>
-        </div>
-      </CollapsibleSection>
-    );
-  }
-
-  // variants: array of {name, description}
-  if (Array.isArray(value) && value.length > 0 && isVariantItem(value[0])) {
-    return (
-      <CollapsibleSection key={key} title={title}>
-        <div className="space-y-5">
-          {value.map((v, i) => (
-            <div key={i} className="pl-6 space-y-3">
-              <h4 className="text-lg font-medium text-gray-800">{v.name}</h4>
-              {renderTextItems(v.description)}
-            </div>
-          ))}
         </div>
       </CollapsibleSection>
     );
@@ -352,28 +455,48 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     );
   }
 
-  // optical_characteristics: nested object with text arrays
+  // optical_characteristics: 新形式 (sections+citations) または旧形式 (text arrays / nested)
   if (key === "optical_characteristics" && typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const items: { label: string; content: React.ReactNode }[] = [];
     const labels = SUBSECTION_LABELS.optical_characteristics ?? {};
-    for (const [k, v] of Object.entries(value)) {
-      if (!v) continue;
-      if (isTextItemArray(v)) {
-        items.push({ label: labels[k] ?? k, content: renderTextItems(v) });
-      } else if (typeof v === "object" && v !== null && !Array.isArray(v)) {
-        for (const [subK, subV] of Object.entries(v)) {
-          if (isTextItemArray(subV)) {
-            items.push({ label: labels[subK] ?? subK, content: renderTextItems(subV) });
+    const items: { itemKey: string; label: string; content: React.ReactNode }[] = [];
+
+    const collectItem = (subKey: string, subVal: unknown) => {
+      if (!subVal) return;
+      if (isOpticalCharacteristicSubsection(subVal)) {
+        items.push({
+          itemKey: subKey,
+          label: labels[subKey] ?? subKey.replace(/_/g, " "),
+          content: renderOpticalCharacteristicSubsection(subVal)
+        });
+      } else if (isTextItemArray(subVal)) {
+        items.push({
+          itemKey: subKey,
+          label: labels[subKey] ?? subKey.replace(/_/g, " "),
+          content: renderTextItems(subVal)
+        });
+      } else if (typeof subVal === "object" && subVal !== null && !Array.isArray(subVal)) {
+        for (const [nestedK, nestedV] of Object.entries(subVal)) {
+          if (isTextItemArray(nestedV)) {
+            items.push({
+              itemKey: `${subKey}-${nestedK}`,
+              label: labels[nestedK] ?? nestedK.replace(/_/g, " "),
+              content: renderTextItems(nestedV)
+            });
           }
         }
       }
+    };
+
+    for (const [k, v] of Object.entries(value)) {
+      collectItem(k, v);
     }
+
     if (items.length === 0) return null;
     return (
       <CollapsibleSection key={key} title={title}>
         <div className="space-y-5">
-          {items.map(({ label, content }) => (
-            <div key={label} className="pl-6 space-y-3">
+          {items.map(({ itemKey, label, content }) => (
+            <div key={itemKey} className="pl-6 space-y-3">
               <h4 className="text-lg font-medium text-gray-800">{label}</h4>
               {content}
             </div>
@@ -425,8 +548,8 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
                 }
                 return <li key={i}>{String(nameValue)}</li>;
               }
-              
-              return <li key={i}>{JSON.stringify(item)}</li>;
+
+              return null;
             })}
           </ul>
         </CollapsibleSection>
@@ -435,11 +558,11 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     return (
       <CollapsibleSection key={key} title={title}>
         <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
-          {value.map((item, i) => (
-            <li key={i}>
-              {typeof item === "object" && item !== null ? JSON.stringify(item) : String(item)}
-            </li>
-          ))}
+          {value
+            .filter((item): item is string | number | boolean => typeof item !== "object" || item === null)
+            .map((item, i) => (
+              <li key={i}>{String(item)}</li>
+            ))}
         </ul>
       </CollapsibleSection>
     );
@@ -447,7 +570,11 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
 
   // Fallback: object
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const entries = Object.entries(value).filter(([, v]) => v != null);
+    const entries = Object.entries(value).filter(([, v]) => {
+      if (v == null) return false;
+      if (typeof v === "object" && !Array.isArray(v) && !("text" in v)) return false;
+      return true;
+    });
     if (entries.length > 0) {
       return (
         <CollapsibleSection key={key} title={title}>
@@ -457,11 +584,12 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
               if (typeof v === "object" && v !== null && !Array.isArray(v) && "text" in v) {
                 displayValue = String((v as { text: string }).text);
               } else if (typeof v === "object" && v !== null) {
-                displayValue = JSON.stringify(v);
+                displayValue = null;
               } else {
                 displayValue = String(v);
               }
-              
+              if (displayValue == null) return null;
+
               return (
                 <div key={k}>
                   <dt className="font-medium text-gray-800">{k.replace(/_/g, " ")}</dt>
