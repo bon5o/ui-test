@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
 
 const navItems: { href: string; label: string }[] = [
   { href: "/", label: "ホーム" },
@@ -12,18 +11,39 @@ const navItems: { href: string; label: string }[] = [
   { href: "/about", label: "このサイトについて" }
 ];
 
+/** メール（封筒）由来のシンプルなアイコン */
+function MailIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m2 7 10 7 10-7" />
+    </svg>
+  );
+}
+
 export function Header() {
   return (
-    <header className="static border-b border-gray-200 bg-white">
+    <header className="static bg-[#E1EBF7]">
       <div className="container-page flex flex-col gap-2 py-2 sm:flex-row sm:items-center sm:justify-between sm:py-4 md:gap-3 lg:py-5">
         <Link href="/" className="flex items-center gap-2 sm:gap-3">
-          <div className="h-9 w-9 shrink-0 rounded-xl bg-gradient-to-br from-sky-200 to-blue-300 shadow-sm sm:h-10 sm:w-10" />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/80 text-[#4A6B8A] shadow-sm sm:h-10 sm:w-10">
+            <MailIcon className="h-5 w-5 sm:h-5 sm:w-5" />
+          </div>
           <div className="flex min-w-0 flex-col">
-            <span className="text-sm font-bold tracking-wide text-[#111111]">
-              ここが沼地。
+            <span className="text-sm font-bold tracking-wide text-[#2C4466]">
+              沼便り。
             </span>
-            <span className="text-xs text-gray-600">
-              現状、構成型のページが一番詳しく書いてある
+            <span className="text-xs text-[#4A6B8A]">
+              なるべく、正確に沼をお届け。更新は悪しからず。
             </span>
           </div>
         </Link>
@@ -33,28 +53,31 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-[#111111] transition-colors hover:bg-gray-100"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-[#2C4466] transition-colors hover:bg-white/50 hover:text-[#1E3350]"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
-          <ThemeToggle />
         </div>
       </div>
-      <nav className="border-t border-gray-200 bg-gray-50 py-2 md:hidden">
+      <nav className="bg-[#DAE6F4] py-2 md:hidden">
         <div className="container-page flex flex-wrap gap-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-[#111111] transition-colors hover:bg-gray-100"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-[#2C4466] transition-colors hover:bg-white/50 hover:text-[#1E3350]"
             >
               {item.label}
             </Link>
           ))}
         </div>
       </nav>
+      <div
+        className="h-4 w-full shrink-0 bg-gradient-to-b from-[#DAE6F4] to-white md:from-[#E1EBF7]"
+        aria-hidden
+      />
     </header>
   );
 }

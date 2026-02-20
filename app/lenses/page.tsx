@@ -1,9 +1,8 @@
 import { getAllLenses } from "../../lib/lenses";
-import type { Lens } from "../../types/lens";
 import { LensList } from "./LensList";
 
 export const metadata = {
-  title: "レンズ一覧 | オールドレンズ構成の歴史と描写研究",
+  title: "レンズ一覧 | 沼便り。",
   description: "オールドレンズの一覧とフィルタリング機能",
 };
 

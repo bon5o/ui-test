@@ -36,20 +36,20 @@ export function CollapsibleSection({
   return (
     <section
       className={`relative transition-colors duration-200 ${
-        isOpen ? "border-l-[1.5px] border-l-[#88A3D4]/40" : "border-l-[1.5px] border-l-transparent"
+        isOpen ? "border-l-[1.5px] border-l-[#7D9CD4]/40" : "border-l-[1.5px] border-l-transparent"
       }`}
     >
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="group flex w-full cursor-pointer items-center justify-between py-6 pl-5 pr-2 text-left transition-colors hover:bg-[#88A3D4]/[0.03]"
+        className="group flex w-full cursor-pointer items-center justify-between py-6 pl-5 pr-2 text-left transition-colors hover:bg-[#7D9CD4]/[0.05]"
         aria-expanded={isOpen}
       >
         <h2 className="text-2xl font-medium tracking-tight text-gray-900">
           {title}
         </h2>
         <svg
-          className={`h-4 w-4 shrink-0 text-[#88A3D4]/70 transition-transform duration-300 ${
+          className={`h-4 w-4 shrink-0 text-[#7D9CD4]/75 transition-transform duration-300 ${
             isOpen ? "rotate-180" : "rotate-0"
           }`}
           fill="none"

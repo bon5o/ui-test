@@ -4,6 +4,14 @@
  */
 
 /**
+ * 価格範囲（メタ内の簡易版）
+ */
+export interface MetaPriceRange {
+  min: number;
+  max: number;
+}
+
+/**
  * メタ情報
  */
 export interface LensMeta {
@@ -15,6 +23,11 @@ export interface LensMeta {
   release_year: number;
   production_period: string;
   country: string;
+  /** 一部レンズで meta に直接指定 */
+  design_type?: string;
+  coating?: string;
+  price_range?: MetaPriceRange;
+  characteristics?: string[];
   citations?: number[];
 }
 

@@ -26,7 +26,7 @@ function Citations({ citations }: { citations?: number[] }) {
   return (
     <span className="ml-1 whitespace-nowrap">
       {citations.map((n) => (
-        <sup key={n} className="text-xs align-super text-[#88A3D4]">
+        <sup key={n} className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]">
           <a href={`#ref-${n}`} className="no-underline hover:underline">
             [{n}]
           </a>
@@ -311,7 +311,7 @@ export default async function LensDetailPage({ params }: PageProps) {
           <ol className="space-y-3 text-sm">
             {lens.references.map((ref) => (
               <li key={ref.id} id={`ref-${ref.id}`} className="flex gap-3 scroll-mt-4">
-                <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
+                <span className="shrink-0 font-mono text-xs text-[#7D9CD4]/70">[{ref.id}]</span>
                 <div className="flex-1">
                   <div className="flex items-start gap-2">
                     <span>
@@ -320,7 +320,7 @@ export default async function LensDetailPage({ params }: PageProps) {
                           href={ref.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-700 underline decoration-[#88A3D4]/25 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/50"
+                          className="text-gray-700 underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8] hover:decoration-[#7D9CD4]/55"
                         >
                           {ref.title}
                         </a>

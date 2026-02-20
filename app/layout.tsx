@@ -14,10 +14,16 @@ const sawarabiMincho = Sawarabi_Mincho({
   display: "swap",
 });
 
+const siteName = "沼便り。";
+
 export const metadata: Metadata = {
-  title: "オールドレンズ構成の歴史と描写研究",
+  title: siteName,
   description:
-    "ダブルガウス、ゾナー、テッサーなどオールドレンズのレンズ構成と描写傾向を体系的に整理したリファレンスサイト。"
+    "オールドレンズのレンズ構成と描写傾向を体系的に整理したリファレンスサイト。のつもり",
+  openGraph: {
+    title: siteName,
+    siteName,
+  },
 };
 
 export default function RootLayout({

@@ -106,7 +106,7 @@ function renderDescriptionWithTermLinks(description: string | unknown): React.Re
       <Link
         key={key++}
         href={`/terms/${linkDef?.slug ?? ""}`}
-        className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
+        className="text-[#7D9CD4] underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8] hover:decoration-[#7D9CD4]/55"
       >
         {term}
       </Link>
@@ -149,7 +149,7 @@ function renderTextItems(items: TextItems | undefined): React.ReactNode {
             {citationsArray && citationsArray.length > 0 && (
               <span className="ml-1 whitespace-nowrap">
                 {citationsArray.map((n) => (
-                  <sup key={n} className="text-xs align-super text-[#88A3D4]">
+                  <sup key={n} className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]">
                     <a href={`#ref-${n}`} className="no-underline hover:underline">
                       [{n}]
                     </a>
@@ -207,7 +207,7 @@ function renderOpticalCharacteristicSubsection(sub: OpticalCharacteristicSubsect
       {citations && citations.length > 0 && (
         <span className="ml-1 whitespace-nowrap">
           {citations.map((n, nIdx) => (
-            <sup key={nIdx} className="text-xs align-super text-[#88A3D4]">
+            <sup key={nIdx} className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]">
               <a href={`#ref-${n}`} className="no-underline hover:underline">
                 [{n}]
               </a>
@@ -282,7 +282,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
                     {linkHref ? (
                       <Link
                         href={linkHref}
-                        className="text-[#88A3D4] underline decoration-[#88A3D4]/25 underline-offset-2 hover:decoration-[#88A3D4]/50"
+                        className="text-[#7D9CD4] underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8] hover:decoration-[#7D9CD4]/55"
                       >
                         {displayName}
                       </Link>
@@ -330,7 +330,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
                         {citations && citations.length > 0 && (
                           <span className="ml-1 whitespace-nowrap">
                             {citations.map((n, nIdx) => (
-                              <sup key={`${j}-${nIdx}`} className="text-xs align-super text-[#88A3D4]">
+                              <sup key={`${j}-${nIdx}`} className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]">
                                 <a href={`#ref-${n}`} className="no-underline hover:underline">
                                   [{n}]
                                 </a>
@@ -355,10 +355,10 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     return (
       <CollapsibleSection key={key} title={title}>
         <div className="pl-6 space-y-3">
-          <div className="relative ml-3 border-l border-[#88A3D4]/30 pl-7">
+          <div className="relative ml-3 border-l border-[#7D9CD4]/30 pl-7">
             {value.map((item, i) => (
               <div key={i} className="relative pb-7 last:pb-0">
-                <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#88A3D4]/50 bg-white" />
+                <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#7D9CD4]/50 bg-white" />
                 <p className="text-lg font-medium text-gray-800">
                   {item.year ?? item.period}
                   {"designer" in item && item.designer && (
@@ -383,14 +383,14 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
         <ol className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
           {value.map((ref) => (
             <li key={ref.id} id={`ref-${ref.id}`} className="flex gap-3 scroll-mt-4">
-              <span className="shrink-0 font-mono text-xs text-[#88A3D4]/60">[{ref.id}]</span>
+              <span className="shrink-0 font-mono text-xs text-[#7D9CD4]/70">[{ref.id}]</span>
               <span>
                 {ref.url ? (
                   <a
                     href={ref.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-700 underline decoration-[#88A3D4]/25 underline-offset-2 transition-colors hover:text-[#88A3D4] hover:decoration-[#88A3D4]/50"
+                    className="text-gray-700 underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8] hover:decoration-[#7D9CD4]/55"
                   >
                     {ref.title}
                   </a>
@@ -420,7 +420,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
                 <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
                   {subVal.map((s: string, i: number) => (
                     <li key={i} className="flex gap-3">
-                      <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#88A3D4]/50" />
+                      <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#7D9CD4]/50" />
                       <span>{s}</span>
                     </li>
                   ))}

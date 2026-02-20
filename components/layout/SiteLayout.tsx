@@ -17,7 +17,7 @@ export const SiteLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
       <footer className="mt-auto border-t border-gray-200 bg-white py-6 text-xs text-gray-600">
         <div className="container-page flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Old Lens Archive</p>
+          <p>© {new Date().getFullYear()} 沼便り。</p>
           <p>このサイトはオールドレンズ研究の個人的なノートを兼ねた非公式リファレンスです。</p>
         </div>
       </footer>

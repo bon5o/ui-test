@@ -8,6 +8,18 @@
     "release_year": 1962,
     "production_period": "1962-1971",
     "country": "Japan",
+
+    "design_type": "double_gauss",
+    "coating": "single",
+    "price_range": {
+      "min": 8000,
+      "max": 15000
+    },
+    "characteristics": [
+      "soft_bokeh",
+      "warm_color",
+      "low_contrast"
+    ],
     "citations": [2]
   },
 

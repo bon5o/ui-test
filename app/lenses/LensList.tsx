@@ -1,98 +1,170 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
 import type { Lens } from "../../types/lens";
+import {
+  LensFilters,
+  DEFAULT_FILTER_STATE,
+  type FilterState,
+} from "./LensFilters";
+import {
+  yearToEra,
+  getDesignType,
+  getCharacteristics,
+  getCoatingDescription,
+  matchesPriceFilter,
+  matchesPriceRangeFilter,
+} from "./lensFilterUtils";
+import { designTypeToLabel } from "./constructionTypes";
 
 interface LensListProps {
   initialLenses: Lens[];
 }
 
+function parseFilterStateFromSearch(search: URLSearchParams): FilterState {
+  const state: FilterState = {
+    decades: new Set(),
+    designTypes: new Set(),
+    manufacturers: new Set(),
+    priceRanges: new Set(),
+    priceRange: { min: null, max: null },
+    coatings: new Set(),
+    characteristics: new Set(),
+  };
+  const decadeValues = search.getAll("decade");
+  if (decadeValues.length > 0) state.decades = new Set(decadeValues);
+  const priceMin = search.get("priceMin");
+  const priceMax = search.get("priceMax");
+  if (priceMin != null && priceMin !== "") {
+    const n = parseInt(priceMin, 10);
+    if (!isNaN(n)) state.priceRange.min = n;
+  }
+  if (priceMax != null && priceMax !== "") {
+    const n = parseInt(priceMax, 10);
+    if (!isNaN(n)) state.priceRange.max = n;
+  }
+  const paramMap: Record<string, keyof FilterState> = {
+    decade: "decades",
+    design: "designTypes",
+    manufacturer: "manufacturers",
+    price: "priceRanges",
+    coating: "coatings",
+    characteristic: "characteristics",
+  };
+  for (const [param, key] of Object.entries(paramMap)) {
+    const values = search.getAll(param);
+    if (values.length > 0 && (key === "decades" || key === "designTypes" || key === "manufacturers" || key === "priceRanges" || key === "coatings" || key === "characteristics")) {
+      state[key] = new Set(values);
+    }
+  }
+  return state;
+}
+
+function filterStateToSearchParams(state: FilterState): URLSearchParams {
+  const params = new URLSearchParams();
+  if (state.priceRange.min != null) params.set("priceMin", String(state.priceRange.min));
+  if (state.priceRange.max != null) params.set("priceMax", String(state.priceRange.max));
+  const paramMap: Record<string, string> = {
+    decades: "decade",
+    designTypes: "design",
+    manufacturers: "manufacturer",
+    priceRanges: "price",
+    coatings: "coating",
+    characteristics: "characteristic",
+  };
+  for (const [key, param] of Object.entries(paramMap)) {
+    const val = state[key as keyof FilterState];
+    if (val instanceof Set) val.forEach((v) => params.append(param, v));
+  }
+  return params;
+}
+
+function matchesLens(lens: Lens, state: FilterState): boolean {
+  if (state.decades.size > 0) {
+    const lensDecade = yearToEra(lens.meta.release_year);
+    if (!state.decades.has(lensDecade)) return false;
+  }
+  if (state.designTypes.size > 0) {
+    const lensDt = getDesignType(lens);
+    const lensLabel = designTypeToLabel[lensDt] ?? lensDt;
+    if (!state.designTypes.has(lensLabel)) return false;
+  }
+  if (state.manufacturers.size > 0) {
+    if (!state.manufacturers.has(lens.meta.manufacturer_id)) return false;
+  }
+  if (state.priceRanges.size > 0) {
+    if (!matchesPriceFilter(lens, [...state.priceRanges])) return false;
+  }
+  if (state.priceRange.min !== null || state.priceRange.max !== null) {
+    if (!matchesPriceRangeFilter(lens, state.priceRange)) return false;
+  }
+  if (state.coatings.size > 0) {
+    const desc = getCoatingDescription(lens);
+    if (!Array.from(state.coatings).some((opt) => desc.includes(opt))) return false;
+  }
+  if (state.characteristics.size > 0) {
+    const lensTraits = getCharacteristics(lens);
+    if (!lensTraits.some((t) => state.characteristics.has(t))) return false;
+  }
+  return true;
+}
+
 export function LensList({ initialLenses }: LensListProps) {
-  const [selectedDesignType, setSelectedDesignType] = useState<string>("all");
-  const [selectedEra, setSelectedEra] = useState<string>("all");
+  const [filterState, setFilterState] = useState<FilterState>(DEFAULT_FILTER_STATE);
 
-  // ユニークな design_type と era を取得
-  const designTypes = useMemo(() => {
-    const types = new Set(initialLenses.map((lens) => lens.classification.design_type));
-    return Array.from(types).sort();
-  }, [initialLenses]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const search = new URLSearchParams(window.location.search);
+    setFilterState(parseFilterStateFromSearch(search));
+  }, []);
 
-  const eras = useMemo(() => {
-    const eraSet = new Set(initialLenses.map((lens) => lens.classification.era));
-    return Array.from(eraSet).sort();
-  }, [initialLenses]);
+  const updateUrl = useCallback(
+    (state: FilterState) => {
+      const params = filterStateToSearchParams(state);
+      const qs = params.toString();
+      const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+      window.history.replaceState(null, "", url);
+    },
+    []
+  );
 
-  // フィルタリング
+  const handleFilterChange = useCallback(
+    (state: FilterState) => {
+      setFilterState(state);
+      updateUrl(state);
+    },
+    [updateUrl]
+  );
+
+  const handleReset = useCallback(() => {
+    setFilterState(DEFAULT_FILTER_STATE);
+    window.history.replaceState(null, "", window.location.pathname);
+  }, []);
+
   const filteredLenses = useMemo(() => {
-    return initialLenses.filter((lens) => {
-      const matchesDesignType =
-        selectedDesignType === "all" ||
-        lens.classification.design_type === selectedDesignType;
-      const matchesEra =
-        selectedEra === "all" || lens.classification.era === selectedEra;
-      return matchesDesignType && matchesEra;
-    });
-  }, [initialLenses, selectedDesignType, selectedEra]);
+    return initialLenses.filter((lens) => matchesLens(lens, filterState));
+  }, [initialLenses, filterState]);
 
   return (
-    <div>
-      {/* フィルタUI */}
-      <div className="mb-8 flex flex-wrap gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="design-type-filter"
-            className="text-sm font-medium text-[#111111]"
-          >
-            設計タイプ
-          </label>
-          <select
-            id="design-type-filter"
-            value={selectedDesignType}
-            onChange={(e) => setSelectedDesignType(e.target.value)}
-            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-[#111111] shadow-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
-          >
-            <option value="all">すべて</option>
-            {designTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div className="space-y-8">
+      <LensFilters
+        lenses={initialLenses}
+        filterState={filterState}
+        onFilterChange={handleFilterChange}
+        onReset={handleReset}
+      />
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="era-filter"
-            className="text-sm font-medium text-[#111111]"
-          >
-            時代
-          </label>
-          <select
-            id="era-filter"
-            value={selectedEra}
-            onChange={(e) => setSelectedEra(e.target.value)}
-            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-[#111111] shadow-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
-          >
-            <option value="all">すべて</option>
-            {eras.map((era) => (
-              <option key={era} value={era}>
-                {era}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex items-end">
-          <div className="text-sm text-gray-600">
-            {filteredLenses.length} 件表示
-          </div>
-        </div>
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-gray-600">
+          {filteredLenses.length} 件
+          {initialLenses.length !== filteredLenses.length &&
+            ` （全 ${initialLenses.length} 件中）`}
+        </p>
       </div>
 
-      {/* レンズ一覧 */}
       {filteredLenses.length === 0 ? (
-        <div className="rounded-lg border border-gray-200 bg-gray-50 p-8 text-center text-gray-600">
+        <div className="rounded-xl border border-gray-100 bg-[#F8FAFC] py-16 text-center text-gray-600">
           該当するレンズが見つかりませんでした。
         </div>
       ) : (
@@ -101,15 +173,15 @@ export function LensList({ initialLenses }: LensListProps) {
             <Link
               key={lens.meta.slug}
               href={`/lenses/${lens.meta.slug}`}
-              className="group rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-blue-300 hover:shadow-md"
+              className="group rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-all hover:border-[#7D9CD4]/30 hover:shadow-md"
             >
-              <h2 className="mb-2 text-xl font-semibold text-[#111111] group-hover:text-blue-500">
+              <h2 className="mb-2 text-xl font-semibold text-[#111111] transition-colors group-hover:text-[#5E7AB8]">
                 {lens.meta.name}
               </h2>
               <div className="mb-4 space-y-1 text-sm text-gray-600">
                 <div>
-                  <span className="font-medium">設計タイプ:</span>{" "}
-                  {lens.classification.design_type}
+                  <span className="font-medium">構成型:</span>{" "}
+                  {getDesignType(lens) || lens.classification.design_type}
                 </div>
                 <div>
                   <span className="font-medium">時代:</span>{" "}
