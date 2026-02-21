@@ -27,7 +27,7 @@ type OpticalCharacteristicSubsection = {
 };
 
 const SECTION_TITLES: Record<string, string> = {
-  origin: "由来",
+  origin: "起源",
   historical_development: "歴史的発展",
   basic_structure: "基本構成",
   design_philosophy: "設計思想",
@@ -437,7 +437,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
           ? o.citations.filter((n): n is number => typeof n === "number")
           : undefined;
       return (
-        <CollapsibleSection defaultOpen={true} key={key} title="由来">
+        <CollapsibleSection defaultOpen={true} key={key} title="起源">
           <dl className="pl-6 space-y-3">
             {o.base_design && (
               <div className="space-y-1">

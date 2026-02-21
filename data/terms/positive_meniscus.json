@@ -1,5 +1,239 @@
 {
   "slug": "positive_meniscus",
-  "title": "正メニスカス",
-  "content": "正メニスカス（positive meniscus）は、凸レンズと凹レンズの性質を併せ持つメニスカスレンズの一種で、中央が厚く縁が薄い形状をしている。光を収束させる（集光する）働きがある。\n\n1817年、カール・フリードリヒ・ガウスが望遠鏡用対物レンズとして、正メニスカスと負メニスカスを組み合わせた2枚構成アクロマートを提案した。この構成は後のガウス・ダブルガウス型レンズの基礎となり、光学設計の重要な源流の一つとなっている。"
+  "title": "正メニスカス（正メニスカスレンズ）",
+  "english_name": "Positive Meniscus Lens",
+  "category": "球面収差補正",
+  "field": ["光学設計", "レーザー光学系", "写真レンズ", "投影光学系"],
+  
+  "overview": [
+    {
+      "text": "正メニスカスレンズは、一方が凸面、他方が凹面の曲率をもつ単レンズで、中心部が周辺部よりも厚く、全体として正の焦点距離（収束力）をもつレンズである。", 
+      "citations": [1]
+    }
+  ],
+
+  "principle": [
+    {
+      "text": "凸面側の曲率半径を凹面側より大きく設計することで、レンズ中央部が厚くなり、全体として光を収束させる正の屈折力を得ると同時に、適切な面配置と曲率比により球面収差やコマ収差を低減する。", 
+      "citations": [3]
+    }
+  ],
+  "structure": {
+    "elements": 1,
+    "cemented": false,
+    "typical_combination": ["単一ガラス（N-BK7など）の凸凹メニスカス形状"]
+  },
+
+  "correction_target": [
+    "球面収差",
+    "コマ収差（設計条件による）",
+    "像面湾曲・ペッツバール和の制御（特定条件）"
+  ],
+
+  "uncorrected_aberrations": [
+    "色収差（単レンズのため基本的に未補正）",
+    "非点収差（配置によっては残存）",
+    "歪曲収差（使用条件による）"
+  ],
+
+  "advantages": [
+    {
+      "text": "同じ焦点距離の単純な凸レンズに比べ球面収差を小さくできる。",
+      "citations": [5]
+    },
+    {
+      "text": "他のレンズと組み合わせることで焦点距離短縮と開口数向上を同時に実現しやすい。", 
+      "citations": [2]
+    },
+    {
+      "text": "構造が単純な単レンズであり、製造と実装が比較的容易でコストも抑えやすい。",
+      "citations": [2]
+    },
+    {
+      "text": "適切な曲率設計によりビーム径やペッツバール曲率を有利に制御できる。",
+      "citations": [6]
+    }
+  ],
+
+  "disadvantages": [
+    {
+      "text": "単レンズであるため色収差補正能力が低く、高精度な色補正用途には不向きである。", 
+      "citations": [4]
+    },
+    {
+      "text": "設計自由度が少なく、高次収差まで十分に抑えるには他のレンズとの組み合わせが必要になる。",
+      "citations": [7]
+    },
+    {
+      "text": "非点収差や歪曲収差の補正は配置や他素子に依存し、単独では万能な補正素子とはならない。",
+      "citations": [6]
+    }
+  ],
+
+  "historical_background": {
+    "first_developed": {
+      "text": "19〜20世紀初頭（各種光学系の収差補正要素として発展）",
+      "citations": [6]
+    },
+    "inventor": {
+      "text": "特定の単一発明者ではなく、実用光学設計の中で徐々に確立された形状とされる。",
+      "citations": [4]
+    },
+    "notes": {
+      "text": "初期の写真レンズや望遠鏡・投影系の収差補正の中で、ペッツバール和や球面収差を制御する手段としてメニスカス形状が重視されるようになった。",
+      "citations": [7]
+    }
+  },
+
+  "applications": [
+    {
+      "text": "レーザーコリメータや集光系におけるビーム径制御と球面収差低減。",
+      "citations": [8]
+    },
+    {
+      "text": "複合レンズ系における焦点距離短縮と開口数向上を目的とした補助レンズ。",
+      "citations": [9]
+    },
+    {
+      "text": "投影光学系や照明光学系でのビーム成形および収差補正。",
+      "citations": [10]
+    },
+    {
+      "text": "一部の天体望遠鏡・カタディオプトリック系における補正用メニスカス素子（正メニスカスに近い設計も含む）。",
+      "citations": [11]
+    }
+  ],
+
+  "comparison": {
+    "vs_singlet": {
+      "text": "同じ焦点距離の単純な平凸レンズや両凸レンズに比べ、正メニスカスは適切な向きで使用すると球面収差やコマ収差を小さくでき、より高い画質を得やすい。",
+      "citations": [1]
+    },
+    "vs_negative_meniscus": {
+      "text": "負メニスカスは中心が薄く発散力をもち、ビーム発散を増大させたり焦点距離を伸ばしたりするのに用いられるのに対し、正メニスカスは収束力を強め、焦点距離短縮と開口数向上を狙う用途で使われる。",
+      "citations": [12]
+    }
+  },
+
+  "related_terms": [
+    "negative_meniscus",
+    "spherical_aberration",
+    "coma",
+    "field_curvature",
+    "petzval_sum"
+  ],
+
+  "see_also": [
+    "achromat",
+    "double_gauss",
+    "tessar",
+    "meniscus_corrector"
+  ],
+
+  "diagrams": [
+    {
+      "type": "structure",
+      "description": "中心が厚く周辺が薄い凸凹形状をもつ正メニスカス単レンズの断面図（入射光に対し凸面を向けた配置）。", 
+      "citations": [5]
+    }
+  ],
+
+  "references": [
+    {
+      "id": 1,
+      "title": "Positive Meniscus Lenses",
+      "author_or_source": "Edmund Optics",
+      "url": "https://www.edmundoptics.com/f/meniscus-lenses/40150/",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 2,
+      "title": "N-BK7 Positive Meniscus Lenses",
+      "author_or_source": "Thorlabs",
+      "url": "https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=130",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 3,
+      "title": "Meniscus Lenses: Understanding Their Unique Optical Properties and Applications",
+      "author_or_source": "MOK Optics",
+      "url": "https://mokoptics.com/meniscus-lenses-understanding-their-unique-optical-properties-and-applications/",
+      "type": "Company Limited",
+      "reliability": "medium"
+    },
+    {
+      "id": 4,
+      "title": "Meniscus Lens and Their Application",
+      "author_or_source": "AZoOptics",
+      "url": "https://www.azooptics.com/Article.aspx?ArticleID=793",
+      "type": "Technical Article",
+      "reliability": "medium"
+    },
+    {
+      "id": 5,
+      "title": "Meniscus Lenses",
+      "author_or_source": "Holmarc Opto-Mechatronics Ltd.",
+      "url": "https://www.holmarc.com/meniscus_lenses.php",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 6,
+      "title": "Design methods - David Shafer",
+      "author_or_source": "David Shafer / University of Arizona",
+      "url": "https://wp.optics.arizona.edu/jsasian/wp-content/uploads/sites/33/2017/07/Design-methods-David-Shafer.pdf",
+      "type": "Lecture Notes",
+      "reliability": "high"
+    },
+    {
+      "id": 7,
+      "title": "Optical Design of a High Aperture Meniscus System",
+      "author_or_source": "Periodica Polytechnica Mechanical Engineering",
+      "url": "https://pp.bme.hu/me/article/download/5778/4883/9536",
+      "type": "Academic Journal",
+      "reliability": "high"
+    },
+    {
+      "id": 8,
+      "title": "Positive Meniscus (Convex-Concave) Lens",
+      "author_or_source": "FindLight",
+      "url": "https://www.findlight.net/optics/lenses/meniscus/positive-meniscus-convex-concave-lens",
+      "type": "Marketplace / Technical Data",
+      "reliability": "medium"
+    },
+    {
+      "id": 9,
+      "title": "The Positive Meniscus Lens",
+      "author_or_source": "Raytek Optics",
+      "url": "https://www.raytekoptics.com/The-Positive-Meniscus-LensThe-Meniscus-Lens-p.html",
+      "type": "Company Limited",
+      "reliability": "medium"
+    },
+    {
+      "id": 10,
+      "title": "What are the advantages of meniscus lenses?",
+      "author_or_source": "CLZ Optical Co., Ltd.",
+      "url": "https://www.clzoptics.com/news/what-are-the-advantages-of-meniscus-lenses.html",
+      "type": "Company Limited",
+      "reliability": "medium"
+    },
+    {
+      "id": 11,
+      "title": "Meniscus corrector",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Meniscus_corrector",
+      "type": "Encyclopedia",
+      "reliability": "medium"
+    },
+    {
+      "id": 12,
+      "title": "レンズ設計の基礎",
+      "author_or_source": "Astron Japan",
+      "url": "https://www.astron-japan.co.jp/pdf/b02_Lenses_Design_Basics_2010.pdf",
+      "type": "Technical Guide",
+      "reliability": "high"
+    }
+  ]
 }

@@ -1,5 +1,202 @@
 {
   "slug": "negative_meniscus",
-  "title": "負メニスカス",
-  "content": "負メニスカス（negative meniscus）は、凸レンズと凹レンズの性質を併せ持つメニスカスレンズの一種で、中央が薄く縁が厚い形状をしている。光を発散させる（拡散する）働きがある。\n\n1817年、カール・フリードリヒ・ガウスが望遠鏡用対物レンズとして、正メニスカスと負メニスカスを組み合わせた2枚構成アクロマートを提案した。正メニスカスと負メニスカスの組み合わせにより色収差を補正し、後のガウス・ダブルガウス型レンズの基礎となる設計思想を確立した。"
+  "title": "負メニスカス（負メニスカスレンズ）",
+  "english_name": "Negative Meniscus Lens",
+  "category": "球面収差・開口数制御",
+  "field": ["光学設計", "レーザー光学系", "赤外光学系", "写真レンズ", "投影光学系"],
+  
+  "overview": [
+    {
+      "text": "負メニスカスレンズは、一方が凸面、他方が凹面の曲率をもつ単レンズで、中心部が周辺部よりも薄く、全体として負の焦点距離（発散力）をもつレンズである。",
+      "citations": [1]
+    }
+  ],
+
+  "principle": [
+    {
+      "text": "凹面側の曲率半径を凸面側より小さく（強く）設計することで、周辺部が中央部より厚くなり、光を発散させる負の屈折力が得られると同時に、他のレンズと組み合わせることで球面収差やコマ収差を抑えつつ焦点距離や開口数を調整できる。",
+      "citations": [5]
+    }
+  ],
+
+  "structure": {
+    "elements": 1,
+    "cemented": false,
+    "typical_combination": ["単一ガラス（N-BK7、UVFS、CaF2、ZnSeなど）の凸凹メニスカス形状（中心が薄く縁が厚い）"]
+  },
+
+  "correction_target": [
+    "球面収差（他レンズと組み合わせたときの最小化）",
+    "コマ収差（設計条件による補助的な低減）",
+    "開口数（NA）の低減とビーム発散角制御",
+    "像面湾曲・ペッツバール和の制御（特定条件）"
+  ],
+
+  "uncorrected_aberrations": [
+    "色収差（単レンズのため基本的に未補正）",
+    "非点収差（レイアウトによっては残存）",
+    "歪曲収差（使用条件と配置に依存）"
+  ],
+
+  "advantages": [
+    {
+      "text": "正レンズと組み合わせることで、系全体の球面収差を抑えつつ、所望の有効焦点距離を得ることができる。",
+      "citations": [6]
+    },
+    {
+      "text": "負の発散力により、光ビームの発散を増大させたり、系の有効開口数（NA）を低減したりでき、ビーム拡大や照明光学系に有利に用いられる。",
+      "citations": [5]
+    },
+    {
+      "text": "単レンズで構成が簡単なため、他の補正レンズと比較して製造が容易で、比較的低コストで実装できる。",
+      "citations": [1]
+    },
+    {
+      "text": "赤外用材料と組み合わせることで、赤外光学系において平凹レンズの代替として高い性能を示しやすい。",
+      "citations": [6]
+    }
+  ],
+
+  "disadvantages": [
+    {
+      "text": "単レンズのため色収差補正能力が低く、高精度な色補正を要求する撮像系には単独では適さない。",
+      "citations": [7]
+    },
+    {
+      "text": "負レンズであるため単独では像縮小と発散が主効果となり、結像レンズとして用いるには他の正レンズとの組み合わせ設計が必須となる。",
+      "citations": [7]
+    },
+    {
+      "text": "非点収差や歪曲収差の補正は配置や他素子に強く依存し、万能な補正素子としては機能しない。",
+      "citations": [7]
+    }
+  ],
+
+  "historical_background": {
+    "first_developed": {
+      "text": "19〜20世紀初頭にかけて、写真レンズや望遠鏡・赤外光学機器などでの収差補正要素として、正メニスカスと並行して負メニスカス形状が実用的に発展した。",
+      "citations": [7]
+    },
+    "inventor": {
+      "text": "特定の個人発明ではなく、実用光学設計の過程で、ペッツバール和や開口数の制御を目的として徐々に確立されたレンズ形状とみなされている。",
+      "citations": [7]
+    },
+    "notes": {
+      "text": "高開口写真レンズやカタディオプトリック系、赤外光学系などで、正レンズと組み合わせて収差補正および焦点距離調整を行うための重要な負レンズ要素として位置付けられてきた。",
+      "citations": [6]
+    }
+  },
+
+  "applications": [
+    {
+      "text": "ビームエキスパンダや照明系におけるビーム拡大・発散角制御（他の正レンズと組み合わせたガリレオ型ビームエキスパンダなど）。",
+      "citations": [5]
+    },
+    {
+      "text": "複合レンズ系における有効焦点距離の延長や開口数低減を目的とした補助レンズ要素。",
+      "citations": [5]
+    },
+    {
+      "text": "赤外光学系での平凹レンズの代替としての集光・発散制御および収差低減。",
+      "citations": [6]
+    },
+    {
+      "text": "カタディオプトリック望遠鏡や補正光学系において、反射系と組み合わせて収差補正と焦点位置の最適化を行う要素。",
+      "citations": [7]
+    }
+  ],
+
+  "comparison": {
+    "vs_singlet": {
+      "text": "同じ発散力をもつ単純な平凹レンズや両凹レンズに比べ、負メニスカスは適切な向きと曲率比で用いることで球面収差を小さくでき、他レンズとの組み合わせ時により良好な像品質とコンパクトな設計が可能になる。",
+      "citations": [1]
+    },
+    "vs_positive_meniscus": {
+      "text": "正メニスカスが中心が厚く収束力をもつ形状で焦点距離短縮や開口数向上に用いられるのに対し、負メニスカスは中心が薄く発散力をもち、焦点距離延長や開口数低減、ビーム拡大などに用いられる。",
+      "citations": [1]
+    }
+  },
+
+  "related_terms": [
+    "positive_meniscus",
+    "spherical_aberration",
+    "coma",
+    "field_curvature",
+    "petzval_sum",
+    "beam_expander"
+  ],
+
+  "see_also": [
+    "achromat",
+    "double_gauss",
+    "retrofocus_lens",
+    "meniscus_corrector"
+  ],
+
+  "diagrams": [
+    {
+      "type": "structure",
+      "description": "中心が薄く周辺が厚い凸凹形状をもつ負メニスカス単レンズの断面図（入射光に対し凹面を向けた配置）。",
+      "citations": [1]
+    }
+  ],
+
+  "references": [
+    {
+      "id": 1,
+      "title": "Positive/Negative Meniscus Lenses",
+      "author_or_source": "Edmund Optics",
+      "url": "https://www.edmundoptics.com/f/meniscus-lenses/40150/",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 2,
+      "title": "負メニスカスレンズ",
+      "author_or_source": "Thorlabs Japan",
+      "url": "https://www.thorlabs.co.jp/navigation.cfm?guide_id=105",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 3,
+      "title": "Advantages of Using Meniscus Lenses in Infrared Applications",
+      "author_or_source": "Edmund Optics",
+      "url": "https://www.edmundoptics.com/knowledge-center/",
+      "type": "Application Note",
+      "reliability": "high"
+    },
+    {
+      "id": 4,
+      "title": "Meniscus Lenses and Their Application",
+      "author_or_source": "Generic Technical/Design Literature",
+      "url": "https://example.com/meniscus_lens_design",
+      "type": "Technical Article",
+      "reliability": "medium"
+    },
+    {
+      "id": 5,
+      "title": "Meniscus Lenses: Understanding Their Unique Optical Properties and Applications",
+      "author_or_source": "MOK Optics",
+      "url": "https://mokoptics.com/meniscus-lenses-understanding-their-unique-optical-properties-and-applications/",
+      "type": "Company Limited",
+      "reliability": "medium"
+    },
+    {
+      "id": 6,
+      "title": "Design methods - David Shafer",
+      "author_or_source": "David Shafer / University of Arizona",
+      "url": "https://wp.optics.arizona.edu/jsasian/wp-content/uploads/sites/33/2017/07/Design-methods-David-Shafer.pdf",
+      "type": "Lecture Notes",
+      "reliability": "high"
+    },
+    {
+      "id": 7,
+      "title": "Positive Meniscus Lenses and Negative Meniscus Lenses",
+      "author_or_source": "UNI OPTICS",
+      "url": "https://www.uni-optics.com/positive-meniscus-lenses-and-negative-meniscus-lenses_p5.html",
+      "type": "Company Limited",
+      "reliability": "medium"
+    }
+  ]
 }

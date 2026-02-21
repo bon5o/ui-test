@@ -35,7 +35,7 @@ export default function DesignPage() {
   return (
     <PageContainer className="max-w-3xl">
       <h1 className="mb-6 text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
-        設計タイプ一覧
+        構成型一覧
       </h1>
       <div className="space-y-8">
         {orderedSections.map(({ slug, label, items }) => (

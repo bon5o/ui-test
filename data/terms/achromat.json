@@ -1,5 +1,204 @@
 {
   "slug": "achromat",
-  "title": "アクロマート",
-  "content": "アクロマート（Achromat）は、屈折率が異なる2種類のガラスレンズ（凸レンズと凹レンズ）を組み合わせ、赤と青の2波長の色収差を補正した「色消しレンズ」です。単レンズに比べ、望遠鏡や顕微鏡で色にじみ（色収差）を抑え、より鮮明な像を得るために広く用いられる標準的なレンズ設計です。"
+  "title": "アクロマート（アクロマートレンズ）",
+  "english_name": "Achromatic Lens",
+  "category": "色収差補正",
+  "field": ["光学設計", "写真レンズ", "天体望遠鏡", "顕微鏡対物レンズ"],
+  "overview": [
+    {
+      "text": "アクロマートレンズは、分散特性の異なる2種類以上の光学ガラスを組み合わせることで、主に2波長の色収差（通常は赤と青）を同一焦点に結像させるよう設計されたレンズである。",
+      "citations": [1, 2]
+    }
+  ],
+  "principle": [
+    {
+      "text": "低分散のクラウンガラス凸レンズと高分散のフリントガラス凹レンズを組み合わせ、それぞれが生む色収差を互いに打ち消し合うように焦点距離と曲率を設計することで、特定2波長の焦点位置を一致させる。",
+      "citations": [6, 2]
+    }
+  ],
+  "structure": {
+    "elements": 2,
+    "cemented": true,
+    "typical_combination": [
+      "クラウンガラスの正レンズ（凸）",
+      "フリントガラスの負レンズ（凹）"
+    ]
+  },
+  "correction_target": [
+    "軸上色収差（通常はC線付近の赤とF線付近の青）",
+    "球面収差・コマ収差（設計により部分的に補正）"
+  ],
+  "uncorrected_aberrations": [
+    "緑付近に残る二次スペクトル（完全には消えない色収差）",
+    "高次球面収差（開口数や設計条件に依存）",
+    "像面湾曲・非点収差（用途により残存）"
+  ],
+  "advantages": [
+    {
+      "text": "単レンズと比較して軸上色収差が大幅に低減し、焦点近傍での色にじみが小さくなる。",
+      "citations": [7]
+    },
+    {
+      "text": "2枚構成のダブレットでありながら、設計自由度が増し、球面収差やコマ収差もある程度同時に抑えられる。",
+      "citations": [8]
+    },
+    {
+      "text": "アポクロマートに比べて構造がシンプルで製造コストも低く、一般用途におけるコストパフォーマンスに優れる。",
+      "citations": [1]
+    },
+    {
+      "text": "視覚用途の望遠鏡や顕微鏡などで十分な画質を提供し、入門〜汎用クラスの光学系で広く利用されている。",
+      "citations": [9]
+    }
+  ],
+  "disadvantages": [
+    {
+      "text": "補正されるのは2波長（2色色消し）が基本であり、可視全域で完全な色収差補正は達成されない。",
+      "citations": [7]
+    },
+    {
+      "text": "高倍率や高開口数の系では、残存する二次スペクトルや高次収差が画質に影響しやすい。",
+      "citations": [8]
+    },
+    {
+      "text": "波長範囲が広い撮像（可視〜近赤外など）では、より高度なアポクロマートや特殊ガラスを用いた設計に比べ性能が劣る。",
+      "citations": [1]
+    }
+  ],
+  "historical_background": {
+    "first_developed": {
+      "text": "18世紀中頃に、屈折望遠鏡の色収差問題を解決するためのレンズとして実用化された。",
+      "citations": [9]
+    },
+    "inventor": {
+      "text": "ジョン・ドロンドらがクラウンガラスとフリントガラスを組み合わせたアクロマート望遠鏡を開発し、その後広く普及したとされる。",
+      "citations": [9]
+    },
+    "notes": {
+      "text": "アクロマートの登場により、屈折望遠鏡や光学測定機器の性能が飛躍的に向上し、近代光学設計の重要なマイルストーンとなった。",
+      "citations": [9]
+    }
+  },
+  "applications": [
+    {
+      "text": "天体望遠鏡の対物レンズとして、可視光での色収差を抑えつつ比較的低コストで良好な像質を実現する用途。",
+      "citations": [7]
+    },
+    {
+      "text": "顕微鏡対物レンズや接眼レンズにおいて、白色光照明下での色にじみを低減し、基本グレードの観察用対物として広く使用される。",
+      "citations": [9]
+    },
+    {
+      "text": "写真レンズや撮像レンズ系で、先頭群や中間群に配置して軸上色収差を抑える補正群として利用される。",
+      "citations": [6]
+    },
+    {
+      "text": "レーザー光学系や計測光学での集光・コリメート用途において、単レンズよりも色収差の小さい集光レンズとして採用される。",
+      "citations": [6]
+    }
+  ],
+  "comparison": {
+    "vs_singlet": {
+      "text": "単レンズは波長ごとに焦点位置が大きくずれるのに対し、アクロマートは2波長の焦点を一致させることで色にじみを大幅に軽減し、同じ焦点距離でもより鮮明な像を得られる。",
+      "citations": [6]
+    },
+    "vs_apochromat": {
+      "text": "アポクロマートは3波長以上を同一点に結像させ、二次スペクトルも抑えた高性能レンズであるのに対し、アクロマートは2波長までの補正に留まるが構造とコストが簡素で、一般用途には十分な性能を持つ。",
+      "citations": [8]
+    }
+  },
+  "related_terms": [
+    "apochromat",
+    "chromatic_aberration",
+    "crown_glass",
+    "flint_glass",
+    "doublet"
+  ],
+  "see_also": [
+    "double_gauss",
+    "tessar",
+    "achromatic_doublet",
+    "aplanat"
+  ],
+  "diagrams": [
+    {
+      "type": "structure",
+      "description": "凸クラウンガラスと凹フリントガラスを貼り合わせた典型的アクロマートダブレットの断面図（赤と青の焦点が一致するよう設計された例）。",
+      "citations": [1]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "アクロマティックレンズをなぜ用いる？",
+      "author_or_source": "Edmund Optics",
+      "url": "https://www.edmundoptics.jp/knowledge-center/application-notes/optics/why-use-an-achromatic-lens/",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 2,
+      "title": "アクロマートレンズの知識、コスト、製造業者に関するガイド",
+      "author_or_source": "ChineseLens (Guide)",
+      "url": "https://chineselens.com/ja/achromatic-lenses-guides/",
+      "type": "Technical Guide",
+      "reliability": "medium"
+    },
+    {
+      "id": 3,
+      "title": "光学レンズの種類：アクロマティックレンズ",
+      "author_or_source": "Suns-emp コラム",
+      "url": "https://suns-emp.com/column/603",
+      "type": "Technical Article",
+      "reliability": "medium"
+    },
+    {
+      "id": 4,
+      "title": "【技術】アクロマートレンズ",
+      "author_or_source": "MEP Info",
+      "url": "https://www.mepinfo.net/アクロマートレンズ/",
+      "type": "Technical Article",
+      "reliability": "medium"
+    },
+    {
+      "id": 5,
+      "title": "アクロマートレンズ - 夏目光学株式会社",
+      "author_or_source": "夏目光学株式会社",
+      "url": "https://www.natsume-optics.co.jp/glossary/アクロマートレンズ/",
+      "type": "Company Limited",
+      "reliability": "high"
+    },
+    {
+      "id": 6,
+      "title": "Achromatic Lenses: Applications & Properties",
+      "author_or_source": "MOK Optics",
+      "url": "https://mokoptics.com/achromatic-lenses-applications-properties/",
+      "type": "Company Limited",
+      "reliability": "medium"
+    },
+    {
+      "id": 7,
+      "title": "Field Guide to Geometrical Optics",
+      "author_or_source": "University of Arizona (SPIE Press)",
+      "url": "https://optics.arizona.edu/",
+      "type": "Academic Literature",
+      "reliability": "high"
+    },
+    {
+      "id": 8,
+      "title": "Achromatic Doublet Lenses",
+      "author_or_source": "UNI Optics",
+      "url": "https://www.uni-optics.com/achromatic-doublet-lenses_p13.html",
+      "type": "Company Limited",
+      "reliability": "medium"
+    },
+    {
+      "id": 9,
+      "title": "Achromatic Doublets",
+      "author_or_source": "Thorlabs",
+      "url": "https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=120",
+      "type": "Company Limited",
+      "reliability": "high"
+    }
+  ]
 }
