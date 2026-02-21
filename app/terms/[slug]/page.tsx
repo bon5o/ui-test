@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { getTermBySlug } from "../../../lib/terms";
+import { BackButton } from "../../../components/ui/BackButton";
 import { PageContainer } from "../../../components/ui/PageContainer";
 
 export async function generateStaticParams() {
@@ -25,9 +25,7 @@ export default async function TermPage({ params }: PageProps) {
   return (
     <PageContainer className="max-w-3xl">
       <nav className="mb-6 text-sm text-gray-600">
-        <Link href="/design" className="text-gray-600 transition-colors hover:text-[#5E7AB8] hover:underline">
-          ← 構成型一覧
-        </Link>
+        <BackButton />
       </nav>
 
       <article>

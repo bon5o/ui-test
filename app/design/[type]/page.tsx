@@ -250,7 +250,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
       const first = value[0];
       if (typeof first === "object" && first !== null && "name" in first) {
         return (
-          <CollapsibleSection key={key} title={title}>
+          <CollapsibleSection defaultOpen={true} key={key} title={title}>
             <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {value.map((item, i) => {
                 const lensItem = item as { name: unknown; slug?: unknown; description?: unknown; [key: string]: unknown };
@@ -323,7 +323,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     );
     if (items.length > 0) {
       return (
-        <CollapsibleSection key={key} title={title}>
+        <CollapsibleSection defaultOpen={true} key={key} title={title}>
           <div className="space-y-5">
             {items.map((v, i) => (
               <div key={i} className="pl-6 space-y-3">
@@ -363,7 +363,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
   // historical_development: timeline
   if (key === "historical_development" && Array.isArray(value) && value.length > 0 && isTimelineItem(value[0])) {
     return (
-      <CollapsibleSection key={key} title={title}>
+      <CollapsibleSection defaultOpen={true} key={key} title={title}>
         <div className="pl-6 space-y-3">
           <div className="relative ml-3 border-l border-[#7D9CD4]/30 pl-7">
             {value.map((item, i) => {
@@ -414,7 +414,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     );
     if (items.length > 0) {
       return (
-        <CollapsibleSection key={key} title={SECTION_TITLES[key] ?? "設計思想"}>
+        <CollapsibleSection defaultOpen={true} key={key} title={SECTION_TITLES[key] ?? "設計思想"}>
           <div className="space-y-5">
             {items.map((item, i) => (
               <div key={i} className="pl-6 space-y-3">
@@ -437,7 +437,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
           ? o.citations.filter((n): n is number => typeof n === "number")
           : undefined;
       return (
-        <CollapsibleSection key={key} title="由来">
+        <CollapsibleSection defaultOpen={true} key={key} title="由来">
           <dl className="pl-6 space-y-3">
             {o.base_design && (
               <div className="space-y-1">
@@ -476,7 +476,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
   // references
   if (Array.isArray(value) && value.length > 0 && isReferenceItem(value[0])) {
     return (
-      <CollapsibleSection key={key} title={title}>
+      <CollapsibleSection defaultOpen={true} key={key} title={title}>
         <ol className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
           {value.map((ref) => (
             <li key={ref.id} id={`ref-${ref.id}`} className="flex gap-3 scroll-mt-4">
@@ -517,7 +517,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     if (bs.layout_overview?.sections && bs.layout_overview.sections.length > 0) {
       const layoutTitle = bs.layout_overview.title ?? SUBSECTION_LABELS.basic_structure?.layout_overview ?? "基本構成";
       parts.push(
-        <CollapsibleSection key={`${key}-layout`} title={layoutTitle}>
+        <CollapsibleSection defaultOpen={true} key={`${key}-layout`} title={layoutTitle}>
           <div className="space-y-5">
             {bs.layout_overview.sections.map((sec, i) => (
               <div key={i} className="pl-6 space-y-3">
@@ -558,7 +558,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     if (bs.design_philosophy && bs.design_philosophy.length > 0) {
       const subTitle = SUBSECTION_LABELS.basic_structure?.design_philosophy ?? "設計思想";
       parts.push(
-        <CollapsibleSection key={`${key}-philosophy`} title={subTitle}>
+        <CollapsibleSection defaultOpen={true} key={`${key}-philosophy`} title={subTitle}>
           <div className="space-y-5">
             {bs.design_philosophy.map((item, i) => (
               <div key={i} className="pl-6 space-y-3">
@@ -574,7 +574,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     if (bs.typical_configurations && Array.isArray(bs.typical_configurations) && bs.typical_configurations.length > 0) {
       const subTitle = SUBSECTION_LABELS.basic_structure?.typical_configurations ?? "典型構成";
       parts.push(
-        <CollapsibleSection key={`${key}-typical`} title={subTitle}>
+        <CollapsibleSection defaultOpen={true} key={`${key}-typical`} title={subTitle}>
           <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
             {bs.typical_configurations.map((s, i) => (
               <li key={i} className="flex gap-3">
@@ -590,7 +590,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     if (bs.symmetry && typeof bs.symmetry === "object" && "text" in bs.symmetry) {
       const subTitle = SUBSECTION_LABELS.basic_structure?.symmetry ?? "対称性";
       parts.push(
-        <CollapsibleSection key={`${key}-symmetry`} title={subTitle}>
+        <CollapsibleSection defaultOpen={true} key={`${key}-symmetry`} title={subTitle}>
           <p className="pl-6 text-base font-normal leading-relaxed text-gray-700">
             {bs.symmetry.text}
           </p>
@@ -640,7 +640,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
 
     if (items.length === 0) return null;
     return (
-      <CollapsibleSection key={key} title={title}>
+      <CollapsibleSection defaultOpen={true} key={key} title={title}>
         <div className="space-y-5">
           {items.map(({ itemKey, label, content }) => (
             <div key={itemKey} className="pl-6 space-y-3">
@@ -659,7 +659,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     const entries = Object.entries(value).filter(([, v]) => isTextItemArray(v));
     if (entries.length === 0) return null;
     return (
-      <CollapsibleSection key={key} title={title}>
+      <CollapsibleSection defaultOpen={true} key={key} title={title}>
         <div className="space-y-5">
           {entries.map(([subKey, subVal]) => (
             <div key={subKey} className="pl-6 space-y-3">
@@ -681,7 +681,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     if (typeof first === "object" && first !== null) {
       const nameKey = ["name", "title", "label", "slug"].find((k) => k in first);
       return (
-        <CollapsibleSection key={key} title={title}>
+        <CollapsibleSection defaultOpen={true} key={key} title={title}>
           <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
             {value.map((item, i) => {
               if (!item || typeof item !== "object") {
@@ -703,7 +703,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
       );
     }
     return (
-      <CollapsibleSection key={key} title={title}>
+      <CollapsibleSection defaultOpen={true} key={key} title={title}>
         <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
           {value
             .filter((item): item is string | number | boolean => typeof item !== "object" || item === null)
@@ -724,7 +724,7 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     });
     if (entries.length > 0) {
       return (
-        <CollapsibleSection key={key} title={title}>
+        <CollapsibleSection defaultOpen={true} key={key} title={title}>
           <dl className="pl-6 space-y-2 text-base font-normal leading-relaxed text-gray-700">
             {entries.map(([k, v]) => {
               let displayValue: React.ReactNode;

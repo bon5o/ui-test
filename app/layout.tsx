@@ -15,14 +15,20 @@ const sawarabiMincho = Sawarabi_Mincho({
 });
 
 const siteName = "沼便り。";
+const siteDescription =
+  "オールドレンズのレンズ構成と描写傾向などを体系的に整理したリファレンスサイト。のつもり（マジai神）";
 
 export const metadata: Metadata = {
   title: siteName,
-  description:
-    "オールドレンズのレンズ構成と描写傾向を体系的に整理したリファレンスサイト。のつもり",
+  description: siteDescription,
   openGraph: {
     title: siteName,
+    description: siteDescription,
     siteName,
+  },
+  twitter: {
+    title: siteName,
+    description: siteDescription,
   },
 };
 

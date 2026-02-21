@@ -184,18 +184,6 @@ export function LensList({ initialLenses }: LensListProps) {
                   {getDesignType(lens) || lens.classification.design_type}
                 </div>
                 <div>
-                  <span className="font-medium">時代:</span>{" "}
-                  {lens.classification.era}
-                </div>
-                <div>
-                  <span className="font-medium">焦点距離:</span>{" "}
-                  {lens.specifications.focal_length_mm}mm
-                </div>
-                <div>
-                  <span className="font-medium">最大F値:</span> f/
-                  {lens.specifications.max_aperture}
-                </div>
-                <div>
                   <span className="font-medium">発売年:</span>{" "}
                   {lens.meta.release_year}
                 </div>

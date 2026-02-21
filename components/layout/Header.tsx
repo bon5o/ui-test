@@ -3,9 +3,7 @@ import Link from "next/link";
 const navItems: { href: string; label: string }[] = [
   { href: "/", label: "ホーム" },
   { href: "/design", label: "構成型" },
-  { href: "/era", label: "年代で探す" },
-  { href: "/maker", label: "メーカーで探す" },
-  { href: "/character", label: "描写傾向で探す" },
+  { href: "/maker", label: "メーカー" },
   { href: "/glossary", label: "用語集" },
   { href: "/references", label: "参考文献" },
   { href: "/about", label: "このサイトについて" }

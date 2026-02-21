@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import type { Lens } from "../../types/lens";
 import { getDesignType } from "./lensFilterUtils";
 import { DesignTypeFilter } from "./DesignTypeFilter";
@@ -238,10 +238,22 @@ export function LensFilters({
           ? `${filterState.priceRange.max.toLocaleString()}円以下`
           : "";
 
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   return (
     <div className="space-y-6 rounded-xl border border-gray-100 bg-[#F8FAFC] p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-base font-medium text-gray-800">絞り込み</h2>
+        <button
+          type="button"
+          onClick={() => setIsFilterOpen((prev) => !prev)}
+          className="flex w-fit items-center gap-2 text-base font-medium text-gray-800 transition-colors hover:text-[#5E7AB8]"
+          aria-expanded={isFilterOpen}
+        >
+          <span>絞り込み</span>
+          <span className="text-sm text-gray-500" aria-hidden>
+            {isFilterOpen ? "▲" : "▼"}
+          </span>
+        </button>
         {hasActiveFilters && (
           <button
             type="button"
@@ -303,6 +315,7 @@ export function LensFilters({
         </div>
       )}
 
+      {isFilterOpen && (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <FilterDropdown
           label="年代"
@@ -339,6 +352,7 @@ export function LensFilters({
           searchable
         />
       </div>
+      )}
     </div>
   );
 }

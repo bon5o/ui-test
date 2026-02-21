@@ -2,10 +2,27 @@ import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 
 const DESIGNS_DIRECTORY = join(process.cwd(), "data", "designs");
+const CATEGORIES_PATH = join(process.cwd(), "data", "categories.json");
+
+export interface CategoryItem {
+  slug: string;
+  label: string;
+}
+
+export function getCategories(): CategoryItem[] {
+  try {
+    const contents = readFileSync(CATEGORIES_PATH, "utf-8");
+    const data = JSON.parse(contents) as CategoryItem[];
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
 
 export interface DesignMeta {
   id: string;
   name: string;
+  category?: string;
   english_name?: string;
   media?: {
     optical_formula?: Array<{
@@ -111,13 +128,21 @@ export function getAllDesignIds(): string[] {
   }
 }
 
-export function getAllDesigns(): { id: string; name: string }[] {
+export interface DesignListItem {
+  id: string;
+  name: string;
+  category: string;
+}
+
+export function getAllDesigns(): DesignListItem[] {
   const ids = getAllDesignIds();
   return ids
     .map((id) => {
       const design = getDesignById(id);
-      return design ? { id, name: design.meta.name } : null;
+      if (!design) return null;
+      const slug = design.meta.category ?? "other";
+      return { id, name: design.meta.name, category: slug };
     })
-    .filter((d): d is { id: string; name: string } => d !== null)
+    .filter((d): d is DesignListItem => d !== null)
     .sort((a, b) => a.name.localeCompare(b.name));
 }

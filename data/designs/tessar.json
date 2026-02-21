@@ -2,6 +2,7 @@
   "meta": {
     "id": "tessar",
     "name": "テッサー型",
+    "category": "triplet",
     "english_name": "Tessar",
     "media": {
       "optical_formula": [
@@ -15,7 +16,7 @@
           "src": "/images/lens-types/tessar/tessar2.png",
           "variant": "テッサーの完成まで",
           "era": "1802",
-          "caption": "引用文献：写真レンズの基礎と発展（小倉敏布著／朝日ソノラマ刊）(http://masupi.com/phase11.htmより)" 
+          "caption": "引用文献：写真レンズの基礎と発展（小倉敏布著／朝日ソノラマ刊）(http://masupi.com/phase11.htmより画像はaiで一部編集されたものを使用)" 
         }
       ],
       "citations": [10,1,2]

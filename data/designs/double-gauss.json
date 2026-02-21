@@ -2,6 +2,7 @@
   "meta": {
     "id": "double-gauss",
     "name": "ダブルガウス型",
+    "category": "gauss",
     "english_name": "Double-Gauss",
     "media": {
       "optical_formula": [

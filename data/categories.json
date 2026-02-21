@@ -1,0 +1,12 @@
+[
+  { "slug": "single", "label": "単レンズ系" },
+  { "slug": "achromat", "label": "二枚構成・アクロマート系" },
+  { "slug": "petzval", "label": "ペッツバール系" },
+  { "slug": "triplet", "label": "トリプレット系（Cooke系）" },
+  { "slug": "gauss", "label": "ガウス系（ダブルガウス系）" },
+  { "slug": "symmetric_wide", "label": "対称広角系" },
+  { "slug": "retrofocus", "label": "レトロフォーカス系" },
+  { "slug": "telephoto", "label": "望遠（テレフォト）系" },
+  { "slug": "zoom", "label": "ズームレンズ系" },
+  { "slug": "special", "label": "特殊フォーム系" }
+]
