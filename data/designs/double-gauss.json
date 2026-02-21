@@ -6,7 +6,7 @@
     "media": {
       "optical_formula": [
         {
-          "src": "/DoubleGauss1text.svg",
+          "src": "/images/lens-types/double-gauss/double-gauss1.svg",
           "variant": "classic_6e4g",
           "era": "classic",
           "caption": "Paul1513 at en.wikipedia, CC 表示-継承 3.0, https://commons.wikimedia.org/w/index.php?curid=16862467による"
@@ -20,6 +20,29 @@
       "citations": [2, 3]
     }
   },
+
+  "basic_structure": {
+    "layout_overview": {
+      "title": "基本構成",
+      "sections": [
+        {
+          "section": "構成の特徴",
+          "content": "絞りを中心に前後ほぼ対称の配置を基本とする設計形式。"
+        },
+        {
+          "section": "典型的な構成例",
+          "items": [
+            "4群4枚（初期のダブルガウス、前後それぞれガウスレンズを対称に配置）",
+            "4群6枚（Zeiss Planar、中央の負メニスカスを貼り合わせダブレット化）",
+            "6枚4群（Planar型、Biotar型、Summitar/Summicron など）",
+            "7〜8枚（高性能・大口径化モデルも多数存在）"
+          ],
+          "citations": [1, 2, 3]
+        }
+      ]
+    }
+  },
+
   
   "historical_development": [
     {
@@ -108,60 +131,47 @@
     }
   ],
 
-  "basic_structure": {
-    "typical_configurations": [
-      "4群4枚（初期のダブルガウス、前後それぞれガウスレンズを対称に配置）",
-      "4群6枚（Zeiss Planar、中央の負メニスカスを貼り合わせダブレット化）",
-      "6枚4群（Planar型、Biotar型、Summitar/Summicron など）",
-      "7〜8枚（高性能・大口径化モデルも多数存在）"
-    ],
-    "symmetry": {
-      "text": "絞りを中心に前後ほぼ対称の配置を基本とする設計形式。",
-      "citations": [1,2,3]
+  "design_philosophy": [
+    {
+      "section": "対称ダブルガウスの基本思想",
+      "points": [
+        {
+          "text": "対称配置によってコマ収差・ディストーション・横色収差を相殺しやすくする。",
+          "citations": [2,3,8]
+        },
+        {
+          "text": "光学パワーを多枚数に分散し、高い補正自由度を得る。",
+          "citations": [2,3,8]
+        }
+      ]
+   },
+   {
+      "section": "RudolphのPlanar思想",
+      "points": [
+        {
+          "text": "厚い負レンズおよび埋没面の採用により、軸上色収差と非点収差・像面湾曲をさらに低減。",
+          "citations": [1,2,4]
+        },
+        {
+          "text": "f/4.5前後で画面全域にわたり高解像を実現する『汎用アナスチグマート標準レンズ』を目指した。",
+          "citations": [1,2,4,7]
+        }
+      ]
     },
-
-    "design_philosophy": [
-      {
-        "section": "対称ダブルガウスの基本思想",
-        "points": [
-          {
-            "text": "対称配置によってコマ収差・ディストーション・横色収差を相殺しやすくする。",
-            "citations": [2,3,8]
-          },
-          {
-            "text": "光学パワーを多枚数に分散し、高い補正自由度を得る。",
-            "citations": [2,3,8]
-          }
-        ]
-      },
-      {
-        "section": "RudolphのPlanar思想",
-        "points": [
-          {
-            "text": "厚い負レンズおよび埋没面の採用により、軸上色収差と非点収差・像面湾曲をさらに低減。",
-            "citations": [1,2,4]
-          },
-          {
-            "text": "f/4.5前後で画面全域にわたり高解像を実現する『汎用アナスチグマート標準レンズ』を目指した。",
-            "citations": [1,2,4,7]
-          }
-        ]
-      },
-      {
-        "section": "非対称ダブルガウスへの進化",
-        "points": [
-          {
-            "text": "Biotar型などでは大口径化（f/2、f/1.5〜f/1.4）と実用画角での画質向上を両立させるため、前後のパワーバランスを意図的に非対称化。",
-            "citations": [2,3,7]
-          },
-          {
-            "text": "諸収差のトレードオフを最適化する思想へ移行し、開放性能とボケ描写の両立を図った。",
-            "citations": [2,3,8,7,5]
-          }
-        ]
-      }
-    ]
-  },
+   {
+      "section": "非対称ダブルガウスへの進化",
+      "points": [
+       {
+          "text": "Biotar型などでは大口径化（f/2、f/1.5〜f/1.4）と実用画角での画質向上を両立させるため、前後のパワーバランスを意図的に非対称化。",
+          "citations": [2,3,7]
+       },
+       {
+          "text": "諸収差のトレードオフを最適化する思想へ移行し、開放性能とボケ描写の両立を図った。",
+          "citations": [2,3,8,7,5]
+       }
+      ]
+    }
+  ],
 
 
   

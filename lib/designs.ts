@@ -8,28 +8,59 @@ export interface DesignMeta {
   name: string;
   english_name?: string;
   media?: {
-    optical_formula?: Array<{ src: string; caption?: string; elements?: number; groups?: number }>;
+    optical_formula?: Array<{
+      src: string;
+      variant?: string;
+      era?: string;
+      caption?: string;
+      elements?: number;
+      groups?: number;
+    }>;
+    citations?: number[];
   };
-  origin?: {
-    base_design?: string;
-    photographic_adaptation?: string;
-  };
+  origin?: DesignOrigin;
+}
+
+export interface DesignOrigin {
+  base_design?: string;
+  photographic_adaptation?: string;
+  citations?: number[];
 }
 
 export interface HistoricalDevelopmentItem {
   year?: number;
   period?: string;
   designer?: string;
-  description: string;
+  description: string | { text: string; citations?: number[] };
+  citations?: number[];
+}
+
+export interface LayoutOverviewSection {
+  section: string;
+  content?: string;
+  items?: string[];
+  citations?: number[];
 }
 
 export interface DesignBasicStructure {
-  typical_configurations?: string[];
-  symmetry?: { text: string };
+  layout_overview?: {
+    title?: string;
+    sections?: LayoutOverviewSection[];
+  };
+  /** @deprecated 旧形式 - トップレベルの design_philosophy を使用 */
   design_philosophy?: Array<{
     section: string;
     points: Array<{ text: string; citations?: number[] }>;
   }>;
+  /** @deprecated 旧形式 - layout_overview を使用 */
+  typical_configurations?: string[];
+  /** @deprecated 旧形式 */
+  symmetry?: { text: string };
+}
+
+export interface DesignPhilosophyItem {
+  section: string;
+  points: Array<{ text: string; citations?: number[] }>;
 }
 
 export interface LensListItem {
@@ -41,9 +72,17 @@ export interface LensListItem {
 
 export interface Design {
   meta: DesignMeta;
-  historical_development?: HistoricalDevelopmentItem[];
+  origin?: DesignOrigin;
   basic_structure?: DesignBasicStructure;
+  historical_development?: HistoricalDevelopmentItem[];
+  design_philosophy?: DesignPhilosophyItem[];
+  optical_characteristics?: Record<string, unknown>;
+  rendering_character?: Record<string, unknown>;
+  operational_characteristics?: Record<string, unknown>;
+  variants?: unknown[];
+  modern_evolution?: Record<string, unknown>;
   lens_list?: LensListItem[];
+  references?: unknown[];
   [key: string]: unknown;
 }
 

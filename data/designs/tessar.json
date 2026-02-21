@@ -6,197 +6,383 @@
     "media": {
       "optical_formula": [
         {
-          "src": "/TessarClassic38mmF55.svg",
-          "variant": "classic_3g4e",
-          "era": "classic",
-          "caption": "Carl Zeiss Tessar 38mm f/5.5 の典型的な3群4枚構成。物体側から凸レンズ・凹レンズ・後群ダブレット（凹凸貼り合わせ）の配置。"
+          "src": "/images/lens-types/tessar/tessar1.png",
+          "variant": "3群4枚テッサー基本型",
+          "era": "1902–1930s",
+          "caption": "前群1枚凸レンズ＋負の中群1枚＋後群貼り合わせダブレットによる3群4枚構成。" 
+        },
+        {
+          "src": "/images/lens-types/tessar/tessar2.png",
+          "variant": "テッサーの完成まで",
+          "era": "1802",
+          "caption": "引用文献：写真レンズの基礎と発展（小倉敏布著／朝日ソノラマ刊）(http://masupi.com/phase11.htmより)" 
         }
       ],
-      "citations": [25, 30]
+      "citations": [10,1,2]
     },
     "origin": {
-      "base_design": "1902年に Carl Zeiss の Paul Rudolph が設計した 3群4枚構成のアナスチグマートレンズ。トリプレットの後玉を凹凸貼り合わせダブレットに発展させたものと見なされる。",
-      "photographic_adaptation": "当初は製版用レンズとして開発されたが、その後標準レンズ・マクロレンズ・パンケーキレンズなど幅広い用途に応用された。",
-      "citations": [25, 29, 30]
+      "base_design": "テッサーは、ツァイスのパウル・ルドルフが1890年に設計した4枚2群のアナスチグマート（後のProtar）と、1899年の4枚4群Unarを基礎としており、Unarの後群2枚を貼り合わせて2群構成とした改良から生まれたとされる。", 
+      "photographic_adaptation": "1902年にCarl Zeiss Jenaから写真レンズとして発表され、標準レンズ用途で多数のカメラに搭載された。初期はf/6.3だったが1917年頃にf/4.5、その後1930年にはf/3.5およびf/2.8まで大口径化され、スチルカメラ用標準レンズとして世界的に普及した。", 
+      "citations": [9]
     }
   },
+
+  "basic_structure": {
+    "layout_overview": {
+      "title": "基本構成",
+      "sections": [
+        {
+          "section": "構成の特徴",
+          "content": "テッサー型は、一般に前群1枚の正レンズ、中群1枚の負レンズ、後群2枚貼り合わせダブレットから成る3群4枚構成であり、前後の群パワーが正と負に分かれることで収差バランスを取っている。　前群は正のパワーと色消しを担当し、中群の負レンズが主に像面湾曲や非点収差を補正し、後群の貼り合わせダブレットが残存収差の微調整と像面の平坦化を担う。" 
+        },
+        {
+          "section": "典型的な構成例",
+          "items": [
+            "前群：正のパワーを持つほぼ両凸（後面はほぼ平面）の単玉、標準レンズとしての焦点距離を規定しつつ、色収差補正の一部を担う。", 
+            "中群：両凹に近い負レンズで、絞りの前に配置されることが多く、像面湾曲・コマ・球面収差のバランスを取る。", 
+            "後群：1枚の平面凹レンズと1枚の両凸レンズを貼り合わせたダブレットで、負のパワーを持ちつつ貼り合わせ界面で色収差とゾーナル収差を補正する。" 
+          ],
+          "citations":[15,2]
+        }
+      ]
+    }
+  },  
 
   "historical_development": [
     {
+      "year": 1817,
+      "designer": "C. F. Gauss",
+      "description": "ガウスは、正メニスカスと負メニスカスから成る2枚構成アクロマートを望遠鏡用対物レンズとして提案し、後のダブルガウス系やアナスチグマート設計の基礎となる対称型収差補正の考え方を示したとされる。", 
+      "citations": [5]
+    },
+    {
+      "year": 1890,
+      "designer": "Paul Rudolph",
+      "description": "ルドルフはツァイス在籍中に2枚の貼り合わせダブレットから成る4枚2群のAnastigmat（後のProtar）を開発し、非点収差と像面湾曲を大きく抑えた初期のアナスチグマート写真レンズとして商業的成功を収めた。", 
+      "citations": [1,9]
+    },
+    {
+      "year": 1895,
+      "designer": "Hugh L. Aldis",
+      "description": "オルディスはDallmeyer用にStigmaticレンズを特許化し、ルドルフのAnastigmat前群に狭いエアギャップを挿入して正の屈折力を持たせる改良を加え、ゾーナル収差補正を改善する手法を示した。",
+      "citations": [1]
+    },
+    {
+      "year": 1899,
+      "designer": "Paul Rudolph",
+      "description": "ルドルフはAnastigmatの2つの貼り合わせダブレットを分離し、4枚4群構成としたUnarを設計した。Unarは絞りを中心にほぼ対称な構成を持ち、高い解像力と良好な収差補正を実現したが、製造や調整がやや複雑であった。", 
+      "citations": [10]
+    },
+    {
       "year": 1902,
-      "designer": "Paul Rudolph（Carl Zeiss）",
-      "description": "3群4枚構成の Tessar を完成。当初の開放 F 値は f/6.3 で、製版用に設計されたが、解像力・コントラスト・歪曲性能の高さから写真用レンズとしても評価される。",
-      "citations": [25, 29, 30]
+      "designer": "Paul Rudolph",
+      "description": "ルドルフはUnarの後群2枚を再び貼り合わせた2群とし、前群2枚を空気間隔で分けた4枚2群構成を組み合わせることで、テッサー1:6.3を完成させた。これによりゾーナル収差と斜め入射光の球面収差が減少し、周辺まで良好な描写と高コントラストを得た。", 
+      "citations":[8]
     },
     {
       "year": 1917,
-      "designer": "Ernst Wandersleb（Carl Zeiss）",
-      "description": "開放 F 値を f/4.5 まで明るくした Tessar を開発。より実用的な標準レンズとして普及が進む。",
-      "citations": [27, 29]
+      "designer": "Ernst Wandersleb",
+      "description": "ヴァンダースレプはルドルフ設計のテッサーを改良し、最大口径をf/6.3からf/4.5へと拡大した。これによりテッサーはより明るい標準レンズとして普及し、ツァイスのシリーズICとして分類された。", 
+      "citations":[13]
     },
     {
       "year": 1930,
-      "designer": "Willi Walter Merte（Carl Zeiss）",
-      "description": "f/3.5、さらに f/2.8 まで大口径化した Tessar を設計。戦前・戦後を通じて多くのカメラメーカーがライセンス供与や模倣設計を行った。",
-      "citations": [27, 29, 32]
+      "designer": "Ernst Wandersleb, Willy Merté",
+      "description": "ツァイスのヴァンダースレプとウィリー・メルテは、テッサーをf/3.5およびf/2.8まで大口径化する設計を開発した。設計上は球面収差・コマ収差のバランスが難しくなるが、標準レンズとしての実用性を高め、当時のコンタックスやエキザクタなどの高級カメラに搭載された。", 
+      "citations": [10,8]
     },
     {
-      "year": 1950,
-      "designer": "各社設計者（Leica, Voigtländer, Kodak など）",
-      "description": "エルマー、スコパー、エクターなど「テッサータイプ」と呼ばれる派生設計が多数登場し、標準レンズ・広角・望遠・マクロ用途に展開される。",
-      "citations": [27, 31, 33]
+      "year": 1926,
+      "designer": "Carl Zeiss / 各国メーカー",
+      "description": "1926年前後にテッサー関連特許が順次失効すると、世界各国のメーカーが同構成をライセンスまたはコピー生産するようになり、テッサー型はトリプレットに代わる標準レンズの代表格として大量生産された。", 
+      "citations":[15]
+    },
+    {
+      "year": 1930,
+      "designer": "Leitz (Elmarなど他社)",
+      "description": "ライツ・エルマー5cm F3.5など、トリプレットやテッサーの思想を取り入れた3群4枚構成のレンズが各社から登場し、色収差と像面湾曲の両立補正を重視した標準レンズ設計としてテッサー型の考え方が広く応用された。", 
+      "citations":[9]
+    },
+    {
+      "year": 1960,
+      "designer": "各社コンパクトカメラ設計者",
+      "description": "1960年代のコンパクトカメラブームでは、シンプルで薄型化しやすい4枚構成のテッサー型が広く採用され、固定焦点標準レンズとして市場を席巻した。", 
+      "citations":[8]
     },
     {
       "year": 1970,
-      "designer": "各社設計者（コンパクトカメラ用）",
-      "description": "3群4枚のシンプル構成がコンパクトカメラやパンケーキレンズに採用され、小型・軽量・低コストを重視した設計が主流化。",
-      "citations": [28, 30, 33]
+      "designer": "Carl Zeissほか",
+      "description": "1970年代のパンケーキレンズブームでも、少枚数で全長を短くできるテッサー型が再評価され、50mm前後の薄型標準レンズに用いられた。", 
+      "citations":[6]
+    },
+    {
+      "year": 1990,
+      "designer": "Carl Zeiss / Cosinaほか",
+      "description": "1990年代までテッサー型は一線級の汎用レンズとして生産され続け、M42やコンタックスRF、各種一眼レフ用の50mm F2.8など、多数の派生が供給された。", 
+      "citations":[6]
     },
     {
       "year": 2000,
-      "designer": "各社設計者（デジタル対応設計）",
-      "description": "非球面レンズやマルチコーティングを組み合わせたデジタル用テッサータイプが登場し、逆光耐性・周辺画質・テレセントリック性を改善。",
-      "citations": [28, 30]
+      "designer": "Carl Zeissおよびデジタル対応設計者",
+      "description": "2000年代に入りカメラのデジタル化が進むと、テッサーの“少枚数・コスト重視”という優位性は相対的に低下したが、コンパクトデジカメやスマホ向けの簡易レンズ、ソニーなどのデジタル用ツァイスブランドレンズの中で“Tessar”の名称と設計思想が受け継がれている。", 
+      "citations": [10]
     }
   ],
 
-  "basic_structure": {
-    "typical_configurations": [
-      "3群4枚（凸レンズ・凹レンズ・後群凹凸貼り合わせダブレット）",
-      "3群4枚変形（前群ダブレット追加、非球面追加など）",
-      "3群3枚（トリプレットベースの簡易テッサータイプ）"
-    ],
-    "symmetry": {
-      "text": "前後対称性を持たないが、対称型に近い構造で収差バランスを取る設計。",
-      "citations": [30, 33]
+  "design_philosophy": [
+    {
+      "section": "対称型アナスチグマートからの発展",
+      "points": [
+        {
+          "text": "テッサーはCooke Tripletに似た外観を持つが、実際にはルドルフのAnastigmat（Protar）およびUnarから派生した“準対称型”アナスチグマートであり、絞りを中心に前後のパワー配分を意図的に非対称化することで、像面湾曲とコマの最適妥協を図っている。", 
+          "citations": [1,5]
+        },
+        {
+          "text": "Unarでは前後に独立した4枚4群を置いていたが、テッサーでは後群を貼り合わせダブレットにすることで、対称性をある程度維持しながら製造公差を緩和し、収差補正と量産性の両立を実現している。", 
+          "citations": [1,5]
+        }
+      ]
     },
-    "design_philosophy": [
-      {
-        "section": "少ない枚数での高効率補正",
-        "points": [
-          {
-            "text": "3群4枚というシンプルな構成で、球面収差・コマ・非点・像面湾曲・歪曲・色収差を効率的に補正する設計思想。",
-            "citations": [25, 29, 30]
-          }
-        ]
-      },
-      {
-        "section": "トリプレットからの発展",
-        "points": [
-          {
-            "text": "トリプレットの後玉を凹凸貼り合わせダブレットに置き換え、周辺画質と歪曲性能を改善。",
-            "citations": [25, 29, 33]
-          }
-        ]
-      },
-      {
-        "section": "製版用レンズとしての設計",
-        "points": [
-          {
-            "text": "等倍（1:1）設計基準で、製版用に最適化された高解像・高コントラスト・低歪曲を特徴とする。",
-            "citations": [25, 29]
-          }
-        ]
-      }
-    ]
-  },
+    {
+      "section": "少枚数と高性能の両立",
+      "points": [
+        {
+          "text": "テッサーは3群4枚という少枚数でありながら、当時普及していたトリプレットよりも歪曲が少なく、画面周辺まで高いシャープネスとコントラストを実現したことが、爆発的普及の大きな理由とされる。", 
+          "citations":[13]
+        },
+        {
+          "text": "ガラス枚数が少ないことはコーティングが未発達な時代においてフレア・ゴーストを抑えるうえで有利であり、同時に製造コスト低減と小型・軽量化に直結したため、“庶民的だが高性能な標準レンズ”として位置づけられた。", 
+          "citations":[11]
+        }
+      ]
+    },
+    {
+      "section": "大口径化と設計限界",
+      "points": [
+        {
+          "text": "f/6.3からf/4.5、さらにf/3.5・f/2.8へと大口径化が進むにつれ、球面収差やコマ収差の完全補正は難しくなり、設計者は像面湾曲・非点収差とのトレードオフの中で“開放での描写性”と“絞ったときの均質性”をバランスさせる必要があった。", 
+          "citations":[7]
+        },
+        {
+          "text": "ツァイスの技術資料では、テッサーのMTF特性は中口径（例：f/8）において画面全域で高く、開放付近では中心のコントラストは高い一方で周辺のMTFが低下することが示されており、設計上“中庸な明るさでの実用最適”を志向したレンズであることが読み取れる。", 
+          "citations":[7]
+        }
+      ]
+    }
+  ],
 
   "optical_characteristics": {
-    "sharpness": {
-      "center": [
+    "center_resolution": {
+      "sections": [
         {
-          "text": "開放付近でも中心解像は十分高く、絞るとさらにシャープネスが向上。",
-          "citations": [28, 29]
+          "type": "text",
+          "text": "テッサー型は中心部の解像力が高く、開放から比較的シャープな像を結ぶことが多い。特にf/5.6〜f/8に絞ると、中心から中間画面にかけて非常に高いMTFを示し、“ピント面がキリッとしている”という評価につながっている。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "Carl Zeiss Jena Tessar 50mm F2.8の実写テストでは、無限遠でf/5.6〜f/8において中心解像が非常に優秀で、モダンレンズに迫るシャープネスが報告されている。", 
+            "テッサー型についてのユーザーレポートでも、“二段絞れば中心から隅まで十分シャープ”“f/5.6で中心・周辺とも急激に良くなる”といった記述が見られる。" 
+          ]
         }
       ],
-      "peripheral": [
-        {
-          "text": "周辺画角では像面湾曲や非点収差が残ることが多く、開放では周辺解像が低下しやすい。",
-          "citations": [28, 29]
-        }
-      ]
+      "citations":[14,6]
     },
-    "contrast": [
-      {
-        "text": "コントラストが高く、シャープに見える描写。",
-          "citations": [28, 29]
-      }
-    ],
-    "aberrations": {
-      "spherical": [
+    "peripheral_resolution": {
+      "sections": [
         {
-          "text": "球面収差は比較的小さく、点像再現性は良好。",
-          "citations": [28, 29]
+          "type": "text",
+          "text": "周辺解像は設計世代と口径に依存し、初期のf/6.3〜f/4.5版ではf/8前後まで絞ることで画面隅まで良好な解像に達するが、大口径版では開放付近で周辺に残存球面収差やコマによる甘さが残る傾向がある。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "ユーザー報告では、75mm F3.5テッサーはf/5.6で中心から隅までシャープになり、135mm F4.5はf/5.6で隅まで改善、150mm F5.6は開放から隅まで良好とされ、焦点距離が長いほど周辺の収差補正が有利になる様子が示されている。", 
+            "旧コンパクトカメラ搭載のテッサー型についても、“開放では周辺が少し流れるが2段絞れば安定する”という実写レビューが多く、設計思想として“絞って使う標準レンズ”であることがうかがえる。" 
+          ]
         }
       ],
-      "coma": [
-        {
-          "text": "コマ収差は少ないが、後期型では周辺でやや増加。",
-          "citations": [28, 29]
-        }
-      ],
-      "astigmatism_and_field_curvature": [
-        {
-          "text": "像面湾曲と非点収差は良好に補正されるが、開放近傍では中〜周辺部に残る場合がある。",
-          "citations": [28, 29]
-        }
-      ]
+      "citations":[13,7]
     },
-    "chromatic_aberration": [
-      {
-        "text": "色収差は小さく、強い逆光以外ではほとんど問題ない。",
-          "citations": [28, 29]
-      }
-    ],
-    "field_curvature": [
-      {
-          "text": "像面は比較的平坦で、画面隅までしっかり描写。",
-          "citations": [28, 29]
-      }
-    ],
-    "distortion": [
-      {
-          "text": "歪曲は非常に小さく、直線はほぼまっすぐ。",
-          "citations": [28, 29]
-      }
-    ],
-    "maximum_aperture_evolution": [
-      {
-          "text": "初期は f/6.3、その後 f/4.5、f/3.5、f/2.8 まで大口径化。",
-          "citations": [27, 29]
-      }
-    ],
-    "vignetting": [
-      {
-          "text": "周辺減光は少なく、画面隅まで明るさが保たれる。",
-          "citations": [28, 29]
-      }
-    ]
+    "contrast": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "少枚数構成と良好な収差バランスにより、テッサー型は中庸の絞りで非常に高いマイクロコントラストを示すことが多く、“線の細いシャープさ”と“高い立ち上がりのトーン”が特徴として挙げられる。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "テッサー50mm F2.8のレビューでは、“解像だけでなくコントラストが高く、やや硬めだがクリアな描写”と評されている。", 
+            "テッサー型人気の理由として、“当時としては驚異的なシャープさとコントラストを持ち、普通のレンズと思えないほどよく写る”とする評価が記録されている。" 
+          ]
+        }
+      ],
+      "citations":[11,8]
+    },
+    "spherical_aberration": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサー型は多数の収差が良好に補正されている一方、特に大口径版では開放付近で球面収差を完全には潰さず、“ややソフトだが芯はある”描写を意図的に残しているとされる。これはボケ描写やポートレート用途にも好ましく働く場合がある。" 
+        },
+        {
+          "type": "text",
+          "text": "点光源ボケの解析では、テッサーの開放像にハロを伴うことが報告されており、これは軸上球面収差によるもので、絞り込むことで急速に収束しMTFも向上することが示されている。" 
+        }
+      ],
+      "citations":[12]
+    },
+    "coma_aberration": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサー型は中口径でのコマ収差が比較的よく抑えられているが、f/3.5〜f/2.8クラスの大口径版では画面周辺に向かって点光源がわずかにコマ状に引き伸ばされる例が報告されている。" 
+        },
+        {
+          "type": "text",
+          "text": "一方、長焦点のテッサー型（135mm F4.5や150mm F5.6など）ではコマ収差が小さく、開放から周辺まで比較的良好な点像再現が得られるとユーザー観測で述べられている。" 
+        }
+      ],
+      "citations": [10,7]
+    },
+    "astigmatism_and_field_curvature": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサーはアナスチグマートとして設計されており、非点収差と像面湾曲はトリプレットより大幅に改善されているが、完全なゼロではなく、特に広い画面での周辺に若干の像面湾曲が残ることが多い。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "テッサーの設計解説では、後群貼り合わせの界面がゾーナル収差と斜め球面収差の補正、さらにサジタル・タンジェンシャル像面の間隔を近づける役割を持つとされ、非点収差を実用レベルまで低減している。",
+            "Carl Zeiss Tessar 50mm F2.8のレビューでは、“像面はおおむねフラットで、パンフォーカス撮影に適する”と評されており、実写においても非点・像面湾曲が良好に抑えられていることが確認できる。" 
+          ]
+        }
+      ],
+      "citations":[9,10,11]
+    },
+    "chromatic_aberration": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサー型は前群および後群貼り合わせダブレットにより軸上色収差と倍率色収差をバランス良く補正しており、同時代のトリプレットに比べて色にじみが少ないと評価されてきた。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "実写レビューでは、Tessar 50mm F2.8は開放近傍でわずかな軸上色収差が見られるものの、1〜2段絞るとほとんど気にならないレベルになると報告されている。", 
+            "TripletとTessarの比較解説では、Tessarタイプが“色消しと像面湾曲補正を両立した第二の形式”として紹介されており、色収差補正の高さが強調されている。" 
+          ]
+        }
+      ],
+      "citations":[8,6,9]
+    },
+    "field_curvature": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサー型の像面湾曲は十分に抑えられており、一般的な撮影距離と画面サイズではほぼフラットな像面として扱えるが、厳密には周辺に向かってわずかな前ピン・後ピン傾向が残る場合がある。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "Carl Zeiss Tessar 50mm F2.8の評価では、“フィールドカーブはごくわずかで、風景撮影では実質的に問題にならない”とされている。", 
+            "テッサー設計資料におけるMTFカーブは像高全域で比較的揃っており、これは実効的に平坦な像面が得られていることを示唆している。" 
+          ]
+        }
+      ],
+      "citations":[9,10,11]
+    },
+    "distortion": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサー型は歪曲収差が非常に少ないことで知られ、標準レンズとして直線の多い被写体でも自然なパースペクティブを保ちやすい。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "テッサー人気の理由として、“トリプレットと比べて歪曲が少ない”ことが挙げられており、実用上ほぼ無視できるレベルの樽型・糸巻き型歪曲に収まっているとされる。", 
+            "Tessar 50mm F2.8の詳細レビューでも、“歪曲はわずかで実写ではほとんど気付かない”と記されている。" 
+          ]
+        }
+      ],
+      "citations":[13,8,6]
+    },
+    "maximum_f_number_evolution": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサーの最大口径は、初期のf/6.3から1910年代のf/4.5、1930年代のf/3.5やf/2.8へと段階的に拡大してきたが、設計上はf/2.8付近が実用的な限界とされ、それ以上の大口径にはゾナー型やダブルガウス型が採用されるようになった。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "ツァイス資料では、初期テッサー1:6.3、後の1:4.5および1:3.5/1:2.8に対するMTF比較が示されており、口径拡大とともに周辺画質の維持が難しくなる傾向が読み取れる。",
+            "テッサーの系譜解説では、F6.3版がSeries IIB、F4.5・F3.5版がSeries ICとして分類されている。" 
+          ]
+        }
+      ],
+      "citations": [1,8,10]
+    },
+    "peripheral_light_loss": {
+      "sections": [
+        {
+          "type": "text",
+          "text": "テッサー型は標準焦点域では像高に対する周辺光量低下が比較的穏やかであり、開放でも自然な周辺減光にとどまるが、パンケーキ化されたものや広角寄りの設計ではやや強めの周辺減光が見られる場合がある。" 
+        },
+        {
+          "type": "list",
+          "items": [
+            "Tessar 50mm F2.8のレビューでは、開放では周辺減光が見られるものの、1〜2段絞ることで実用上問題ないレベルに収まり、クラシックな雰囲気を好むユーザーにはむしろ好まれるとされる。", 
+            "テッサー型コンパクトカメラの作例でも、最大開放では周辺がわずかに暗く落ちるが、これは当時の写真表現としてポジティブに受け取られていたと解説されている。" 
+          ]
+        }
+      ],
+      "citations":[13,6]
+    }
   },
 
   "rendering_character": {
     "bokeh": [
       {
-          "text": "ボケは整っており、玉ボケの輪郭が硬くなりすぎない。",
-          "citations": [28, 29]
+        "text": "テッサー型のボケは、開放付近では球面収差をわずかに残した設計のため、前ボケがやや柔らかく、後ボケに二線傾向が出る個体もあり、“少しざわつくが立体感のあるボケ”として評価されることが多い。", 
+        "citations":[12,14]
+      },
+      {
+        "text": "Tessar 50mm F2.8の作例では、背景の点光源がやや硬めのエッジを持つ半円形ボケとして現れる一方、中距離の被写体では自然なアウトフォーカスを示しており、設計世代と絞り羽根枚数により印象が変化することが分かる。", 
+        "citations":[11]
       }
     ],
     "three_dimensionality": [
       {
-          "text": "中心解像と周辺ソフトネスのバランスが良く、立体感のある描写。",
-          "citations": [28, 29]
+        "text": "高い中心シャープネスとしっかりしたマイクロコントラスト、適度に残された球面収差による背景ボケの分離により、テッサー型は“立体感がある”“被写体が浮き上がる”と評されることが多い。", 
+        "citations":[6,11]
+      },
+      {
+        "text": "特にモノクロやフィルム撮影では、中間トーンの階調再現とエッジコントラストのバランスが良く、古典的な“クラシカル3D”描写を楽しむレンズとして愛好されている。", 
+        "citations":[8]
       }
     ],
     "flare_resistance": [
       {
-          "text": "ガラス面数が少なく、フレアに強く、逆光耐性が高い。",
-          "citations": [28, 29]
+        "text": "少枚数かつコーティングの進歩により、後期のテッサー型は逆光耐性が比較的良好で、複雑なダブルガウスに比べてフレア・ゴーストが出にくいとされるが、初期の単層コート版ではコントラスト低下が起こりやすい。", 
+        "citations":[6,11]
+      },
+      {
+        "text": "実写レポートでは、“強い逆光では白っぽくフレアが出るが、ハイライトのにじみとして味になる”“フードを併用すれば実用上問題ない”といったコメントが見られる。", 
+        "citations":[6,11]
       }
     ],
     "color_rendering": [
       {
-          "text": "カラーバランスが最適化されており、彩度が穏やか。",
-          "citations": [25, 29]
+        "text": "テッサー型はニュートラル寄りの色再現を持つとされ、特にCarl Zeiss Jena製ではやや冷調で透明感のある発色が、旧東独レンズの特徴として語られている。", 
+        "citations":[6,11]
+      },
+      {
+        "text": "オールドレンズとして使用した場合、コーティングの世代差により彩度とコントラストが変化し、戦前の無コート〜単層コート版は柔らかく淡い色合い、戦後のマルチコート版は現代レンズに近いクリアな発色を示す。", 
+        "citations":[8]
       }
     ]
   },
@@ -204,58 +390,78 @@
   "operational_characteristics": {
     "size_and_weight": [
       {
-          "text": "3群4枚構成のためコンパクトで軽量。",
-          "citations": [28, 30]
+        "text": "テッサー型は3群4枚・短い全長という構成上、小型軽量に設計しやすく、50mm F2.8クラスで全長3〜4cm・重量100〜200g程度に収まる例が多い。", 
+        "citations":[6,8]
+      },
+      {
+        "text": "Carl Zeiss Jena Tessar 50mm F2.8の仕様では、全長約37mm・重量約170gとなっており、パンケーキ的な取り回しの良さが特徴として挙げられている。", 
+        "citations":[6]
       }
     ],
     "typical_focal_length": [
       {
-          "text": "標準画角（50mm前後）が主流。",
-          "citations": [28, 29]
+        "text": "テッサー型は標準域で最も多く、35mm判では45〜55mm前後、中判では75〜105mm付近のレンズに採用されることが多い。", 
+        "citations":[2]
+      },
+      {
+        "text": "一方で、135mmや150mmといった中望遠域にもテッサー型は存在し、これらは開放から画面全域で良好な描写を示す実用レンズとして報告されている。", 
+        "citations":[7]
       }
     ],
     "manufacturing_cost": [
       {
-          "text": "ガラス面数が少なく、大量生産しやすい。",
-          "citations": [28, 30]
+        "text": "3群4枚という少枚数構成と、複雑な非対称ダブルガウスに比べた簡素な形状により、テッサー型は研磨・調芯・組立コストを抑えやすく、ライセンス生産や大量生産に適した設計だった。", 
+        "citations":[13]
+      },
+      {
+        "text": "その結果、テッサー型は“高性能でありながら手の届く価格”の標準レンズとして普及し、多くのコンパクトカメラや普及機のキットレンズに採用されるに至った。", 
+        "citations":[8]
       }
     ]
   },
 
   "variants": [
     {
-      "name": "Tessar",
+      "name": "原型テッサー (f/6.3)",
       "description": [
         {
-          "text": "Carl Zeiss のオリジナル 3群4枚構成。",
-          "citations": [25, 29]
+          "text": "1902年にルドルフが設計した最初期のテッサーはf/6.3の比較的暗いレンズで、4枚2群構成とされるが、後に一般に知られる3群4枚テッサーの基本思想を確立し、高い解像と低歪曲で高い評価を受けた。",
+          "citations": [1]
         }
       ]
     },
     {
-      "name": "Elmar",
+      "name": "大口径テッサー (f/4.5, f/3.5, f/2.8)",
       "description": [
         {
-          "text": "Leica のテッサータイプ。",
-          "citations": [27, 31]
+          "text": "ヴァンダースレプとメルテによる改良でf/4.5、さらにf/3.5およびf/2.8まで大口径化されたテッサーは、中心シャープネスと適度なソフトさを兼ね備えた標準レンズとして、レンジファインダーや一眼レフの高級機にも搭載された。",
+          "citations": [10]
+        },
+        {
+          "text": "設計限界に近いf/2.8版では、開放で周辺の収差が残る一方、中間絞りでの画質は極めて高く、“絞って使う高速標準レンズ”として位置づけられた。", 
+          "citations":[7]
         }
       ]
     },
     {
-      "name": "Skopar",
+      "name": "アポテッサー (Apo-Tessar)",
       "description": [
         {
-          "text": "Voigtländer のテッサータイプ。",
-          "citations": [27, 31]
+          "text": "ZeissのシリーズVIIIとして製版用途などに用いられたアポテッサーは、テッサー型をベースに色収差補正をさらに追い込んだ設計で、高い解像と色再現を要求される用途に供された。",
+          "citations": [10]
         }
       ]
     },
     {
-      "name": "Ektar",
+      "name": "コンパクトカメラ用テッサー型",
       "description": [
         {
-          "text": "Kodak のテッサータイプ。",
-          "citations": [27, 31]
+          "text": "1960年代以降のコンパクトカメラには、テッサー型またはその派生構成が多数採用され、薄型ボディと量産性を両立した大衆向けレンズとして普及した。", 
+          "citations":[13]
+        },
+        {
+          "text": "これらの一部はレンズ銘に“Tessar”を冠さないものの、光学構成としては3群4枚のテッサー型であり、今日“テッサータイプ”として分類されている。", 
+          "citations":[9]
         }
       ]
     }
@@ -264,97 +470,169 @@
   "modern_evolution": {
     "digital_optimization": [
       {
-          "text": "非球面レンズやマルチコーティングを組み合わせたデジタル用テッサータイプが主流。",
-          "citations": [28, 30]
+        "text": "デジタル時代には、撮像素子の平坦な受光面とマイクロレンズ構造に合わせるため、テッサー型をベースに像面湾曲や周辺入射角を最適化した設計が行われ、コンパクトデジカメやスマートフォン向けの簡易レンズに類似思想が応用されている。", 
+        "citations": [10]
+      },
+      {
+        "text": "ツァイスの技術資料でも、テッサー名を冠した現代レンズにおいてMTFシミュレーションが提示されており、デジタル撮像に合わせた高コントラスト・高解像のチューニングが行われていることが示されている。", 
+        "citations": [10]
       }
     ],
     "current_position": [
       {
-          "text": "コンパクトカメラ・パンケーキレンズの基盤として重要な設計思想。",
-          "citations": [28, 30]
+        "text": "テッサー型そのものは今日のハイエンド交換レンズの主役ではないものの、“少枚数で高性能”“コンパクトで量産性が高い”という設計哲学は依然として有効であり、ソニーなどのツァイス銘レンズに“Tessar”の名が残る形で継承されている。", 
+        "citations": [10,8]
       }
     ]
   },
 
   "lens_list": [
     {
-      "name": "Carl Zeiss Tessar 50mm f/2.8"
+      "name": "Carl Zeiss Tessar 50mm F2.8 (Carl Zeiss Jena, M42/Contax他)",
+      "citations":[6]
     },
     {
-      "name": "Leica Elmar 50mm f/3.5"
+      "name": "Carl Zeiss Tessar 45mm F2.8 (Contax/Yashica, Pancake Tessar)",
+      "citations":[8]
     },
     {
-      "name": "Voigtländer Skopar 50mm f/3.5"
+      "name": "Carl Zeiss Tessar 75mm F3.5 (中判二眼レフ用 Ikoflex 等)",
+      "citations":[7]
     },
     {
-      "name": "Kodak Ektar 50mm f/3.5"
+      "name": "Carl Zeiss Tessar 135mm F4.5 (各種大判・中判カメラ用)",
+      "citations":[7]
+    },
+    {
+      "name": "Carl Zeiss Tessar 150mm F5.6 (Mamiya Press等のテッサータイプ)",
+      "citations":[7]
+    },
+    {
+      "name": "各社コンパクトカメラ搭載 40mm前後 F2.8〜F3.5 テッサー型レンズ",
+      "citations":[13]
     }
   ],
 
   "references": [
     {
-      "id": 25,
-      "title": "テッサー - Wikipedia",
+      "id": 1,
+      "title": "Tessar",
       "author_or_source": "Wikipedia",
-      "url": "https://ja.wikipedia.org/wiki/%E3%83%86%E3%83%83%E3%82%B5%E3%83%BC",
+      "url": "https://en.wikipedia.org/wiki/Tessar",
       "type": "encyclopedia",
-      "reliability": "medium"
+      "reliability": "一般的な概要を得るには十分だが、一次資料と併読が望ましい。"
     },
     {
-      "id": 27,
-      "title": "レンズ構成の話 テッサータイプ",
-      "author_or_source": "カメラのキタムラ",
-      "url": "https://www.kitamura.jp/photo/tanekiyo/2013/ta132.html",
-      "type": "technical-article",
-      "reliability": "medium"
+      "id": 2,
+      "title": "Tessar - Camera-wiki.org",
+      "author_or_source": "Camera-wiki.org",
+      "url": "https://camera-wiki.org/wiki/Tessar",
+      "type": "technical summary",
+      "reliability": "レンズ構成の概要には有用だが、詳細設計には専門資料が必要。"
     },
     {
-      "id": 28,
-      "title": "レンズ探求 #38 時空を超えるレンズ その2 Tessar 50mm F2.8",
-      "author_or_source": "sstylery",
-      "url": "https://sstylery.blog.jp/archives/86267530.html",
-      "type": "technical-article",
-      "reliability": "medium"
+      "id": 3,
+      "title": "The Humble Tessar",
+      "author_or_source": "Joshua McBruceer",
+      "url": "https://joshuamcbruceer.com/2020/07/06/the-humble-tessar/",
+      "type": "technical blog",
+      "reliability": "個人ブログだが、光学計算に基づく解説で技術的信頼性は比較的高い。"
     },
     {
-      "id": 29,
-      "title": "Tessarとは Carl Zeissのレンズ設計士パウル・ルドルフが ...",
-      "author_or_source": "oldlens.jp",
+      "id": 4,
+      "title": "Tessar - Wikipedia (Spanish)",
+      "author_or_source": "Wikipedia (es)",
+      "url": "https://es.wikipedia.org/wiki/Tessar",
+      "type": "encyclopedia (translation)",
+      "reliability": "英語版と同等の概要情報源として利用可能。"
+    },
+    {
+      "id": 5,
+      "title": "A Short History of Fast Normal Lenses",
+      "author_or_source": "Rangefinderforum post",
+      "url": "https://rangefinderforum.com/threads/a-short-history-of-fast-normal-lenses.159507/",
+      "type": "historical overview (forum)",
+      "reliability": "専門的な歴史解説だがフォーラム投稿のため、一次資料との照合が必要。"
+    },
+    {
+      "id": 6,
+      "title": "Review: Carl Zeiss Jena Tessar 50mm F/2.8",
+      "author_or_source": "Phillip Reeve / Martin",
+      "url": "https://phillipreeve.net/blog/carl-zeiss-jena-tessar-50mm-f-2-8-review/",
+      "type": "lens review",
+      "reliability": "実写ベースの評価として有用だが、サンプル個体依存の可能性あり。"
+    },
+    {
+      "id": 7,
+      "title": "Tessar lens characteristics",
+      "author_or_source": "Google Groups (rec.photo.moderated)",
+      "url": "https://groups.google.com/g/rec.photo.moderated/c/67yd_N7JeiM",
+      "type": "user technical discussion",
+      "reliability": "経験と文献に基づく考察で示唆に富むが、厳密な実験データではない。"
+    },
+    {
+      "id": 8,
+      "title": "Tessarとは",
+      "author_or_source": "Oldlens.jp",
       "url": "https://oldlens.jp/tessar-rudolph/",
-      "type": "technical-article",
-      "reliability": "medium"
+      "type": "Japanese technical article",
+      "reliability": "日本語での歴史・特徴まとめとして信頼性が高く、一次資料も参照されている。"
     },
     {
-      "id": 30,
-      "title": "歴史的レンズ解説 Carl Zeiss Tessar 38mm F5 ... - LENS Review",
-      "author_or_source": "LENS Review",
-      "url": "https://lensreview.xyz/heritage-carl-zeiss-tessar-38mm-f5-5/",
-      "type": "technical-article",
-      "reliability": "medium"
+      "id": 9,
+      "title": "Elmar 5cm F/3.5はTessarタイプなのか？",
+      "author_or_source": "note.com うにょーん",
+      "url": "https://note.com/unyoon_san/n/nf9db07f5c0d7",
+      "type": "technical blog (Japanese)",
+      "reliability": "テッサー・トリプレット比較の解説として有用だが、個人の見解を含む。"
     },
     {
-      "id": 31,
-      "title": "初心者でもよく分かるテッサータイプ対決（序章）：ヤシカContax ...",
-      "author_or_source": "pochilog.jp",
-      "url": "https://pochilog.jp/5004",
-      "type": "technical-article",
-      "reliability": "medium"
+      "id": 10,
+      "title": "From the Series of Articles on Lens Names: Tessar",
+      "author_or_source": "ZEISS Lenspire (PDF)",
+      "url": "https://lenspire.zeiss.com/photo/app/uploads/2022/02/technical-article-lens-names-tessar.pdf",
+      "type": "official technical article",
+      "reliability": "ツァイス公式の技術資料であり、設計由来・MTFなどの一次情報として非常に信頼性が高い。"
     },
     {
-      "id": 32,
-      "title": "【オールドレンズの王道】Tessarの超解説w その魅力と ...",
-      "author_or_source": "paraiso.mundanoz.com",
-      "url": "https://paraiso.mundanoz.com/what-is-tessar/",
-      "type": "technical-article",
-      "reliability": "medium"
+      "id": 11,
+      "title": "The Carl Zeiss Tessar 50mm f/2.8 - what a nice Bokeh!",
+      "author_or_source": "Lichtsucher blog",
+      "url": "http://lichtsucher.blogspot.com/2015/05/the-carl-zeiss-tessar-50mm-f28-what.html",
+      "type": "lens impression / review",
+      "reliability": "作例と主観的評価が中心だが、描写傾向の把握に役立つ。"
     },
     {
-      "id": 33,
-      "title": "第2話：3枚玉と4枚玉",
-      "author_or_source": "masupi.com",
-      "url": "http://masupi.com/phase11.htm",
-      "type": "technical-article",
-      "reliability": "medium"
+      "id": 12,
+      "title": "Zeiss Tessar: How does my vintage lens blur images?",
+      "author_or_source": "Joshua McBruceer",
+      "url": "https://joshuamcbruceer.com/2024/05/11/how-does-my-vintage-lens-blur-images/",
+      "type": "technical analysis of blur",
+      "reliability": "点像ボケ解析と収差の関係を示した技術的記事で信頼性が高い。"
+    },
+    {
+      "id": 13,
+      "title": "レンズ構成の話 テッサータイプ",
+      "author_or_source": "種清豊（カメラのキタムラ フォトコラム）",
+      "url": "https://www.kitamura.jp/photo/tanekiyo/2013/ta132.html",
+      "type": "popular technical article (Japanese)",
+      "reliability": "写真店サイトの技術コラムとして実務的な信頼性が高い。"
+    },
+    {
+      "id": 14,
+      "title": "テッサー型の良い点は何ですか。",
+      "author_or_source": "Yahoo!知恵袋",
+      "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q13170144068",
+      "type": "Q&A discussion",
+      "reliability": "ユーザー経験に基づく主観的情報であり、参考程度にとどめるべき。"
+    },
+    {
+      "id": 15,
+      "title": "Tessar | Camerapedia",
+      "author_or_source": "Camerapedia (Fandom)",
+      "url": "https://camerapedia.fandom.com/wiki/Tessar",
+      "type": "community encyclopedia",
+      "reliability": "レンズ構成と歴史の概要把握には有用だが、原典との照合が望ましい。"
     }
   ]
 }

@@ -18,8 +18,9 @@ type VariantItem = {
 
 /** optical_characteristics の新形式: sections + citations */
 type OpticalSectionParagraph = { type: "paragraph"; text: string };
+type OpticalSectionText = { type: "text"; text: string };
 type OpticalSectionList = { type: "list"; items: string[] };
-type OpticalSection = OpticalSectionParagraph | OpticalSectionList;
+type OpticalSection = OpticalSectionParagraph | OpticalSectionText | OpticalSectionList;
 type OpticalCharacteristicSubsection = {
   sections: OpticalSection[];
   citations?: number[];
@@ -29,6 +30,7 @@ const SECTION_TITLES: Record<string, string> = {
   origin: "由来",
   historical_development: "歴史的発展",
   basic_structure: "基本構成",
+  design_philosophy: "設計思想",
   optical_characteristics: "光学特性",
   rendering_character: "描写特性",
   operational_characteristics: "使用面での特性",
@@ -186,7 +188,7 @@ function renderOpticalCharacteristicSubsection(sub: OpticalCharacteristicSubsect
         if (typeof sec !== "object" || sec === null) return null;
         const s = sec as { type?: unknown; text?: unknown; items?: unknown };
         const sectionKey = `${String(s.type ?? "section")}-${i}`;
-        if (s.type === "paragraph" && typeof s.text === "string") {
+        if ((s.type === "paragraph" || s.type === "text") && typeof s.text === "string") {
           return (
             <p key={sectionKey} className="text-base font-normal leading-relaxed text-gray-700">
               {renderDescriptionWithTermLinks(s.text)}
@@ -219,7 +221,15 @@ function renderOpticalCharacteristicSubsection(sub: OpticalCharacteristicSubsect
   );
 }
 
-function isTimelineItem(val: unknown): val is { year?: number; period?: string; designer?: string; description: string | { text: string; citations?: number[] } } {
+function isTimelineItem(
+  val: unknown
+): val is {
+  year?: number;
+  period?: string;
+  designer?: string;
+  description: string | { text: string; citations?: number[] };
+  citations?: number[];
+} {
   return typeof val === "object" && val !== null && "description" in val;
 }
 
@@ -356,24 +366,111 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
       <CollapsibleSection key={key} title={title}>
         <div className="pl-6 space-y-3">
           <div className="relative ml-3 border-l border-[#7D9CD4]/30 pl-7">
-            {value.map((item, i) => (
-              <div key={i} className="relative pb-7 last:pb-0">
-                <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#7D9CD4]/50 bg-white" />
-                <p className="text-lg font-medium text-gray-800">
-                  {item.year ?? item.period}
-                  {"designer" in item && item.designer && (
-                    <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
-                  )}
-                </p>
-                <p className="mt-1.5 text-base font-normal leading-relaxed text-gray-700">
-                  {renderDescriptionWithTermLinks(item.description)}
-                </p>
-              </div>
-            ))}
+            {value.map((item, i) => {
+              const citations =
+                "citations" in item && Array.isArray(item.citations)
+                  ? (item.citations as unknown[]).filter((n: unknown): n is number => typeof n === "number")
+                  : undefined;
+              return (
+                <div key={i} className="relative pb-7 last:pb-0">
+                  <span className="absolute -left-[calc(1.75rem+3.5px)] top-1.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-[#7D9CD4]/50 bg-white" />
+                  <p className="text-lg font-medium text-gray-800">
+                    {item.year ?? item.period}
+                    {"designer" in item && item.designer && (
+                      <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
+                    )}
+                  </p>
+                  <p className="mt-1.5 text-base font-normal leading-relaxed text-gray-700">
+                    {renderDescriptionWithTermLinks(item.description)}
+                    {citations && citations.length > 0 && (
+                      <span className="ml-1 whitespace-nowrap">
+                        {citations.map((n: number, nIdx: number) => (
+                          <sup
+                            key={nIdx}
+                            className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]"
+                          >
+                            <a href={`#ref-${n}`} className="no-underline hover:underline">
+                              [{n}]
+                            </a>
+                          </sup>
+                        ))}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </CollapsibleSection>
     );
+  }
+
+  // design_philosophy: トップレベル (新形式)
+  if (key === "design_philosophy" && Array.isArray(value) && value.length > 0) {
+    const items = value.filter(
+      (v): v is { section: string; points: Array<{ text: string; citations?: number[] }> } =>
+        typeof v === "object" && v !== null && "section" in v && "points" in v && Array.isArray((v as { points: unknown }).points)
+    );
+    if (items.length > 0) {
+      return (
+        <CollapsibleSection key={key} title={SECTION_TITLES[key] ?? "設計思想"}>
+          <div className="space-y-5">
+            {items.map((item, i) => (
+              <div key={i} className="pl-6 space-y-3">
+                <h4 className="text-lg font-medium text-gray-800">{item.section}</h4>
+                {renderTextItems(item.points)}
+              </div>
+            ))}
+          </div>
+        </CollapsibleSection>
+      );
+    }
+  }
+
+  // origin: design-level origin (base_design, photographic_adaptation) - meta.origin またはトップレベル
+  if (key === "origin" && typeof value === "object" && value !== null && !Array.isArray(value)) {
+    const o = value as { base_design?: string; photographic_adaptation?: string; citations?: number[] };
+    if (o.base_design || o.photographic_adaptation) {
+      const citations =
+        Array.isArray(o.citations) && o.citations.length > 0
+          ? o.citations.filter((n): n is number => typeof n === "number")
+          : undefined;
+      return (
+        <CollapsibleSection key={key} title="由来">
+          <dl className="pl-6 space-y-3">
+            {o.base_design && (
+              <div className="space-y-1">
+                <dt className="text-lg font-medium text-gray-800">基本設計</dt>
+                <dd className="text-base font-normal leading-relaxed text-gray-700">
+                  {renderDescriptionWithTermLinks(o.base_design)}
+                </dd>
+              </div>
+            )}
+            {o.photographic_adaptation && (
+              <div className="space-y-1">
+                <dt className="text-lg font-medium text-gray-800">写真用適応</dt>
+                <dd className="text-base font-normal leading-relaxed text-gray-700">
+                  {renderDescriptionWithTermLinks(o.photographic_adaptation)}
+                </dd>
+              </div>
+            )}
+            {citations && citations.length > 0 && (
+              <span className="ml-1 whitespace-nowrap">
+                {citations.map((n) => (
+                  <sup key={n} className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]">
+                    <a href={`#ref-${n}`} className="no-underline hover:underline">
+                      [{n}]
+                    </a>
+                  </sup>
+                ))}
+              </span>
+            )}
+          </dl>
+        </CollapsibleSection>
+      );
+    }
+    return null;
   }
 
   // references
@@ -406,53 +503,103 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
     );
   }
 
-  // basic_structure: nested object
+  // basic_structure: nested object (layout_overview + design_philosophy)
   if (key === "basic_structure" && typeof value === "object" && value !== null && !Array.isArray(value)) {
-    const entries = Object.entries(value);
-    if (entries.length === 0) return null;
-    return (
-      <>
-        {entries.map(([subKey, subVal]) => {
-          const subTitle = SUBSECTION_LABELS.basic_structure?.[subKey] ?? subKey;
-          if (subKey === "typical_configurations" && Array.isArray(subVal) && subVal.length > 0) {
-            return (
-              <CollapsibleSection key={`${key}-${subKey}`} title={subTitle}>
-                <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
-                  {subVal.map((s: string, i: number) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#7D9CD4]/50" />
-                      <span>{s}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CollapsibleSection>
-            );
-          }
-          if (subKey === "symmetry" && typeof subVal === "object" && subVal !== null && "text" in subVal) {
-            return (
-              <CollapsibleSection key={`${key}-${subKey}`} title={subTitle}>
-                <p className="pl-6 text-base font-normal leading-relaxed text-gray-700">{(subVal as { text: string }).text}</p>
-              </CollapsibleSection>
-            );
-          }
-          if (subKey === "design_philosophy" && Array.isArray(subVal) && subVal.length > 0) {
-            return (
-              <CollapsibleSection key={`${key}-${subKey}`} title={subTitle}>
-                <div className="space-y-5">
-                  {subVal.map((item: { section: string; points: TextItem[] }, i: number) => (
-                    <div key={i} className="pl-6 space-y-3">
-                      <h4 className="text-lg font-medium text-gray-800">{item.section}</h4>
-                      {renderTextItems(item.points)}
-                    </div>
-                  ))}
-                </div>
-              </CollapsibleSection>
-            );
-          }
-          return null;
-        })}
-      </>
-    );
+    const bs = value as {
+      layout_overview?: { title?: string; sections?: Array<{ section: string; content?: string; items?: string[]; citations?: number[] }> };
+      design_philosophy?: Array<{ section: string; points: TextItem[] }>;
+      typical_configurations?: string[];
+      symmetry?: { text: string };
+    };
+
+    const parts: React.ReactNode[] = [];
+
+    if (bs.layout_overview?.sections && bs.layout_overview.sections.length > 0) {
+      const layoutTitle = bs.layout_overview.title ?? SUBSECTION_LABELS.basic_structure?.layout_overview ?? "基本構成";
+      parts.push(
+        <CollapsibleSection key={`${key}-layout`} title={layoutTitle}>
+          <div className="space-y-5">
+            {bs.layout_overview.sections.map((sec, i) => (
+              <div key={i} className="pl-6 space-y-3">
+                <h4 className="text-lg font-medium text-gray-800">{sec.section}</h4>
+                {sec.content && (
+                  <p className="text-base font-normal leading-relaxed text-gray-700">
+                    {renderDescriptionWithTermLinks(sec.content)}
+                  </p>
+                )}
+                {sec.items && sec.items.length > 0 && (
+                  <ul className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700">
+                    {sec.items.map((item, j) => (
+                      <li key={j}>{renderDescriptionWithTermLinks(item)}</li>
+                    ))}
+                  </ul>
+                )}
+                {sec.citations && sec.citations.length > 0 && (
+                  <span className="ml-1 whitespace-nowrap">
+                    {sec.citations.map((n, nIdx) => (
+                      <sup
+                        key={nIdx}
+                        className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]"
+                      >
+                        <a href={`#ref-${n}`} className="no-underline hover:underline">
+                          [{n}]
+                        </a>
+                      </sup>
+                    ))}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </CollapsibleSection>
+      );
+    }
+
+    if (bs.design_philosophy && bs.design_philosophy.length > 0) {
+      const subTitle = SUBSECTION_LABELS.basic_structure?.design_philosophy ?? "設計思想";
+      parts.push(
+        <CollapsibleSection key={`${key}-philosophy`} title={subTitle}>
+          <div className="space-y-5">
+            {bs.design_philosophy.map((item, i) => (
+              <div key={i} className="pl-6 space-y-3">
+                <h4 className="text-lg font-medium text-gray-800">{item.section}</h4>
+                {renderTextItems(item.points)}
+              </div>
+            ))}
+          </div>
+        </CollapsibleSection>
+      );
+    }
+
+    if (bs.typical_configurations && Array.isArray(bs.typical_configurations) && bs.typical_configurations.length > 0) {
+      const subTitle = SUBSECTION_LABELS.basic_structure?.typical_configurations ?? "典型構成";
+      parts.push(
+        <CollapsibleSection key={`${key}-typical`} title={subTitle}>
+          <ul className="pl-6 space-y-3 text-base font-normal leading-relaxed text-gray-700">
+            {bs.typical_configurations.map((s, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="mt-[0.65em] h-1 w-1 shrink-0 rounded-full bg-[#7D9CD4]/50" />
+                <span>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+      );
+    }
+
+    if (bs.symmetry && typeof bs.symmetry === "object" && "text" in bs.symmetry) {
+      const subTitle = SUBSECTION_LABELS.basic_structure?.symmetry ?? "対称性";
+      parts.push(
+        <CollapsibleSection key={`${key}-symmetry`} title={subTitle}>
+          <p className="pl-6 text-base font-normal leading-relaxed text-gray-700">
+            {bs.symmetry.text}
+          </p>
+        </CollapsibleSection>
+      );
+    }
+
+    if (parts.length === 0) return null;
+    return <>{parts}</>;
   }
 
   // optical_characteristics: 新形式 (sections+citations) または旧形式 (text arrays / nested)
@@ -624,11 +771,23 @@ export default async function DesignDetailPage({ params }: PageProps) {
   }
 
   const { meta } = design;
+  const originValue = meta.origin ?? design.origin;
   const media = meta.media as {
-    optical_formula?: Array<{ src: string; caption?: string; elements?: number; groups?: number }>;
+    optical_formula?: Array<{
+      src: string;
+      variant?: string;
+      era?: string;
+      caption?: string;
+      elements?: number;
+      groups?: number;
+    }>;
   } | undefined;
 
   const designEntries = Object.entries(design).filter(([key]) => key !== "meta");
+  const entriesToRender: [string, unknown][] =
+    originValue
+      ? [["origin", originValue], ...designEntries.filter(([k]) => k !== "origin")]
+      : designEntries;
 
   return (
     <PageContainer className="!max-w-[800px]">
@@ -656,6 +815,11 @@ export default async function DesignDetailPage({ params }: PageProps) {
                 />
               )}
               <figcaption className="mt-2.5 space-y-0.5">
+                {(item.variant || item.era) && (
+                  <p className="text-xs font-medium text-gray-500">
+                    {[item.variant, item.era].filter(Boolean).join(" · ")}
+                  </p>
+                )}
                 {item.caption && (
                   <p className="text-xs leading-relaxed text-gray-400">{item.caption}</p>
                 )}
@@ -671,26 +835,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
       )}
 
       <div className="divide-y divide-gray-100 border-t border-gray-100">
-        {meta.origin && (
-          <CollapsibleSection title="由来">
-            <dl className="pl-6 space-y-3">
-              {"base_design" in meta.origin && meta.origin.base_design && (
-                <div className="space-y-1">
-                  <dt className="text-lg font-medium text-gray-800">基本設計</dt>
-                  <dd className="text-base font-normal leading-relaxed text-gray-700">{meta.origin.base_design}</dd>
-                </div>
-              )}
-              {"photographic_adaptation" in meta.origin && meta.origin.photographic_adaptation && (
-                <div className="space-y-1">
-                  <dt className="text-lg font-medium text-gray-800">写真用適応</dt>
-                  <dd className="text-base font-normal leading-relaxed text-gray-700">{meta.origin.photographic_adaptation}</dd>
-                </div>
-              )}
-            </dl>
-          </CollapsibleSection>
-        )}
-
-        {designEntries.map(([key, value]) => (
+        {entriesToRender.map(([key, value]) => (
           <React.Fragment key={key}>{renderDesignSection(key, value)}</React.Fragment>
         ))}
       </div>
