@@ -59,6 +59,7 @@
       "citations": [18, 19],
 
       "media": {
+        "layout": "left",
         "images": [
           {
             "src": "/images/lens-types/double-gauss/Gauss_lens1817.png",
@@ -96,6 +97,7 @@
       "description": "内部負メニスカスを厚肉化し、同屈折率・異アッベ数の2種ガラスで構成された貼り合わせダブレットとすることで埋没面を導入した6枚4群の対称ダブルガウス Zeiss Planar f/4.5 を完成させ、色収差と非点収差を大幅に改善した高速写真用レンズの先駆的存在となった。",
       "citations": [18, 28],
       "media": {
+        "layout": "left",
         "images": [{
             "src": "/images/lens-types/double-gauss/Gauss_lens1896.png",
             "caption": "1896年パウル・ルドルフによるレンズ構成図",
@@ -196,7 +198,8 @@
           }],
           "diagrams": [],
           "documents": [{
-          "text": "f/4.5前後"}]
+          "text": "f/4.5前後"}],
+          "scale": 0.2
         }
       }  
       ]
