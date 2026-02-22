@@ -26,6 +26,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
   const metaName = meta?.name ?? String(type);
   const metaEnglishName = meta?.english_name;
 
+  const refs = design.references;
+
   if (!isHybridContent(design)) {
     return (
       <PageContainer className="!max-w-[800px]">
@@ -60,11 +62,11 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
       <HybridContentRenderer content={design} />
 
-      {design.references && Array.isArray(design.references) && design.references.length > 0 && (
+      {Array.isArray(refs) && refs.length > 0 && (
         <div className="mt-12">
           <CollapsibleSection title="参考文献" defaultOpen={false}>
             <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
-              {(design.references as Array<{ id?: number; title?: string; author_or_source?: string; type?: string; url?: string }>).map((ref) => (
+              {refs.map((ref) => (
                 <li key={ref.id ?? String(ref)} id={ref.id != null ? `ref-${ref.id}` : undefined} className="flex flex-col gap-1">
                   <span className="flex flex-wrap items-baseline gap-x-1">
                     {ref.id != null && (

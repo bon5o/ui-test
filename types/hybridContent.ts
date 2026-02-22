@@ -72,7 +72,17 @@ export interface MetaInfo {
   [key: string]: unknown;
 }
 
+export type Reference = {
+  id: number;
+  title: string;
+  author_or_source?: string;
+  url?: string;
+  type?: string;
+  reliability?: string;
+};
+
 export interface HybridContent {
   meta?: MetaInfo;
   chapters: Chapter[];
+  references?: Reference[];
 }
