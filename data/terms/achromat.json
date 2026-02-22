@@ -4,10 +4,24 @@
   "english_name": "Achromatic Lens",
   "category": "色収差補正",
   "field": ["光学設計", "写真レンズ", "天体望遠鏡", "顕微鏡対物レンズ"],
+  "media": {
+    "optical_formula": [
+      {
+        "src": "/images/terms/achromat/achromat.png",
+        "variant": "classic_6e4g",
+        "era": "classic",
+        "caption": "https://star-party.jp/owner/?p=1202による"
+      }
+    ]
+  },
+
+
+
+
   "overview": [
     {
-      "text": "アクロマートレンズは、分散特性の異なる2種類以上の光学ガラスを組み合わせることで、主に2波長の色収差（通常は赤と青）を同一焦点に結像させるよう設計されたレンズである。",
-      "citations": [1, 2]
+      "text": "原理については参考文献[１０]のサイトを見るとわかりやすい。([10]をまとめると色による分散が全くないガラスがあれば色収差のないレンズが作れるがそのような材質が無い。ED(Extra low Dispersion:超低分散)ガラスと呼ばれる高級な光学レンズでも単独では色収差を無くすことができない。(EDガラスを使えば色収差だけでなく他の収差も軽減しやすくなることは確かなよう))そこで、アクロマートとかその他の構造などが考えられてる。)---------------------------------アクロマートレンズは、分散特性の異なる2種類以上の光学ガラスを組み合わせることで、主に2波長の色収差（通常は赤と青）を同一焦点に結像させるよう設計されたレンズである。",
+      "citations": [1,2,10]
     }
   ],
   "principle": [
@@ -199,6 +213,14 @@
       "url": "https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=120",
       "type": "Company Limited",
       "reliability": "high"
+    },
+    {
+      "id": 10,
+      "title": "超入門 望遠鏡光学 (その７) アクロマートって何さ(2)",
+      "author_or_source": "スタパオーナー",
+      "url": "https://star-party.jp/owner/?p=1202",
+      "type": "blog",
+      "reliability": "low"
     }
   ]
 }

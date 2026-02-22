@@ -33,6 +33,11 @@ export interface DesignMeta {
       elements?: number;
       groups?: number;
     }>;
+    images?: Array<{
+      src: string;
+      caption?: string;
+      alt?: string;
+    }>;
     citations?: number[];
   };
   origin?: DesignOrigin;
@@ -50,6 +55,9 @@ export interface HistoricalDevelopmentItem {
   designer?: string;
   description: string | { text: string; citations?: number[] };
   citations?: number[];
+  media?: {
+    images?: Array<{ src: string; caption?: string; alt?: string }>;
+  };
 }
 
 export interface LayoutOverviewSection {

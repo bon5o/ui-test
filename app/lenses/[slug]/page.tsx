@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllSlugs, getLensBySlug } from "../../../lib/lenses";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { SectionHeading } from "../../../components/ui/SectionHeading";
+import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
 import type { Lens } from "../../../types/lens";
 
 export async function generateStaticParams() {
@@ -89,18 +90,22 @@ export default async function LensDetailPage({ params }: PageProps) {
       {lens.editorial.summary && (
         <section className="mb-8">
           <SectionHeading className="mb-4">概要</SectionHeading>
-          <p className="text-sm text-gray-700">
-            <TextWithCitations text={lens.editorial.summary} citations={lens.editorial.citations} />
-          </p>
+          <AutoMediaRenderer data={lens.editorial as unknown}>
+            <p className="text-sm text-gray-700">
+              <TextWithCitations text={lens.editorial.summary} citations={lens.editorial.citations} />
+            </p>
+          </AutoMediaRenderer>
         </section>
       )}
 
       {lens.editorial.historical_notes && (
         <section className="mb-8">
           <SectionHeading className="mb-4">歴史的備考</SectionHeading>
-          <p className="text-sm text-gray-700">
-            <TextWithCitations text={lens.editorial.historical_notes} citations={lens.editorial.citations} />
-          </p>
+          <AutoMediaRenderer data={lens.editorial as unknown}>
+            <p className="text-sm text-gray-700">
+              <TextWithCitations text={lens.editorial.historical_notes} citations={lens.editorial.citations} />
+            </p>
+          </AutoMediaRenderer>
         </section>
       )}
 

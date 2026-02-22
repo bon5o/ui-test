@@ -4,7 +4,18 @@
   "english_name": "Positive Meniscus Lens",
   "category": "球面収差補正",
   "field": ["光学設計", "レーザー光学系", "写真レンズ", "投影光学系"],
-  
+  "media": {
+    "optical_formula": [
+       {
+         "src": "/images/terms/positive_meniscus/positive_meniscus.png",
+         "variant": "classic_6e4g",
+         "era": "classic",
+         "caption": "http://nijikarasu.cocolog-nifty.com/blog/2015/02/post-c6bf.htmlによる"
+       }
+     ]
+  },
+
+
   "overview": [
     {
       "text": "正メニスカスレンズは、一方が凸面、他方が凹面の曲率をもつ単レンズで、中心部が周辺部よりも厚く、全体として正の焦点距離（収束力）をもつレンズである。", 

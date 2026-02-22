@@ -1,11 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDesignById, getAllDesignIds } from "../../../lib/designs";
 import { TERM_LINKS } from "../../../lib/termLinks";
 import { getLensBySlug } from "../../../lib/lenses";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
+import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
 
 type TextItem = { text: string; citations?: number[] };
 type TextItems = TextItem | TextItem[];
@@ -380,23 +382,25 @@ function renderDesignSection(key: string, value: unknown): React.ReactNode {
                       <span className="ml-2 font-normal text-gray-400">{item.designer}</span>
                     )}
                   </p>
-                  <p className="mt-1.5 text-base font-normal leading-relaxed text-gray-700">
-                    {renderDescriptionWithTermLinks(item.description)}
-                    {citations && citations.length > 0 && (
-                      <span className="ml-1 whitespace-nowrap">
-                        {citations.map((n: number, nIdx: number) => (
-                          <sup
-                            key={nIdx}
-                            className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]"
-                          >
-                            <a href={`#ref-${n}`} className="no-underline hover:underline">
-                              [{n}]
-                            </a>
-                          </sup>
-                        ))}
-                      </span>
-                    )}
-                  </p>
+                  <AutoMediaRenderer data={item}>
+                    <p className="mt-1.5 text-base font-normal leading-relaxed text-gray-700">
+                      {renderDescriptionWithTermLinks(item.description)}
+                      {citations != null && citations.length > 0 && (
+                        <span className="ml-1 whitespace-nowrap">
+                          {citations.map((n: number, nIdx: number) => (
+                            <sup
+                              key={nIdx}
+                              className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]"
+                            >
+                              <a href={`#ref-${n}`} className="no-underline hover:underline">
+                                [{n}]
+                              </a>
+                            </sup>
+                          ))}
+                        </span>
+                      )}
+                    </p>
+                  </AutoMediaRenderer>
                 </div>
               );
             })}
@@ -781,6 +785,9 @@ export default async function DesignDetailPage({ params }: PageProps) {
       elements?: number;
       groups?: number;
     }>;
+    images?: Array<{ src: string; caption?: string; alt?: string }>;
+    diagrams?: Array<{ src: string; caption?: string; alt?: string }>;
+    documents?: Array<{ src: string; caption?: string }>;
   } | undefined;
 
   const designEntries = Object.entries(design).filter(([key]) => key !== "meta");
@@ -801,6 +808,8 @@ export default async function DesignDetailPage({ params }: PageProps) {
           </p>
         )}
       </header>
+
+      <AutoMediaRenderer data={meta} />
 
       {media?.optical_formula && media.optical_formula.length > 0 && (
         <figure className="mb-12 border-b border-gray-100 pb-12">
@@ -836,7 +845,10 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
       <div className="divide-y divide-gray-100 border-t border-gray-100">
         {entriesToRender.map(([key, value]) => (
-          <React.Fragment key={key}>{renderDesignSection(key, value)}</React.Fragment>
+          <React.Fragment key={key}>
+            {renderDesignSection(key, value)}
+            {key !== "historical_development" && <AutoMediaRenderer data={value} />}
+          </React.Fragment>
         ))}
       </div>
 

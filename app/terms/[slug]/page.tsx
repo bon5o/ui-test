@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTermBySlug, type CitedText } from "../../../lib/terms";
 import { getDesignById } from "../../../lib/designs";
@@ -6,6 +7,7 @@ import { TERM_LINKS } from "../../../lib/termLinks";
 import { BackButton } from "../../../components/ui/BackButton";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { SectionHeading } from "../../../components/ui/SectionHeading";
+import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
 
 function renderTextWithTermLinks(text: string): React.ReactNode {
   const regex = new RegExp(`(${TERM_LINKS.map((t) => t.term).join("|")})`, "g");
@@ -149,77 +151,126 @@ export default async function TermPage({ params }: PageProps) {
           )}
         </header>
 
+        {term.media?.optical_formula && term.media.optical_formula.length > 0 && (
+          <Section title="光学構成図">
+            <AutoMediaRenderer data={term.media}>
+              <div className="space-y-6">
+                {term.media.optical_formula.map((item, i) => (
+                  <figure key={i}>
+                    {item.src && (
+                      <Image
+                        src={item.src}
+                        alt={item.caption ?? "光学構成図"}
+                        width={600}
+                        height={300}
+                        unoptimized
+                        className="max-w-full rounded border border-gray-100 bg-gray-50/50 p-3"
+                      />
+                    )}
+                    {(item.variant || item.era || item.caption) && (
+                      <figcaption className="mt-2.5 space-y-0.5 text-xs text-gray-500">
+                        {(item.variant || item.era) && (
+                          <p className="font-medium">
+                            {[item.variant, item.era].filter(Boolean).join(" · ")}
+                          </p>
+                        )}
+                        {item.caption && (
+                          <p className="leading-relaxed text-gray-400">{item.caption}</p>
+                        )}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </AutoMediaRenderer>
+          </Section>
+        )}
+
         {term.overview && term.overview.length > 0 && (
           <Section title={LABELS.overview}>
-            <CitedTextList items={term.overview} />
+            <AutoMediaRenderer data={term.overview}>
+              <CitedTextList items={term.overview} />
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.principle && term.principle.length > 0 && (
           <Section title={LABELS.principle}>
-            <CitedTextList items={term.principle} />
+            <AutoMediaRenderer data={term.principle}>
+              <CitedTextList items={term.principle} />
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.structure && (
           <Section title={LABELS.structure}>
-            <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-[15px]">
-              {term.structure.elements != null && (
-                <>
-                  <div className="text-gray-600">枚数</div>
-                  <div>{term.structure.elements}枚</div>
-                </>
-              )}
-              {term.structure.cemented != null && (
-                <>
-                  <div className="text-gray-600">貼り合わせ</div>
-                  <div>{term.structure.cemented ? "あり" : "なし"}</div>
-                </>
-              )}
-              {term.structure.typical_combination &&
-                term.structure.typical_combination.length > 0 && (
-                <>
-                  <div className="text-gray-600">典型的な構成</div>
-                  <div>
-                    <ul className="list-disc pl-6 space-y-1">
-                      {term.structure.typical_combination.map((s, i) => (
-                        <li key={i}>{renderTextWithTermLinks(s)}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </>
-              )}
-            </div>
+            <AutoMediaRenderer data={term.structure}>
+              <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-[15px]">
+                {term.structure.elements != null && (
+                  <>
+                    <div className="text-gray-600">枚数</div>
+                    <div>{term.structure.elements}枚</div>
+                  </>
+                )}
+                {term.structure.cemented != null && (
+                  <>
+                    <div className="text-gray-600">貼り合わせ</div>
+                    <div>{term.structure.cemented ? "あり" : "なし"}</div>
+                  </>
+                )}
+                {term.structure.typical_combination &&
+                  term.structure.typical_combination.length > 0 && (
+                  <>
+                    <div className="text-gray-600">典型的な構成</div>
+                    <div>
+                      <ul className="list-disc pl-6 space-y-1">
+                        {term.structure.typical_combination.map((s, i) => (
+                          <li key={i}>{renderTextWithTermLinks(s)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
+              </div>
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.correction_target && term.correction_target.length > 0 && (
           <Section title={LABELS.correction_target}>
-            <StringList items={term.correction_target} />
+            <AutoMediaRenderer data={term.correction_target}>
+              <StringList items={term.correction_target} />
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.uncorrected_aberrations && term.uncorrected_aberrations.length > 0 && (
           <Section title={LABELS.uncorrected_aberrations}>
-            <StringList items={term.uncorrected_aberrations} />
+            <AutoMediaRenderer data={term.uncorrected_aberrations}>
+              <StringList items={term.uncorrected_aberrations} />
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.advantages && term.advantages.length > 0 && (
           <Section title={LABELS.advantages}>
-            <CitedTextList
-              items={term.advantages}
-              className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
-            />
+            <AutoMediaRenderer data={term.advantages}>
+              <CitedTextList
+                items={term.advantages}
+                className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
+              />
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.disadvantages && term.disadvantages.length > 0 && (
           <Section title={LABELS.disadvantages}>
-            <CitedTextList
-              items={term.disadvantages}
-              className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
-            />
+            <AutoMediaRenderer data={term.disadvantages}>
+              <CitedTextList
+                items={term.disadvantages}
+                className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
+              />
+            </AutoMediaRenderer>
           </Section>
         )}
 
@@ -229,28 +280,34 @@ export default async function TermPage({ params }: PageProps) {
               {term.historical_background.first_developed && (
                 <div>
                   <h3 className="text-base font-medium text-gray-800">初出・発展</h3>
-                  <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                    {renderTextWithTermLinks(term.historical_background.first_developed.text)}
-                    {renderCitations(term.historical_background.first_developed.citations)}
-                  </p>
+                  <AutoMediaRenderer data={term.historical_background.first_developed}>
+                    <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
+                      {renderTextWithTermLinks(term.historical_background.first_developed.text)}
+                      {renderCitations(term.historical_background.first_developed.citations)}
+                    </p>
+                  </AutoMediaRenderer>
                 </div>
               )}
               {term.historical_background.inventor && (
                 <div>
                   <h3 className="text-base font-medium text-gray-800">発明者</h3>
-                  <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                    {renderTextWithTermLinks(term.historical_background.inventor.text)}
-                    {renderCitations(term.historical_background.inventor.citations)}
-                  </p>
+                  <AutoMediaRenderer data={term.historical_background.inventor}>
+                    <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
+                      {renderTextWithTermLinks(term.historical_background.inventor.text)}
+                      {renderCitations(term.historical_background.inventor.citations)}
+                    </p>
+                  </AutoMediaRenderer>
                 </div>
               )}
               {term.historical_background.notes && (
                 <div>
                   <h3 className="text-base font-medium text-gray-800">備考</h3>
-                  <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                    {renderTextWithTermLinks(term.historical_background.notes.text)}
-                    {renderCitations(term.historical_background.notes.citations)}
-                  </p>
+                  <AutoMediaRenderer data={term.historical_background.notes}>
+                    <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
+                      {renderTextWithTermLinks(term.historical_background.notes.text)}
+                      {renderCitations(term.historical_background.notes.citations)}
+                    </p>
+                  </AutoMediaRenderer>
                 </div>
               )}
             </div>
@@ -259,10 +316,12 @@ export default async function TermPage({ params }: PageProps) {
 
         {term.applications && term.applications.length > 0 && (
           <Section title={LABELS.applications}>
-            <CitedTextList
-              items={term.applications}
-              className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
-            />
+            <AutoMediaRenderer data={term.applications}>
+              <CitedTextList
+                items={term.applications}
+                className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
+              />
+            </AutoMediaRenderer>
           </Section>
         )}
 
@@ -275,10 +334,12 @@ export default async function TermPage({ params }: PageProps) {
                 return (
                   <div key={key}>
                     <h3 className="text-base font-medium text-gray-800">{label}</h3>
-                    <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(val.text)}
-                      {renderCitations(val.citations)}
-                    </p>
+                    <AutoMediaRenderer data={val}>
+                      <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
+                        {renderTextWithTermLinks(val.text)}
+                        {renderCitations(val.citations)}
+                      </p>
+                    </AutoMediaRenderer>
                   </div>
                 );
               })}
@@ -288,45 +349,49 @@ export default async function TermPage({ params }: PageProps) {
 
         {term.related_terms && term.related_terms.length > 0 && (
           <Section title={LABELS.related_terms}>
-            <div className="flex flex-wrap gap-2">
-              {term.related_terms.map((s, i) => (
-                <Link
-                  key={i}
-                  href={`/terms/${s}`}
-                  className="rounded bg-[#7D9CD4]/15 px-2 py-1 text-sm text-[#5E7AB8] transition-colors hover:bg-[#7D9CD4]/25"
-                >
-                  {s.replace(/_/g, " ")}
-                </Link>
-              ))}
-            </div>
+            <AutoMediaRenderer data={term.related_terms}>
+              <div className="flex flex-wrap gap-2">
+                {term.related_terms.map((s, i) => (
+                  <Link
+                    key={i}
+                    href={`/terms/${s}`}
+                    className="rounded bg-[#7D9CD4]/15 px-2 py-1 text-sm text-[#5E7AB8] transition-colors hover:bg-[#7D9CD4]/25"
+                  >
+                    {s.replace(/_/g, " ")}
+                  </Link>
+                ))}
+              </div>
+            </AutoMediaRenderer>
           </Section>
         )}
 
         {term.see_also && term.see_also.length > 0 && (
           <Section title={LABELS.see_also}>
-            <div className="flex flex-wrap gap-2">
-              {term.see_also.map((s, i) => {
-                const designSlug = s.replace(/_/g, "-");
-                const designExists = getDesignById(designSlug) !== null;
-                const label = s.replace(/_/g, " ");
-                return designExists ? (
-                  <Link
-                    key={i}
-                    href={`/design/${designSlug}`}
-                    className="rounded bg-[#7D9CD4]/15 px-2 py-1 text-sm text-[#5E7AB8] transition-colors hover:bg-[#7D9CD4]/25"
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <span
-                    key={i}
-                    className="rounded bg-[#7D9CD4]/15 px-2 py-1 text-sm text-[#5E7AB8]"
-                  >
-                    {label}
-                  </span>
-                );
-              })}
-            </div>
+            <AutoMediaRenderer data={term.see_also}>
+              <div className="flex flex-wrap gap-2">
+                {term.see_also.map((s, i) => {
+                  const designSlug = s.replace(/_/g, "-");
+                  const designExists = getDesignById(designSlug) !== null;
+                  const label = s.replace(/_/g, " ");
+                  return designExists ? (
+                    <Link
+                      key={i}
+                      href={`/design/${designSlug}`}
+                      className="rounded bg-[#7D9CD4]/15 px-2 py-1 text-sm text-[#5E7AB8] transition-colors hover:bg-[#7D9CD4]/25"
+                    >
+                      {label}
+                    </Link>
+                  ) : (
+                    <span
+                      key={i}
+                      className="rounded bg-[#7D9CD4]/15 px-2 py-1 text-sm text-[#5E7AB8]"
+                    >
+                      {label}
+                    </span>
+                  );
+                })}
+              </div>
+            </AutoMediaRenderer>
           </Section>
         )}
 
@@ -335,9 +400,13 @@ export default async function TermPage({ params }: PageProps) {
             <ul className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {term.diagrams.map((d, i) => (
                 <li key={i}>
-                  {d.type && <span className="font-medium text-gray-800">{d.type}: </span>}
-                  {d.description && renderTextWithTermLinks(d.description)}
-                  {renderCitations(d.citations)}
+                  <AutoMediaRenderer data={d}>
+                    <>
+                      {d.type && <span className="font-medium text-gray-800">{d.type}: </span>}
+                      {d.description && renderTextWithTermLinks(d.description)}
+                      {renderCitations(d.citations)}
+                    </>
+                  </AutoMediaRenderer>
                 </li>
               ))}
             </ul>
@@ -348,23 +417,27 @@ export default async function TermPage({ params }: PageProps) {
           <Section title={LABELS.references}>
             <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {term.references.map((ref) => (
-                <li key={ref.id} id={`ref-${ref.id}`} className="flex gap-3 scroll-mt-4">
-                  <span className="shrink-0 font-mono text-xs text-[#7D9CD4]/70">[{ref.id}]</span>
-                  <span>
-                    {ref.url ? (
-                      <a
-                        href={ref.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-700 underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8]"
-                      >
-                        {ref.title}
-                      </a>
-                    ) : (
-                      <span className="text-gray-700">{ref.title}</span>
-                    )}
-                    <span className="ml-1 text-gray-400"> &mdash; {ref.author_or_source}</span>
-                  </span>
+                <li key={ref.id} id={`ref-${ref.id}`} className="flex flex-col gap-2 scroll-mt-4">
+                  <AutoMediaRenderer data={ref}>
+                    <div className="flex gap-3 scroll-mt-4">
+                      <span className="shrink-0 font-mono text-xs text-[#7D9CD4]/70">[{ref.id}]</span>
+                      <span>
+                        {ref.url ? (
+                          <a
+                            href={ref.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-700 underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8]"
+                          >
+                            {ref.title}
+                          </a>
+                        ) : (
+                          <span className="text-gray-700">{ref.title}</span>
+                        )}
+                        <span className="ml-1 text-gray-400"> &mdash; {ref.author_or_source}</span>
+                      </span>
+                    </div>
+                  </AutoMediaRenderer>
                 </li>
               ))}
             </ol>

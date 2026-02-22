@@ -34,6 +34,19 @@ export interface TermComparison {
   [key: string]: { text: string; citations?: number[] } | undefined;
 }
 
+/** 光学構成図の1項目 */
+export interface TermOpticalFormulaItem {
+  src: string;
+  variant?: string;
+  era?: string;
+  caption?: string;
+}
+
+/** メディア */
+export interface TermMedia {
+  optical_formula?: TermOpticalFormulaItem[];
+}
+
 /** 図表 */
 export interface TermDiagram {
   type?: string;
@@ -56,6 +69,7 @@ export interface Term {
   title: string;
   english_name?: string;
   category?: string;
+  media?: TermMedia;
   field?: string[];
   overview?: CitedText[];
   principle?: CitedText[];

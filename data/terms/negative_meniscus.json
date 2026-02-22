@@ -4,7 +4,19 @@
   "english_name": "Negative Meniscus Lens",
   "category": "球面収差・開口数制御",
   "field": ["光学設計", "レーザー光学系", "赤外光学系", "写真レンズ", "投影光学系"],
-  
+  "media": {
+    "optical_formula": [
+      {
+        "src": "/images/terms/negative_meniscus/negative_meniscus.png",
+        "variant": "classic_6e4g",
+        "era": "classic",
+        "caption": "http://nijikarasu.cocolog-nifty.com/blog/2015/02/post-c6bf.htmlによる"
+       }
+     ]
+ },
+
+
+
   "overview": [
     {
       "text": "負メニスカスレンズは、一方が凸面、他方が凹面の曲率をもつ単レンズで、中心部が周辺部よりも薄く、全体として負の焦点距離（発散力）をもつレンズである。",
@@ -41,6 +53,13 @@
   "advantages": [
     {
       "text": "正レンズと組み合わせることで、系全体の球面収差を抑えつつ、所望の有効焦点距離を得ることができる。",
+            "media": {
+        "images": [{
+            "src": "/images/lens-types/double-gauss/Gauss_lens1896.png",
+            "caption": "1888年ガウスの初期構成図",
+            "alt": "1888年 ガウスのレンズ構成図"
+          }]
+      },
       "citations": [6]
     },
     {

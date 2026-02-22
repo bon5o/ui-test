@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllLenses } from "../../../lib/lenses";
+import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
 
 export async function generateStaticParams() {
   const lenses = getAllLenses();
@@ -32,16 +33,20 @@ export default async function EraDetailPage({ params }: PageProps) {
 
       <ul className="space-y-2">
         {filteredLenses.map((lens) => (
-          <li key={lens.meta.slug}>
-            <Link
-              href={`/lenses/${lens.meta.slug}`}
-              className="text-blue-500 hover:underline"
-            >
-              {lens.meta.name}
-            </Link>
-            <span className="ml-2 text-sm text-gray-600">
-              ({lens.meta.release_year})
-            </span>
+          <li key={lens.meta.slug} className="space-y-2">
+            <AutoMediaRenderer data={lens as unknown}>
+              <div>
+                <Link
+                  href={`/lenses/${lens.meta.slug}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  {lens.meta.name}
+                </Link>
+                <span className="ml-2 text-sm text-gray-600">
+                  ({lens.meta.release_year})
+                </span>
+              </div>
+            </AutoMediaRenderer>
           </li>
         ))}
       </ul>
