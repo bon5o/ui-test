@@ -2,11 +2,22 @@
   "meta": {
     "id": "double-gauss",
     "name": "ダブルガウス型",
-    "category": "gauss",
     "english_name": "Double-Gauss",
-    "media": {
-      "optical_formula": [
+    "category": "gauss"
+  },
+
+"chapters": [
+
+{
+  "id": "overview",
+  "title": "概要",
+  "sections": [
+    {
+      "id": "optical_formula",
+      "title": "光学構成図",
+      "items": [
         {
+          "type": "image",
           "src": "/images/lens-types/double-gauss/double-gauss1.svg",
           "variant": "classic_6e4g",
           "era": "classic",
@@ -15,23 +26,44 @@
       ],
       "citations": [3, 4]
     },
-    "origin": {
-      "base_design": "1810年代のガウス望遠鏡対物レンズ（正メニスカス＋負メニスカスのアクロマート）",
-      "photographic_adaptation": "前後対称に2組配置した写真用設計",
-      "citations": [2, 3]
-    }
-  },
-
-  "basic_structure": {
-    "layout_overview": {
-      "title": "基本構成",
-      "sections": [
+    {
+      "id": "origin",
+      "title": "起源",
+      "items": [
         {
-          "section": "構成の特徴",
-          "content": "絞りを中心に前後ほぼ対称の配置を基本とする設計形式。"
+          "type": "paragraph",
+          "text": "1810年代のガウス望遠鏡対物レンズ（正メニスカス＋負メニスカスのアクロマート）を基礎とする。",
+          "citations": [2, 3]
         },
         {
-          "section": "典型的な構成例",
+          "type": "paragraph",
+          "text": "それを前後対称に2組配置することで写真用設計へと発展した。",
+          "citations": [2, 3]
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "basic_structure",
+  "title": "基本構成",
+  "sections": [
+    {
+      "id": "layout_overview",
+      "title": "構成の特徴",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "絞りを中心に前後ほぼ対称の配置を基本とする設計形式。"
+        }
+      ]
+    },
+    {
+      "id": "typical_configurations",
+      "title": "典型的な構成例",
+      "items": [
+        {
+          "type": "list",
           "items": [
             "4群4枚（初期のダブルガウス、前後それぞれガウスレンズを対称に配置）",
             "4群6枚（Zeiss Planar、中央の負メニスカスを貼り合わせダブレット化）",
@@ -42,558 +74,786 @@
         }
       ]
     }
-  },
+  ]
+},
 
-  
-  "historical_development": [
-    {
-      "year": 2026,
-      "designer": "主",
-      "description": "注意、歴史的背景の項の引用文献の番号と[]内の番号がずれてる可能性がある。直すかもしれないし直さないかもしれない。",
-      "citations": []
-    },
-    {
-      "year": 1817,
-      "designer": "Carl Friedrich Gauss",
-      "description": "数学者カール・フリードリヒ・ガウス（Carl Friedrich Gauss）が正メニスカス＋負メニスカスから成る2枚構成アクロマートを屈折望遠鏡用対物レンズとして提案し、物体側に正メニスカス、像側に負メニスカスを置いた構成は後のガウスレンズおよびダブルガウスの基本形となった。",
-      "citations": [18, 19],
 
-      "media": {
-        "layout": "left",
-        "images": [
-          {
-            "src": "/images/lens-types/double-gauss/Gauss_lens1817.png",
-            "caption": "1817年ガウスの初期構成図",
-            "alt": "1817年 ガウスのレンズ構成図",
-            "scale": 0.2
-          }
-        ]
-      }
-    },
+{
+  "id": "historical_development",
+  "title": "歴史的発展",
+  "sections": [
     {
-      "year": 1888,
-      "designer": "Alvan Graham Clark（Bausch & Lomb と協働）",
-      "description": "ガウスの2枚構成対物レンズを前後対称に配置し、中央に絞りを置いた4群4枚の対称ダブルガウスを特許化し、外側に正メニスカス、内側に負メニスカスを配置した構成によりコマやディストーションなどの諸収差を対称性で低減したが、写真用レンズとしては像面湾曲や周辺像質の点で性能不十分と評価された。また、同年ハインリヒ・ルートヴィヒ・ユーゴ・シュローダーもこのガラスを使用しレンズを開発したが補正されていない球面の異常により、絞りは現実味のないf/20に制限された。",
-      "citations": [28],
-      "media": {
-        "layout": "left",
-        "images": [{
-            "src": "/images/lens-types/double-gauss/Gauss_lens1888.png",
-            "caption": "1888年アルヴァン・グレアム・クラークによるレンズ構成図",
-            "alt": "1888年 ガウスのレンズ構成図",
-            "scale": 0.5
-          }]
-      }
-    },
-    {
-      "year": 1895,
-      "designer": "Paul Rudolph（Carl Zeiss Jena）",
-      "description": "Clark 型ダブルガウスを基礎に、内部負メニスカスを厚肉化し空気間隔を縮小する案を検討し、球面収差および中間画角での非点収差・像面湾曲の低減を目的とした改良の下地を整え、後に Planar へ発展する設計方針を確立したとされる。",
-      "citations": [20, 22]
-    },
-    {
-      "year": 1896,
-      "designer": "Paul Rudolph（Carl Zeiss Jena）",
-      "description": "内部負メニスカスを厚肉化し、同屈折率・異アッベ数の2種ガラスで構成された貼り合わせダブレットとすることで埋没面を導入した6枚4群の対称ダブルガウス Zeiss Planar f/4.5 を完成させ、色収差と非点収差を大幅に改善した高速写真用レンズの先駆的存在となった。",
-      "citations": [18, 28],
-      "media": {
-        "layout": "left",
-        "images": [{
-            "src": "/images/lens-types/double-gauss/Gauss_lens1896.png",
-            "caption": "1896年パウル・ルドルフによるレンズ構成図",
-            "scale": 0.2
-          }]
-      }
-    },
-    {
-      "year": 1920,
-      "designer": "Horace William Lee（Taylor, Taylor & Hobson / Cooke）",
-      "description": "Rudolph の対称 Planar をわずかに非対称化し、片側のパワー配分や空気間隔を変えることで大口径化と収差バランス改善を図った Cooke Opic（Series 0）50mm f/2 を設計し、以後の非対称ダブルガウス標準レンズの基本形となる構成を提示した。",
-      "citations": [24, 25, 26]
-    },
-    {
-      "year": 1920,
-      "designer": "Horace William Lee（Taylor, Taylor & Hobson / Cooke）",
-      "description": "Opic を含む一連の非対称ダブルガウス設計を通じて、対称性を多少犠牲にしてでも大口径化と画面全域の実用画質を優先する設計パラダイムを確立し、シネ用およびスチル用の高速標準レンズにおける非対称ダブルガウス採用の流れを決定づけた。",
-      "citations": [27]
-    },
-    {
-      "year": 1927,
-      "designer": "Horace William Lee（Taylor, Taylor & Hobson / Cooke）",
-      "description": "Opic を発展させた Ultra Speed Panchro（Ultra Panchro）f/1.4 を開発し、高屈折率の中間レンズと多数の曲率半径を用いた変形ダブルガウス構成によって f/1.4 クラスの開放を達成し、シネマ用高速標準レンズの事実上の始祖となった。",
-      "citations": [24, 25]
-    },
-    {
-      "year": 1930,
-      "designer": "Horace William Lee（Taylor, Taylor & Hobson / Cooke）",
-      "description": "7枚構成の Super Speed Panchro（Speed Panchro、58mm f/1.3～f/1.5 クラス）を設計し、より大口径化した非対称ダブルガウスとして Cooke Speed Panchro シリーズを展開、以後のシネマ用高速ダブルガウスの設計指針として多くのメーカーに参照され続けた。",
-      "citations": [25, 26]
-    },
-    {
-      "year": 1930,
-      "designer": "Carl Zeiss（Biotar 系設計陣）",
-      "description": "Lee の非対称ダブルガウス理念を取り入れた Zeiss Biotar 58mm f/2 などの Biotar 系設計を展開し、大口径標準・中望遠レンズに非対称ダブルガウスを採用して高い開放性能と周辺で渦巻き状に流れるボケ描写を持つレンズ群を実現した。",
-      "citations": [22]
-    },
-    {
-      "year": 1950,
-      "designer": "各社設計者（Carl Zeiss, Schneider Kreuznach, Leitz, Kodak など）",
-      "description": "戦後の高性能光学ガラスと単層コーティング技術の進歩を背景に、Carl Zeiss Planar 50mm f/2、Schneider Xenon 50mm f/2、Kodak Ektar 47mm f/2 などの6枚4群ダブルガウスが各社35mmカメラ用標準レンズの主流となり、f/1.5〜f/2 クラスで画面全域の高解像と低歪曲を両立する設計が一般化した。",
-      "citations": [18, 27]
-    },
-    {
-      "year": 1966,
-      "designer": "Asahi Pentax",
-      "description": "Super Speed Panchro 型と Xenon 型を折衷した 7枚6群ダブルガウス構成の Super-Takumar 50mm f/1.4（第二型）を開発し、大口径・高画質・比較的コンパクトさを兼ね備えた一眼レフ用標準レンズとして、その構成が後の SMC Takumar 50mm f/1.4 や他社の 50mm f/1.4 に広く模倣された。",
-      "citations": [21]
-    },
-    {
-      "year": 1970,
-      "designer": "Leitz（Leica）",
-      "description": "Summicron-M 50mm f/2 や Summilux-M 50mm f/1.4 などを通じて、6枚4群〜7枚5群の非対称ダブルガウスに近距離補正機構や改良コーティングを組み込み、高いコントラストとニュートラルな色再現を備えたレンジファインダー用「現代標準レンズ」としてのダブルガウス像を確立した。",
-      "citations": [18]
-    },
-    {
-      "year": 1980,
-      "designer": "各社設計者（Contax/Zeiss, Nikon, Canon, Minolta など）",
-      "description": "コンピュータ光学設計の普及により、Planar T* 50mm f/1.4（Contax/Zeiss）、Nikkor 50mm f/1.4 Ai-S、Canon New FD 50mm f/1.4 など7〜8枚構成の Planar/Ultron 風ダブルガウスが一般的となり、f/1.4 クラスで開放から高い周辺画質と低ディストーションを実現する一眼レフ用標準レンズが各社から出揃った。",
-      "citations": [18, 21]
-    },
-    {
-      "year": 2000,
-      "designer": "各社設計者（デジタル対応設計、Carl Zeiss, Canon, Nikon, Sony, Edmund Optics など）",
-      "description": "デジタルセンサーのテレセントリック性要求と高解像センサーに対応するため、Zeiss Planar T* 50mm f/1.4 ZF/ZE、Canon EF 50mm f/1.4 USM 改良型、Nikon AF-S NIKKOR 50mm f/1.4G などで後群のパワーバランスや後玉径が見直され、フローティング機構や非球面を組み込んだ変形ダブルガウスが主流となるとともに、Edmund Optics の TECHSPEC Double Gauss Imaging Lenses のような電子撮像素子向けダブルガウス系が産業用イメージング分野で広く用いられるようになった。",
-      "citations": [22]
-    }
-  ],
-
-  "design_philosophy": [
-    {
-      "section": "対称ダブルガウスの基本思想",
-      "points": [
+      "id": "2026",
+      "title": "2026年",
+      "meta": {
+        "year": 2026,
+        "designer": "主"
+      },
+      "items": [
         {
+          "type": "paragraph",
+          "text": "注意、歴史的背景の項の引用文献の番号と[]内の番号がずれてる可能性がある。直すかもしれないし直さないかもしれない。",
+          "citations": []
+        }
+      ]
+    },
+    {
+      "id": "1817_gauss",
+      "title": "1817年 – Carl Friedrich Gauss",
+      "meta": {
+        "year": 1817,
+        "designer": "Carl Friedrich Gauss"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "数学者カール・フリードリヒ・ガウスが正メニスカス＋負メニスカスから成る2枚構成アクロマートを屈折望遠鏡用対物レンズとして提案し、物体側に正メニスカス、像側に負メニスカスを置いた構成は後のガウスレンズおよびダブルガウスの基本形となった。",
+          "citations": [18, 19]
+        },
+        {
+          "type": "image",
+          "src": "/images/lens-types/double-gauss/Gauss_lens1817.png",
+          "caption": "1817年ガウスの初期構成図",
+          "alt": "1817年 ガウスのレンズ構成図",
+          "layout": "left",
+          "scale": 0.5
+        }
+      ]
+    },
+    {
+      "id": "1888_clark",
+      "title": "1888年 – Alvan Graham Clark",
+      "meta": {
+        "year": 1888,
+        "designer": "Alvan Graham Clark（Bausch & Lomb と協働）"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "ガウスの2枚構成対物レンズを前後対称に配置し、中央に絞りを置いた4群4枚の対称ダブルガウスを特許化。対称性によりコマやディストーションなどを低減したが、写真用としては像面湾曲や周辺像質が不十分とされた。また同年シュローダーも関連設計を行ったが、球面補正不足によりf/20に制限された。",
+          "citations": [28]
+        },
+        {
+          "type": "image",
+          "src": "/images/lens-types/double-gauss/Gauss_lens1888.png",
+          "caption": "1888年 アルヴァン・グレアム・クラーク レンズ構成図",
+          "alt": "1888年 ガウスのレンズ構成図",
+          "layout": "left",
+          "scale": 0.5
+        }
+      ]
+    },
+    {
+      "id": "1895_rudolph",
+      "title": "1895年 – Paul Rudolph",
+      "meta": {
+        "year": 1895,
+        "designer": "Paul Rudolph（Carl Zeiss Jena）"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Clark 型を基礎に内部負メニスカスの厚肉化と空気間隔縮小を検討し、後の Planar へ発展する改良方針を確立した。",
+          "citations": [20, 22]
+        }
+      ]
+    },
+    {
+      "id": "1896_planar",
+      "title": "1896年 – Zeiss Planar f/4.5",
+      "meta": {
+        "year": 1896,
+        "designer": "Paul Rudolph（Carl Zeiss Jena）"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "厚肉負メニスカスと埋没面ダブレットを採用した6枚4群の対称ダブルガウス Planar f/4.5 を完成させ、色収差と非点収差を大幅に改善。",
+          "citations": [18, 28]
+        },
+        {
+          "type": "image",
+          "src": "/images/lens-types/double-gauss/Gauss_lens1896.png",
+          "caption": "1896年 パウル・ルドルフ レンズ構成図",
+          "layout": "left",
+          "scale": 0.5
+        }
+      ]
+    },
+    {
+      "id": "1920_lee",
+      "title": "1920年 – Horace William Lee",
+      "meta": {
+        "year": 1920,
+        "designer": "Horace William Lee（Taylor, Taylor & Hobson / Cooke）"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "対称 Planar を非対称化し、大口径化と収差バランス改善を図った Cooke Opic 50mm f/2 を設計。以後の非対称ダブルガウス標準の基礎を築いた。",
+          "citations": [24, 25, 26, 27]
+        }
+      ]
+    },
+    {
+      "id": "1927_ultra_panchro",
+      "title": "1927年 – Ultra Speed Panchro",
+      "meta": {
+        "year": 1927,
+        "designer": "Horace William Lee"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Ultra Speed Panchro f/1.4 を開発し、f/1.4級高速標準の先駆けとなった。",
+          "citations": [24, 25]
+        }
+      ]
+    },
+    {
+      "id": "1930_biotar",
+      "title": "1930年 – Zeiss Biotar",
+      "meta": {
+        "year": 1930,
+        "designer": "Carl Zeiss"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "非対称ダブルガウス Biotar 系を展開し、大口径標準における開放性能と特徴的ボケ描写を実現。",
+          "citations": [22]
+        }
+      ]
+    },
+    {
+      "id": "1950_postwar",
+      "title": "1950年代 – 戦後標準レンズの確立",
+      "meta": {
+        "year": 1950,
+        "designer": "各社設計者"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "高性能ガラスと単層コーティングの進歩により6枚4群ダブルガウスが35mm標準の主流となる。",
+          "citations": [18, 27]
+        }
+      ]
+    },
+    {
+      "id": "1966_takumar",
+      "title": "1966年 – Super-Takumar 50mm f/1.4",
+      "meta": {
+        "year": 1966,
+        "designer": "Asahi Pentax"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "7枚6群ダブルガウスを採用し、大口径標準の代表作となった。",
+          "citations": [21]
+        }
+      ]
+    },
+    {
+      "id": "1970_summicron",
+      "title": "1970年代 – Leica Summicron / Summilux",
+      "meta": {
+        "year": 1970,
+        "designer": "Leitz（Leica）"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "改良コーティングと近距離補正機構を備えた非対称ダブルガウスを確立。",
+          "citations": [18]
+        }
+      ]
+    },
+    {
+      "id": "1980_slr_standard",
+      "title": "1980年代 – SLR用標準の完成",
+      "meta": {
+        "year": 1980,
+        "designer": "各社設計者"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "コンピュータ設計によりf/1.4級で高い周辺画質を実現する7〜8枚構成が一般化。",
+          "citations": [18, 21]
+        }
+      ]
+    },
+    {
+      "id": "2000_digital",
+      "title": "2000年代 – デジタル対応ダブルガウス",
+      "meta": {
+        "year": 2000,
+        "designer": "各社設計者"
+      },
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "テレセントリック性要求と高解像センサー対応のため、後群設計や非球面・フローティング機構を導入した変形ダブルガウスが主流となった。",
+          "citations": [22]
+        }
+      ]
+    }
+  ]
+},
+
+
+{
+  "id": "design_philosophy",
+  "title": "設計思想",
+  "sections": [
+    {
+      "id": "symmetric_double_gauss",
+      "title": "対称ダブルガウスの基本思想",
+      "items": [
+        {
+          "type": "paragraph",
           "text": "対称配置によってコマ収差・ディストーション・横色収差を相殺しやすくする。",
           "citations": [2,3,8]
         },
         {
+          "type": "paragraph",
           "text": "光学パワーを多枚数に分散し、高い補正自由度を得る。",
           "citations": [2,3,8]
         }
       ]
-   },
-   {
-      "section": "RudolphのPlanar思想",
-      "points": [
+    },
+    {
+      "id": "rudolph_planar_concept",
+      "title": "RudolphのPlanar思想",
+      "items": [
         {
+          "type": "paragraph",
           "text": "厚い負レンズおよび埋没面の採用により、軸上色収差と非点収差・像面湾曲をさらに低減。",
           "citations": [1,2,4]
         },
         {
+          "type": "paragraph",
           "text": "f/4.5前後で画面全域にわたり高解像を実現する『汎用アナスチグマート標準レンズ』を目指した。",
-          "citations": [1,2,4,7],
-          
-          "media": {
+          "citations": [1,2,4,7]
+        },
+        {
+          "type": "image",
+          "src": "/images/lens-types/double-gauss/Gauss_lens1896.png",
+          "alt": "1896年パウル・ルドルフによるレンズ構成図",
+          "caption": "1896年パウル・ルドルフによるレンズ構成図",
           "layout": "left",
-          "images": [{
-            "src": "/images/lens-types/double-gauss/Gauss_lens1888.png",
-            "caption": "1896年パウル・ルドルフによるレンズ構成図",
-            "scale": 0.2
-          }]
+          "scale": 0.2,
+          "citations": []
         }
-      }  
       ]
     },
-   {
-      "section": "非対称ダブルガウスへの進化",
-      "points": [
-       {
+    {
+      "id": "asymmetric_double_gauss",
+      "title": "非対称ダブルガウスへの進化",
+      "items": [
+        {
+          "type": "paragraph",
           "text": "Biotar型などでは大口径化（f/2、f/1.5〜f/1.4）と実用画角での画質向上を両立させるため、前後のパワーバランスを意図的に非対称化。",
           "citations": [2,3,7]
-       },
-       {
+        },
+        {
+          "type": "paragraph",
           "text": "諸収差のトレードオフを最適化する思想へ移行し、開放性能とボケ描写の両立を図った。",
           "citations": [2,3,8,7,5]
-       }
+        }
       ]
     }
-  ],
-
-
-  
-"optical_characteristics": {
-  "center_resolution": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text":"ダブルガウス型レンズは、中央の負群が球面収差と像面湾曲を補正するため、絞り開放付近でも比較的高い解像力を示す。1〜2段絞ると球面収差が抑えられ、中心部は非常に高いMTFを示すのが典型的な挙動である。"
-      },
-      {
-        "type": "list",
-        "items": [
-          "中央の負群が球面収差と像面湾曲を打ち消す設計",
-        "絞りを絞ることで球面収差成分が減少し、回折限界に近づく"
-        ]
-      }
-    ],
-    "citations": [12, 15]
-  },
-  
-  "peripheral_resolution": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text":"古典的Planarおよび初期Biotarでは、像面湾曲と非点収差により開放時の周辺解像が低下するが、f/4〜f/5.6で急速に均質化する。現代の多枚数ダブルガウス（Summicron-R 50mmなど）では、開放から像面湾曲と非点収差がよく抑えられ、周辺解像も高水準に設計されている。"
-      },
-      {
-        "type": "list",
-        "items": [
-          "像面湾曲と非点収差が周辺部で残存しやすい",
-        "厚い負レンズと埋没面を用いた非点収差・像面湾曲の積極的補正"
-        ]
-      }
-    ],
-    "citations": [12, 14]
-  },
-
-  "contrast": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text":"コーティング前提でない時代のPlanarは、フレアによりミクロコントラストが低下しやすく、収差補正自体は高いが『高解像だがヌルい』描写になりがちとされる。近代的コーティング導入後はゴーストを抑制し、高いマイクロコントラストを実現した。"
-      },
-      {
-        "type": "list",
-        "items": [
-          "空気・ガラス界面での内部反射・フレアによるコントラスト低下",
-        "マルチコーティングによる内部反射・フレアの抑制"
-        ]
-      }
-    ],
-    "citations": [14]
-  },
-
-  "spherical_aberration": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text":"中央の負群が球面収差と像面湾曲を主に補正する役割を担うが、大口径化すると周辺画角で斜め入射の球面収差（oblique spherical aberration）が増大しやすい。"
-      },
-      {
-        "type": "list",
-        "items": [
-           "中央負群による軸上球面収差・像面湾曲の補正",
-        "大口径化に伴う周辺画角での斜め入射球面収差の増大"
-        ]
-      }
-    ],
-    "citations": [16]
-  },
-
-  "coma_aberration": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text": "対称構成によりコマ収差は基本的に小さく、点像再現性に優れる。非対称化した高速Biotar型では周辺に残存コマが生じ、特徴的なボケ形状の一因となる。"
-      },
-      {
-        "type": "list",
-        "items": [
-           "左右対称構成によるコマ収差の抑制",
-        "高速化のための非対称化による周辺部コマの残存"
-        ]
-      }
-    ],
-    "citations":  [13]
-  },
-
-  "astigmatism_and_field_curvature": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text": "Planar以降、厚い負レンズと埋没面の活用により非点収差と像面湾曲は大きく抑制された。ただし開放近傍では中〜周辺部に非点収差および像面湾曲が残る場合が多い。"
-      },
-      {
-        "type": "list",
-        "items": [
-          "厚い負レンズと埋没面による非点収差・像面湾曲の補正",
-        "開放近傍での収差バランスとF値のトレードオフ"
-        ]
-      }
-    ],
-    "citations":  [12, 14]
-  },
-
-  "chromatic_aberration": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text": "Planarで導入された埋没面（同屈折率・異アッベ数ペア界面）は軸上色収差を積極的に補正するための仕組みで、その思想は後続のダブルガウス系にも継承された。標準〜やや望遠域では横色収差は小さく、軸上色収差も中口径では良好に抑えられるが、大口径f/1.4クラスでは開放時にパープル／グリーンフリンジが残る個体も多い。"
-      },
-      {
-        "type": "list",
-        "items": [
-         "埋没面による軸上色収差の積極的補正",
-        "大口径化に伴う高次色収差の影響"
-        ]
-      }
-    ],
-    "citations":  [12, 15]
-  },
-
-  
-  "field_curvature": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text": "理論的には対称ダブルガウスは像面をフラットに近づけられるが、画角拡大や大口径化により補正しきれない像面湾曲が残る場合がある。Summicron系では無限遠と近距離での像面湾曲およびフォーカスシフトを実用撮影距離で最適化する設計例が報告されている。"
-      },
-      {
-        "type": "list",
-        "items": [
-         "対称構成による像面湾曲の理論的フラット化",
-        "画角拡大・大口径化による補正限界と実用距離での最適化"
-        ]
-      }
-    ],
-    "citations":   [12, 15]
-  },
-
-  "distortion": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text": "絞りを挟んだほぼ対称配置のため、樽型／糸巻き型ディストーションは非常に小さい。非対称化した高速型でも、ゾナー型など他形式より歪曲は小さいことが多い。"
-      },
-      {
-        "type": "list",
-        "items": [
-         "絞りを挟んだほぼ対称配置による歪曲の抑制",
-        "非対称化でも比較的小さい歪曲の設計"
-        ]
-      }
-    ],
-    "citations":   [14]
-  },
-
-  
-  "maximum_f_number_evolution": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text":"初期Planarではf/4.5付近が実用的なスタート。1920〜30年代の改良型ではf/2〜f/1.5が一般化し、高速標準の主流となった。設計自由度とガラス発展によりf/1.4やf/1.2も実現されたが、f/1.0級では別形式へ移行する例も多い。"
-      },
-      {
-        "type": "list",
-        "items": [
-        "ガラスの屈折率・アッベ数の発展と設計自由度の拡大",
-        "f/1.0級での収差バランスの難しさによる別形式への移行"
-        ]
-      }
-    ],
-    "citations":   [12]
-  }, 
-  "peripheral_light_loss": {
-    "sections": [
-      {
-        "type":"paragraph",
-        "text":"標準焦点距離ではcos⁴則により開放で周辺光量が低下する。大口径Biotar型では開放で明確な周辺減光が残るが、それが描写特性として評価される場合もある。"
-      },
-      {
-        "type": "list",
-        "items": [
-       "cos⁴則による周辺光量の低下",
-        "大口径Biotar型での周辺減光の描写特性としての評価"
-        ]
-      }
-    ],
-    "citations":   [14]
-  } 
-
+  ]
 },
 
 
-
-  "rendering_character": {
-
-    "bokeh": [
-      {
-        "text": "開放付近では残存球面収差と非点収差・コマのバランスにより、中心付近は比較的素直だが、周辺では楕円化したボケやわずかな二線傾向が現れることがある。",
-        "citations": [2,8,5]
-      },
-      {
-        "text": "非対称ダブルガウス（Biotar系）では、周辺の像面湾曲とコマ収差に起因する回転ボケ・渦巻き状ボケが生じることがあり、ポートレート用途で好まれる傾向がある。",
-        "citations": [8,9]
-      },
-      {
-        "text": "現代のSummicron系などでは、前後ボケのエッジを抑え、玉ボケの輪郭が硬くなりすぎないよう最適化されており、滑らかなボケと高いシャープネスのバランスが追求されている。",
-        "citations": [6,8]
-      }
-    ],
-
-    "three_dimensionality": [
-      {
-        "text": "開放付近では中心に高い解像を維持しつつマイクロコントラストがやや穏やかであり、1〜2段絞ることで急激にコントラストが立ち上がる特性により、被写体の輪郭が浮かび上がるような立体感を与えることが多い。",
-        "citations": [2,6,5]
-      },
-      {
-        "text": "Summicron-Rのような設計では、近距離における像面湾曲と収差バランスを最適化することで、中距離〜近距離撮影時の空気感・立体感を重視した描写が分析されている。",
-        "citations": [6]
-      }
-    ],
-
-    "flare_resistance": [
-      {
-        "text": "クラシックPlanarはガラス面数が多く、単層コーティング以前ではフレアやゴーストが発生しやすく、逆光時にコントラストが大きく低下する傾向があった。",
-        "citations": [1,4,5]
-      },
-      {
-        "text": "そのためZeissは、フレア耐性に優れる少枚数構成のSonnar系を高コントラスト標準として併売していた時期がある。",
-        "citations": [7,5]
-      },
-      {
-        "text": "マルチコーティング導入以降のダブルガウスは、逆光下でもフレアとゴーストが良好に抑制され、現代では逆光耐性も標準的に優秀なカテゴリとされる。",
-        "citations": [2,6]
-      }
-    ],
-
-    "color_rendering": [
-      {
-        "text": "単層コート〜初期マルチコート時代のダブルガウスは、わずかに暖色寄りで彩度が穏やかな描写を示す個体が多いとされる。",
-        "citations": [1,4,5]
-      },
-      {
-        "text": "現代のSummicron系ではニュートラル志向の色再現と高いヌケを両立し、内部反射低減によってデジタルでのポスト処理耐性も意識された設計となっている。",
-        "citations": [6,10]
-      }
-    ]
-  },
-
-  "operational_characteristics": {
-
-    "size_and_weight": [
-      {
-        "text": "標準域（50mm前後）の6枚4群ダブルガウスは、フィルム時代の典型例で全長40〜50mm台、重量150〜300gに収まりやすく、比較的コンパクトな構造が可能。",
-        "citations": [2,6,5]
-      },
-      {
-        "text": "デジタル対応の高性能版では、非球面レンズやフローティング機構の追加により7〜8枚以上となることが多く、全長および重量は増加する傾向がある。",
-        "citations": [2,8]
-      }
-    ],
-
-    "typical_focal_length": [
-      {
-        "text": "ダブルガウスが最も得意とする焦点距離は、35mm判で35〜60mm、特に50mm前後の標準域。",
-        "citations": [2,8]
-      },
-      {
-        "text": "85〜105mmの中望遠域にも応用例があるが、その場合はゾナー型やエルノスター型など他形式との折衷設計が用いられることが多い。",
-        "citations": [2,8,5]
-      }
-    ],
-
-    "manufacturing_cost": [
-      {
-        "text": "対称構造であり、超高屈折・超低分散材を必須としない設計が多いため、標準レンズとして大量生産しやすい点が利点。",
-        "citations": [2,8]
-      },
-      {
-        "text": "いいい一方でSummicronクラスの高性能版では、高度なガラス組み合わせ、高精度なセンタリングおよび面精度、場合によっては非球面の採用が求められ、現代的高性能実装には相応のコストがかかる。",
-        "citations": [6,8,5]
-      }
-    ]
-  },
-
-
-
-  "variants": [
+{
+  "id": "optical_characteristics",
+  "title": "光学的特性",
+  "sections": [
     {
-      "name": "Planar型",
-      "description": [
+      "id": "center_resolution",
+      "title": "中心解像力",
+      "items": [
         {
+          "type": "paragraph",
+          "text": "ダブルガウス型レンズは、中央の負群が球面収差と像面湾曲を補正するため、絞り開放付近でも比較的高い解像力を示す。1〜2段絞ると球面収差が抑えられ、中心部は非常に高いMTFを示すのが典型的な挙動である。",
+          "citations": [12, 15]
+        },
+        {
+          "type": "list",
+          "items": [
+            "中央の負群が球面収差と像面湾曲を打ち消す設計",
+            "絞りを絞ることで球面収差成分が減少し、回折限界に近づく"
+          ],
+          "citations": [12, 15]
+        }
+      ]
+    },
+    {
+      "id": "peripheral_resolution",
+      "title": "周辺解像力",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "古典的Planarおよび初期Biotarでは、像面湾曲と非点収差により開放時の周辺解像が低下するが、f/4〜f/5.6で急速に均質化する。現代の多枚数ダブルガウス（Summicron-R 50mmなど）では、開放から像面湾曲と非点収差がよく抑えられ、周辺解像も高水準に設計されている。",
+          "citations": [12, 14]
+        },
+        {
+          "type": "list",
+          "items": [
+            "像面湾曲と非点収差が周辺部で残存しやすい",
+            "厚い負レンズと埋没面を用いた非点収差・像面湾曲の積極的補正"
+          ],
+          "citations": [12, 14]
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "title": "コントラスト",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "コーティング前提でない時代のPlanarは、フレアによりミクロコントラストが低下しやすく、収差補正自体は高いが『高解像だがヌルい』描写になりがちとされる。近代的コーティング導入後はゴーストを抑制し、高いマイクロコントラストを実現した。",
+          "citations": [14]
+        },
+        {
+          "type": "list",
+          "items": [
+            "空気・ガラス界面での内部反射・フレアによるコントラスト低下",
+            "マルチコーティングによる内部反射・フレアの抑制"
+          ],
+          "citations": [14]
+        }
+      ]
+    },
+    {
+      "id": "spherical_aberration",
+      "title": "球面収差",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "中央の負群が球面収差と像面湾曲を主に補正する役割を担うが、大口径化すると周辺画角で斜め入射の球面収差（oblique spherical aberration）が増大しやすい。",
+          "citations": [16]
+        },
+        {
+          "type": "list",
+          "items": [
+            "中央負群による軸上球面収差・像面湾曲の補正",
+            "大口径化に伴う周辺画角での斜め入射球面収差の増大"
+          ],
+          "citations": [16]
+        }
+      ]
+    },
+    {
+      "id": "coma_aberration",
+      "title": "コマ収差",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "対称構成によりコマ収差は基本的に小さく、点像再現性に優れる。非対称化した高速Biotar型では周辺に残存コマが生じ、特徴的なボケ形状の一因となる。",
+          "citations": [13]
+        },
+        {
+          "type": "list",
+          "items": [
+            "左右対称構成によるコマ収差の抑制",
+            "高速化のための非対称化による周辺部コマの残存"
+          ],
+          "citations": [13]
+        }
+      ]
+    },
+    {
+      "id": "astigmatism_and_field_curvature",
+      "title": "非点収差と像面湾曲",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Planar以降、厚い負レンズと埋没面の活用により非点収差と像面湾曲は大きく抑制された。ただし開放近傍では中〜周辺部に非点収差および像面湾曲が残る場合が多い。",
+          "citations": [12, 14]
+        },
+        {
+          "type": "list",
+          "items": [
+            "厚い負レンズと埋没面による非点収差・像面湾曲の補正",
+            "開放近傍での収差バランスとF値のトレードオフ"
+          ],
+          "citations": [12, 14]
+        }
+      ]
+    },
+    {
+      "id": "chromatic_aberration",
+      "title": "色収差",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Planarで導入された埋没面（同屈折率・異アッベ数ペア界面）は軸上色収差を積極的に補正するための仕組みで、その思想は後続のダブルガウス系にも継承された。標準〜やや望遠域では横色収差は小さく、軸上色収差も中口径では良好に抑えられるが、大口径f/1.4クラスでは開放時にパープル／グリーンフリンジが残る個体も多い。",
+          "citations": [12, 15]
+        },
+        {
+          "type": "list",
+          "items": [
+            "埋没面による軸上色収差の積極的補正",
+            "大口径化に伴う高次色収差の影響"
+          ],
+          "citations": [12, 15]
+        }
+      ]
+    },
+    {
+      "id": "field_curvature",
+      "title": "像面湾曲",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "理論的には対称ダブルガウスは像面をフラットに近づけられるが、画角拡大や大口径化により補正しきれない像面湾曲が残る場合がある。Summicron系では無限遠と近距離での像面湾曲およびフォーカスシフトを実用撮影距離で最適化する設計例が報告されている。",
+          "citations": [12, 15]
+        },
+        {
+          "type": "list",
+          "items": [
+            "対称構成による像面湾曲の理論的フラット化",
+            "画角拡大・大口径化による補正限界と実用距離での最適化"
+          ],
+          "citations": [12, 15]
+        }
+      ]
+    },
+    {
+      "id": "distortion",
+      "title": "歪曲収差",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "絞りを挟んだほぼ対称配置のため、樽型／糸巻き型ディストーションは非常に小さい。非対称化した高速型でも、ゾナー型など他形式より歪曲は小さいことが多い。",
+          "citations": [14]
+        },
+        {
+          "type": "list",
+          "items": [
+            "絞りを挟んだほぼ対称配置による歪曲の抑制",
+            "非対称化でも比較的小さい歪曲の設計"
+          ],
+          "citations": [14]
+        }
+      ]
+    },
+    {
+      "id": "maximum_f_number_evolution",
+      "title": "最大口径の進化",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "初期Planarではf/4.5付近が実用的なスタート。1920〜30年代の改良型ではf/2〜f/1.5が一般化し、高速標準の主流となった。設計自由度とガラス発展によりf/1.4やf/1.2も実現されたが、f/1.0級では別形式へ移行する例も多い。",
+          "citations": [12]
+        },
+        {
+          "type": "list",
+          "items": [
+            "ガラスの屈折率・アッベ数の発展と設計自由度の拡大",
+            "f/1.0級での収差バランスの難しさによる別形式への移行"
+          ],
+          "citations": [12]
+        }
+      ]
+    },
+    {
+      "id": "peripheral_light_loss",
+      "title": "周辺光量低下",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "標準焦点距離ではcos⁴則により開放で周辺光量が低下する。大口径Biotar型では開放で明確な周辺減光が残るが、それが描写特性として評価される場合もある。",
+          "citations": [14]
+        },
+        {
+          "type": "list",
+          "items": [
+            "cos⁴則による周辺光量の低下",
+            "大口径Biotar型での周辺減光の描写特性としての評価"
+          ],
+          "citations": [14]
+        }
+      ]
+    }
+  ]
+},
+
+
+{
+  "id": "rendering_character",
+  "title": "描写特性",
+  "sections": [
+    {
+      "id":"bokeh",
+      "title":"ボケ",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "開放付近では残存球面収差と非点収差・コマのバランスにより、中心付近は比較的素直だが、周辺では楕円化したボケやわずかな二線傾向が現れることがある。",
+          "citations": [2,8,5]
+        },
+        {
+          "type": "paragraph",
+          "text": "非対称ダブルガウス（Biotar系）では、周辺の像面湾曲とコマ収差に起因する回転ボケ・渦巻き状ボケが生じることがあり、ポートレート用途で好まれる傾向がある。",
+          "citations": [8,9]
+        },
+        {
+          "type": "paragraph",
+          "text": "現代のSummicron系などでは、前後ボケのエッジを抑え、玉ボケの輪郭が硬くなりすぎないよう最適化されており、滑らかなボケと高いシャープネスのバランスが追求されている。",
+          "citations": [6,8]
+        }
+      ]
+    },
+
+    {
+      "id":"three_dimensionality",
+      "title":"立体感",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "開放付近では中心に高い解像を維持しつつマイクロコントラストがやや穏やかであり、1〜2段絞ることで急激にコントラストが立ち上がる特性により、被写体の輪郭が浮かび上がるような立体感を与えることが多い。",
+          "citations": [2,6,5]
+        },
+        {
+          "type": "paragraph",
+          "text": "Summicron-Rのような設計では、近距離における像面湾曲と収差バランスを最適化することで、中距離〜近距離撮影時の空気感・立体感を重視した描写が分析されている。",
+          "citations": [6]
+        }
+      ]
+    },
+    
+    {
+      "id":"flare_resistance",
+      "title":"フレア",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "クラシックPlanarはガラス面数が多く、単層コーティング以前ではフレアやゴーストが発生しやすく、逆光時にコントラストが大きく低下する傾向があった。",
+          "citations": [1,4,5]
+        },
+        {
+          "type": "paragraph",
+          "text": "そのためZeissは、フレア耐性に優れる少枚数構成のSonnar系を高コントラスト標準として併売していた時期がある。",
+          "citations": [7,5]
+        },
+        {
+          "type": "paragraph",
+          "text": "マルチコーティング導入以降のダブルガウスは、逆光下でもフレアとゴーストが良好に抑制され、現代では逆光耐性も標準的に優秀なカテゴリとされる。",
+          "citations": [2,6]
+        }
+      ]
+    },
+
+    {
+      "id":"color_rendering",
+      "title":"色再現",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "単層コート〜初期マルチコート時代のダブルガウスは、わずかに暖色寄りで彩度が穏やかな描写を示す個体が多いとされる。",
+          "citations": [1,4,5]
+        },
+        {
+          "type": "paragraph",
+          "text": "現代のSummicron系ではニュートラル志向の色再現と高いヌケを両立し、内部反射低減によってデジタルでのポスト処理耐性も意識された設計となっている。",
+          "citations": [6,10]
+        }
+      ]
+    }
+  ]
+},
+
+{
+  "id":"operational_characteristics",
+  "title":"使用面での特徴",
+  "sections": [
+    {
+      "id":"size_and_weight",
+      "title":"サイズ・重量",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "標準域（50mm前後）の6枚4群ダブルガウスは、フィルム時代の典型例で全長40〜50mm台、重量150〜300gに収まりやすく、比較的コンパクトな構造が可能。",
+          "citations": [2,6,5]
+        },
+        {
+          "type": "paragraph",
+          "text": "デジタル対応の高性能版では、非球面レンズやフローティング機構の追加により7〜8枚以上となることが多く、全長および重量は増加する傾向がある。",
+          "citations": [2,8]
+        }
+      ]
+    },
+    {
+      "id":"typical_focal_length",
+      "title":"サイズ・重量",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "ダブルガウスが最も得意とする焦点距離は、35mm判で35〜60mm、特に50mm前後の標準域。",
+          "citations": [2,8]
+        },
+        {
+          "type": "paragraph",
+          "text": "85〜105mmの中望遠域にも応用例があるが、その場合はゾナー型やエルノスター型など他形式との折衷設計が用いられることが多い。",
+          "citations": [2,8,5]
+        }
+      ]
+    },
+    {
+      "id":"manufacturing_cost",
+      "title":"製造コスト",
+      "items":[
+        {
+          "type": "paragraph",
+          "text": "対称構造であり、超高屈折・超低分散材を必須としない設計が多いため、標準レンズとして大量生産しやすい点が利点。",
+          "citations": [2,8]
+        },
+        {
+          "type": "paragraph",
+          "text": "いいい一方でSummicronクラスの高性能版では、高度なガラス組み合わせ、高精度なセンタリングおよび面精度、場合によっては非球面の採用が求められ、現代的高性能実装には相応のコストがかかる。",
+          "citations": [6,8,5]
+        }
+      ]
+    }
+  ]
+},
+
+
+{
+  "id":"variants",
+  "title":"バリエーション",
+  "sections": [
+    {
+      "id":"planar_type",
+      "title": "Planar型",
+      "items": [
+        {
+          "type": "paragraph",
           "text": "Rudolphによる6枚4群構成を源流とし、多くのCarl Zeiss Planar（50mm f/1.4, 50mm f/1.7など）やContax用標準レンズへと発展した系譜。",
           "citations": [1,2,4]
         }
       ]
     },
     {
-      "name": "Biotar型",
-      "description": [
+      "id":"biotar_type",
+      "title": "Biotar型",
+      "items": [
         {
+          "type": "paragraph",
           "text": "非対称化したダブルガウスで、大口径化と高速性能を狙った設計。Helios-44などのコピーで広まり、渦巻きボケ描写で知られる。",
           "citations": [2,8,9]
         }
       ]
     },
     {
-      "name": "Summitar / Summicron型",
-      "description": [
+      "id":"summicronr_type",
+      "title": "Summitar / Summicron型",
+      "items": [
         {
+          "type": "paragraph",
           "text": "Leicaの50mm f/2クラス標準レンズに見られる派生型。6枚4群〜6枚5群を基礎とし、貼り合わせ位置や空気間隔を調整することで性能最適化を図る。",
           "citations": [6,3]
         },
         {
+          "type": "paragraph",
           "text": "Summicron-R 50mm f/2 2nd typeなどは6枚5群の非対称ダブルガウスで、近距離性能最適化が特徴。",
           "citations": [6,3]
         }
       ]
     },
     {
-      "name": "近代的40mm / 35mm型",
-      "description": [
+      "id":"35mm_type",
+      "title": "近代的40mm / 35mm型",
+      "items": [
         {
+          "type": "paragraph",
           "text": "Konica Hexanon 40mmなど、6枚5群の変形ダブルガウス設計により、コンパクトさと描写性能のバランスを追求した派生型。",
           "citations": [10,2]
         }
       ]
     }
-  ],
+  ]
+},
 
-  "modern_evolution": {
 
-    "digital_optimization": [
-
+{
+  "id": "modern_evolution",
+  "title": "現代的展開",
+  "sections": [
+    {
+      "id": "digital_optimization",
+      "title": "デジタル最適化",
+      "items": [
       {
-        "text": "あああデジタルセンサーは斜入射光に弱いため、像側主光線角を小さくする設計が重視される。後群設計の最適化や後玉の大径化により、よりテレセントリックに近づける改良が行われている。",
+        "type": "paragraph",
+        "text": "デジタルセンサーは斜入射光に弱いため、像側主光線角を小さくする設計が重視される。後群設計の最適化や後玉の大径化により、よりテレセントリックに近づける改良が行われている。",
         "citations": [2,8,10]
       },
 
       {
+        "type": "paragraph",
         "text": "近距離での球面収差や像面湾曲を抑制するため、フォーカスに連動して一部レンズ群を移動させるフローティング機構が採用されることが多い。",
         "citations": [6,8]
       },
 
       {
+        "type": "paragraph",
         "text": "大口径開放時の周辺像質改善や軸上色収差と球面収差の同時抑制のため、1〜2面の非球面要素を導入した変形ダブルガウスが主流となりつつある。",
         "citations": [2,8,5]
       },
 
       {
+        "type": "paragraph",
         "text": "高度なマルチコーティングや鏡胴内部の迷光対策強化により、逆光フレアを大幅に改善し、現代では高コントラストでクセの少ない標準レンズとして再定義されている。",
         "citations": [2,6,10]
       }
-    ],
-
-    "current_position": [
-      {
-        "text": "ダブルガウスは現代標準レンズ設計の基準的存在であり、光学性能・製造効率・描写特性のバランスにおいて依然として重要な設計思想を形成している。",
-        "citations": [2,8]
-      }
-    ]
-  },
-
-
-  "lens_list": [
-    {
-      "name": "Super-Takumar 55mm f1.8"
+      ]
     },
     {
-      "name": "<レンズ名2>",
-      "type": "<convex/concave>",
-      "position": 2,
-      "description": "<レンズ2の説明>"
+      "id": "current_position",
+      "title": "現代的地位",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "ダブルガウスは現代標準レンズ設計の基準的存在であり、光学性能・製造効率・描写特性のバランスにおいて依然として重要な設計思想を形成している。",
+          "citations": [2,8]
+        }
+      ]
     }
-  ],
+  ]
+},
+
+{
+  "id": "lens_list",
+  "title": "レンズ一覧",
+  "sections": [
+    {
+      "id": "double_gauss_group",
+      "title": "ダブルガウス系",
+      "items": [
+        {
+          "type": "paragraph",
+          "text": "Super-Takumar 55mm f1.8"
+        },
+        {
+          "type": "paragraph",
+          "text": "<レンズ名2>"
+        }
+      ]
+    }
+  ]
+}
+
+
+],
+
 
   "references": [
     {
@@ -829,6 +1089,7 @@
     }
 
   ]
+
 }
 
 

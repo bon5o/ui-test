@@ -35,30 +35,24 @@ function renderImageItems(
     return (
       <figure
         key={img.src ? `${img.src}-${index}` : index}
-        className="inline-block p-2 bg-gray-50 border border-gray-100 rounded"
+        className="inline-block align-top p-2 bg-[#F4F8FF] border border-gray-100 rounded"
       >
         {img.src && (
-          <div
-            className="inline-block"
-            style={{ width: `${600 * scale}px` }}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt ?? img.caption ?? fallbackAlt}
-              width={600}
-              height={400}
-              unoptimized
-              style={{ width: "100%", height: "auto" }}
-              className="rounded"
-            />
-          </div>
+          <Image
+            src={img.src}
+            alt={img.alt ?? img.caption ?? fallbackAlt}
+            width={600 * scale}
+            height={400 * scale}
+            unoptimized
+            className="rounded"
+          />
         )}
-      {img.caption != null && img.caption !== "" && (
-        <figcaption className="mt-2 text-xs leading-relaxed text-gray-500">
-          {img.caption}
-        </figcaption>
-      )}
-    </figure>
+        {img.caption != null && img.caption !== "" && (
+          <figcaption className="mt-2 text-sm text-gray-600 text-center break-words whitespace-pre-line">
+            {img.caption}
+          </figcaption>
+        )}
+      </figure>
     );
   });
 }

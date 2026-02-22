@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
+import type { HybridContent } from "../types/hybridContent";
 
 const DESIGNS_DIRECTORY = join(process.cwd(), "data", "designs");
 const CATEGORIES_PATH = join(process.cwd(), "data", "categories.json");
@@ -115,14 +116,21 @@ function getDesignFilePath(id: string): string {
   return join(DESIGNS_DIRECTORY, `${id}.json`);
 }
 
-export function getDesignById(id: string): Design | null {
+export function getDesignById(id: string): Design | HybridContent | null {
   try {
     const filePath = getDesignFilePath(id);
     const contents = readFileSync(filePath, "utf-8");
-    return JSON.parse(contents) as Design;
+    const data = JSON.parse(contents) as Record<string, unknown>;
+    return data as Design | HybridContent;
   } catch {
     return null;
   }
+}
+
+export function isHybridContent(
+  design: Design | HybridContent | null
+): design is HybridContent {
+  return design != null && "chapters" in design && Array.isArray(design.chapters);
 }
 
 export function getAllDesignIds(): string[] {
