@@ -193,13 +193,12 @@
           "citations": [1,2,4,7],
           
           "media": {
+          "layout": "left",
           "images": [{
-            "src": "/images/lens-types/double-gauss/Gauss_lens1888.png"
-          }],
-          "diagrams": [],
-          "documents": [{
-          "text": "f/4.5前後"}],
-          "scale": 0.2
+            "src": "/images/lens-types/double-gauss/Gauss_lens1888.png",
+            "caption": "1896年パウル・ルドルフによるレンズ構成図",
+            "scale": 0.2
+          }]
         }
       }  
       ]
