@@ -845,10 +845,10 @@ export default async function DesignDetailPage({ params }: PageProps) {
 
       <div className="divide-y divide-gray-100 border-t border-gray-100">
         {entriesToRender.map(([key, value]) => (
-          <React.Fragment key={key}>
+          <div key={key} className="block w-full">
             {renderDesignSection(key, value)}
             {key !== "historical_development" && <AutoMediaRenderer data={value} />}
-          </React.Fragment>
+          </div>
         ))}
       </div>
 
