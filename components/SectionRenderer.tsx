@@ -18,9 +18,9 @@ function groupItems(items: ContentItem[], sectionId: string): ItemChunk[] {
   let i = 0;
   while (i < items.length) {
     const item = items[i];
-    const raw = item as Record<string, unknown>;
+    const raw = item as unknown as Record<string, unknown>;
     const layout = raw.layout as "left" | "right" | undefined;
-    const nextRaw = items[i + 1] as Record<string, unknown> | undefined;
+    const nextRaw = items[i + 1] as unknown as Record<string, unknown> | undefined;
     const nextLayout = nextRaw?.layout as "left" | "right" | undefined;
 
     // Pattern B: paragraph/list → image(left/right) → 描画順を image → paragraph → ... に入替
@@ -33,7 +33,7 @@ function groupItems(items: ContentItem[], sectionId: string): ItemChunk[] {
       const following: ContentItem[] = [item]; // 画像より前の段落を「続き」に含める
       i += 2;
       while (i < items.length) {
-        const n = items[i] as Record<string, unknown>;
+        const n = items[i] as unknown as Record<string, unknown>;
         if (n.type === "paragraph" || n.type === "list") {
           following.push(items[i]);
           i++;
@@ -51,7 +51,7 @@ function groupItems(items: ContentItem[], sectionId: string): ItemChunk[] {
       const following: ContentItem[] = [];
       i++;
       while (i < items.length) {
-        const n = items[i] as Record<string, unknown>;
+        const n = items[i] as unknown as Record<string, unknown>;
         if (n.type === "paragraph" || n.type === "list") {
           following.push(items[i]);
           i++;

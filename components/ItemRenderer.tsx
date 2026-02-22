@@ -33,7 +33,7 @@ function isEmptyOrKeyless(obj: Record<string, unknown>): boolean {
 }
 
 function renderItemContent(item: ContentItem, index: number): React.ReactNode {
-  const raw = item as Record<string, unknown>;
+  const raw = item as unknown as Record<string, unknown>;
 
   if (isEmptyOrKeyless(raw)) {
     return null;

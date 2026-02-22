@@ -156,8 +156,8 @@ export function getAllDesigns(): DesignListItem[] {
     .map((id) => {
       const design = getDesignById(id);
       if (!design) return null;
-      const slug = design.meta.category ?? "other";
-      return { id, name: design.meta.name, category: slug };
+      const slug = design.meta?.category ?? "other";
+      return { id, name: design.meta?.name ?? id, category: slug };
     })
     .filter((d): d is DesignListItem => d !== null)
     .sort((a, b) => a.name.localeCompare(b.name));

@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { getDesignById, getAllDesignIds, isHybridContent } from "../../../lib/designs";
+import type { Reference } from "../../../types/hybridContent";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { HybridContentRenderer } from "../../../components/HybridContentRenderer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
@@ -66,7 +67,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
         <div className="mt-12">
           <CollapsibleSection title="参考文献" defaultOpen={false}>
             <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
-              {refs.map((ref) => (
+              {(refs as Reference[]).map((ref) => (
                 <li key={ref.id ?? String(ref)} id={ref.id != null ? `ref-${ref.id}` : undefined} className="flex flex-col gap-1">
                   <span className="flex flex-wrap items-baseline gap-x-1">
                     {ref.id != null && (
