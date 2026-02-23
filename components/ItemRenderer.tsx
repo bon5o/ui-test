@@ -29,6 +29,15 @@ function assertNever(x: never): never {
 
 const KNOWN_TYPES = ["paragraph", "list", "image", "quote", "table"] as const;
 
+/** 2列仕様表かどうか（項目/仕様など短文ラベル＋値） */
+function isSpecTable(headers: string[]): boolean {
+  return (
+    headers.length === 2 &&
+    headers[0] === "項目" &&
+    headers[1] === "仕様"
+  );
+}
+
 /** 年表テーブルかどうか（年＋出来事/意義の列がある） */
 function isTimelineTable(headers: string[]): boolean {
   const hasYear = headers.includes("年");
@@ -248,7 +257,8 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     case "table": {
       const t = item as TableItem;
       const headers = t.headers ?? [];
-      const timelineItems = tableToTimelineItems(t);
+      const specTable = isSpecTable(headers);
+      const timelineItems = specTable ? null : tableToTimelineItems(t);
       const cardRows: ResponsiveTableCardRow[] = t.rows.map((row) => ({
         cells:
           headers.length > 0
@@ -261,6 +271,47 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
                 value: <TermLinkify text={String(v)} />,
               })),
       }));
+
+      if (specTable) {
+        return (
+          <div key={index} className="my-4 w-full">
+            <table className="w-full table-fixed border-separate border-spacing-0 border border-gray-200 rounded overflow-hidden text-sm">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                    {headers[0]}
+                  </th>
+                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                    {headers[1]}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {t.rows.map((row, ri) => (
+                  <tr
+                    key={ri}
+                    className={
+                      ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+                    }
+                  >
+                    <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
+                      <TermLinkify text={String(row[0] ?? "")} />
+                    </td>
+                    <td className="border-b border-gray-200 px-3 py-2 align-top text-sm text-gray-700 leading-6 whitespace-pre-line break-words">
+                      <TermLinkify text={String(row[1] ?? "")} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {t.citations && t.citations.length > 0 && (
+              <div className="mt-2">
+                <Citation citations={t.citations} />
+              </div>
+            )}
+          </div>
+        );
+      }
 
       return (
         <div key={index} className="my-4">
