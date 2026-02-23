@@ -38,12 +38,10 @@ function isSpecTable(headers: string[]): boolean {
   );
 }
 
-/** 年表テーブルかどうか（年＋出来事/意義の列がある） */
+/** 年表テーブルかどうか（年列があり、他に列がある） */
 function isTimelineTable(headers: string[]): boolean {
-  const hasYear = headers.includes("年");
-  const hasEventOrSignificance =
-    headers.includes("出来事") || headers.includes("意義");
-  return hasYear && (hasEventOrSignificance || headers.includes("人物/企業"));
+  const yearIdx = headers.indexOf("年");
+  return yearIdx >= 0 && headers.length >= 2;
 }
 
 /** TableItem を TimelineItem[] に変換。年表でない場合は null */
@@ -52,24 +50,42 @@ function tableToTimelineItems(t: TableItem): TimelineItem[] | null {
   if (!isTimelineTable(headers)) return null;
 
   const yearIdx = headers.indexOf("年");
-  const personIdx = headers.findIndex(
-    (h) => h === "人物/企業" || h === "製品"
+  const titleIdx =
+    headers.indexOf("人物/企業") >= 0
+      ? headers.indexOf("人物/企業")
+      : headers.indexOf("製品") >= 0
+        ? headers.indexOf("製品")
+        : -1;
+
+  const excludeIndices = new Set(
+    [yearIdx, titleIdx].filter((i) => i >= 0)
   );
-  const eventIdx = headers.indexOf("出来事");
-  const significanceIdx = headers.indexOf("意義");
+  const bulletHeaderIndices = headers
+    .map((_, i) => i)
+    .filter((i) => !excludeIndices.has(i));
 
   return t.rows
     .map((row) => {
-      const year = yearIdx >= 0 ? row[yearIdx] : undefined;
-      const person = personIdx >= 0 ? row[personIdx] : undefined;
-      const event = eventIdx >= 0 ? row[eventIdx] : undefined;
-      const significance = significanceIdx >= 0 ? row[significanceIdx] : undefined;
-      if (!year && !person && !event && !significance) return null;
+      const year =
+        yearIdx >= 0 && row[yearIdx] != null && String(row[yearIdx]).trim() !== ""
+          ? String(row[yearIdx])
+          : undefined;
+      const title =
+        titleIdx >= 0 && row[titleIdx] != null && String(row[titleIdx]).trim() !== ""
+          ? String(row[titleIdx])
+          : undefined;
+      const bullets: Array<{ label: string; value: string }> = [];
+      for (const i of bulletHeaderIndices) {
+        const val = row[i];
+        if (val != null && String(val).trim() !== "") {
+          bullets.push({ label: headers[i], value: String(val) });
+        }
+      }
+      if (!year && !title && bullets.length === 0) return null;
       return {
-        year: year ?? undefined,
-        person: person ? String(person) : undefined,
-        event: event ? String(event) : undefined,
-        significance: significance ? String(significance) : undefined,
+        year,
+        title,
+        bullets: bullets.length > 0 ? bullets : undefined,
       } as TimelineItem;
     })
     .filter((item): item is TimelineItem => item != null);
