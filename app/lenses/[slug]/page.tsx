@@ -7,7 +7,7 @@ import { PageContainer } from "../../../components/ui/PageContainer";
 import { HybridContentRenderer } from "../../../components/HybridContentRenderer";
 import type { HybridContent, Chapter } from "../../../types/hybridContent";
 
-const CHAPTER_ORDER = [
+const FIXED_IDS = [
   "overview",
   "basic_structure",
   "design_philosophy",
@@ -20,6 +20,14 @@ const CHAPTER_ORDER = [
   "comparative_analysis",
   "related",
 ] as const;
+
+type ChapterId = (typeof FIXED_IDS)[number];
+
+const fixedIds = new Set<ChapterId>(FIXED_IDS);
+
+function isChapterId(x: string): x is ChapterId {
+  return (FIXED_IDS as readonly string[]).includes(x);
+}
 
 export async function generateStaticParams() {
   const slugs = getAllSlugs();
@@ -59,14 +67,13 @@ export default async function LensDetailPage({ params }: PageProps) {
     if (ch?.id) chapterMap.set(ch.id, ch);
   }
 
-  const fixedIds = new Set(CHAPTER_ORDER);
   const orderedChapters: Chapter[] = [];
-  for (const id of CHAPTER_ORDER) {
+  for (const id of FIXED_IDS) {
     const ch = chapterMap.get(id);
     if (ch) orderedChapters.push(ch);
   }
   for (const ch of rawChapters) {
-    if (ch?.id && !fixedIds.has(ch.id)) orderedChapters.push(ch);
+    if (ch?.id && !isChapterId(ch.id)) orderedChapters.push(ch);
   }
 
   const content: HybridContent = {
