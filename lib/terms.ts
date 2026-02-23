@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
+import type { HybridContent } from "../types/hybridContent";
 
 const TERMS_DIRECTORY = join(process.cwd(), "data", "terms");
 
@@ -90,6 +91,9 @@ export interface Term {
 export interface TermListItem {
   slug: string;
   title: string;
+  english_name?: string;
+  /** category パス（例: "lens_element/singlet_geometry"） */
+  category?: string;
 }
 
 export function getAllTerms(): TermListItem[] {
@@ -100,20 +104,39 @@ export function getAllTerms(): TermListItem[] {
       .map((f) => {
         const slug = f.replace(".json", "");
         const term = getTermBySlug(slug);
-        return term ? { slug: term.slug, title: term.title } : null;
+        if (!term) return null;
+        const rawTitle =
+          "title" in term && typeof term.title === "string"
+            ? term.title
+            : (term as HybridContent).meta?.title ??
+              (term as HybridContent).meta?.name ??
+              slug;
+        const title = typeof rawTitle === "string" ? rawTitle : String(slug);
+        const rawEnglish =
+          "english_name" in term && typeof term.english_name === "string"
+            ? term.english_name
+            : (term as HybridContent).meta?.english_name;
+        const english_name =
+          typeof rawEnglish === "string" ? rawEnglish : undefined;
+        const category =
+          (term as HybridContent).meta?.category ??
+          ("category" in term ? (term as Term).category : undefined);
+        const categoryStr = typeof category === "string" ? category : undefined;
+        const item: TermListItem = { slug, title, english_name, category: categoryStr };
+        return item;
       })
-      .filter((t): t is TermListItem => t !== null)
+      .filter((t): t is TermListItem => t != null)
       .sort((a, b) => a.title.localeCompare(b.title));
   } catch {
     return [];
   }
 }
 
-export function getTermBySlug(slug: string): Term | null {
+export function getTermBySlug(slug: string): Term | HybridContent | null {
   try {
     const filePath = join(TERMS_DIRECTORY, `${slug}.json`);
     const contents = readFileSync(filePath, "utf-8");
-    return JSON.parse(contents) as Term;
+    return JSON.parse(contents) as Term | HybridContent;
   } catch {
     return null;
   }

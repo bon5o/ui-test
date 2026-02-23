@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import type { Lens } from "../types/lens";
+import type { LensIndexItem } from "../types/lensIndex";
 
 /**
  * レンズデータのディレクトリパス
@@ -59,6 +60,22 @@ export function getAllSlugs(): string[] {
     return lenses.map((lens) => lens.meta.slug);
   } catch (error) {
     console.error("Error getting all slugs:", error);
+    return [];
+  }
+}
+
+const LENS_INDEX_PATH = join(process.cwd(), "data", "lens_index.json");
+
+/**
+ * レンズ一覧用の軽量インデックスを取得
+ * data/lens_index.json を読み込む
+ */
+export function getAllLensIndexItems(): LensIndexItem[] {
+  try {
+    const contents = readFileSync(LENS_INDEX_PATH, "utf-8");
+    const data = JSON.parse(contents) as LensIndexItem[];
+    return Array.isArray(data) ? data : [];
+  } catch {
     return [];
   }
 }

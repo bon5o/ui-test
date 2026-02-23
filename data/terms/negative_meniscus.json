@@ -1,221 +1,1072 @@
 {
-  "slug": "negative_meniscus",
-  "title": "負メニスカス（負メニスカスレンズ）",
-  "english_name": "Negative Meniscus Lens",
-  "category": "球面収差・開口数制御",
-  "field": ["光学設計", "レーザー光学系", "赤外光学系", "写真レンズ", "投影光学系"],
-  "media": {
-    "optical_formula": [
-      {
-        "src": "/images/terms/negative_meniscus/negative_meniscus.png",
-        "variant": "classic_6e4g",
-        "era": "classic",
-        "caption": "http://nijikarasu.cocolog-nifty.com/blog/2015/02/post-c6bf.htmlによる"
-       }
-     ]
- },
-
-
-
-  "overview": [
-    {
-      "text": "負メニスカスレンズは、一方が凸面、他方が凹面の曲率をもつ単レンズで、中心部が周辺部よりも薄く、全体として負の焦点距離（発散力）をもつレンズである。",
-      "citations": [1]
-    }
-  ],
-
-  "principle": [
-    {
-      "text": "凹面側の曲率半径を凸面側より小さく（強く）設計することで、周辺部が中央部より厚くなり、光を発散させる負の屈折力が得られると同時に、他のレンズと組み合わせることで球面収差やコマ収差を抑えつつ焦点距離や開口数を調整できる。",
-      "citations": [5]
-    }
-  ],
-
-  "structure": {
-    "elements": 1,
-    "cemented": false,
-    "typical_combination": ["単一ガラス（N-BK7、UVFS、CaF2、ZnSeなど）の凸凹メニスカス形状（中心が薄く縁が厚い）"]
+  "meta": {
+    "id": "negative_meniscus",
+    "name": "負メニスカスレンズ",
+    "english_name": "Negative meniscus lens",
+    "category": "aaa/bb",
+    "aliases": [
+      "負のメニスカスレンズ",
+      "凹凸レンズ（負）",
+      "diverging meniscus lens",
+      "convex-concave lens (negative)"
+    ],
+    "summary": "負メニスカスレンズは、片面が凸・片面が凹のメニスカス形状を持ちながら全体として負の光学パワー（発散作用）を示す単レンズ要素で、球面収差や像面湾曲（Petzval和）などのバランス調整に使われやすい。",
+    "tags": [
+      "meniscus",
+      "negative_power",
+      "diverging_lens",
+      "aberration_balance",
+      "field_flattening",
+      "beam_expander",
+      "paraxial_optics",
+      "photographic_lens_history"
+    ],
+    "updated_at": "2026-02-23"
   },
-
-  "correction_target": [
-    "球面収差（他レンズと組み合わせたときの最小化）",
-    "コマ収差（設計条件による補助的な低減）",
-    "開口数（NA）の低減とビーム発散角制御",
-    "像面湾曲・ペッツバール和の制御（特定条件）"
-  ],
-
-  "uncorrected_aberrations": [
-    "色収差（単レンズのため基本的に未補正）",
-    "非点収差（レイアウトによっては残存）",
-    "歪曲収差（使用条件と配置に依存）"
-  ],
-
-  "advantages": [
+  "chapters": [
     {
-      "text": "正レンズと組み合わせることで、系全体の球面収差を抑えつつ、所望の有効焦点距離を得ることができる。",
-            "media": {
-        "images": [{
-            "src": "/images/lens-types/double-gauss/Gauss_lens1896.png",
-            "caption": "1888年ガウスの初期構成図",
-            "alt": "1888年 ガウスのレンズ構成図"
-          }]
-      },
-      "citations": [6]
+      "id": "overview",
+      "title": "概要",
+      "sections": [
+        {
+      "id": "optical_formula",
+      "title": "メニスカス",
+      "items": [
+        {
+          "type": "image",
+          "src": "/images/terms/negative_meniscus/meniscus1.png",
+          "caption": "メニスカス"
+        }
+      ]
+    },
+
+
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスレンズは、凸面と凹面を1つずつ持つメニスカス形状のうち、凹面側の曲率が相対的に強く（半径が短い側が凹面となりやすく）、レンズ全体として入射光を発散させる負の焦点距離を持つレンズ要素である。",
+              "citations": [
+                1,
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "id": "quick_summary",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "凸面と凹面を持つが、全体の光学パワーは負（発散）になる。",
+                "単体でも発散作用を持つが、実務では他レンズと組み合わせて使うことが多い。",
+                "球面収差を大きく悪化させずにビーム発散を増やす用途で用いられることがある。",
+                "組合せ系では有効焦点距離を伸ばし、NAを下げる方向に働きやすい。",
+                "Petzval和（像面湾曲）低減など、収差バランスのための負パワー要素として機能しやすい。",
+                "顕微鏡・内視鏡・表示系・超広角系などの特許例で、負メニスカス要素が複数の形で現れる。"
+              ],
+              "citations": [
+                2,
+                3,
+                6,
+                13,
+                14,
+                15,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "id": "typical_use",
+          "title": "用途",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "代表的には、ビーム拡大・ビーム整形の構成要素、複合レンズでの有効焦点距離やNA調整、像面湾曲を含む収差バランスのための負パワー成分として使われる。",
+              "citations": [
+                2,
+                3,
+                6,
+                13
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "レーザー・光ファイバ系：ビーム拡大系、発散量の調整。",
+                "撮像・投影：超広角系や特殊撮像での負パワー群の一部。",
+                "顕微鏡：平坦像面（プラン）志向の対物設計での負メニスカス要素の採用例。",
+                "内視鏡：負メニスカスを分割して歪曲や像面湾曲を抑える設計例。",
+                "表示光学：転送レンズでの像面平坦化要素、視野拡大要素。"
+              ],
+              "citations": [
+                2,
+                12,
+                14,
+                15,
+                17
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "text": "負の発散力により、光ビームの発散を増大させたり、系の有効開口数（NA）を低減したりでき、ビーム拡大や照明光学系に有利に用いられる。",
-      "citations": [5]
+      "id": "basic_structure",
+      "title": "基本構造",
+      "sections": [
+        {
+          "id": "geometry_definition",
+          "title": "幾何定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、片面が凸・片面が凹の形状を取り、厚み分布としては中心が薄く周辺が厚くなりやすい。形状分類としての「負」は、2面の曲率の相対関係により全体の光学パワーが負になることを指す。",
+              "citations": [
+                1,
+                4
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "面形状：凸面1面＋凹面1面。",
+                "厚み傾向：中心薄・周辺厚になりやすい。",
+                "曲率関係の目安：凹面側の曲率が相対的に強い（結果として負パワー）。",
+                "実務上の注意：曲率の強弱・符号は採用する符号規約（Rの符号）に依存するため、設計ではパワーと収差への寄与で判断する。"
+              ],
+              "citations": [
+                1,
+                4,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "id": "optical_power_characteristics",
+          "title": "光学パワー特性",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "薄肉近似では光学パワーは主に屈折率nと両面の曲率（半径R1, R2）で決まり、負メニスカスは 1/f が負になる曲率組合せとして理解できる。実際には厚みや配置（空気間隔）も効くため、単体パワーというより系全体のパワー配分として扱われる。",
+              "citations": [
+                8,
+                9
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "単体効果：平行光を発散させ、像はレンズ前方の虚焦点から出るように見える。",
+                "組合せ効果：他の正パワー要素と組むと有効焦点距離を増やし、結果としてNAを下げる方向に働きやすい。",
+                "波長依存：屈折率分散により色収差寄与を持つため、単体では色補正できない（別要素との組合せが前提になりやすい）。"
+              ],
+              "citations": [
+                2,
+                3,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "id": "placement_in_system",
+          "title": "光学系内での配置",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、ビーム拡大では発散量制御の要素として、結像系では像面湾曲や視野特性を整える負パワー成分として配置される。特許例では、像面平坦化のための負パワー要素、あるいは負メニスカス要素のセットを物体側最前面に置く超広角構成などが見られる。",
+              "citations": [
+                2,
+                13,
+                15,
+                17
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "ビーム系：コリメート光や準コリメート光に対し、発散を増やす位置に配置。",
+                "結像系：レンズ群の前群や中間群に負パワーを配分し、Petzval和や視野収差を調整。",
+                "最前面配置の例：超広角で負メニスカス群を物体側に置く設計例がある。",
+                "像面平坦化の例：負パワー要素をフィールドフラットナとして使う構成例がある。"
+              ],
+              "citations": [
+                2,
+                6,
+                15,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "id": "typical_variations",
+          "title": "構造バリエーション",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは単レンズ（singlet）として流通する一方、特許・設計例では複数枚の負メニスカスをセット化したり、正レンズに貼り合わせた形で負メニスカス要素を組み込む例もある。用途により、材料・コーティング・厚み・曲率配分が変わり、狙う収差（像面湾曲、歪曲、球面収差など）に応じて形状が最適化される。",
+              "citations": [
+                2,
+                12,
+                14,
+                15,
+                16
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "単体素子：市販の負メニスカス（発散・収差低減目的）。",
+                "セット構成：負メニスカスを2枚以上組み合わせ、視野や歪曲を狙って分担させる設計例。",
+                "貼り合わせ：正レンズとセメントして群全体の色収差や球面収差を調整する設計例。",
+                "用途特化：超広角、顕微鏡対物、内視鏡、表示転送などで曲率・ガラス選択が最適化される。"
+              ],
+              "citations": [
+                12,
+                14,
+                15,
+                16
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "text": "単レンズで構成が簡単なため、他の補正レンズと比較して製造が容易で、比較的低コストで実装できる。",
-      "citations": [1]
+      "id": "principle",
+      "title": "原理",
+      "sections": [
+        {
+          "id": "refraction_mechanism",
+          "title": "屈折機構",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスでは、2つの球面（凸面と凹面）での屈折の合成により、光線束の開きを増やす方向の角度変化が支配的になる。薄肉近似のレンズメーカ式の観点では、両面曲率の差（および屈折率）が 1/f の符号を決め、負になると発散レンズとして機能する。",
+              "citations": [
+                1,
+                8,
+                9
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "入射光線（平行に近い）に対して、出射光線が外側へ広がる。",
+                "見かけ上、レンズ前方の焦点から出たような虚像の光線束になる。",
+                "実系では厚み・開口位置・前後の空気間隔が加わり、単体パワーよりも「どこでどの光線束をどれだけ曲げるか」が重要になる。"
+              ],
+              "citations": [
+                2,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aberration_behavior",
+          "title": "収差への影響",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、単に発散させるだけでなく、球面収差を大きく増やさずにビームの発散を増やす用途で用いられることがある。さらに、複合系では負パワーの配分と形状因子により、コマ・非点・歪曲などの第三次（Seidel）収差のバランスに寄与し得る。",
+              "citations": [
+                2,
+                3,
+                7,
+                10
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "球面収差：単レンズでも形状により寄与が変わり、用途によっては「大きな追加球面収差を出さずに発散量を稼ぐ」方向で使われる。",
+                "コマ・非点：視野光線束の取り扱い（絞り位置や前後群との組合せ）により増減し、負メニスカス単体での善悪ではなく系全体で評価する。",
+                "歪曲：負パワー群は視野角設計と結びつきやすく、特許例では歪曲や像面湾曲を抑える狙いで負メニスカスを分割する構成が示される。"
+              ],
+              "citations": [
+                7,
+                10,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "id": "field_curvature_effect",
+          "title": "像面湾曲との関係",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "像面湾曲はPetzval和で評価され、平坦像面を得るには系のPetzval曲率を相殺するように正・負の屈折力（正負パワー）を配分する考え方が基礎になる。負メニスカスは負パワー要素としてPetzval和を下げる方向に寄与しやすく、フィールドフラットナ要素や対物系前群の厚いメニスカスとして用いられる例がある。",
+              "citations": [
+                6,
+                12,
+                13,
+                17
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "Petzval曲率の観点：正パワーだけでは像面が曲がりやすく、負パワーを混ぜることで相殺を狙う。",
+                "実装の観点：像面平坦化は単一要素だけで完結しにくく、負メニスカスは系内の役割分担として入ることが多い。",
+                "応用例：表示転送系や顕微鏡対物の設計で、像面平坦化に関する記述が特許に現れる。"
+              ],
+              "citations": [
+                6,
+                12,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "id": "system_interaction",
+          "title": "他レンズとの相互作用",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、正レンズ群と組み合わせることで系の有効焦点距離・開口・収差の分担を調整する役割を持つ。市販技術資料では、負メニスカスを別レンズと組み合わせることで焦点距離を増やしNAを低下させる、といった系全体の特性変化が説明されている。",
+              "citations": [
+                2,
+                3
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "パワー配分：正パワーを主担当にしつつ、負メニスカスで視野収差や像面特性を整える。",
+                "絞り位置依存：同じ負メニスカスでも、絞り（開口停止）との位置関係でコマ・非点などの寄与が変わる。",
+                "群設計：負メニスカスを複数枚に分割し、歪曲・像面湾曲などを分担して抑える設計例がある。"
+              ],
+              "citations": [
+                10,
+                14
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "text": "赤外用材料と組み合わせることで、赤外光学系において平凹レンズの代替として高い性能を示しやすい。",
-      "citations": [6]
+      "id": "pros_cons",
+      "title": "メリット・デメリット",
+      "sections": [
+        {
+          "id": "advantages",
+          "title": "メリット",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、負パワーを比較的扱いやすい形で系に導入でき、像面湾曲や視野収差のバランスに使える点が利点になりやすい。特に、像面平坦化のための負パワー要素、歪曲や像面湾曲を抑えるための負メニスカス分割、ビーム発散増加を球面収差の大きな増加なしに行う、といった方向で利点が語られる傾向がある。",
+              "citations": [
+                2,
+                6,
+                14,
+                17
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "負パワー導入によりPetzval和低減（像面湾曲の相殺）に寄与しやすい傾向がある。",
+                "フィールドフラットナや前群要素として、平坦像面や広視野の狙いに組み込みやすい。",
+                "ビーム拡大・発散増加用途で、顕著な球面収差を追加せずに機能させる説明例がある。",
+                "負メニスカスを複数枚に分割することで歪曲や像面湾曲を抑える設計例が示されている。",
+                "顕微鏡・内視鏡・表示光学など、要求が厳しい分野で採用例が多く、設計の定石として扱われやすい。"
+              ],
+              "citations": [
+                2,
+                6,
+                12,
+                14,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "id": "disadvantages",
+          "title": "デメリット",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは負パワー要素であるため、単体で結像させる用途には向きにくく、他要素との組合せ前提になりやすい。また、負パワー導入は視野収差や色収差の分担を複雑化させ得るため、系設計では絞り位置やガラス選択を含めた全体最適が必要になる。",
+              "citations": [
+                5,
+                7,
+                8
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "単体では色収差補正ができず、波長依存の焦点変化を抑えるには追加要素が必要になりやすい。",
+                "負パワー導入により、コマ・非点・歪曲などの視野収差バランスが変化し、絞り位置とセットでの再最適化が必要になりやすい。",
+                "設計自由度は増える一方、要素追加や分割により枚数・空気間隔が増え、調整や製造許容差の管理が難しくなる場合がある。",
+                "超広角などでは負メニスカス群の形状・配置が性能に強く効き、条件式で拘束される設計例がある。",
+                "像面平坦化目的でも、負パワー要素だけで完全に平坦化するのは一般に難しく、他の収差（非点や歪曲など）とのトレードオフになりやすい。"
+              ],
+              "citations": [
+                7,
+                12,
+                15,
+                16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "historical_development",
+      "title": "歴史的展開",
+      "sections": [
+        {
+          "id": "prehistory_context",
+          "title": "前史・技術背景",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "写真以前の単玉レンズやカメラ・オブスクラでは、単レンズで広い画角と実用的なシャープネスを得るために、絞り位置とレンズ形状の工夫が重要だった。写真レンズ設計史の整理では、メニスカス（特にWollastonのランドスケープ・レンズ）や、その後のアクロマート化が、広い視野での実用性向上の文脈で語られる。",
+              "citations": [
+                5
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "当時の制約：単玉は色収差が大きく、感材の分光感度の偏りもあり、実用上の合焦やシャープネスに制約があった。",
+                "対策の方向性：絞り（開口停止）の導入、レンズ形状（メニスカス）の工夫、後のアクロマート化。",
+                "この文脈での位置づけ：メニスカス形状は視野の実用性を高める要素として歴史上重要視される。"
+              ],
+              "citations": [
+                5
+              ]
+            }
+          ]
+        },
+        {
+          "id": "origin",
+          "title": "起源",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "メニスカス形状そのものの代表的起点として、Wollastonが1804年に眼鏡用の正メニスカスを考案し、1812年にカメラ・オブスクラ用として応用したと整理されることが多い。一方で「負メニスカス」という要素形状は基本的な幾何分類であり、特定の単一発明者や単一特許に帰属させるのは難しく、用途別の設計史として追う必要がある。",
+              "citations": [
+                5,
+                1,
+                4
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "写真史上のメニスカス起点：Wollastonのメニスカスと絞り配置の工夫がランドスケープ・レンズとして整理される。",
+                "アクロマート化：1839年末までにChevalierがアクロマート化したメニスカスを作った、という整理がある。",
+                "負メニスカス固有の起源：要追加調査（基本形状分類としては広く用いられ、特定の単一特許に限定しにくい）。"
+              ],
+              "citations": [
+                5
+              ]
+            }
+          ]
+        },
+        {
+          "id": "early_improvements",
+          "title": "初期改良期",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "単玉メニスカスの改良は、色収差の抑制（アクロマート化）と、視野でのシャープネス確保（絞り位置や形状の最適化）という2軸で進んだと整理される。ここでは負メニスカス単体の改良史というより、正負の屈折力配分を含むレンズ設計一般の成熟が背景として重要になる。",
+              "citations": [
+                5,
+                6
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "アクロマート化により、合焦の実用性が向上する方向が示された。",
+                "像面湾曲などの視野特性は、Petzval曲率の観点で「正負パワーの配分」が有効という枠組みが重要になった。",
+                "負メニスカスは、この枠組みの中で負パワー要素として組み込まれていく。"
+              ],
+              "citations": [
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        {
+          "id": "major_breakthroughs",
+          "title": "主要転換点",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "20世紀後半には、顕微鏡や表示光学などで像面平坦化や広視野を狙う設計の中に、負メニスカス要素が明示的に現れる特許が見られる。負メニスカスは、像面湾曲（Petzval和）低減や歪曲・収差配分の一部として、実装上の役割が明確化されていった。",
+              "citations": [
+                12,
+                13,
+                17
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "年",
+                "人物/企業",
+                "出来事",
+                "意義"
+              ],
+              "rows": [
+                [
+                  "1804",
+                  "William Hyde Wollaston",
+                  "眼鏡用の正メニスカスを考案したと整理される",
+                  "メニスカス形状が視野実用性の文脈で重要要素として扱われる起点の一つ"
+                ],
+                [
+                  "1812",
+                  "William Hyde Wollaston",
+                  "メニスカスをカメラ・オブスクラ用に応用したと整理される",
+                  "絞り配置と形状で広い画角の実用性を得る発想が体系化される"
+                ],
+                [
+                  "1839",
+                  "Chevalier",
+                  "アクロマート化したメニスカスを作ったと整理される",
+                  "色収差を抑えた実用的な広視野単群の方向性を提示"
+                ],
+                [
+                  "1976",
+                  "Kohayakawa, Takesi",
+                  "負メニスカスを反射要素として用いるカトプトリック系の特許",
+                  "負メニスカスが特殊系の構成要素として明示される"
+                ],
+                [
+                  "1977",
+                  "Walter Klein",
+                  "像面湾曲補正・平坦化の文脈で負メニスカス前玉を含む顕微鏡対物の特許",
+                  "高NA・広視野での像面平坦化の設計課題に対する具体的構成例"
+                ],
+                [
+                  "1980",
+                  "Phillip J. Rogers",
+                  "修正Petzval系で負メニスカス形状の負要素やフィールドフラットナを扱う特許",
+                  "Petzval曲率と収差配分の実装として負メニスカス形状が利用される例"
+                ],
+                [
+                  "1980",
+                  "Phillip J. Rogers",
+                  "転送レンズで負パワー要素をフィールドフラットナ成分として扱う特許出願",
+                  "表示・転送光学での像面平坦化設計の中に負要素の役割が明示される"
+                ],
+                [
+                  "1994",
+                  "Richard Wolf GmbH",
+                  "内視鏡で負メニスカス2枚の負レンズクラスターを用いる特許",
+                  "歪曲や像面湾曲の低減を「負メニスカス分割」で狙う設計思想が明文化"
+                ],
+                [
+                  "2018",
+                  "Griffin, Taylor",
+                  "自動車向けデュアルフォーカスカメラで負メニスカスを介在させる特許出願",
+                  "撮像用途での機能分割（同一センサ面で別距離の焦点）への応用例"
+                ],
+                [
+                  "2020",
+                  "Nikon",
+                  "対物レンズで負メニスカスをセメントして用いる特許出願",
+                  "高性能対物での材料条件式・貼り合わせ構成として負メニスカスが組み込まれる"
+                ],
+                [
+                  "2024",
+                  "Olympus",
+                  "240度以上の画角を対象に負メニスカスレンズセットを最前面に配置する特許",
+                  "超広角での負メニスカス形状・表面条件の体系化例"
+                ]
+              ],
+              "citations": [
+                5,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ]
+            }
+          ]
+        },
+        {
+          "id": "modern_development",
+          "title": "現代的展開",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "現代では、負メニスカスは単体部品としてのビーム用途だけでなく、顕微鏡・内視鏡・超広角撮像など高性能系の「負パワー分担」要素として具体的に設計条件へ落とし込まれている。特許では、負メニスカスの枚数分割、最前面配置、貼り合わせ、材料条件式などが提示され、用途ごとの最適化の方向性が読み取れる。",
+              "citations": [
+                14,
+                15,
+                16
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "医療内視鏡：負メニスカスを2枚構成にして歪曲と像面湾曲を抑える設計例。",
+                "顕微鏡対物：負メニスカスを貼り合わせ構成に組み込み、材料条件まで含めて最適化する設計例。",
+                "超広角：負メニスカスセットを物体側最前面に置き、画角条件を満たすための表面形状条件を課す設計例。",
+                "撮像機能分割：センサ近傍に負メニスカスを入れて画像の一部を別距離に合焦させる設計例。"
+              ],
+              "citations": [
+                14,
+                15,
+                16,
+                18
+              ]
+            }
+          ]
+        },
+        {
+          "id": "historical_significance",
+          "title": "歴史的意義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、単なる発散レンズというより、像面湾曲や視野収差を含む「収差配分」の中で負パワーを導入するための実装形状として意義がある。写真史の初期におけるメニスカスの重要性と、Petzval曲率を相殺する設計枠組みが結びつき、後の高性能系における負メニスカスの具体的な活躍へつながっていく。",
+              "citations": [
+                5,
+                6
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mathematical_background",
+      "title": "数学的背景",
+      "sections": [
+        {
+          "id": "basic_equations",
+          "title": "基本式",
+          "items": [
+            {
+              "type": "table",
+              "headers": [
+                "式",
+                "意味",
+                "実用的解釈"
+              ],
+              "rows": [
+                [
+                  "1/f = (n - 1) * (1/R1 - 1/R2)",
+                  "薄肉近似のレンズメーカ式（空気中）",
+                  "曲率差と材料屈折率でパワーが決まり、符号が負なら発散レンズになる"
+                ],
+                [
+                  "P = 1/f",
+                  "光学パワー（薄肉近似の表現として）",
+                  "Pが負なら負レンズ、Pの絶対値が大きいほど強い発散（または収束）"
+                ]
+              ],
+              "citations": [
+                8,
+                9
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは、R1とR2の組合せにより 1/f が負になるように設計されるが、実際の設計では厚み・空気間隔・停止位置が効くため、単一式だけで性能は決まらない。とはいえ近軸式は、負パワー導入の第一近似の見積りとして有用である。",
+              "citations": [
+                8,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "id": "paraxial_approximation",
+          "title": "近軸近似",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "近軸理論では、角度が小さい範囲で sinθ や tanθ を一次近似し、レンズメーカ式やガウス結像が成立する条件を作る。第三次収差の説明では、sinθ の級数展開の高次項が無視できないことで、近軸像からのズレが球面収差などとして現れる、という見方が使われる。",
+              "citations": [
+                10
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "適用範囲：小開口・小視野（小角度）で最もよく成り立つ。",
+                "限界：高NAや広視野では高次項の影響が増え、負メニスカスの配置や形状が収差に強く効く。",
+                "実務：近軸近似は初期設計や感度把握に有効で、最終性能はレイトレースと最適化で詰める。"
+              ],
+              "citations": [
+                7,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aberration_terms",
+          "title": "収差項",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "第三次（Seidel）収差は、球面収差・コマ・非点・像面湾曲・歪曲の5つとして整理され、要素の形状や停止位置で寄与が変化する。負メニスカスは負パワー要素として像面湾曲（Petzval曲率）に関与しやすく、特許や設計資料でも像面平坦化や歪曲低減の文脈で役割が言及される。",
+              "citations": [
+                6,
+                7,
+                14
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "球面収差：軸上での焦点位置のズレとして現れ、形状因子と開口で大きく変わる。",
+                "コマ・非点：オフ軸点像が崩れる現象で、停止位置とレンズ形状の相互作用が強い。",
+                "像面湾曲：理想平面に対して最良結像面が曲がる現象で、Petzval和の観点が有効。",
+                "歪曲：倍率が視野で変化し直線が曲がる現象で、広視野系では負パワー群の設計と結びつきやすい。"
+              ],
+              "citations": [
+                7,
+                10,
+                14
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comparative_analysis",
+      "title": "比較",
+      "sections": [
+        {
+          "id": "similar_elements",
+          "title": "類似要素との比較",
+          "items": [
+            {
+              "type": "table",
+              "headers": [
+                "比較項目",
+                "本構成",
+                "類似構成",
+                "主な違い"
+              ],
+              "rows": [
+                [
+                  "形状分類",
+                  "負メニスカス（凸面＋凹面）",
+                  "平凹レンズ（plano-concave）",
+                  "平面があるため形状因子の自由度が小さく、同等パワーでも収差配分の幅が変わる"
+                ],
+                [
+                  "光学パワー",
+                  "負（発散）",
+                  "正メニスカス（positive meniscus）",
+                  "同じメニスカス形状でも曲率配分でパワー符号が反転する"
+                ],
+                [
+                  "収差バランス用途",
+                  "負パワーとしてPetzval和低減に寄与しやすい",
+                  "単純な負レンズ（例：両凹）",
+                  "負パワーの導入自体は同じでも、メニスカス形状は曲率配分により視野収差の調整余地が異なる"
+                ],
+                [
+                  "広視野設計での現れ方",
+                  "負メニスカスのセットを物体側最前面に置く設計例がある",
+                  "単独の負レンズ前玉",
+                  "セット化・表面条件付与など、超広角での幾何制約の扱いが具体的に提示される場合がある"
+                ]
+              ],
+              "citations": [
+                1,
+                4,
+                15
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "負メニスカスは「負レンズ」である点では平凹や両凹と共通するが、凸面と凹面の両方を持つことで形状因子の選択肢が増え、収差配分の自由度が変わる。メニスカス内での正負判定は曲率の相対関係に依存し、分類上は同形状でも機能が分かれる。",
+              "citations": [
+                1,
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "id": "performance_comparison",
+          "title": "性能傾向比較",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスの性能は単体評価より、系の中での収差分担として評価するのが適切である。特に像面湾曲（Petzval和）や歪曲を含む視野特性の調整では、負パワーの入れ方と形状の自由度が効くため、単純な負レンズとの差が出やすい。",
+              "citations": [
+                6,
+                7,
+                14
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "解像（傾向）：単体ではなく、絞り位置や前後群との組合せで決まるため、負メニスカス自体の優劣というより最適化のしやすさが効く。",
+                "球面収差（傾向）：ビーム用途では「大きな球面収差を追加せずに発散を増やす」説明がなされることがある。",
+                "像面湾曲（傾向）：負パワー要素としてPetzval和を低減する方向に使われやすい。",
+                "歪曲（傾向）：広視野では歪曲が主要課題になり、負メニスカス分割などの設計例がある。"
+              ],
+              "citations": [
+                2,
+                6,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "id": "usage_difference",
+          "title": "用途上の違い",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "負メニスカスが有利になりやすいのは、負パワーを導入しつつ視野特性や像面平坦性を同時に調整したい場合である。一方、単に弱い発散を得るだけなら他の負レンズ形状でも足りることが多く、負メニスカスを選ぶ動機は「収差配分の都合」になりやすい。",
+              "citations": [
+                2,
+                6,
+                15
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "有利な状況：像面平坦化を意識した設計、広視野での収差バランス調整、特定の負パワー配分が必要な多群設計。",
+                "不利になり得る状況：枚数や空気間隔が増えやすい構成で、許容差・コスト・サイズ制約が厳しい場合。",
+                "用途依存：内視鏡や超広角では、歪曲や像面湾曲の扱いから負メニスカスの分割やセット化が選ばれることがある。"
+              ],
+              "citations": [
+                14,
+                15
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "related",
+      "title": "関連",
+      "sections": [
+        {
+          "id": "related_links",
+          "title": "関連構成型・用語",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "メニスカスレンズ（positive/negative）",
+                "発散レンズ（negative lens）",
+                "フィールドフラットナ（像面平坦化要素）",
+                "Petzval和、Petzval曲率、像面湾曲",
+                "第三次（Seidel）収差：球面収差、コマ、非点、像面湾曲、歪曲",
+                "薄レンズ近似、レンズメーカ式",
+                "ビームエキスパンダ（ビーム拡大系）",
+                "顕微鏡対物（plan objective）",
+                "内視鏡光学系",
+                "超広角光学系（魚眼を含む）"
+              ],
+              "citations": [
+                1,
+                2,
+                6,
+                7,
+                15
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
-
-  "disadvantages": [
-    {
-      "text": "単レンズのため色収差補正能力が低く、高精度な色補正を要求する撮像系には単独では適さない。",
-      "citations": [7]
-    },
-    {
-      "text": "負レンズであるため単独では像縮小と発散が主効果となり、結像レンズとして用いるには他の正レンズとの組み合わせ設計が必須となる。",
-      "citations": [7]
-    },
-    {
-      "text": "非点収差や歪曲収差の補正は配置や他素子に強く依存し、万能な補正素子としては機能しない。",
-      "citations": [7]
-    }
-  ],
-
-  "historical_background": {
-    "first_developed": {
-      "text": "19〜20世紀初頭にかけて、写真レンズや望遠鏡・赤外光学機器などでの収差補正要素として、正メニスカスと並行して負メニスカス形状が実用的に発展した。",
-      "citations": [7]
-    },
-    "inventor": {
-      "text": "特定の個人発明ではなく、実用光学設計の過程で、ペッツバール和や開口数の制御を目的として徐々に確立されたレンズ形状とみなされている。",
-      "citations": [7]
-    },
-    "notes": {
-      "text": "高開口写真レンズやカタディオプトリック系、赤外光学系などで、正レンズと組み合わせて収差補正および焦点距離調整を行うための重要な負レンズ要素として位置付けられてきた。",
-      "citations": [6]
-    }
-  },
-
-  "applications": [
-    {
-      "text": "ビームエキスパンダや照明系におけるビーム拡大・発散角制御（他の正レンズと組み合わせたガリレオ型ビームエキスパンダなど）。",
-      "citations": [5]
-    },
-    {
-      "text": "複合レンズ系における有効焦点距離の延長や開口数低減を目的とした補助レンズ要素。",
-      "citations": [5]
-    },
-    {
-      "text": "赤外光学系での平凹レンズの代替としての集光・発散制御および収差低減。",
-      "citations": [6]
-    },
-    {
-      "text": "カタディオプトリック望遠鏡や補正光学系において、反射系と組み合わせて収差補正と焦点位置の最適化を行う要素。",
-      "citations": [7]
-    }
-  ],
-
-  "comparison": {
-    "vs_singlet": {
-      "text": "同じ発散力をもつ単純な平凹レンズや両凹レンズに比べ、負メニスカスは適切な向きと曲率比で用いることで球面収差を小さくでき、他レンズとの組み合わせ時により良好な像品質とコンパクトな設計が可能になる。",
-      "citations": [1]
-    },
-    "vs_positive_meniscus": {
-      "text": "正メニスカスが中心が厚く収束力をもつ形状で焦点距離短縮や開口数向上に用いられるのに対し、負メニスカスは中心が薄く発散力をもち、焦点距離延長や開口数低減、ビーム拡大などに用いられる。",
-      "citations": [1]
-    }
-  },
-
-  "related_terms": [
-    "positive_meniscus",
-    "spherical_aberration",
-    "coma",
-    "field_curvature",
-    "petzval_sum",
-    "beam_expander"
-  ],
-
-  "see_also": [
-    "achromat",
-    "double_gauss",
-    "retrofocus_lens",
-    "meniscus_corrector"
-  ],
-
-  "diagrams": [
-    {
-      "type": "structure",
-      "description": "中心が薄く周辺が厚い凸凹形状をもつ負メニスカス単レンズの断面図（入射光に対し凹面を向けた配置）。",
-      "citations": [1]
-    }
-  ],
-
   "references": [
     {
       "id": 1,
-      "title": "Positive/Negative Meniscus Lenses",
-      "author_or_source": "Edmund Optics",
-      "url": "https://www.edmundoptics.com/f/meniscus-lenses/40150/",
-      "type": "Company Limited",
-      "reliability": "high"
+      "title": "meniscus lens (Photonics Dictionary)",
+      "author_or_source": "Photonics Media",
+      "url": "https://www.photonics.com/Dictionary/meniscus-lens/d5383",
+      "type": "dictionary",
+      "reliability": "high",
+      "notes": "負メニスカスの定義（凹側曲率が強い場合に発散）を含む用語辞典。"
     },
     {
       "id": 2,
-      "title": "負メニスカスレンズ",
-      "author_or_source": "Thorlabs Japan",
-      "url": "https://www.thorlabs.co.jp/navigation.cfm?guide_id=105",
-      "type": "Company Limited",
-      "reliability": "high"
+      "title": "Application Note: Using Meniscus Lenses",
+      "author_or_source": "Thorlabs",
+      "url": "https://www.thorlabs.de/catalogPages/715.pdf",
+      "type": "manufacturer_pdf",
+      "reliability": "high",
+      "notes": "負メニスカスの用途（ビーム拡大、球面収差を大きく増やさない等）と組合せ効果（焦点距離増加、NA低下）に言及。"
     },
     {
       "id": 3,
-      "title": "Advantages of Using Meniscus Lenses in Infrared Applications",
-      "author_or_source": "Edmund Optics",
-      "url": "https://www.edmundoptics.com/knowledge-center/",
-      "type": "Application Note",
-      "reliability": "high"
+      "title": "Negative Meniscus Lenses (Guide)",
+      "author_or_source": "Thorlabs",
+      "url": "https://www.thorlabs.com/navigation.cfm?Guide_ID=105",
+      "type": "manufacturer_article",
+      "reliability": "high",
+      "notes": "負メニスカスの一般的説明と用途（ビーム拡大、NA変化など）に関するメーカー資料。"
     },
     {
       "id": 4,
-      "title": "Meniscus Lenses and Their Application",
-      "author_or_source": "Generic Technical/Design Literature",
-      "url": "https://example.com/meniscus_lens_design",
-      "type": "Technical Article",
-      "reliability": "medium"
+      "title": "Lens (negative meniscus description)",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Lens",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "負メニスカスの幾何的特徴（中心が薄い等）と分類の説明。"
     },
     {
       "id": 5,
-      "title": "Meniscus Lenses: Understanding Their Unique Optical Properties and Applications",
-      "author_or_source": "MOK Optics",
-      "url": "https://mokoptics.com/meniscus-lenses-understanding-their-unique-optical-properties-and-applications/",
-      "type": "Company Limited",
-      "reliability": "medium"
+      "title": "History of photographic lens design (Meniscus or 'landscape' lens section)",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/History_of_photographic_lens_design",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "Wollastonのメニスカス、カメラ・オブスクラへの応用、Chevalierのアクロマート化など写真史の文脈。"
     },
     {
       "id": 6,
-      "title": "Design methods - David Shafer",
-      "author_or_source": "David Shafer / University of Arizona",
-      "url": "https://wp.optics.arizona.edu/jsasian/wp-content/uploads/sites/33/2017/07/Design-methods-David-Shafer.pdf",
-      "type": "Lecture Notes",
-      "reliability": "high"
+      "title": "Petzval Theorem (PDF)",
+      "author_or_source": "University of Florence (e-learning resource)",
+      "url": "https://e-l.unifi.it/mod/resource/view.php?id=357550",
+      "type": "academic_pdf",
+      "reliability": "high",
+      "notes": "像面湾曲（Petzval曲率）と正負パワー配分の考え方に関する学術資料。"
     },
     {
       "id": 7,
-      "title": "Positive Meniscus Lenses and Negative Meniscus Lenses",
-      "author_or_source": "UNI OPTICS",
-      "url": "https://www.uni-optics.com/positive-meniscus-lenses-and-negative-meniscus-lenses_p5.html",
-      "type": "Company Limited",
-      "reliability": "medium"
+      "title": "Phys42200 Lecture 33: Aberrations (PDF)",
+      "author_or_source": "Purdue University (course notes)",
+      "url": "https://www.physics.purdue.edu/~jones105/phys42200_Spring2013/notes/Phys42200_Lecture33.pdf",
+      "type": "academic_pdf",
+      "reliability": "high",
+      "notes": "第三次（Seidel）収差の分類を講義資料として整理。"
+    },
+    {
+      "id": 8,
+      "title": "Lensmaker’s Equation (NCBI Bookshelf)",
+      "author_or_source": "NCBI Bookshelf",
+      "url": "https://www.ncbi.nlm.nih.gov/sites/books/NBK594278/?report=reader",
+      "type": "textbook_like",
+      "reliability": "high",
+      "notes": "薄レンズ近似のレンズメーカ式の提示。"
+    },
+    {
+      "id": 9,
+      "title": "24.3: Lenses (The Lensmaker's Equation)",
+      "author_or_source": "Physics LibreTexts (Boundless)",
+      "url": "https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24:_Geometric_Optics/24.3:_Lenses",
+      "type": "educational",
+      "reliability": "medium",
+      "notes": "パワー P=1/f と薄レンズ近似式の関係を説明。"
+    },
+    {
+      "id": 10,
+      "title": "Third-Order Seidel Aberrations",
+      "author_or_source": "JML Optical",
+      "url": "https://www.jmloptical.com/resources/third-order-seidel-aberrations/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "第三次収差の物理解釈や近軸近似の級数展開（sinθの展開）を含む技術解説。"
+    },
+    {
+      "id": 11,
+      "title": "High aperture catoptric system",
+      "author_or_source": "US Patent US3994573A",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/US3994573A?lens_id=045-968-964-360-64X",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "負メニスカスを反射要素として扱うカトプトリック系の例。"
+    },
+    {
+      "id": 12,
+      "title": "Microscope objective",
+      "author_or_source": "US Patent US4009945A",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/US4009945A?lens_id=046-823-856-453-506",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "像面湾曲補正・平坦化の文脈で負メニスカス前玉を含む顕微鏡対物の例。"
+    },
+    {
+      "id": 13,
+      "title": "Modified Petzval lens",
+      "author_or_source": "US Patent US4232943A",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/US4232943A?lens_id=101-801-358-248-097",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "負要素がメニスカス形状になり得ること、フィールドフラットナなどの構成を含む。"
+    },
+    {
+      "id": 14,
+      "title": "Endoscope optical system",
+      "author_or_source": "US Patent US5327283A",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/US5327283A?lens_id=159-653-169-485-74X",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "負メニスカス2枚で歪曲や像面湾曲低減を狙う内視鏡目的の例。"
+    },
+    {
+      "id": 15,
+      "title": "Set of negative meniscus lenses, wide-angle optical system, image pickup apparatus, and projection apparatus",
+      "author_or_source": "US Patent US12055696B2 (Olympus Corporation)",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/US12055696B2?lens_id=146-924-135-821-602",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "超広角で負メニスカスセットを最前面に置く設計例と条件式。"
+    },
+    {
+      "id": 16,
+      "title": "OBJECTIVE LENS, OPTICAL SYSTEM, AND MICROSCOPE",
+      "author_or_source": "EP Patent Application EP3623859A1 (Nikon Corporation)",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/EP3623859A1?lens_id=146-637-866-454-832",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "負メニスカスをセメントした対物構成と材料条件式の例。"
+    },
+    {
+      "id": 17,
+      "title": "Four-component lens and display apparatus including this lens",
+      "author_or_source": "EP Patent Application EP20006A1",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/EP20006A1?lens_id=027-389-563-237-094",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "転送レンズでの負パワー成分（フィールドフラットナ等）の構成例。"
+    },
+    {
+      "id": 18,
+      "title": "DUAL-FOCUS CAMERA FOR AUTOMATED VEHICLES",
+      "author_or_source": "EP Patent Application EP3284641A1",
+      "url": "https://www.perplexity.ai/rest/file-repository/patents/EP3284641A1?lens_id=179-756-469-445-894",
+      "type": "patent",
+      "reliability": "high",
+      "notes": "撮像系で負メニスカスを介在させて画像の一部を別距離に合焦させる例。"
     }
   ]
 }

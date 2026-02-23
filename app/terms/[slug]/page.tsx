@@ -1,13 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getTermBySlug, type CitedText } from "../../../lib/terms";
+import { getTermBySlug, getAllTerms, type CitedText, type Term } from "../../../lib/terms";
 import { getDesignById } from "../../../lib/designs";
+import { isHybridContent } from "../../../lib/isHybridContent";
 import { TERM_LINKS } from "../../../lib/termLinks";
+import type { Reference } from "../../../types/hybridContent";
 import { BackButton } from "../../../components/ui/BackButton";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { SectionHeading } from "../../../components/ui/SectionHeading";
 import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
+import { HybridContentRenderer } from "../../../components/HybridContentRenderer";
+import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
 
 function renderTextWithTermLinks(text: string): React.ReactNode {
   const regex = new RegExp(`(${TERM_LINKS.map((t) => t.term).join("|")})`, "g");
@@ -85,11 +89,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export async function generateStaticParams() {
-  return [
-    { slug: "positive_meniscus" },
-    { slug: "negative_meniscus" },
-    { slug: "achromat" },
-  ];
+  const terms = getAllTerms();
+  return terms.map((t) => ({ slug: t.slug }));
 }
 
 interface PageProps {
@@ -104,6 +105,99 @@ export default async function TermPage({ params }: PageProps) {
     notFound();
   }
 
+  // ハイブリッド形式（chapters）の場合は HybridContentRenderer で描画
+  if (isHybridContent(term)) {
+    const meta = term.meta as {
+      title?: string;
+      name?: string;
+      english_name?: string;
+      category?: string;
+      field?: string[];
+    } | undefined;
+    const title = meta?.title ?? meta?.name ?? slug;
+    const englishName = meta?.english_name;
+    const category = meta?.category;
+    const field = meta?.field;
+    const refs = term.references;
+
+    return (
+      <PageContainer className="max-w-3xl">
+        <nav className="mb-6 text-sm text-gray-600">
+          <BackButton />
+        </nav>
+        <article>
+          <header className="mb-8">
+            <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
+              {title}
+            </h1>
+            {englishName && (
+              <p className="mt-2 text-[15px] tracking-[0.04em] text-gray-500 font-sans">
+                {englishName}
+              </p>
+            )}
+            {(category || (field && field.length > 0)) && (
+              <div className="mt-3 flex flex-wrap gap-2 text-sm text-gray-600">
+                {category && (
+                  <span className="rounded bg-gray-100 px-2 py-1">{category}</span>
+                )}
+                {field?.map((f, i) => (
+                  <span key={i} className="rounded bg-gray-100 px-2 py-1">
+                    {f}
+                  </span>
+                ))}
+              </div>
+            )}
+          </header>
+
+          <HybridContentRenderer content={term} />
+
+          {Array.isArray(refs) && refs.length > 0 && (
+            <div className="mt-12">
+              <CollapsibleSection title="参考文献" defaultOpen={false}>
+                <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
+                  {(refs as Reference[]).map((ref) => (
+                    <li
+                      key={ref.id ?? String(ref)}
+                      id={ref.id != null ? `ref-${ref.id}` : undefined}
+                      className="flex flex-col gap-1"
+                    >
+                      <span className="flex flex-wrap items-baseline gap-x-1">
+                        {ref.id != null && (
+                          <span className="shrink-0 font-mono text-xs text-[#7D9CD4]/70">
+                            [{ref.id}]
+                          </span>
+                        )}
+                        <span>{ref.title ?? ""}</span>
+                        {ref.author_or_source && (
+                          <span className="text-gray-500">/ {ref.author_or_source}</span>
+                        )}
+                        {ref.type && (
+                          <span className="text-gray-400">/ {ref.type}</span>
+                        )}
+                        {ref.url && (
+                          <a
+                            href={ref.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#7D9CD4] underline decoration-[#7D9CD4]/30 underline-offset-2 hover:text-[#5E7AB8]"
+                          >
+                            {ref.url}
+                          </a>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </CollapsibleSection>
+            </div>
+          )}
+        </article>
+      </PageContainer>
+    );
+  }
+
+  // 非ハイブリッド（旧形式）: 従来の AutoMediaRenderer 表示を維持
+  const termData = term as Term;
   const LABELS: Record<string, string> = {
     overview: "概要",
     principle: "原理",
@@ -130,19 +224,19 @@ export default async function TermPage({ params }: PageProps) {
       <article>
         <header className="mb-8">
           <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
-            {term.title}
+            {termData.title}
           </h1>
-          {term.english_name && (
+          {termData.english_name && (
             <p className="mt-2 text-[15px] tracking-[0.04em] text-gray-500 font-sans">
-              {term.english_name}
+              {termData.english_name}
             </p>
           )}
-          {(term.category || (term.field && term.field.length > 0)) && (
+          {(termData.category || (termData.field && termData.field.length > 0)) && (
             <div className="mt-3 flex flex-wrap gap-2 text-sm text-gray-600">
-              {term.category && (
-                <span className="rounded bg-gray-100 px-2 py-1">{term.category}</span>
+              {termData.category && (
+                <span className="rounded bg-gray-100 px-2 py-1">{termData.category}</span>
               )}
-              {term.field?.map((f, i) => (
+              {termData.field?.map((f, i) => (
                 <span key={i} className="rounded bg-gray-100 px-2 py-1">
                   {f}
                 </span>
@@ -151,11 +245,11 @@ export default async function TermPage({ params }: PageProps) {
           )}
         </header>
 
-        {term.media?.optical_formula && term.media.optical_formula.length > 0 && (
+        {termData.media?.optical_formula && termData.media.optical_formula.length > 0 && (
           <Section title="光学構成図">
-            <AutoMediaRenderer data={term.media}>
+            <AutoMediaRenderer data={termData.media}>
               <div className="space-y-6">
-                {term.media.optical_formula.map((item, i) => (
+                {termData.media.optical_formula.map((item, i) => (
                   <figure key={i}>
                     {item.src && (
                       <Image
@@ -186,45 +280,45 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.overview && term.overview.length > 0 && (
+        {termData.overview && termData.overview.length > 0 && (
           <Section title={LABELS.overview}>
-            <AutoMediaRenderer data={term.overview}>
-              <CitedTextList items={term.overview} />
+            <AutoMediaRenderer data={termData.overview}>
+              <CitedTextList items={termData.overview} />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.principle && term.principle.length > 0 && (
+        {termData.principle && termData.principle.length > 0 && (
           <Section title={LABELS.principle}>
-            <AutoMediaRenderer data={term.principle}>
-              <CitedTextList items={term.principle} />
+            <AutoMediaRenderer data={termData.principle}>
+              <CitedTextList items={termData.principle} />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.structure && (
+        {termData.structure && (
           <Section title={LABELS.structure}>
-            <AutoMediaRenderer data={term.structure}>
+            <AutoMediaRenderer data={termData.structure}>
               <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-[15px]">
-                {term.structure.elements != null && (
+                {termData.structure.elements != null && (
                   <>
                     <div className="text-gray-600">枚数</div>
-                    <div>{term.structure.elements}枚</div>
+                    <div>{termData.structure.elements}枚</div>
                   </>
                 )}
-                {term.structure.cemented != null && (
+                {termData.structure.cemented != null && (
                   <>
                     <div className="text-gray-600">貼り合わせ</div>
-                    <div>{term.structure.cemented ? "あり" : "なし"}</div>
+                    <div>{termData.structure.cemented ? "あり" : "なし"}</div>
                   </>
                 )}
-                {term.structure.typical_combination &&
-                  term.structure.typical_combination.length > 0 && (
+                {termData.structure.typical_combination &&
+                  termData.structure.typical_combination.length > 0 && (
                   <>
                     <div className="text-gray-600">典型的な構成</div>
                     <div>
                       <ul className="list-disc pl-6 space-y-1">
-                        {term.structure.typical_combination.map((s, i) => (
+                        {termData.structure.typical_combination.map((s, i) => (
                           <li key={i}>{renderTextWithTermLinks(s)}</li>
                         ))}
                       </ul>
@@ -236,76 +330,76 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.correction_target && term.correction_target.length > 0 && (
+        {termData.correction_target && termData.correction_target.length > 0 && (
           <Section title={LABELS.correction_target}>
-            <AutoMediaRenderer data={term.correction_target}>
-              <StringList items={term.correction_target} />
+            <AutoMediaRenderer data={termData.correction_target}>
+              <StringList items={termData.correction_target} />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.uncorrected_aberrations && term.uncorrected_aberrations.length > 0 && (
+        {termData.uncorrected_aberrations && termData.uncorrected_aberrations.length > 0 && (
           <Section title={LABELS.uncorrected_aberrations}>
-            <AutoMediaRenderer data={term.uncorrected_aberrations}>
-              <StringList items={term.uncorrected_aberrations} />
+            <AutoMediaRenderer data={termData.uncorrected_aberrations}>
+              <StringList items={termData.uncorrected_aberrations} />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.advantages && term.advantages.length > 0 && (
+        {termData.advantages && termData.advantages.length > 0 && (
           <Section title={LABELS.advantages}>
-            <AutoMediaRenderer data={term.advantages}>
+            <AutoMediaRenderer data={termData.advantages}>
               <CitedTextList
-                items={term.advantages}
+                items={termData.advantages}
                 className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
               />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.disadvantages && term.disadvantages.length > 0 && (
+        {termData.disadvantages && termData.disadvantages.length > 0 && (
           <Section title={LABELS.disadvantages}>
-            <AutoMediaRenderer data={term.disadvantages}>
+            <AutoMediaRenderer data={termData.disadvantages}>
               <CitedTextList
-                items={term.disadvantages}
+                items={termData.disadvantages}
                 className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
               />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.historical_background && (
+        {termData.historical_background && (
           <Section title={LABELS.historical_background}>
             <div className="space-y-4">
-              {term.historical_background.first_developed && (
+              {termData.historical_background.first_developed && (
                 <div>
                   <h3 className="text-base font-medium text-gray-800">初出・発展</h3>
-                  <AutoMediaRenderer data={term.historical_background.first_developed}>
+                  <AutoMediaRenderer data={termData.historical_background.first_developed}>
                     <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(term.historical_background.first_developed.text)}
-                      {renderCitations(term.historical_background.first_developed.citations)}
+                      {renderTextWithTermLinks(termData.historical_background.first_developed.text)}
+                      {renderCitations(termData.historical_background.first_developed.citations)}
                     </p>
                   </AutoMediaRenderer>
                 </div>
               )}
-              {term.historical_background.inventor && (
+              {termData.historical_background.inventor && (
                 <div>
                   <h3 className="text-base font-medium text-gray-800">発明者</h3>
-                  <AutoMediaRenderer data={term.historical_background.inventor}>
+                  <AutoMediaRenderer data={termData.historical_background.inventor}>
                     <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(term.historical_background.inventor.text)}
-                      {renderCitations(term.historical_background.inventor.citations)}
+                      {renderTextWithTermLinks(termData.historical_background.inventor.text)}
+                      {renderCitations(termData.historical_background.inventor.citations)}
                     </p>
                   </AutoMediaRenderer>
                 </div>
               )}
-              {term.historical_background.notes && (
+              {termData.historical_background.notes && (
                 <div>
                   <h3 className="text-base font-medium text-gray-800">備考</h3>
-                  <AutoMediaRenderer data={term.historical_background.notes}>
+                  <AutoMediaRenderer data={termData.historical_background.notes}>
                     <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(term.historical_background.notes.text)}
-                      {renderCitations(term.historical_background.notes.citations)}
+                      {renderTextWithTermLinks(termData.historical_background.notes.text)}
+                      {renderCitations(termData.historical_background.notes.citations)}
                     </p>
                   </AutoMediaRenderer>
                 </div>
@@ -314,21 +408,21 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.applications && term.applications.length > 0 && (
+        {termData.applications && termData.applications.length > 0 && (
           <Section title={LABELS.applications}>
-            <AutoMediaRenderer data={term.applications}>
+            <AutoMediaRenderer data={termData.applications}>
               <CitedTextList
-                items={term.applications}
+                items={termData.applications}
                 className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
               />
             </AutoMediaRenderer>
           </Section>
         )}
 
-        {term.comparison && Object.keys(term.comparison).length > 0 && (
+        {termData.comparison && Object.keys(termData.comparison).length > 0 && (
           <Section title={LABELS.comparison}>
             <div className="space-y-4">
-              {Object.entries(term.comparison).map(([key, val]) => {
+              {Object.entries(termData.comparison).map(([key, val]) => {
                 if (!val?.text) return null;
                 const label = key.replace(/^vs_/, "vs ").replace(/_/g, " ");
                 return (
@@ -347,11 +441,11 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.related_terms && term.related_terms.length > 0 && (
+        {termData.related_terms && termData.related_terms.length > 0 && (
           <Section title={LABELS.related_terms}>
-            <AutoMediaRenderer data={term.related_terms}>
+            <AutoMediaRenderer data={termData.related_terms}>
               <div className="flex flex-wrap gap-2">
-                {term.related_terms.map((s, i) => (
+                {termData.related_terms.map((s, i) => (
                   <Link
                     key={i}
                     href={`/terms/${s}`}
@@ -365,11 +459,11 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.see_also && term.see_also.length > 0 && (
+        {termData.see_also && termData.see_also.length > 0 && (
           <Section title={LABELS.see_also}>
-            <AutoMediaRenderer data={term.see_also}>
+            <AutoMediaRenderer data={termData.see_also}>
               <div className="flex flex-wrap gap-2">
-                {term.see_also.map((s, i) => {
+                {termData.see_also.map((s, i) => {
                   const designSlug = s.replace(/_/g, "-");
                   const designExists = getDesignById(designSlug) !== null;
                   const label = s.replace(/_/g, " ");
@@ -395,10 +489,10 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.diagrams && term.diagrams.length > 0 && (
+        {termData.diagrams && termData.diagrams.length > 0 && (
           <Section title={LABELS.diagrams}>
             <ul className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
-              {term.diagrams.map((d, i) => (
+              {termData.diagrams.map((d, i) => (
                 <li key={i}>
                   <AutoMediaRenderer data={d}>
                     <>
@@ -413,10 +507,10 @@ export default async function TermPage({ params }: PageProps) {
           </Section>
         )}
 
-        {term.references && term.references.length > 0 && (
+        {termData.references && termData.references.length > 0 && (
           <Section title={LABELS.references}>
             <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
-              {term.references.map((ref) => (
+              {termData.references.map((ref) => (
                 <li key={ref.id} id={`ref-${ref.id}`} className="flex flex-col gap-2 scroll-mt-4">
                   <AutoMediaRenderer data={ref}>
                     <div className="flex gap-3 scroll-mt-4">

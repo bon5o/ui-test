@@ -1,4 +1,4 @@
-import { getAllLenses } from "../../lib/lenses";
+import { getAllLensIndexItems } from "../../lib/lenses";
 import { LensList } from "./LensList";
 
 export const metadata = {
@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default function LensesPage() {
-  const lenses = getAllLenses();
+  const lenses = getAllLensIndexItems();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">

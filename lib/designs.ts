@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import type { HybridContent } from "../types/hybridContent";
+import { isHybridContent as isHybrid } from "./isHybridContent";
 
 const DESIGNS_DIRECTORY = join(process.cwd(), "data", "designs");
 const CATEGORIES_PATH = join(process.cwd(), "data", "categories.json");
@@ -130,7 +131,7 @@ export function getDesignById(id: string): Design | HybridContent | null {
 export function isHybridContent(
   design: Design | HybridContent | null
 ): design is HybridContent {
-  return design != null && "chapters" in design && Array.isArray(design.chapters);
+  return isHybrid(design);
 }
 
 export function getAllDesignIds(): string[] {
@@ -144,21 +145,26 @@ export function getAllDesignIds(): string[] {
   }
 }
 
+/** 一覧用の design メタ情報（meta をソース・オブ・トゥルース） */
 export interface DesignListItem {
   id: string;
   name: string;
-  category: string;
+  english_name?: string;
+  /** 階層パス（例: "lens_design/design_types"）。無い場合は "uncategorized" */
+  category?: string;
 }
 
 export function getAllDesigns(): DesignListItem[] {
   const ids = getAllDesignIds();
-  return ids
-    .map((id) => {
-      const design = getDesignById(id);
-      if (!design) return null;
-      const slug = design.meta?.category ?? "other";
-      return { id, name: design.meta?.name ?? id, category: slug };
-    })
-    .filter((d): d is DesignListItem => d !== null)
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const list: DesignListItem[] = [];
+  for (const id of ids) {
+    const design = getDesignById(id);
+    if (!design) continue;
+    const meta = design.meta as { id?: string; name?: string; english_name?: string; category?: string } | undefined;
+    const name = typeof meta?.name === "string" ? meta.name : id;
+    const english_name = typeof meta?.english_name === "string" ? meta.english_name : undefined;
+    const category = typeof meta?.category === "string" ? meta.category.trim() || "uncategorized" : "uncategorized";
+    list.push({ id, name, english_name, category });
+  }
+  return list.sort((a, b) => a.name.localeCompare(b.name));
 }

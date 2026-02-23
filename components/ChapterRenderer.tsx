@@ -13,7 +13,7 @@ export function ChapterRenderer({ chapter }: ChapterRendererProps): React.ReactE
   return (
     <CollapsibleSection defaultOpen={true} title={chapter.title}>
       <div id={chapter.id} className="space-y-8">
-        {chapter.sections.map((section) => (
+        {(chapter.sections ?? []).filter(Boolean).map((section) => (
           <SectionRenderer key={section.id} section={section} />
         ))}
       </div>

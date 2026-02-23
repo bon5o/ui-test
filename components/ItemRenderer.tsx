@@ -11,10 +11,11 @@ import {
   type TableItem,
 } from "../types/hybridContent";
 import { Citation } from "./Citation";
+import { TermLinkify } from "./TermLinkify";
 
 interface ItemRendererProps {
   item: ContentItem;
-  index: number;
+  index?: number;
 }
 
 function assertNever(x: never): never {
@@ -90,8 +91,8 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
         ? (raw.citations as unknown[]).filter((n): n is number => typeof n === "number")
         : undefined;
       return (
-        <p key={index} className="text-base font-normal leading-relaxed text-gray-700">
-          {text}
+        <p key={index} className="text-base font-normal leading-relaxed text-gray-700 whitespace-pre-line">
+          <TermLinkify text={text} />
           {citations && citations.length > 0 && <Citation citations={citations} />}
         </p>
       );
@@ -107,8 +108,8 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     case "paragraph": {
       const p = item as ParagraphItem;
       return (
-        <p key={index} className="text-base font-normal leading-relaxed text-gray-700">
-          {p.text}
+        <p key={index} className="text-base font-normal leading-relaxed text-gray-700 whitespace-pre-line">
+          <TermLinkify text={p.text} />
           {p.citations && p.citations.length > 0 && (
             <Citation citations={p.citations} />
           )}
@@ -116,16 +117,30 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
       );
     }
     case "list": {
-      const l = item as ListItem;
+      // 後方互換: items が無くても entries/bullets/text 等の別キーがあれば代用
+      // 理想: list は必ず items:string[] に統一すること（JSON 正規化）
+      const list = item as ListItem & Record<string, unknown>;
+      const entries =
+        Array.isArray(list.items) ? list.items :
+        Array.isArray(list.entries) ? list.entries :
+        Array.isArray(list.bullets) ? list.bullets :
+        Array.isArray(list.text) ? list.text :
+        null;
+      if (!entries) {
+        console.warn("[ItemRenderer] list item missing items", item);
+        return null;
+      }
       return (
         <div key={index}>
           <ul className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700">
-            {l.items.map((entry, i) => (
-              <li key={i}>{entry}</li>
+            {entries.map((entry, i) => (
+              <li key={i} className="whitespace-pre-line">
+                <TermLinkify text={String(entry)} />
+              </li>
             ))}
           </ul>
-          {l.citations && l.citations.length > 0 && (
-            <Citation citations={l.citations} />
+          {list.citations && list.citations.length > 0 && (
+            <Citation citations={list.citations} />
           )}
         </div>
       );
@@ -165,7 +180,7 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
                 </p>
               )}
               {img.caption != null && img.caption !== "" && (
-                <p className="leading-relaxed">{img.caption}</p>
+                <p className="leading-relaxed whitespace-pre-line">{img.caption}</p>
               )}
             </figcaption>
           )}
@@ -180,8 +195,8 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     case "quote": {
       const q = item as QuoteItem;
       return (
-        <blockquote key={index} className="border-l-2 border-[#7D9CD4]/50 pl-4 py-2 my-4 text-base text-gray-700 italic">
-          {q.text}
+        <blockquote key={index} className="border-l-2 border-[#7D9CD4]/50 pl-4 py-2 my-4 text-base text-gray-700 italic whitespace-pre-line">
+          <TermLinkify text={q.text} />
           {q.citations && q.citations.length > 0 && (
             <Citation citations={q.citations} />
           )}
@@ -208,8 +223,8 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
               {t.rows.map((row, ri) => (
                 <tr key={ri} className={ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="px-4 py-2 border-b border-gray-100 text-gray-700">
-                      {cell}
+                    <td key={ci} className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-pre-line">
+                      <TermLinkify text={String(cell)} />
                     </td>
                   ))}
                 </tr>
@@ -229,6 +244,6 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
   }
 }
 
-export function ItemRenderer({ item, index }: ItemRendererProps): React.ReactNode {
+export function ItemRenderer({ item, index = 0 }: ItemRendererProps): React.ReactNode {
   return renderItemContent(item, index);
 }

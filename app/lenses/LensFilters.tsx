@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import type { Lens } from "../../types/lens";
-import { getDesignType } from "./lensFilterUtils";
+import type { LensIndexItem } from "../../types/lensIndex";
+import { getDesignType } from "./lensIndexFilterUtils";
+import { designTypeToLabel } from "./constructionTypes";
 import { DesignTypeFilter } from "./DesignTypeFilter";
 import { PriceRangeFilter, type PriceRange } from "./PriceRangeFilter";
 import { FilterDropdown, type GroupedOptions } from "../../components/FilterDropdown";
@@ -154,7 +155,7 @@ export const DEFAULT_FILTER_STATE: FilterState = {
 };
 
 interface LensFiltersProps {
-  lenses: Lens[];
+  lenses: LensIndexItem[];
   filterState: FilterState;
   onFilterChange: (state: FilterState) => void;
   onReset: () => void;
@@ -179,8 +180,15 @@ export function LensFilters({
     onFilterChange({ ...filterState, [key]: next });
   };
 
-  const designTypes = [...new Set(safeLenses.map((l) => getDesignType(l)))].filter(Boolean).sort();
-  const manufacturers = [...new Set(safeLenses.map((l) => l.meta.manufacturer_id))].sort();
+  const designTypes = [
+    ...new Set(
+      safeLenses.map((l) => {
+        const dt = getDesignType(l);
+        return designTypeToLabel[dt] ?? dt;
+      })
+    ),
+  ].filter(Boolean).sort();
+  const manufacturers = [...new Set(safeLenses.map((l) => l.manufacturer).filter(Boolean) as string[])].sort();
 
   const allDataManufacturers = useMemo(
     () =>
@@ -202,11 +210,6 @@ export function LensFilters({
     }
     return groups;
   }, [manufacturers, allDataManufacturers]);
-  if (typeof window !== "undefined") {
-    console.log("[LensFilters] lenses count:", safeLenses.length);
-    console.log("[LensFilters] designTypes:", designTypes);
-    console.log("[LensFilters] manufacturers:", manufacturers);
-  }
 
   const hasActiveFilters =
     filterState.decades.size > 0 ||

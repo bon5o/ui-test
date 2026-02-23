@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asahi-super-takumar-55mm-f1-8-m42",
+    "name": "旭光学 Super-Takumar 55mm F1.8（M42）",
+    "manufacturer": "asahi_pentax",
+    "mount": "m42",
+    "release_year": 1962,
+    "decade": "1960s",
+    "design_type": "double_gauss",
+    "coating": "single",
+    "price_min": 8000,
+    "price_max": 15000,
+    "characteristics": ["soft_bokeh", "warm_color", "low_contrast"],
+    "tags": ["portrait", "classic-standard", "monocoat-vintage", "m42-legend"]
+  }
+]

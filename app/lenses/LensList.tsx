@@ -2,24 +2,24 @@
 
 import { useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
-import type { Lens } from "../../types/lens";
+import type { LensIndexItem } from "../../types/lensIndex";
 import {
   LensFilters,
   DEFAULT_FILTER_STATE,
   type FilterState,
 } from "./LensFilters";
 import {
-  yearToEra,
+  getDecade,
   getDesignType,
   getCharacteristics,
   getCoatingDescription,
   matchesPriceFilter,
   matchesPriceRangeFilter,
-} from "./lensFilterUtils";
+} from "./lensIndexFilterUtils";
 import { designTypeToLabel } from "./constructionTypes";
 
 interface LensListProps {
-  initialLenses: Lens[];
+  initialLenses: LensIndexItem[];
 }
 
 function parseFilterStateFromSearch(search: URLSearchParams): FilterState {
@@ -80,31 +80,32 @@ function filterStateToSearchParams(state: FilterState): URLSearchParams {
   return params;
 }
 
-function matchesLens(lens: Lens, state: FilterState): boolean {
+function matchesLens(item: LensIndexItem, state: FilterState): boolean {
   if (state.decades.size > 0) {
-    const lensDecade = yearToEra(lens.meta.release_year);
-    if (!state.decades.has(lensDecade)) return false;
+    const lensDecade = getDecade(item);
+    if (!lensDecade || !state.decades.has(lensDecade)) return false;
   }
   if (state.designTypes.size > 0) {
-    const lensDt = getDesignType(lens);
+    const lensDt = getDesignType(item);
     const lensLabel = designTypeToLabel[lensDt] ?? lensDt;
-    if (!state.designTypes.has(lensLabel)) return false;
+    if (!lensLabel || !state.designTypes.has(lensLabel)) return false;
   }
   if (state.manufacturers.size > 0) {
-    if (!state.manufacturers.has(lens.meta.manufacturer_id)) return false;
+    const mfr = item.manufacturer ?? "";
+    if (!mfr || !state.manufacturers.has(mfr)) return false;
   }
   if (state.priceRanges.size > 0) {
-    if (!matchesPriceFilter(lens, [...state.priceRanges])) return false;
+    if (!matchesPriceFilter(item, [...state.priceRanges])) return false;
   }
   if (state.priceRange.min !== null || state.priceRange.max !== null) {
-    if (!matchesPriceRangeFilter(lens, state.priceRange)) return false;
+    if (!matchesPriceRangeFilter(item, state.priceRange)) return false;
   }
   if (state.coatings.size > 0) {
-    const desc = getCoatingDescription(lens);
+    const desc = getCoatingDescription(item);
     if (!Array.from(state.coatings).some((opt) => desc.includes(opt))) return false;
   }
   if (state.characteristics.size > 0) {
-    const lensTraits = getCharacteristics(lens);
+    const lensTraits = getCharacteristics(item);
     if (!lensTraits.some((t) => state.characteristics.has(t))) return false;
   }
   return true;
@@ -143,7 +144,7 @@ export function LensList({ initialLenses }: LensListProps) {
   }, []);
 
   const filteredLenses = useMemo(() => {
-    return initialLenses.filter((lens) => matchesLens(lens, filterState));
+    return initialLenses.filter((item) => matchesLens(item, filterState));
   }, [initialLenses, filterState]);
 
   return (
@@ -169,30 +170,25 @@ export function LensList({ initialLenses }: LensListProps) {
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredLenses.map((lens) => (
+          {filteredLenses.map((item) => (
             <Link
-              key={lens.meta.slug}
-              href={`/lenses/${lens.meta.slug}`}
+              key={item.id}
+              href={`/lenses/${item.id}`}
               className="group rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-all hover:border-[#7D9CD4]/30 hover:shadow-md"
             >
               <h2 className="mb-2 text-xl font-semibold text-[#111111] transition-colors group-hover:text-[#5E7AB8]">
-                {lens.meta.name}
+                {item.name}
               </h2>
               <div className="mb-4 space-y-1 text-sm text-gray-600">
                 <div>
                   <span className="font-medium">構成型:</span>{" "}
-                  {getDesignType(lens) || lens.classification.design_type}
+                  {designTypeToLabel[item.design_type ?? ""] ?? item.design_type ?? "—"}
                 </div>
                 <div>
                   <span className="font-medium">発売年:</span>{" "}
-                  {lens.meta.release_year}
+                  {item.release_year ?? "—"}
                 </div>
               </div>
-              {lens.editorial.summary && (
-                <p className="line-clamp-2 text-sm text-gray-500">
-                  {lens.editorial.summary}
-                </p>
-              )}
             </Link>
           ))}
         </div>

@@ -4,13 +4,14 @@
  * - PageContainer が max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 を適用（モバイル/PC両対応）
  * - グリッドに sm:grid-cols-2 lg:grid-cols-3 でレスポンシブ対応
  * - LensList（フィルター付き）でレンズ一覧を表示（/lenses と同構造）
+ * - 一覧は data/lens_index.json（軽量index）を使用
  */
-import { getAllLenses } from "../lib/lenses";
+import { getAllLensIndexItems } from "../lib/lenses";
 import { PageContainer } from "../components/ui/PageContainer";
 import { LensList } from "./lenses/LensList";
 
 export default function Home() {
-  const lenses = getAllLenses();
+  const lenses = getAllLensIndexItems();
 
   return (
     <PageContainer>
