@@ -5,10 +5,17 @@ import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
 
 export async function generateStaticParams() {
   const lenses = getAllLenses();
-  const eras = [...new Set(lenses.map((l) => l.classification.era))];
-  return eras.map((era) => ({
-    era,
-  }));
+  const eras = [
+    ...new Set(
+      lenses
+        .map((l) => {
+          const c = (l as unknown as Record<string, unknown>).classification as Record<string, unknown> | undefined;
+          return c?.era as string | undefined;
+        })
+        .filter((e): e is string => typeof e === "string" && e.length > 0)
+    ),
+  ];
+  return eras.map((era) => ({ era }));
 }
 
 interface PageProps {
@@ -19,7 +26,10 @@ export default async function EraDetailPage({ params }: PageProps) {
   const { era } = await params;
   const lenses = getAllLenses();
 
-  const filteredLenses = lenses.filter((l) => l.classification.era === era);
+  const filteredLenses = lenses.filter((l) => {
+    const c = (l as unknown as Record<string, unknown>).classification as Record<string, unknown> | undefined;
+    return c?.era === era;
+  });
 
   if (filteredLenses.length === 0) {
     notFound();
@@ -32,23 +42,34 @@ export default async function EraDetailPage({ params }: PageProps) {
       </h1>
 
       <ul className="space-y-2">
-        {filteredLenses.map((lens) => (
-          <li key={lens.meta.slug} className="space-y-2">
-            <AutoMediaRenderer data={lens as unknown}>
-              <div>
-                <Link
-                  href={`/lenses/${lens.meta.slug}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  {lens.meta.name}
-                </Link>
-                <span className="ml-2 text-sm text-gray-600">
-                  ({lens.meta.release_year})
-                </span>
-              </div>
-            </AutoMediaRenderer>
-          </li>
-        ))}
+        {filteredLenses.map((lens, i) => {
+          const meta = (lens as unknown as Record<string, unknown>).meta as Record<string, unknown> | undefined;
+          const slug = meta?.slug as string | undefined;
+          const name = meta?.name as string | undefined;
+          const rawYear = meta?.release_year ?? (meta?.facts as Record<string, unknown>)?.introduced_year;
+          const year = typeof rawYear === "number" || typeof rawYear === "string" ? rawYear : null;
+          return (
+            <li key={slug ?? String(meta?.id ?? i)} className="space-y-2">
+              <AutoMediaRenderer data={lens as unknown}>
+                <div>
+                  {slug ? (
+                    <Link
+                      href={`/lenses/${slug}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {name ?? "—"}
+                    </Link>
+                  ) : (
+                    <span>{name ?? "—"}</span>
+                  )}
+                  {year != null && (
+                    <span className="ml-2 text-sm text-gray-600">({String(year)})</span>
+                  )}
+                </div>
+              </AutoMediaRenderer>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

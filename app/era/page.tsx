@@ -4,7 +4,16 @@ import { PageContainer } from "../../components/ui/PageContainer";
 
 export default function EraPage() {
   const lenses = getAllLenses();
-  const eras = [...new Set(lenses.map((l) => l.classification.era))].sort();
+  const eras = [
+    ...new Set(
+      lenses
+        .map((l) => {
+          const c = (l as unknown as Record<string, unknown>).classification as Record<string, unknown> | undefined;
+          return c?.era as string | undefined;
+        })
+        .filter((e): e is string => typeof e === "string" && e.length > 0)
+    ),
+  ].sort();
 
   return (
     <PageContainer className="max-w-3xl">

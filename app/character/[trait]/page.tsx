@@ -5,9 +5,13 @@ import { getAllLenses } from "../../../lib/lenses";
 function getUniqueTraits(lenses: ReturnType<typeof getAllLenses>): string[] {
   const values = new Set<string>();
   for (const lens of lenses) {
-    const rc = lens.rendering_characteristics;
-    if (rc.sharpness.wide_open) values.add(rc.sharpness.wide_open);
-    if (rc.sharpness.stopped_down) values.add(rc.sharpness.stopped_down);
+    const rc = (lens as unknown as Record<string, unknown>).rendering_characteristics as
+      | { sharpness?: { wide_open?: string; stopped_down?: string }; bokeh?: string; contrast?: string; color?: string; flare_resistance?: string; ghosting?: string }
+      | undefined;
+    if (!rc) continue;
+    const s = rc.sharpness;
+    if (s?.wide_open) values.add(s.wide_open);
+    if (s?.stopped_down) values.add(s.stopped_down);
     if (rc.bokeh) values.add(rc.bokeh);
     if (rc.contrast) values.add(rc.contrast);
     if (rc.color) values.add(rc.color);
@@ -21,10 +25,14 @@ function lensMatchesTrait(
   lens: ReturnType<typeof getAllLenses>[number],
   trait: string
 ): boolean {
-  const rc = lens.rendering_characteristics;
+  const rc = (lens as unknown as Record<string, unknown>).rendering_characteristics as
+    | { sharpness?: { wide_open?: string; stopped_down?: string }; bokeh?: string; contrast?: string; color?: string; flare_resistance?: string; ghosting?: string }
+    | undefined;
+  if (!rc) return false;
+  const s = rc.sharpness;
   return (
-    rc.sharpness.wide_open === trait ||
-    rc.sharpness.stopped_down === trait ||
+    s?.wide_open === trait ||
+    s?.stopped_down === trait ||
     rc.bokeh === trait ||
     rc.contrast === trait ||
     rc.color === trait ||
@@ -36,9 +44,9 @@ function lensMatchesTrait(
 export async function generateStaticParams() {
   const lenses = getAllLenses();
   const traits = getUniqueTraits(lenses);
-  return traits.map((trait) => ({
-    trait,
-  }));
+  return traits
+    .filter((t): t is string => typeof t === "string" && t.length > 0)
+    .map((trait) => ({ trait }));
 }
 
 interface PageProps {
@@ -63,19 +71,30 @@ export default async function CharacterDetailPage({ params }: PageProps) {
       </h1>
 
       <ul className="space-y-2">
-        {filteredLenses.map((lens) => (
-          <li key={lens.meta.slug}>
-            <Link
-              href={`/lenses/${lens.meta.slug}`}
-              className="text-blue-500 hover:underline"
-            >
-              {lens.meta.name}
-            </Link>
-            <span className="ml-2 text-sm text-gray-600">
-              ({lens.meta.release_year})
-            </span>
-          </li>
-        ))}
+        {filteredLenses.map((lens, i) => {
+          const meta = (lens as unknown as Record<string, unknown>).meta as Record<string, unknown> | undefined;
+          const slug = meta?.slug as string | undefined;
+          const name = meta?.name as string | undefined;
+          const rawYear = meta?.release_year ?? (meta?.facts as Record<string, unknown>)?.introduced_year;
+          const year = typeof rawYear === "number" || typeof rawYear === "string" ? rawYear : null;
+          return (
+            <li key={slug ?? String(meta?.id ?? i)}>
+              {slug ? (
+                <Link
+                  href={`/lenses/${slug}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  {name ?? "—"}
+                </Link>
+              ) : (
+                <span>{name ?? "—"}</span>
+              )}
+              {year != null && (
+                <span className="ml-2 text-sm text-gray-600">({String(year)})</span>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

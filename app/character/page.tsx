@@ -5,9 +5,13 @@ import { PageContainer } from "../../components/ui/PageContainer";
 function getUniqueTraits(lenses: ReturnType<typeof getAllLenses>): string[] {
   const values = new Set<string>();
   for (const lens of lenses) {
-    const rc = lens.rendering_characteristics;
-    if (rc.sharpness.wide_open) values.add(rc.sharpness.wide_open);
-    if (rc.sharpness.stopped_down) values.add(rc.sharpness.stopped_down);
+    const rc = (lens as unknown as Record<string, unknown>).rendering_characteristics as
+      | { sharpness?: { wide_open?: string; stopped_down?: string }; bokeh?: string; contrast?: string; color?: string; flare_resistance?: string; ghosting?: string }
+      | undefined;
+    if (!rc) continue;
+    const s = rc.sharpness;
+    if (s?.wide_open) values.add(s.wide_open);
+    if (s?.stopped_down) values.add(s.stopped_down);
     if (rc.bokeh) values.add(rc.bokeh);
     if (rc.contrast) values.add(rc.contrast);
     if (rc.color) values.add(rc.color);
