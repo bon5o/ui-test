@@ -39,18 +39,15 @@ export function ResponsiveTableCards({
       {rows.map((row, ri) => (
         <div
           key={ri}
-          className="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+          className="w-full rounded-xl border border-gray-200 bg-white p-3 shadow-sm"
         >
-          <div className="space-y-3">
+          <div className="space-y-4">
             {row.cells.map((cell, ci) => (
-              <div
-                key={ci}
-                className="flex items-start justify-between gap-3"
-              >
-                <div className="min-w-0 shrink-0 text-sm font-medium text-gray-900 whitespace-normal break-words">
+              <div key={ci} className="space-y-1.5">
+                <div className="text-xs font-medium text-gray-500">
                   {cell.label}
                 </div>
-                <div className="min-w-0 flex-1 text-right text-sm text-gray-700 whitespace-normal break-words">
+                <div className="text-sm text-gray-900 leading-6 whitespace-normal break-words text-left">
                   {cell.value}
                 </div>
               </div>
