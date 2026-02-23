@@ -12,6 +12,7 @@ import {
 } from "../types/hybridContent";
 import { Citation } from "./Citation";
 import { TermLinkify } from "./TermLinkify";
+import { ResponsiveTableRoot } from "./ui/ResponsiveTable";
 
 interface ItemRendererProps {
   item: ContentItem;
@@ -206,13 +207,16 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     case "table": {
       const t = item as TableItem;
       return (
-        <div key={index} className="overflow-x-auto my-4">
-          <table className="min-w-full border border-gray-200 rounded overflow-hidden text-sm">
+        <div key={index}>
+          <ResponsiveTableRoot>
             {t.headers && t.headers.length > 0 && (
               <thead>
                 <tr className="bg-gray-50">
                   {t.headers.map((h, i) => (
-                    <th key={i} className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200">
+                    <th
+                      key={i}
+                      className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-nowrap"
+                    >
                       {h}
                     </th>
                   ))}
@@ -223,14 +227,17 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
               {t.rows.map((row, ri) => (
                 <tr key={ri} className={ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-pre-line">
+                    <td
+                      key={ci}
+                      className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-nowrap"
+                    >
                       <TermLinkify text={String(cell)} />
                     </td>
                   ))}
                 </tr>
               ))}
             </tbody>
-          </table>
+          </ResponsiveTableRoot>
           {t.citations && t.citations.length > 0 && (
             <div className="mt-2">
               <Citation citations={t.citations} />
