@@ -12,7 +12,10 @@ import {
 } from "../types/hybridContent";
 import { Citation } from "./Citation";
 import { TermLinkify } from "./TermLinkify";
-import { ResponsiveTableRoot } from "./ui/ResponsiveTable";
+import {
+  ResponsiveTableCards,
+  type ResponsiveTableCardRow,
+} from "./ui/ResponsiveTableCards";
 
 interface ItemRendererProps {
   item: ContentItem;
@@ -206,38 +209,60 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     }
     case "table": {
       const t = item as TableItem;
+      const headers = t.headers ?? [];
+      const cardRows: ResponsiveTableCardRow[] = t.rows.map((row) => ({
+        cells:
+          headers.length > 0
+            ? headers.map((h, i) => ({
+                label: h,
+                value: <TermLinkify text={String(row[i] ?? "")} />,
+              }))
+            : row.map((v, i) => ({
+                label: `列${i + 1}`,
+                value: <TermLinkify text={String(v)} />,
+              })),
+      }));
+
       return (
-        <div key={index}>
-          <ResponsiveTableRoot>
-            {t.headers && t.headers.length > 0 && (
-              <thead>
-                <tr className="bg-gray-50">
-                  {t.headers.map((h, i) => (
-                    <th
-                      key={i}
-                      className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-nowrap"
-                    >
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-            )}
-            <tbody>
-              {t.rows.map((row, ri) => (
-                <tr key={ri} className={ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
-                  {row.map((cell, ci) => (
-                    <td
-                      key={ci}
-                      className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-nowrap"
-                    >
-                      <TermLinkify text={String(cell)} />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </ResponsiveTableRoot>
+        <div key={index} className="my-4">
+          <ResponsiveTableCards rows={cardRows} />
+          <div className="hidden md:block">
+            <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
+              {headers.length > 0 && (
+                <thead>
+                  <tr className="bg-gray-50">
+                    {headers.map((h, i) => (
+                      <th
+                        key={i}
+                        className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200"
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {t.rows.map((row, ri) => (
+                  <tr
+                    key={ri}
+                    className={
+                      ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+                    }
+                  >
+                    {row.map((cell, ci) => (
+                      <td
+                        key={ci}
+                        className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-normal break-words"
+                      >
+                        <TermLinkify text={String(cell)} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {t.citations && t.citations.length > 0 && (
             <div className="mt-2">
               <Citation citations={t.citations} />
