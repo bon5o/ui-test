@@ -16,6 +16,7 @@ import {
   ResponsiveTableCards,
   type ResponsiveTableCardRow,
 } from "./ui/ResponsiveTableCards";
+import { TimelineList, type TimelineItem } from "./sections/TimelineList";
 
 interface ItemRendererProps {
   item: ContentItem;
@@ -27,6 +28,43 @@ function assertNever(x: never): never {
 }
 
 const KNOWN_TYPES = ["paragraph", "list", "image", "quote", "table"] as const;
+
+/** 年表テーブルかどうか（年＋出来事/意義の列がある） */
+function isTimelineTable(headers: string[]): boolean {
+  const hasYear = headers.includes("年");
+  const hasEventOrSignificance =
+    headers.includes("出来事") || headers.includes("意義");
+  return hasYear && (hasEventOrSignificance || headers.includes("人物/企業"));
+}
+
+/** TableItem を TimelineItem[] に変換。年表でない場合は null */
+function tableToTimelineItems(t: TableItem): TimelineItem[] | null {
+  const headers = t.headers ?? [];
+  if (!isTimelineTable(headers)) return null;
+
+  const yearIdx = headers.indexOf("年");
+  const personIdx = headers.findIndex(
+    (h) => h === "人物/企業" || h === "製品"
+  );
+  const eventIdx = headers.indexOf("出来事");
+  const significanceIdx = headers.indexOf("意義");
+
+  return t.rows
+    .map((row) => {
+      const year = yearIdx >= 0 ? row[yearIdx] : undefined;
+      const person = personIdx >= 0 ? row[personIdx] : undefined;
+      const event = eventIdx >= 0 ? row[eventIdx] : undefined;
+      const significance = significanceIdx >= 0 ? row[significanceIdx] : undefined;
+      if (!year && !person && !event && !significance) return null;
+      return {
+        year: year ?? undefined,
+        person: person ? String(person) : undefined,
+        event: event ? String(event) : undefined,
+        significance: significance ? String(significance) : undefined,
+      } as TimelineItem;
+    })
+    .filter((item): item is TimelineItem => item != null);
+}
 
 function isKnownType(t: unknown): t is (typeof KNOWN_TYPES)[number] {
   return typeof t === "string" && KNOWN_TYPES.includes(t as (typeof KNOWN_TYPES)[number]);
@@ -210,6 +248,7 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     case "table": {
       const t = item as TableItem;
       const headers = t.headers ?? [];
+      const timelineItems = tableToTimelineItems(t);
       const cardRows: ResponsiveTableCardRow[] = t.rows.map((row) => ({
         cells:
           headers.length > 0
@@ -225,7 +264,14 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
 
       return (
         <div key={index} className="my-4">
-          <ResponsiveTableCards rows={cardRows} />
+          {timelineItems && timelineItems.length > 0 ? (
+            <TimelineList
+              items={timelineItems}
+              renderValue={(text) => <TermLinkify text={text} />}
+            />
+          ) : (
+            <ResponsiveTableCards rows={cardRows} />
+          )}
           <div className="hidden md:block">
             <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
               {headers.length > 0 && (
