@@ -1,0 +1,377 @@
+{
+  "meta": {
+    "id": "grp_elt",
+    "name": "群、枚",
+    "english_name": "Group Element",
+    "category": "レンズ構成関連",
+    "aliases": [
+
+    ],
+    "summary": "あああ",
+    "tags": [
+      "grp_elt"
+    ],
+    "updated_at": "2026-03-13"
+  },
+  "chapters": [
+    {
+      "id": "overview",
+      "title": "概要",
+      "sections": [
+        {
+      "id": "optical_formula",
+      "title": "例",
+      "items": [
+        {
+          "type": "image",
+          "src": "/images/terms/grp_elt/grp_elt.jpg",
+          "caption": "プラナー型４群６枚の例"
+        }
+      ]
+    },
+
+
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "「枚」は、レンズの総数。「群」は、グループの数。1枚で独立している場合も「1群」として数える。貼り合わせられたレンズ（アクロマートなど）は、複数枚でも「1群」として数える。 ",
+              "citations": [
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "id": "quick_summary",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "一般的に枚数が多いほど、色にじみ（色収差）や歪みを細かく補正している傾向がある。"
+              ],
+              "citations": [
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "id": "why",
+          "title": "なぜ「群」に分けるのか？",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "反射面の削減・透過率の向上：レンズと空気の境界面では反射が起きますが、複数枚を接着して1群にすると空気との境界面が減り、不要な反射・ゴーストを抑えつつ枚数を増やせます。",
+                "収差補正の自由度アップ：凸レンズと凹レンズ、異なる硝材や形状を組み合わせた群ごとに、色収差・球面収差・歪曲などを相互に打ち消すように設計できます。複数のレンズ群を組み合わせることで、全体として高画質を狙えます。",
+                "機構的な扱いやすさ（フォーカス・ズーム）：実際の鏡筒の中では、レンズは「群」単位で一体として動かします。"
+                ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pros_cons",
+      "title": "メリット・デメリット",
+      "sections": [
+        {
+          "id": "advantages",
+          "title": "メリット",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "枚数とか群数が多いと収差や歪みをいっぱい補正できる",
+              "citations": [
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "id": "disadvantages",
+          "title": "デメリット",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "多くの群・枚を使えば理論的な収差補正の自由度は高くなるが、その分重く・高価になる。",
+              "citations": [
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "historical_development",
+      "title": "歴史的展開",
+      "sections": [
+        {
+          "id":"",
+          "title": "19th_century",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "初期の写真レンズは1枚から数枚の極めて単純な構成であり、強い収差や周辺のボケ、像の流れを抱えたまま実用化されていた。",
+              "citations": [7]
+            },
+            {
+              "type": "paragraph",
+              "text": "1840年代に登場したペッツバール型は、前群と後群からなる4群4枚構成を基本とする。当時としては明るくシャープな設計であり、ポートレート用レンズとして普及した。",
+              "citations": [8]
+            }
+          ]
+        },
+        {
+          "id": "20th_century",
+          "title": "19世紀末から20世紀の進化",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "クック・トリプレット：3群3枚の構成で諸収差をバランスよく補正した優秀なレンズ",
+                "テッサー：トリプレットを基礎とした4枚3群構成。標準から中望遠で多用された",
+                "ダブルガウス型：前後対称の構成。F1.4クラスの標準レンズの主流となり、枚数も増加した",
+                "ズームレンズ：焦点距離可変のため複数群を動かす必要があり、10枚以上の複雑な構成が一般的となった"
+              ],
+              "citations": [8, 9, 10]
+            }
+          ]
+        },
+        {
+          "id": "Digital _Mirrorless",
+          "title": "デジタル・ミラーレス時代",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "高解像センサーの要求に応えるため、非球面レンズやEDレンズ等の特殊硝材を導入した。結果として14枚から20枚を超える設計も珍しくない状況である。",
+              "citations": [11]
+            }
+          ]
+        },
+        {
+          "id": "Composition_trends",
+          "title": "レンズ種別ごとの構成傾向",
+          "items": [
+            {
+              "type": "table",
+              "headers": [
+                "レンズ種別",
+                "例",
+                "枚数目安",
+                "群数目安",
+                "傾向"
+              ],
+              "rows": [
+                [
+                  "古典的トリプレット",
+                  "50mm F2.8 等",
+                  "3枚",
+                  "3群",
+                  "シンプルかつ小型だが収差は多い"
+                ],
+                [
+                  "古典的テッサー",
+                  "標準〜中望遠",
+                  "4枚",
+                  "3群",
+                  "歴史的に多用された比較的高画質な設計"
+                ],
+                [
+                  "オールド標準",
+                  "50mm F2 前後",
+                  "6枚",
+                  "4〜5群",
+                  "フィルム時代の定番構成"
+                ],
+                [
+                  "現代標準単焦点",
+                  "35〜85mm F1.8",
+                  "6〜10枚",
+                  "5〜9群",
+                  "非球面レンズを1〜2枚使用"
+                ],
+                [
+                  "現代大口径単焦点",
+                  "50mm F1.2 等",
+                  "10〜15枚以上",
+                  "8〜12群",
+                  "画質最優先による大型化"
+                ],
+                [
+                  "標準ズーム",
+                  "24-70mm F2.8",
+                  "15〜20枚",
+                  "10〜15群",
+                  "高性能だが重厚かつ高価"
+                ],
+                [
+                  "望遠ズーム",
+                  "70-200mm F2.8",
+                  "20枚前後",
+                  "15群前後",
+                  "手ブレ補正群等を追加"
+                ]
+              ],
+              "citations": [
+                6,
+                8,
+                9,
+                10,
+                11
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "related",
+      "title": "関連",
+      "sections": [
+        {
+          "id": "related_links",
+          "title": "関連構成型・用語",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                
+                "なし"
+              ],
+              "citations": [
+                0
+                
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "レンズの群とか枚とかについて知っておくべきこと。 ",
+      "author_or_source": "Photonics Media",
+      "url": "https://note.com/kitamura_sa/n/n111d340121d3",
+      "type": "note",
+      "reliability": "low",
+      "notes": "noteによる説明"
+    },
+    {
+      "id": 2,
+      "title": "Application Note: Using Meniscus Lenses",
+      "author_or_source": "Thorlabs",
+      "url": "https://ilottvintage.com/glossary/elements-groups",
+      "type": "manufacturer_pdf",
+      "reliability": "high",
+      "notes": "負メニスカスの用途（ビーム拡大、球面収差を大きく増やさない等）と組合せ効果（焦点距離増加、NA低下）に言及。"
+    },
+    {
+      "id": 3,
+      "title": "Negative Meniscus Lenses (Guide)",
+      "author_or_source": "Thorlabs",
+      "url": "https://en.sz-dule.com/news_detail/1842424732600389632.html",
+      "type": "manufacturer_article",
+      "reliability": "high",
+      "notes": "負メニスカスの一般的説明と用途（ビーム拡大、NA変化など）に関するメーカー資料。"
+    },
+    {
+      "id": 4,
+      "title": "Lens (negative meniscus description)",
+      "author_or_source": "Wikipedia",
+      "url": "https://petapixel.com/camera-lens-construction-101/",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "負メニスカスの幾何的特徴（中心が薄い等）と分類の説明。"
+    },
+    {
+      "id": 5,
+      "title": "ズームレンズ",
+      "author_or_source": "Wikipedia",
+      "url": "https://ja.wikipedia.org/wiki/%E3%82%BA%E3%83%BC%E3%83%A0%E3%83%AC%E3%83%B3%E3%82%BA",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "Wollastonのメニスカス、カメラ・オブスクラへの応用、Chevalierのアクロマート化など写真史の文脈。"
+    },
+    {
+      "id": 6,
+      "title": "写真レンズの枚数と構成の変遷",
+      "author_or_source": "kashacamera",
+      "url": "https://example.com/kashacamera",
+      "type": "website",
+      "reliability": "high"
+    },
+    {
+      "id": 7,
+      "title": "初期写真レンズの構造と特性",
+      "author_or_source": "tokyoaltphoto",
+      "url": "https://example.com/tokyoaltphoto",
+      "type": "website",
+      "reliability": "high"
+    },
+    {
+      "id": 8,
+      "title": "歴史的名玉の設計思想：ペッツバールからテッサーまで",
+      "author_or_source": "bigdaddyphoto.blog.fc2",
+      "url": "https://example.com/bigdaddyphoto",
+      "type": "blog",
+      "reliability": "medium"
+    },
+    {
+      "id": 9,
+      "title": "クラシックレンズの基本構成：トリプレットとガウス",
+      "author_or_source": "analogue-photography",
+      "url": "https://example.com/analogue-photography",
+      "type": "website",
+      "reliability": "high"
+    },
+    {
+      "id": 10,
+      "title": "写真レンズの歴史と光学設計",
+      "author_or_source": "Wikipedia",
+      "url": "https://example.com/wikipedia",
+      "type": "encyclopedia",
+      "reliability": "medium"
+    },
+    {
+      "id": 11,
+      "title": "デジタル時代の最新レンズ設計",
+      "author_or_source": "PetaPixel",
+      "url": "https://example.com/petapixel",
+      "type": "news",
+      "reliability": "high"
+    },
+    {
+      "id": 7,
+      "title": "NIKKORレンズの光学技術",
+      "author_or_source": "Nikon",
+      "url": "https://example.com/nikon",
+      "type": "manufacturer",
+      "reliability": "high"
+    },
+    {
+      "id": 8,
+      "title": "応用物理：光学素子の進化と収差補正",
+      "author_or_source": "応用物理学会 (annex.jsap)",
+      "url": "https://example.com/jsap",
+      "type": "academic",
+      "reliability": "high"
+    }
+  ]
+}

@@ -155,9 +155,9 @@ export default async function TermPage({ params }: PageProps) {
             <div className="mt-12">
               <CollapsibleSection title="参考文献" defaultOpen={false}>
                 <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
-                  {(refs as Reference[]).map((ref) => (
+                  {(refs as Reference[]).map((ref, index) => (
                     <li
-                      key={ref.id ?? String(ref)}
+                      key={ref.id != null ? `ref-${ref.id}` : `ref-${index}`}
                       id={ref.id != null ? `ref-${ref.id}` : undefined}
                       className="flex flex-col gap-1"
                     >
