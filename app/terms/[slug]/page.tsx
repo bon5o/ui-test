@@ -157,7 +157,7 @@ export default async function TermPage({ params }: PageProps) {
                 <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
                   {(refs as Reference[]).map((ref, index) => (
                     <li
-                      key={ref.id != null ? `ref-${ref.id}` : `ref-${index}`}
+                      key={`ref-${ref.id ?? index}-${index}`}
                       id={ref.id != null ? `ref-${ref.id}` : undefined}
                       className="flex flex-col gap-1"
                     >
