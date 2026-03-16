@@ -30,7 +30,7 @@
               "src": "/images/terms/asphere/asphere_lens_in_letter.jpg",
               "caption": "黒線がレンズです。緑の線が光です。"
             }
-        ] 
+          ] 
         },
         {
           "id": "what_it_is",
@@ -134,8 +134,13 @@
                 3,
                 4
               ]
+            },
+            {
+              "type": "image",
+              "src": "/images/terms/asphere/asphere_spheric.jpg",
+              "caption": "上が球面レンズ、下が非球面レンズです"
             }
-          ]
+          ] 
         }
       ]
     },
