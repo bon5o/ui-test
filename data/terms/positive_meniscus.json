@@ -1,8 +1,8 @@
 {
   "slug": "positive_meniscus",
-  "title": "正メニスカス（正メニスカスレンズ）",
+  "title": "正メニスカス",
   "english_name": "Positive Meniscus Lens",
-  "category": "球面収差補正",
+  "category": "レンズ",
   "field": ["光学設計", "レーザー光学系", "写真レンズ", "投影光学系"],
   "media": {
     "optical_formula": [

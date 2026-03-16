@@ -280,11 +280,19 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
           headers.length > 0
             ? headers.map((h, i) => ({
                 label: h,
-                value: <TermLinkify text={String(row[i] ?? "")} />,
+                value: (
+                  <span className="whitespace-pre-line">
+                    <TermLinkify text={String(row[i] ?? "")} />
+                  </span>
+                ),
               }))
             : row.map((v, i) => ({
                 label: `列${i + 1}`,
-                value: <TermLinkify text={String(v)} />,
+                value: (
+                  <span className="whitespace-pre-line">
+                    <TermLinkify text={String(v)} />
+                  </span>
+                ),
               })),
       }));
 
@@ -294,10 +302,10 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
             <table className="w-full table-fixed border-separate border-spacing-0 border border-gray-200 rounded overflow-hidden text-sm">
               <thead>
                 <tr className="bg-gray-50">
-                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
                     {headers[0]}
                   </th>
-                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
                     {headers[1]}
                   </th>
                 </tr>
@@ -347,7 +355,7 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
                     {headers.map((h, i) => (
                       <th
                         key={i}
-                        className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200"
+                        className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
                       >
                         {h}
                       </th>
@@ -366,7 +374,7 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
                     {row.map((cell, ci) => (
                       <td
                         key={ci}
-                        className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-normal break-words"
+                        className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-pre-line break-words"
                       >
                         <TermLinkify text={String(cell)} />
                       </td>

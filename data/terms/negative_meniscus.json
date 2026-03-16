@@ -1,9 +1,9 @@
 {
   "meta": {
     "id": "negative_meniscus",
-    "name": "負メニスカスレンズ",
+    "name": "負メニスカス",
     "english_name": "Negative meniscus lens",
-    "category": "aaa/bb",
+    "category": "レンズ",
     "aliases": [
       "負のメニスカスレンズ",
       "凹凸レンズ（負）",
@@ -428,7 +428,7 @@
       ]
     },
     {
-      "id": "historical_development",
+      "id": "historical_development_main",
       "title": "歴史的展開",
       "sections": [
         {
