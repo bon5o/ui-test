@@ -9,6 +9,7 @@ import {
   type ImageItem,
   type QuoteItem,
   type TableItem,
+  type Tone,
 } from "../types/hybridContent";
 import { Citation } from "./Citation";
 import { TermLinkify } from "./TermLinkify";
@@ -21,6 +22,8 @@ import { TimelineList, type TimelineItem } from "./sections/TimelineList";
 interface ItemRendererProps {
   item: ContentItem;
   index?: number;
+  /** section.tone などから継承するデフォルトトーン（item.tone があればそちらが優先） */
+  inheritedTone?: Tone;
 }
 
 function assertNever(x: never): never {
@@ -42,6 +45,291 @@ function isSpecTable(headers: string[]): boolean {
 function isTimelineTable(headers: string[]): boolean {
   const yearIdx = headers.indexOf("年");
   return yearIdx >= 0 && headers.length >= 2;
+}
+
+/** セル値が ImageItem かどうか */
+function isImageCell(val: unknown): val is ImageItem {
+  return (
+    typeof val === "object" &&
+    val != null &&
+    "type" in val &&
+    (val as ImageItem).type === "image" &&
+    typeof (val as ImageItem).src === "string"
+  );
+}
+
+function renderImageFigure(
+  img: ImageItem,
+  opts?: {
+    key?: React.Key;
+    /** 表内などで崩れを防ぐための最大高さ（任意） */
+    maxHeightClassName?: string;
+    /** scale を反映した最大幅（任意） */
+    maxWidthPx?: number;
+  }
+): React.ReactElement {
+  const scale = img.scale ?? 1;
+  const figureWidth = 320 * scale;
+  const maxWidthPx = opts?.maxWidthPx ?? figureWidth;
+  const maxHeightClassName = opts?.maxHeightClassName ?? "";
+
+  return (
+    <figure
+      key={opts?.key}
+      className="block mx-auto p-2 bg-[#F4F8FF] border border-gray-100 rounded mb-4"
+      style={{ maxWidth: `${maxWidthPx}px` }}
+    >
+      <Image
+        src={img.src}
+        alt={img.alt ?? img.caption ?? "画像"}
+        width={Math.round(600 * scale)}
+        height={Math.round(400 * scale)}
+        unoptimized
+        className={`block mx-auto rounded h-auto w-auto max-w-full object-contain ${maxHeightClassName}`.trim()}
+      />
+      {((img.variant != null || img.era != null) || (img.caption != null && img.caption !== "")) && (
+        <figcaption className="mt-2 text-sm text-gray-600 text-center break-words whitespace-pre-line space-y-0.5">
+          {(img.variant != null || img.era != null) && (
+            <p className="text-xs font-medium text-gray-500">
+              {[img.variant, img.era].filter(Boolean).join(" · ")}
+            </p>
+          )}
+          {img.caption != null && img.caption !== "" && (
+            <p className="leading-relaxed whitespace-pre-line text-center">{img.caption}</p>
+          )}
+        </figcaption>
+      )}
+      {img.citations && img.citations.length > 0 && (
+        <div className="mt-2 text-center">
+          <Citation citations={img.citations} />
+        </div>
+      )}
+    </figure>
+  );
+}
+
+/**
+ * テーブルセル用描画。string / type: "image" オブジェクト / それらの配列（縦並び）に対応。
+ * 既存の \n 改行（whitespace-pre-line）は文字列セルで維持。
+ */
+function renderTableCell(cell: unknown): React.ReactNode {
+  if (typeof cell === "string") {
+    return (
+      <span className="whitespace-pre-line">
+        <TermLinkify text={cell} />
+      </span>
+    );
+  }
+  if (Array.isArray(cell)) {
+    return (
+      <div className="flex flex-col gap-2">
+        {cell.map((item, i) => (
+          <React.Fragment key={i}>{renderTableCell(item)}</React.Fragment>
+        ))}
+      </div>
+    );
+  }
+  if (isImageCell(cell)) {
+    const img = cell;
+    // NOTE: table 内でも scale を「画像本体」に効かせるため、高さ固定はしない（表外 image と挙動統一）
+    return renderImageFigure(img);
+  }
+  if (cell != null && typeof cell === "object") {
+    return (
+      <span className="whitespace-pre-line break-words">
+        {String((cell as Record<string, unknown>).type ?? JSON.stringify(cell))}
+      </span>
+    );
+  }
+  return (
+    <span className="whitespace-pre-line">
+      <TermLinkify text={String(cell ?? "")} />
+    </span>
+  );
+}
+
+/** 2列仕様表（項目/仕様）を常に表形式で描画 */
+function renderSpecTable(
+  t: TableItem,
+  headers: string[],
+  index: number
+): React.ReactElement {
+  return (
+    <div key={index} className="my-4 w-full">
+      <table className="w-full table-fixed border-separate border-spacing-0 border border-gray-200 rounded overflow-hidden text-sm">
+        <thead>
+          <tr className="bg-gray-50">
+            <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
+              {headers[0]}
+            </th>
+            <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
+              {headers[1]}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {t.rows.map((row, ri) => (
+            <tr
+              key={ri}
+              className={
+                ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+              }
+            >
+              <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
+                {renderTableCell(row[0])}
+              </td>
+              <td className={`border-b border-gray-200 align-top text-sm text-gray-700 leading-6 break-words ${isImageCell(row[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
+                {renderTableCell(row[1])}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {t.citations && t.citations.length > 0 && (
+        <div className="mt-2">
+          <Citation citations={t.citations} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** 常に表形式（行・列）で描画 */
+function renderGridTable(
+  t: TableItem,
+  headers: string[],
+  index: number
+): React.ReactElement {
+  return (
+    <div key={index} className="my-4">
+      <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
+        {headers.length > 0 && (
+          <thead>
+            <tr className="bg-gray-50">
+              {headers.map((h, i) => (
+                <th
+                  key={i}
+                  className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {t.rows.map((row, ri) => (
+            <tr
+              key={ri}
+              className={
+                ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+              }
+            >
+              {row.map((cell, ci) => (
+                <td
+                  key={ci}
+                  className={`border-b border-gray-100 text-gray-700 break-words align-top ${
+                    isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
+                  }`}
+                >
+                  {renderTableCell(cell)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {t.citations && t.citations.length > 0 && (
+        <div className="mt-2">
+          <Citation citations={t.citations} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** 常にカード形式で描画 */
+function renderCardsTable(
+  cardRows: ResponsiveTableCardRow[],
+  citations: number[] | undefined,
+  index: number
+): React.ReactElement {
+  return (
+    <div key={index} className="my-4">
+      <ResponsiveTableCards rows={cardRows} responsive={false} />
+      {citations && citations.length > 0 && (
+        <div className="mt-2">
+          <Citation citations={citations} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** 画面幅に応じて表/カードを切替（既存の responsive 挙動） */
+function renderResponsiveTable(
+  t: TableItem,
+  headers: string[],
+  cardRows: ResponsiveTableCardRow[],
+  timelineItems: TimelineItem[] | null,
+  specTable: boolean,
+  index: number
+): React.ReactElement {
+  if (specTable) {
+    return renderSpecTable(t, headers, index);
+  }
+  // NOTE: 以前は「年表テーブル」を TimelineList で別描画していたが、
+  // display: "responsive" の要件として「md未満=カード / md以上=表」を保証するため、
+  // ここではカード＋md以上の表を常に併置する。
+  return (
+    <div key={index} className="my-4">
+      <ResponsiveTableCards rows={cardRows} />
+      <div className="hidden md:block">
+        <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
+          {headers.length > 0 && (
+            <thead>
+              <tr className="bg-gray-50">
+                {headers.map((h, i) => (
+                  <th
+                    key={i}
+                    className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+          )}
+          <tbody>
+            {t.rows.map((row, ri) => (
+              <tr
+                key={ri}
+                className={
+                  ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
+                }
+              >
+                {row.map((cell, ci) => (
+                  <td
+                    key={ci}
+                    className={`border-b border-gray-100 text-gray-700 break-words align-top ${
+                      isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
+                    }`}
+                  >
+                    {renderTableCell(cell)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {t.citations && t.citations.length > 0 && (
+        <div className="mt-2">
+          <Citation citations={t.citations} />
+        </div>
+      )}
+    </div>
+  );
 }
 
 /** TableItem を TimelineItem[] に変換。年表でない場合は null */
@@ -67,18 +355,18 @@ function tableToTimelineItems(t: TableItem): TimelineItem[] | null {
   return t.rows
     .map((row) => {
       const year =
-        yearIdx >= 0 && row[yearIdx] != null && String(row[yearIdx]).trim() !== ""
-          ? String(row[yearIdx])
+        yearIdx >= 0 && row[yearIdx] != null && typeof row[yearIdx] === "string" && row[yearIdx].trim() !== ""
+          ? row[yearIdx]
           : undefined;
       const title =
-        titleIdx >= 0 && row[titleIdx] != null && String(row[titleIdx]).trim() !== ""
-          ? String(row[titleIdx])
+        titleIdx >= 0 && row[titleIdx] != null && typeof row[titleIdx] === "string" && row[titleIdx].trim() !== ""
+          ? row[titleIdx]
           : undefined;
       const bullets: Array<{ label: string; value: string }> = [];
       for (const i of bulletHeaderIndices) {
         const val = row[i];
-        if (val != null && String(val).trim() !== "") {
-          bullets.push({ label: headers[i], value: String(val) });
+        if (val != null && typeof val === "string" && val.trim() !== "") {
+          bullets.push({ label: headers[i], value: val });
         }
       }
       if (!year && !title && bullets.length === 0) return null;
@@ -100,7 +388,11 @@ function isEmptyOrKeyless(obj: Record<string, unknown>): boolean {
   return keys.length === 0;
 }
 
-function renderItemContent(item: ContentItem, index: number): React.ReactNode {
+function renderItemContent(
+  item: ContentItem,
+  index: number,
+  inheritedTone?: Tone
+): React.ReactNode {
   const raw = item as unknown as Record<string, unknown>;
 
   if (isEmptyOrKeyless(raw)) {
@@ -174,8 +466,15 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
   switch (item.type) {
     case "paragraph": {
       const p = item as ParagraphItem;
+      const resolvedTone = p.tone ?? inheritedTone ?? "normal";
+      const toneClass =
+        resolvedTone === "note"
+          ? "text-sm text-gray-500 leading-snug"
+          : resolvedTone === "muted"
+            ? "text-[15px] text-gray-600 leading-relaxed"
+            : "text-base text-gray-700 leading-relaxed";
       return (
-        <p key={index} className="text-base font-normal leading-relaxed text-gray-700 whitespace-pre-line">
+        <p key={index} className={`font-normal whitespace-pre-line ${toneClass}`}>
           <TermLinkify text={p.text} />
           {p.citations && p.citations.length > 0 && (
             <Citation citations={p.citations} />
@@ -197,9 +496,17 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
         console.warn("[ItemRenderer] list item missing items", item);
         return null;
       }
+      const resolvedTone = list.tone ?? inheritedTone ?? "normal";
+      const toneClass =
+        resolvedTone === "note"
+          ? "text-sm text-gray-500 leading-snug"
+          : resolvedTone === "muted"
+            ? "text-[15px] text-gray-600 leading-relaxed"
+            : "text-base text-gray-700 leading-relaxed";
+      const itemGapClass = resolvedTone === "note" ? "space-y-0.5" : "space-y-1";
       return (
         <div key={index}>
-          <ul className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700">
+          <ul className={`list-disc pl-6 ${itemGapClass} font-normal ${toneClass}`}>
             {entries.map((entry, i) => (
               <li key={i} className="whitespace-pre-line">
                 <TermLinkify text={String(entry)} />
@@ -214,50 +521,7 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
     }
     case "image": {
       const img = item as ImageItem;
-      const scale = img.scale ?? 1;
-      const baseWidth = 320;
-      const figureWidth = baseWidth * scale;
-      const layoutClass =
-        img.layout === "left"
-          ? "sm:float-left sm:mr-4 max-sm:float-none max-sm:mr-0 max-sm:ml-0 mb-4"
-          : img.layout === "right"
-            ? "sm:float-right sm:ml-4 max-sm:float-none max-sm:mr-0 max-sm:ml-0 mb-4"
-            : img.layout === "center"
-              ? "mx-auto block mb-4"
-              : "mb-4";
-      return (
-        <figure
-          key={index}
-          className={`inline-block align-top p-2 bg-[#F4F8FF] border border-gray-100 rounded ${layoutClass}`}
-          style={{ width: `${figureWidth}px`, maxWidth: `${figureWidth}px` }}
-        >
-          <Image
-            src={img.src}
-            alt={img.alt ?? img.caption ?? "画像"}
-            width={Math.round(600 * scale)}
-            height={Math.round(400 * scale)}
-            unoptimized
-            className="rounded h-auto"
-          />
-          {((img.variant != null || img.era != null) || (img.caption != null && img.caption !== "")) && (
-            <figcaption className="mt-2 text-sm text-gray-600 text-center break-words whitespace-pre-line space-y-0.5">
-              {(img.variant != null || img.era != null) && (
-                <p className="text-xs font-medium text-gray-500">
-                  {[img.variant, img.era].filter(Boolean).join(" · ")}
-                </p>
-              )}
-              {img.caption != null && img.caption !== "" && (
-                <p className="leading-relaxed whitespace-pre-line">{img.caption}</p>
-              )}
-            </figcaption>
-          )}
-          {img.citations && img.citations.length > 0 && (
-            <div className="mt-2 text-center">
-              <Citation citations={img.citations} />
-            </div>
-          )}
-        </figure>
-      );
+      return renderImageFigure(img, { key: index });
     }
     case "quote": {
       const q = item as QuoteItem;
@@ -280,116 +544,29 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
           headers.length > 0
             ? headers.map((h, i) => ({
                 label: h,
-                value: (
-                  <span className="whitespace-pre-line">
-                    <TermLinkify text={String(row[i] ?? "")} />
-                  </span>
-                ),
+                value: renderTableCell(row[i]),
               }))
             : row.map((v, i) => ({
                 label: `列${i + 1}`,
-                value: (
-                  <span className="whitespace-pre-line">
-                    <TermLinkify text={String(v)} />
-                  </span>
-                ),
+                value: renderTableCell(v),
               })),
       }));
+      const displayMode = t.display ?? "responsive";
 
-      if (specTable) {
-        return (
-          <div key={index} className="my-4 w-full">
-            <table className="w-full table-fixed border-separate border-spacing-0 border border-gray-200 rounded overflow-hidden text-sm">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
-                    {headers[0]}
-                  </th>
-                  <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
-                    {headers[1]}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {t.rows.map((row, ri) => (
-                  <tr
-                    key={ri}
-                    className={
-                      ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
-                    }
-                  >
-                    <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
-                      <TermLinkify text={String(row[0] ?? "")} />
-                    </td>
-                    <td className="border-b border-gray-200 px-3 py-2 align-top text-sm text-gray-700 leading-6 whitespace-pre-line break-words">
-                      <TermLinkify text={String(row[1] ?? "")} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {t.citations && t.citations.length > 0 && (
-              <div className="mt-2">
-                <Citation citations={t.citations} />
-              </div>
-            )}
-          </div>
-        );
+      if (displayMode === "table") {
+        if (specTable) return renderSpecTable(t, headers, index);
+        return renderGridTable(t, headers, index);
       }
-
-      return (
-        <div key={index} className="my-4">
-          {timelineItems && timelineItems.length > 0 ? (
-            <TimelineList
-              items={timelineItems}
-              renderValue={(text) => <TermLinkify text={text} />}
-            />
-          ) : (
-            <ResponsiveTableCards rows={cardRows} />
-          )}
-          <div className="hidden md:block">
-            <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
-              {headers.length > 0 && (
-                <thead>
-                  <tr className="bg-gray-50">
-                    {headers.map((h, i) => (
-                      <th
-                        key={i}
-                        className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-              )}
-              <tbody>
-                {t.rows.map((row, ri) => (
-                  <tr
-                    key={ri}
-                    className={
-                      ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
-                    }
-                  >
-                    {row.map((cell, ci) => (
-                      <td
-                        key={ci}
-                        className="px-4 py-2 border-b border-gray-100 text-gray-700 whitespace-pre-line break-words"
-                      >
-                        <TermLinkify text={String(cell)} />
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {t.citations && t.citations.length > 0 && (
-            <div className="mt-2">
-              <Citation citations={t.citations} />
-            </div>
-          )}
-        </div>
+      if (displayMode === "cards") {
+        return renderCardsTable(cardRows, t.citations, index);
+      }
+      return renderResponsiveTable(
+        t,
+        headers,
+        cardRows,
+        timelineItems,
+        specTable,
+        index
       );
     }
     default:
@@ -397,6 +574,10 @@ function renderItemContent(item: ContentItem, index: number): React.ReactNode {
   }
 }
 
-export function ItemRenderer({ item, index = 0 }: ItemRendererProps): React.ReactNode {
-  return renderItemContent(item, index);
+export function ItemRenderer({
+  item,
+  index = 0,
+  inheritedTone,
+}: ItemRendererProps): React.ReactNode {
+  return renderItemContent(item, index, inheritedTone);
 }

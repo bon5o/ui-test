@@ -5,8 +5,13 @@
 
 export type ItemType = "paragraph" | "list" | "image" | "quote" | "table";
 
+/** 文面トーン（表示の濃淡）。未指定は通常（normal）扱い */
+export type Tone = "normal" | "muted" | "note";
+
 export interface ParagraphItem {
   type: "paragraph";
+  /** 表示の濃淡（任意） */
+  tone?: Tone;
   text: string;
   citations?: number[];
 }
@@ -18,6 +23,8 @@ export interface ParagraphItem {
  */
 export interface ListItem {
   type: "list";
+  /** 表示の濃淡（任意） */
+  tone?: Tone;
   /** リスト項目（推奨）。必須にしないのは JSON 移行期の互換のため */
   items?: string[];
   /** 代替キー（items がない場合に代用） */
@@ -47,10 +54,22 @@ export interface QuoteItem {
   citations?: number[];
 }
 
+/** テーブルセルに指定できる値。文字列・画像オブジェクト・それらの配列（縦並び） */
+export type TableCellValue =
+  | string
+  | ImageItem
+  | Array<string | ImageItem>;
+
+/** テーブルの表示モード。未指定時は "responsive"（既存挙動） */
+export type TableDisplayMode = "responsive" | "cards" | "table";
+
 export interface TableItem {
   type: "table";
+  /** 表示形式: responsive=画面幅で切替 / cards=常にカード / table=常に表。未指定は "responsive" */
+  display?: TableDisplayMode;
   headers?: string[];
-  rows: string[][];
+  /** 各セルは string / image オブジェクト / (string | image)[] のいずれか */
+  rows: (string | ImageItem | Array<string | ImageItem>)[][];
   citations?: number[];
 }
 
@@ -69,6 +88,8 @@ export interface SectionMeta {
 export interface Section {
   id: string;
   title: string;
+  /** セクション全体の表示トーン（任意）。item 側に tone があれば item が優先。 */
+  tone?: Tone;
   meta?: SectionMeta;
   citations?: number[];
   items: ContentItem[];

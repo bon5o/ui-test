@@ -17,6 +17,11 @@ interface ResponsiveTableCardsProps {
   /** 1行=1カードのデータ */
   rows: ResponsiveTableCardRow[];
   className?: string;
+  /**
+   * true（デフォルト）: md未満でのみ表示（レスポンシブ用）
+   * false: 画面幅に関係なく常に表示（display: "cards" 用）
+   */
+  responsive?: boolean;
 }
 
 /**
@@ -28,11 +33,12 @@ export function ResponsiveTableCards({
   title,
   rows,
   className = "",
+  responsive = true,
 }: ResponsiveTableCardsProps): React.ReactElement {
   if (rows.length === 0) return <></>;
 
   return (
-    <div className={`md:hidden space-y-3 ${className}`.trim()}>
+    <div className={`${responsive ? "md:hidden " : ""}space-y-3 ${className}`.trim()}>
       {title && (
         <h4 className="text-sm font-semibold text-gray-800">{title}</h4>
       )}
