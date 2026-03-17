@@ -332,6 +332,71 @@ function renderResponsiveTable(
   );
 }
 
+/** display: "timeline" 用の縦タイムライン表示 */
+function renderTimelineTable(
+  t: TableItem,
+  headers: string[],
+  index: number
+): React.ReactElement {
+  const labelHeaders = headers.length > 0 ? headers : undefined;
+  return (
+    <div key={index} className="my-4">
+      {/* タイムライン全体に対して縦線を1本だけ描画（row間のgapでも途切れない） */}
+      <div className="relative space-y-4">
+        {/* 年と丸点を隣に寄せる: 年 50px + gap 4px + 中央カラム中心 10px = 64px */}
+        <div className="pointer-events-none absolute inset-y-0 left-[64px] w-px bg-gray-200 z-0" />
+        {t.rows.map((row, ri) => {
+          const year = row[0];
+          const details = row.slice(1);
+          const detailLabels = labelHeaders ? labelHeaders.slice(1) : [];
+
+          return (
+            <div key={ri} className="grid grid-cols-[50px_20px_1fr] gap-x-1">
+              <div className="text-sm font-medium text-gray-800 whitespace-pre-line">
+                {renderTableCell(year)}
+              </div>
+
+              <div className="relative flex justify-center">
+                {/* 丸点（線より前面・輪っか） */}
+                <div className="mt-1 h-3 w-3 rounded-full bg-white border-2 border-[#7D9CD4] z-10" />
+              </div>
+
+              <div className="rounded-lg border border-gray-200 bg-white px-3 py-2">
+                <div className="space-y-2">
+                  {details.map((cell, ci) => {
+                    const label = detailLabels[ci] ?? `列${ci + 2}`;
+                    // 空っぽは省略（年表の可読性優先）
+                    const isEmpty =
+                      cell == null ||
+                      (typeof cell === "string" && cell.trim() === "");
+                    if (isEmpty) return null;
+                    return (
+                      <div key={ci} className="space-y-1">
+                        <div className="text-[11px] font-medium text-gray-500">
+                          {label}
+                        </div>
+                        <div className="text-sm text-gray-800 leading-6 break-words">
+                          {renderTableCell(cell)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {t.citations && t.citations.length > 0 && (
+        <div className="mt-2">
+          <Citation citations={t.citations} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 /** TableItem を TimelineItem[] に変換。年表でない場合は null */
 function tableToTimelineItems(t: TableItem): TimelineItem[] | null {
   const headers = t.headers ?? [];
@@ -468,13 +533,19 @@ function renderItemContent(
       const p = item as ParagraphItem;
       const resolvedTone = p.tone ?? inheritedTone ?? "normal";
       const toneClass =
-        resolvedTone === "note"
+        resolvedTone === "highlight_note"
           ? "text-sm text-gray-500 leading-snug"
-          : resolvedTone === "muted"
-            ? "text-[15px] text-gray-600 leading-relaxed"
-            : "text-base text-gray-700 leading-relaxed";
+          : resolvedTone === "note"
+            ? "text-sm text-gray-500 leading-snug"
+            : resolvedTone === "muted"
+              ? "text-[15px] text-gray-600 leading-relaxed"
+              : "text-base text-gray-700 leading-relaxed";
+      const highlightWrapClass =
+        resolvedTone === "highlight_note"
+          ? "bg-[#F7F8F9] border-1 border-[#a4bfd9] rounded px-3 py-2"
+          : "";
       return (
-        <p key={index} className={`font-normal whitespace-pre-line ${toneClass}`}>
+        <p key={index} className={`font-normal whitespace-pre-line ${toneClass} ${highlightWrapClass}`.trim()}>
           <TermLinkify text={p.text} />
           {p.citations && p.citations.length > 0 && (
             <Citation citations={p.citations} />
@@ -498,15 +569,24 @@ function renderItemContent(
       }
       const resolvedTone = list.tone ?? inheritedTone ?? "normal";
       const toneClass =
-        resolvedTone === "note"
+        resolvedTone === "highlight_note"
           ? "text-sm text-gray-500 leading-snug"
+          : resolvedTone === "note"
+            ? "text-sm text-gray-500 leading-snug"
           : resolvedTone === "muted"
             ? "text-[15px] text-gray-600 leading-relaxed"
             : "text-base text-gray-700 leading-relaxed";
-      const itemGapClass = resolvedTone === "note" ? "space-y-0.5" : "space-y-1";
+      const itemGapClass =
+        resolvedTone === "note" || resolvedTone === "highlight_note"
+          ? "space-y-0.5"
+          : "space-y-1";
+      const highlightWrapClass =
+        resolvedTone === "highlight_note"
+          ? "bg-[#F7F8F9] border-1 border-[#a4bfd9] rounded px-3 py-2"
+          : "";
       return (
         <div key={index}>
-          <ul className={`list-disc pl-6 ${itemGapClass} font-normal ${toneClass}`}>
+          <ul className={`list-disc pl-6 ${itemGapClass} font-normal ${toneClass} ${highlightWrapClass}`.trim()}>
             {entries.map((entry, i) => (
               <li key={i} className="whitespace-pre-line">
                 <TermLinkify text={String(entry)} />
@@ -553,6 +633,9 @@ function renderItemContent(
       }));
       const displayMode = t.display ?? "responsive";
 
+      if (displayMode === "timeline") {
+        return renderTimelineTable(t, headers, index);
+      }
       if (displayMode === "table") {
         if (specTable) return renderSpecTable(t, headers, index);
         return renderGridTable(t, headers, index);

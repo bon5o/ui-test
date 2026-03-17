@@ -6,7 +6,7 @@
 export type ItemType = "paragraph" | "list" | "image" | "quote" | "table";
 
 /** 文面トーン（表示の濃淡）。未指定は通常（normal）扱い */
-export type Tone = "normal" | "muted" | "note";
+export type Tone = "normal" | "muted" | "note" | "highlight_note";
 
 export interface ParagraphItem {
   type: "paragraph";
@@ -61,7 +61,7 @@ export type TableCellValue =
   | Array<string | ImageItem>;
 
 /** テーブルの表示モード。未指定時は "responsive"（既存挙動） */
-export type TableDisplayMode = "responsive" | "cards" | "table";
+export type TableDisplayMode = "responsive" | "cards" | "table" | "timeline";
 
 export interface TableItem {
   type: "table";
