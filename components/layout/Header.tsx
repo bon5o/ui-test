@@ -30,13 +30,13 @@ function MailIcon({ className }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="static relative w-full min-w-0 overflow-hidden bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-white">
-      {/* 背景レイヤー（レンズ前玉 + 反射）。absolute は header 内でクリップするため overflow-hidden 必須 */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        {/* 前玉っぽい楕円。位置固定。モバイルで右はみ出し防止のため max-w-full */}
-        <div className="absolute -top-56 left-[30%] h-[350px] w-[600px] max-w-full -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_5%_5%,rgba(136,5,105,0.58),rgba(255,255,255,0)_58%)] blur-2xl opacity-70" />
-        {/* コーティング反射（右側・はみ出しは header でクリップ） */}
-        <div className="absolute -top-24 right-0 h-[380px] w-[380px] max-w-none translate-x-1/4 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.12),rgba(99,102,241,0.08),rgba(255,255,255,0)_62%)] blur-2xl opacity-55" />
+    <header className="isolate static relative w-full min-w-0 overflow-hidden overflow-x-clip bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-white">
+      {/* 背景レイヤー。absolute 子はこのラッパー内でクリップ（blur のはみ出し対策） */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        {/* 前玉っぽい楕円。位置固定。モバイルで blur 弱め + max-w-full で右はみ出し防止 */}
+        <div className="absolute -top-56 left-[30%] h-[350px] w-[600px] max-w-full -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_5%_5%,rgba(136,5,105,0.58),rgba(255,255,255,0)_58%)] opacity-70 blur-xl md:blur-2xl" />
+        {/* コーティング反射（右側）。モバイルでは translate なしで右端に揃え、PC でだけ少し右に */}
+        <div className="absolute -top-24 right-0 h-[380px] w-[380px] max-w-full translate-x-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.12),rgba(99,102,241,0.08),rgba(255,255,255,0)_62%)] blur-2xl opacity-55 md:max-w-none md:translate-x-1/4" />
         {/* ガラス面のごく薄いハイライト */}
         <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/40 to-transparent" />
       </div>
