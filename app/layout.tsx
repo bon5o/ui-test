@@ -7,7 +7,6 @@ import type { Metadata } from "next";
 import { Sawarabi_Mincho } from "next/font/google";
 import "./globals.css";
 import { SiteLayout } from "../components/layout/SiteLayout";
-import { OverflowDebug } from "../components/OverflowDebug";
 
 const sawarabiMincho = Sawarabi_Mincho({
   weight: "400",
@@ -41,7 +40,6 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning className="overflow-x-hidden">
       <body className={`min-h-screen min-w-0 max-w-full overflow-x-hidden bg-white text-[#111111] ${sawarabiMincho.className}`}>
-        <OverflowDebug />
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>
