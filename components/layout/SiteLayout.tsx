@@ -10,12 +10,12 @@ import { Header } from "./Header";
 
 export const SiteLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen min-w-0 max-w-full flex-col bg-white">
       <Header />
 
-      <main className="flex-1">{children}</main>
+      <main className="min-w-0 flex-1">{children}</main>
 
-      <footer className="mt-auto border-t border-gray-200 bg-white py-6 text-xs text-gray-600">
+      <footer className="mt-auto min-w-0 border-t border-gray-200 bg-white py-6 text-xs text-gray-600">
         <div className="container-page flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} 沼便り。</p>
           <p>このサイトはオールドレンズ研究の個人的なノートを兼ねた非公式リファレンスです。</p>

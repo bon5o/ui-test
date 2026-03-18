@@ -38,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" suppressHydrationWarning>
-      <body className={`min-h-screen bg-white text-[#111111] ${sawarabiMincho.className}`}>
+    <html lang="ja" suppressHydrationWarning className="overflow-x-hidden">
+      <body className={`min-h-screen min-w-0 max-w-full overflow-x-hidden bg-white text-[#111111] ${sawarabiMincho.className}`}>
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>

@@ -30,16 +30,15 @@ function MailIcon({ className }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="static relative overflow-hidden bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-white">
-      {/* 背景レイヤー（レンズ前玉 + 反射） */}
+    <header className="static relative w-full min-w-0 overflow-hidden bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-white">
+      {/* 背景レイヤー（レンズ前玉 + 反射）。absolute は header 内でクリップするため overflow-hidden 必須 */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        {/* 前玉っぽい大きな円（うっすら・少し存在感アップ） */}
-        <div className="absolute -top-60 left-3/13 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(100,0,0,0.54),rgba(25,25,25,0)_38%)] blur-2xl opacity-70" />
-        <div className="absolute -top-50 left-12/13 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(0, 1, 1, 0.65),rgba(25,25,25,0)_38%)] blur-2xl opacity-70" />
-        {/* コーティング反射（青緑〜紫を控えめに） */}
-        <div className="absolute -top-24 right-[-140px] h-[440px] w-[440px] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(4,211,238,0.12),rgba(99,82,201,0.08),rgba(100,100,100,0)_6%)] blur-2xl opacity-55" />
+        {/* 前玉っぽい大きな円（中央・うっすら） */}
+        <div className="absolute -top-56 left-[30%] h-[350px] w-[600px] max-w-none -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_5%_5%,rgba(136,5,105,0.58),rgba(255,255,255,0)_58%)] blur-2xl opacity-70" />
+        {/* コーティング反射（右側・はみ出しは header でクリップ） */}
+        <div className="absolute -top-24 right-0 h-[380px] w-[380px] max-w-none translate-x-1/4 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.12),rgba(99,102,241,0.08),rgba(255,255,255,0)_62%)] blur-2xl opacity-55" />
         {/* ガラス面のごく薄いハイライト */}
-        <div className="absolute inset-x-0 top-0 h-55 bg-gradient-to-b from-white/40 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/40 to-transparent" />
       </div>
 
       <div className="relative z-10 container-page flex flex-col gap-2 py-2 sm:flex-row sm:items-center sm:justify-between sm:py-4 md:gap-3 lg:py-5">

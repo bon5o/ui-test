@@ -20,7 +20,7 @@ export function ResponsiveTable({
 }: ResponsiveTableProps): React.ReactElement {
   return (
     <div
-      className={`w-full overflow-x-auto [-webkit-overflow-scrolling:touch] ${className}`.trim()}
+      className={`min-w-0 w-full max-w-full overflow-x-auto [-webkit-overflow-scrolling:touch] ${className}`.trim()}
     >
       {children}
     </div>
