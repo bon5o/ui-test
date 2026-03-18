@@ -6,7 +6,7 @@ import raw from "../../../data/compare/designs.json";
 export default function CompareDesignsPage() {
   const data = raw as unknown as DesignComparisonData;
   return (
-    <PageContainer className="max-w-5xl">
+    <PageContainer className="max-w-none px-2 sm:px-4 lg:px-6">
       <DesignCompareClient data={data} />
     </PageContainer>
   );
