@@ -33,8 +33,8 @@ export function Header() {
     <header className="static relative w-full min-w-0 overflow-hidden bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-white">
       {/* 背景レイヤー（レンズ前玉 + 反射）。absolute は header 内でクリップするため overflow-hidden 必須 */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        {/* 前玉っぽい大きな円（中央・うっすら） */}
-        <div className="absolute -top-56 left-[30%] h-[350px] w-[600px] max-w-none -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_5%_5%,rgba(136,5,105,0.58),rgba(255,255,255,0)_58%)] blur-2xl opacity-70" />
+        {/* 前玉っぽい楕円。位置固定。モバイルで右はみ出し防止のため max-w-full */}
+        <div className="absolute -top-56 left-[30%] h-[350px] w-[600px] max-w-full -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_5%_5%,rgba(136,5,105,0.58),rgba(255,255,255,0)_58%)] blur-2xl opacity-70" />
         {/* コーティング反射（右側・はみ出しは header でクリップ） */}
         <div className="absolute -top-24 right-0 h-[380px] w-[380px] max-w-none translate-x-1/4 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.12),rgba(99,102,241,0.08),rgba(255,255,255,0)_62%)] blur-2xl opacity-55" />
         {/* ガラス面のごく薄いハイライト */}
