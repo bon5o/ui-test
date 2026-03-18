@@ -5,17 +5,17 @@ const items = [
   {
     href: "/compare/lenses",
     title: "レンズ比較",
-    description: "レンズ同士の比較（準備中）",
+    description: "（準備中）",
   },
   {
     href: "/compare/designs",
     title: "構成型比較",
-    description: "構成型（設計タイプ）の比較（準備中）",
+    description: "構成型の比較",
   },
   {
     href: "/compare/makers",
     title: "メーカー比較",
-    description: "メーカー別の比較（準備中）",
+    description: "（準備中）",
   },
 ] as const;
 
@@ -27,7 +27,7 @@ export default function CompareIndexPage() {
           比較一覧
         </h1>
         <p className="mt-2 text-[15px] text-gray-600">
-          比較機能は準備中です。まずは導線のみ実装しています。
+          比較機能一部準備中です。様々な比較を簡単にするためのページです。
         </p>
       </header>
 

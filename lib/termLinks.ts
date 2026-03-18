@@ -11,6 +11,17 @@ export const TERM_LINKS: { term: string; slug: string }[] = [
   { term: "非球面", slug: "aspheric" },
   { term: "コーティング", slug: "coating" },
   { term: "収差", slug: "aberration" },
+  { term: "球面収差", slug: "spherical_aberration" },
+  { term: "コマ収差", slug: "coma_aberration" },
+  { term: "コマ", slug: "coma_aberration" },
+  { term: "非点収差", slug: "astigmatism" },
+  { term: "非点", slug: "astigmatism" },
+  { term: "像面湾曲", slug: "aspheric" },
+  { term: "歪曲収差", slug: "distortion_aberration" },
+  { term: "歪曲", slug: "distortion_aberration" },
+  { term: "軸上色収差", slug: "axial_chromatic_aberration" },
+  { term: "倍率色収差", slug: "lateral_chromatic_aberration" },
+  { term: "迷光", slug: "stray_light" },
   { term: "ダブルガウス", slug: "double-gauss" },
   { term: "Super-Takumar 55mm f1.8", slug: "super-takumar-55mm-f18" }
 ];

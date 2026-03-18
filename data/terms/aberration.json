@@ -107,32 +107,58 @@
               "type": "table",
               "headers": [
                 "収差の名前",
+                "図",
                 "発生原因",
                 "描写上の特徴"
               ],
               "rows": [
                 [
                   "球面収差",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/spherical_aberration/spherical_aberration.jpg",
+                    "caption": "光線の焦点位置が異なっている状態"
+                  },
                   "球面レンズで周辺光線と軸近傍光線の焦点位置が異なることに起因する収差である",
                   "像全体のコントラストが低下し、開放では柔らかいハロ状のにじみが乗る描写となる"
                 ],
                 [
                   "コマ収差",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/coma_aberration/coma_aberration.jpg",
+                    "caption": "像のできる位置が異なる状態"
+                  },
                   "オフ軸光線がレンズの各ゾーンで異なる倍率で結像することに起因する収差である",
                   "画面周辺の点光源が彗星状あるいは羽の生えた形に伸びる描写となる"
                 ],
                 [
                   "非点収差",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/astigmatism/astigmatism.jpg",
+                    "caption": "直交した平面上の光線が異なる位置で像をなしている状態\nSebastian Kosch (Ginger Penguin, CC 表示-継承 3.0, https://commons.wikimedia.org/w/index.php?curid=2232585による"
+                  },
                   "接線方向と子午線方向で焦点位置が異なることに起因する収差である",
-                  "画面周辺의像が一方向に伸びた線状になり、特定の距離でだけ一方向がシャープになる描写となる"
+                  "画面周辺像が一方向に伸びた線状になり、特定の距離でだけ一方向がシャープになる描写となる"
                 ],
                 [
                   "像面湾曲",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/field_curvature/field_curvature.jpg",
+                    "caption": "異なる位置で像をなしている状態\n単色で起きる現象だがわかりやすくするため色を付けている"
+                  },
                   "像面が理想的な平面ではなく曲面となる性質に起因する収差である",
                   "中心は合焦しているが周辺はピントが前後にずれ、周辺部を優先すると中心が外れるような描写となる"
                 ],
                 [
                   "歪曲収差",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/distortion_aberration/distortion_aberration.jpg",
+                    "caption": "本来通るはずの光線より外側または内側に光線が通ってしまっている状態\n上図は樽型"
+                  },
                   "倍率が画面位置によって変化することに起因する収差である",
                   "直線が樽型や糸巻型に曲がって写るが、解像感には比較的影響が小さい場合が多い描写となる"
                 ]
@@ -163,17 +189,28 @@
               "type": "table",
               "headers": [
                 "収差の名前",
+                "図",
                 "発生原因",
                 "描写上の特徴"
               ],
               "rows": [
                 [
                   "軸上色収差",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/axial_chromatic_aberration/axial_chromatic_aberration.jpg",
+                    "caption": "異なる色の光が異なる軸上の位置で像をなしている状態"
+                  },
                   "波長ごとに焦点距離が異なるため、光軸上で色ごとに焦点位置が前後にずれることに起因する収差である",
                   "ピント面前後や強いハイライトの周辺に紫や緑のにじみが生じ、開放ではハロを伴う柔らかさが現れる描写となる"
                 ],
                 [
                   "倍率色収差",
+                  {
+                    "type": "image",
+                    "src": "/images/terms/lateral_chromatic_aberration/lateral_chromatic_aberration.jpg",
+                    "caption": "異なる色の光が異なる場所で像をなしている状態"
+                  },
                   "波長ごとに像倍率が異なることにより、画面周辺で色ごとの位置がずれることに起因する収差である",
                   "画面端の高コントラスト境界にシアンやマゼンタ方向の色ズレが現れる描写となる"
                 ]

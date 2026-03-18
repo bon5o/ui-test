@@ -53,7 +53,8 @@ export function ChapterRenderer({
       <div id={chapter.id} className="space-y-8">
         {(chapter.sections ?? []).filter(Boolean).map((section, index) => (
           <SectionRenderer
-            key={section.id || `section-${index}`}
+            // section.id が重複しても兄弟要素の key がユニークになるよう index を併用
+            key={`${section.id ?? "section"}-${index}`}
             section={section}
             currentTermSlug={currentTermSlug}
           />

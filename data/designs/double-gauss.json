@@ -73,7 +73,7 @@
           "items": [
             {
               "type": "paragraph",
-              "text": "ダブルガウス型（Double-Gauss type）とは、ガウス型のレンズを前後に配置し、絞りを中心に置いて左右対称またはほぼ対称にまとめたレンズ構成型である。",
+              "text": "ダブルガウス型（Double-Gauss type）とは、ガウス型のレンズを前後に配置し、絞りを中心に置いて左右対称または、ほぼ対称にまとめたレンズ構成型である。",
               "citations": [
                 1,
                 10,
@@ -786,7 +786,11 @@
         },
         {
           "id": "focus_transition",
-          "title": "ピント面からボケへの移行がスムーズなど",
+          "title": "ピント面からボケへの移行",
+          "toc": {
+            "hidden": false,
+            "label": "ボケへの移行"
+          },
           "items": [
             {
               "type": "paragraph",
@@ -1197,7 +1201,7 @@
         },
         {
           "id": "modernization",
-          "title": "現代化（デジタル最適化・テレセントリック・センサー反射・コーティング）",
+          "title": "現代化",
           "items": [
             {
               "type": "paragraph",

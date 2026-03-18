@@ -1,0 +1,290 @@
+{
+  "meta": {
+    "id": "stray_light_old_lenses",
+    "slug": "stray_light",
+    "name": "迷光",
+    "english_name": "Stray Light",
+    "category": "光学現象",
+    "aliases": [
+      "迷光",
+      "ストレイライト",
+      "フレア",
+      "ゴースト",
+      "ベイリングフレア",
+      "ベイリンググレア"
+    ],
+    "summary": "迷光とは、光学系の設計上意図されていない経路で像面に到達する不要光であり、写真用オールドレンズではフレアやゴーストとして顕在化し、コントラスト低下やハレーション的描写を生む根源的要因である。",
+    "tags": [
+      "optics",
+      "photography",
+      "old_lens",
+      "flare",
+      "ghosting",
+      "veiling_glare",
+      "industrial_optics",
+      "optical_history"
+    ],
+    "updated_at": "2026-03-18"
+  },
+  "chapters": [
+    {
+      "id": "overview",
+      "title": "概要",
+      "sections": [
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "迷光とは、光学系において設計された主光線束とは異なる経路で像面や検出器に到達し、像形成に不要な寄与をする光である。",
+              "citations": [
+                1,
+                2,
+                3,
+                8,
+                11
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "写真用レンズにおいて迷光は、主として内部反射や散乱、絞り・鏡筒・鏡胴内面からの反射などによって生じ、画面全体のベール状のかぶりや局所的なゴースト像として現れる。",
+              "citations": [
+                1,
+                2,
+                3,
+                5,
+                6,
+                9
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズでは単層もしくは無コーティング、大きな空気間隔、簡素な内面黒色処理などの設計・製造上の要因により迷光が増大し、現代レンズと比較してコントラストが低く、逆光時に顕著なフレアやゴーストが出やすい特徴がある。",
+              "citations": [
+                5,
+                6,
+                7,
+                9,
+                15
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "迷光は、設計された像形成に関与しない不要光であり、コントラスト低下とダイナミックレンジの劣化を招く根本要因である。",
+                "写真用レンズでは、迷光はベイリングフレアやゴースト、ハレーション的なにじみとして観察される。",
+                "オールドレンズはコーティング技術や鏡筒内迷光対策が未発達であったため、現代レンズより迷光の影響が大きく、逆光耐性が低い傾向がある。",
+                "産業用・計測用光学系では迷光は測定誤差やコントラスト劣化の主要因となるため、設計段階から専用の迷光解析と対策が必須である。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                8,
+                11,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "id": "explanation",
+          "title": "解説",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "迷光は、理想的には像を形成すべき主光線束から外れた光が、反射・散乱・回折などにより像面に到達する現象であり、設計上の光路図には現れないノイズ成分として扱われる。",
+              "citations": [
+                1,
+                2,
+                3,
+                8,
+                11,
+                14
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "写真用オールドレンズでは、迷光は画面の黒レベル上昇、コントラスト低下、ハイライトのにじみ、輪帯状や多角形のゴースト像などとして可視化され、描写の「柔らかさ」や「霞んだ空気感」といった主観的評価と強く結びついてきた。",
+              "citations": [
+                5,
+                6,
+                9,
+                10,
+                13,
+                15
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "光学的起源の整理：内部反射、鏡筒・絞り・機械構造部からの反射、レンズガラス内部や表面微小欠陥による散乱、回折による迷光成分に整理できる。",
+                "写真描写への影響：ベイリングフレアによるグローバルコントラスト低下、局所的なゴースト像、色にじみ、逆光時のハレーション的描写として現れる。",
+                "オールドレンズ特有の要因：単層あるいは無コーティング、レンズ枚数と空気面の多さ、古い鏡筒内塗装や絞り形状などが迷光の発生と拡散を助長する。",
+                "産業・計測光学との対比：撮像用途では迷光を描写表現として利用する場合もあるが、計測・検査光学では迷光は厳密に抑制すべき誤差要因である。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                8,
+                9,
+                11,
+                14
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "Stray light",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Stray_light",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "迷光の一般的定義と光学系における影響を概説する資料。"
+    },
+    {
+      "id": 2,
+      "title": "What is Stray Light Analysis? – Definition & Examples",
+      "author_or_source": "Lambda Research",
+      "url": "https://lambdares.com/news/what-is-stray-light-analysis",
+      "type": "technical_article",
+      "reliability": "high",
+      "notes": "迷光の定義、原因、解析手法を説明する光学設計ソフトウェアベンダーの技術記事。"
+    },
+    {
+      "id": 3,
+      "title": "What is Stray Light and How is it Analyzed?",
+      "author_or_source": "Ansys",
+      "url": "https://www.ansys.com/simulation-topics/what-is-stray-light",
+      "type": "technical_article",
+      "reliability": "high",
+      "notes": "迷光の分類とレンズフレアとの関連を説明するシミュレーションベンダー資料。"
+    },
+    {
+      "id": 4,
+      "title": "What is stray light?",
+      "author_or_source": "Bena Optics",
+      "url": "https://www.benaoptics.com/what-is-stray-light.html",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "望遠光学系の迷光とフード設計に関する解説記事。"
+    },
+    {
+      "id": 5,
+      "title": "Stray Light Analysis for Camera Lens in Zemax Non Sequential Mode",
+      "author_or_source": "Ozen Engineering",
+      "url": "https://blog.ozeninc.com/resources/stray-light-analysis-for-camera-lens-in-zemax-nsc-mode",
+      "type": "application_note",
+      "reliability": "high",
+      "notes": "カメラレンズの迷光解析事例を扱うZemaxのアプリケーションノート。"
+    },
+    {
+      "id": 6,
+      "title": "Understanding Lens Flare",
+      "author_or_source": "Photography Life",
+      "url": "https://photographylife.com/what-is-ghosting-and-flare",
+      "type": "photo_technical_article",
+      "reliability": "medium",
+      "notes": "フレアとゴースト、ベイリングフレアの写真実例と原因を解説する記事。"
+    },
+    {
+      "id": 7,
+      "title": "History of photographic lens design",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/History_of_photographic_lens_design",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "写真レンズ設計史を概観し、オールドレンズの収差傾向の理解に有用。"
+    },
+    {
+      "id": 8,
+      "title": "Stray Light – an overview",
+      "author_or_source": "ScienceDirect Topics",
+      "url": "https://www.sciencedirect.com/topics/engineering/stray-light",
+      "type": "academic_overview",
+      "reliability": "high",
+      "notes": "工学的観点から迷光の発生源と影響を整理した学術的概説。"
+    },
+    {
+      "id": 9,
+      "title": "Veiling and ghosting (flare)",
+      "author_or_source": "Japan — All About Photography (JAPB)",
+      "url": "https://japb.net/theory/optical_flaws/veiling-ghosting/",
+      "type": "photo_technical_article",
+      "reliability": "medium",
+      "notes": "ベイリングフレアとゴーストをオールドレンズの文脈で詳細に扱う技術的解説。"
+    },
+    {
+      "id": 10,
+      "title": "What is Lens Flare?",
+      "author_or_source": "Thorsten Overgaard",
+      "url": "https://www.overgaard.dk/the-story-behind-that-picture-0204_gb.html",
+      "type": "photo_essay",
+      "reliability": "low",
+      "notes": "ライカレンズを中心にフレアの描写的側面を論じる写真家の記事。"
+    },
+    {
+      "id": 11,
+      "title": "Stray light: what is it, and what kinds of stray light exist",
+      "author_or_source": "Acktar",
+      "url": "https://acktar.com/stray-light-what-is-it-and-what-kinds-of-stray-light-exist/",
+      "type": "technical_article",
+      "reliability": "high",
+      "notes": "黒色コーティングメーカーによる迷光の種類と抑制手法の整理。"
+    },
+    {
+      "id": 12,
+      "title": "Camera Lens Flare and Ghosting: What You Need to Know",
+      "author_or_source": "YouTube educational content",
+      "url": "https://www.youtube.com/watch?v=XuKenlhD504",
+      "type": "video",
+      "reliability": "medium",
+      "notes": "フレアとゴーストを迷光の観点から説明する教育的動画。"
+    },
+    {
+      "id": 13,
+      "title": "The Aesthetics of Light: Lens Flare in Cinematography & Cinematic Screen Captures",
+      "author_or_source": "ReelMind",
+      "url": "https://reelmind.ai/blog/the-aesthetics-of-light-lens-flare-in-cinematography-cinematic-screen-captures",
+      "type": "essay",
+      "reliability": "low",
+      "notes": "シネマトグラフィにおけるレンズフレアの歴史的・美学的意味づけを論じる記事。"
+    },
+    {
+      "id": 14,
+      "title": "Stray light characterization with ultrafast time-of-flight imaging",
+      "author_or_source": "L. Clermont et al., Scientific Reports",
+      "url": "https://www.nature.com/articles/s41598-021-89324-y",
+      "type": "peer_reviewed_article",
+      "reliability": "high",
+      "notes": "超高速ToFを用いた迷光の定量評価手法を示す学術論文。"
+    },
+    {
+      "id": 15,
+      "title": "Understanding Lens Flare & Ghosting",
+      "author_or_source": "ishootshows.com",
+      "url": "https://ishootshows.com/understanding-lens-flare-ghosting/",
+      "type": "photo_technical_article",
+      "reliability": "medium",
+      "notes": "現代レンズとフィルターにおけるフレア・ゴーストの実務的解説。"
+    }
+  ]
+}
