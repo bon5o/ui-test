@@ -463,11 +463,11 @@ export function DesignCompareClient({ data }: { data: DesignComparisonData }) {
                               </td>
                               {selectedItems.map((it) => {
                                 const axisValues =
-                                  (it.values?.[axisId] as Record<string, unknown> | undefined) ?? undefined;
+                                  (it.values?.[axis.id] as Record<string, unknown> | undefined) ?? undefined;
                                 const val = axisValues?.[f.id];
                                 return (
                                   <td
-                                    key={`${it.id}-${axisId}-${f.id}`}
+                                    key={`${it.id}-${axis.id}-${f.id}`}
                                     className="border-b border-r border-gray-200 px-3 py-3 align-top text-gray-700 leading-6 last:border-r-0"
                                   >
                                     {renderCellValue(val)}
@@ -493,9 +493,9 @@ export function DesignCompareClient({ data }: { data: DesignComparisonData }) {
                       </thead>
                       <tbody>
                         {selectedItems.map((it, i) => {
-                          const val = it.values?.[axisId];
+                          const val = it.values?.[axis.id];
                           return (
-                            <tr key={`${it.id}-${axisId}`} className={i % 2 === 0 ? "bg-white" : STRIPE_BG}>
+                            <tr key={`${it.id}-${axis.id}`} className={i % 2 === 0 ? "bg-white" : STRIPE_BG}>
                               <td className={`border-b border-r border-gray-200 ${STICKY_BG} px-3 py-3 align-top font-medium text-gray-800`}>
                                 <div className="flex items-baseline gap-2">
                                   <span>{getItemLabel(it)}</span>
