@@ -1,15 +1,16 @@
-"use client";
-
 import React from "react";
 import type { HybridContent } from "../types/hybridContent";
 import { ChapterRenderer } from "./ChapterRenderer";
 
 interface HybridContentRendererProps {
   content: HybridContent;
+  /** 表示中の用語ページ slug（自己リンク化を避ける） */
+  currentTermSlug?: string;
 }
 
 export function HybridContentRenderer({
   content,
+  currentTermSlug,
 }: HybridContentRendererProps): React.ReactElement {
   if (process.env.NODE_ENV !== "production") {
     const ids = content.chapters.map((c) => c.id);
@@ -49,6 +50,7 @@ export function HybridContentRenderer({
         <ChapterRenderer
           key={chapter.id || `chapter-${index}`}
           chapter={chapter}
+          currentTermSlug={currentTermSlug}
         />
       ))}
     </div>

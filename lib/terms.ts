@@ -1,8 +1,11 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import type { HybridContent } from "../types/hybridContent";
+import { TERM_LINKS } from "./termLinks";
 
 const TERMS_DIRECTORY = join(process.cwd(), "data", "terms");
+const DESIGNS_DIRECTORY = join(process.cwd(), "data", "designs");
+const LENSES_DIRECTORY = join(process.cwd(), "data", "lenses");
 
 /** 引用付きテキスト */
 export interface CitedText {
@@ -98,11 +101,14 @@ export interface TermListItem {
 
 export function getAllTerms(): TermListItem[] {
   try {
-    const fileNames = readdirSync(TERMS_DIRECTORY);
-    return fileNames
-      .filter((f) => f.endsWith(".json"))
-      .map((f) => {
-        const slug = f.replace(".json", "");
+    const fileNames = readdirSync(TERMS_DIRECTORY).filter((f) => f.endsWith(".json"));
+    const slugs = new Set<string>(fileNames.map((f) => f.replace(".json", "")));
+
+    // TermLinkify で参照される slug は terms/ に無くても候補に含める（designs/lenses へのフォールバック用）
+    for (const { slug } of TERM_LINKS) slugs.add(slug);
+
+    const items = Array.from(slugs)
+      .map((slug) => {
         const term = getTermBySlug(slug);
         if (!term) return null;
         const rawTitle =
@@ -116,8 +122,7 @@ export function getAllTerms(): TermListItem[] {
           "english_name" in term && typeof term.english_name === "string"
             ? term.english_name
             : (term as HybridContent).meta?.english_name;
-        const english_name =
-          typeof rawEnglish === "string" ? rawEnglish : undefined;
+        const english_name = typeof rawEnglish === "string" ? rawEnglish : undefined;
         const category =
           (term as HybridContent).meta?.category ??
           ("category" in term ? (term as Term).category : undefined);
@@ -127,17 +132,26 @@ export function getAllTerms(): TermListItem[] {
       })
       .filter((t): t is TermListItem => t != null)
       .sort((a, b) => a.title.localeCompare(b.title));
+
+    return items;
   } catch {
     return [];
   }
 }
 
 export function getTermBySlug(slug: string): Term | HybridContent | null {
-  try {
-    const filePath = join(TERMS_DIRECTORY, `${slug}.json`);
-    const contents = readFileSync(filePath, "utf-8");
-    return JSON.parse(contents) as Term | HybridContent;
-  } catch {
-    return null;
+  const candidates = [
+    join(TERMS_DIRECTORY, `${slug}.json`),
+    join(DESIGNS_DIRECTORY, `${slug}.json`),
+    join(LENSES_DIRECTORY, `${slug}.json`),
+  ];
+  for (const filePath of candidates) {
+    try {
+      const contents = readFileSync(filePath, "utf-8");
+      return JSON.parse(contents) as Term | HybridContent;
+    } catch {
+      // continue
+    }
   }
+  return null;
 }

@@ -6,6 +6,7 @@ import { designTypeToLabel } from "../constructionTypes";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { HybridContentRenderer } from "../../../components/HybridContentRenderer";
 import type { HybridContent, Chapter } from "../../../types/hybridContent";
+import { Toc } from "../../../components/Toc";
 
 const FIXED_IDS = [
   "overview",
@@ -139,10 +140,11 @@ export default async function LensDetailPage({ params }: PageProps) {
         )}
       </header>
 
+      <Toc content={content} />
       <HybridContentRenderer content={content} />
 
       {rawRefs && rawRefs.length > 0 && (
-        <section className="mt-12 mb-8">
+        <section id="references" className="mt-12 mb-8 scroll-mt-4">
           <h2 className="mb-4 text-xl font-semibold text-gray-900">
             参考文献
           </h2>

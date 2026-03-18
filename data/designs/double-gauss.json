@@ -1,9 +1,10 @@
 {
   "meta": {
     "id": "double-gauss",
+    "slug": "double-gauss",
     "name": "ダブルガウス型",
     "english_name": "Double Gauss lens",
-    "category": "ガウス系",
+    "category": "レンズ構成/ガウス系",
     "aliases": [
       "Double-Gauss",
       "Double Gauss",
@@ -25,6 +26,13 @@
     ],
     "updated_at": "2026-02-23T11:05:00+09:00"
   },
+  
+  "toc": {
+    "mode": "auto",
+    "title": "目次",
+    "depth": 2
+  },
+
   "chapters": [
     {
       "id": "overview",
@@ -33,7 +41,10 @@
         {
           "id": "optical_formula",
           "title": "光学構成図",
-          "items": [
+          "toc": {
+            "hidden": true
+          },
+                  "items": [
             {
               "type": "image",
               "src": "/images/lens-types/double-gauss/double-gauss.jpg",
@@ -45,6 +56,9 @@
         {
           "id": "Note",
           "title": "",
+          "toc": {
+            "hidden": true
+          },
           "items":[
             {
               "type": "paragraph",
@@ -199,7 +213,7 @@
                   "増枚で高次収差の制御自由度を確保し、開放性能を追い込む方向が多い",
                   "-",
                   "FE 50mm F1.8（ソニー）",
-                  "殊、現代のレンズにおいてダブルガウス型と呼ばれるときは、「忠実にダブルガウスの形（４群４枚）になってる場合」と「対称なレンズ構成になってる場合」の２通りである。"
+                  "現代のレンズに関しては、絞りを中心に左右対称になっていれば大体ダブルガウス型と呼ばれる。"
                 ]
               ],
               "citations": [
@@ -224,10 +238,15 @@
         {
           "id": "alternative_designs",
           "title": "他の構成との差（なぜ選ばれる/選ばれない）",
+          "toc": {
+            "hidden": false,
+            "label": "他構成との差",
+            "order": 1
+          },
           "items": [
             {
               "type": "paragraph",
-              "text": "標準域の型としては、Sonnar系やTessar系などが比較対象になり、枚数、収差補正の配分、サイズや逆光耐性の折衷点が異なるという整理が一般的である。",
+              "text": "標準域の型としては、Sonnar系やTessar系などが比較対象になり、枚数、収差補正の配分、サイズや逆光耐性の折衷点が異なる。",
               "citations": [
                 1,
                 7
@@ -236,8 +255,8 @@
             {
               "type": "list",
               "items": [
-                "選ばれやすい理由として、低歪曲と大口径化の両立しやすい",
-                "選ばれにくい理由として、バックフォーカス制約や周辺画質の追い込みで別形式が有利になり得る",
+                "選ばれやすい理由：低歪曲と大口径化の両立しやすい点",
+                "選ばれにくい理由：バックフォーカス制約や周辺画質の追い込みで別形式が有利になり得る点",
                 "コーティングや製造性の条件が変わると、同じ形式でも実用上の優劣が変わり得る"
               ],
               "citations": [
@@ -250,11 +269,11 @@
         },
         {
           "id": "variation_patterns",
-          "title": "ダブルガウス採用レンズの差異",
+          "title": "ダブルガウス採用レンズ間の差異",
           "items": [
             {
               "type": "paragraph",
-              "text": "ダブルガウス型は、対称性の維持と補正自由度の拡大の間で設計方針が分岐し、準対称化や増枚、ガラス選択、コーティング前提の迷光設計などが組み合わされる。",
+              "text": "ダブルガウス型レンズは、対称性の維持と補正自由度の拡大の間で設計方針が分岐し、準対称化や増枚、ガラス選択、コーティング前提の迷光設計などが組み合わされる。",
               "citations": [
                 1,
                 6,
@@ -998,11 +1017,11 @@
     },
     {
       "id": "notable_lenses",
-      "title": "notable_lenses",
+      "title": "代表的なレンズ",
       "sections": [
         {
           "id": "classic_examples",
-          "title": "クラシック代表（table必須：レンズ名/メーカー/焦点距離/開放F/年代/特徴）",
+          "title": "オールドレンズ",
           "items": [
             {
               "type": "paragraph",
@@ -1059,7 +1078,7 @@
         },
         {
           "id": "modern_examples",
-          "title": "現代代表（同上）",
+          "title": "現代",
           "items": [
             {
               "type": "paragraph",

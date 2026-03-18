@@ -1,14 +1,17 @@
-"use client";
-
 import React from "react";
 import type { Section, ContentItem, Tone } from "../types/hybridContent";
 import { ItemRenderer } from "./ItemRenderer";
 
 interface SectionRendererProps {
   section: Section | null | undefined;
+  /** 表示中の用語ページ slug（自己リンク化を避ける） */
+  currentTermSlug?: string;
 }
 
-export function SectionRenderer({ section }: SectionRendererProps): React.ReactElement | null {
+export function SectionRenderer({
+  section,
+  currentTermSlug,
+}: SectionRendererProps): React.ReactElement | null {
   if (!section) return null;
 
   const items = Array.isArray(section.items) ? section.items : [];
@@ -44,7 +47,12 @@ export function SectionRenderer({ section }: SectionRendererProps): React.ReactE
 
       <div className={`space-y-4 ${bodyToneClass}`.trim()}>
         {items.filter((item): item is ContentItem => item != null).map((item, i) => (
-          <ItemRenderer key={i} item={item} inheritedTone={sectionTone} />
+          <ItemRenderer
+            key={i}
+            item={item}
+            inheritedTone={sectionTone}
+            currentTermSlug={currentTermSlug}
+          />
         ))}
       </div>
     </section>

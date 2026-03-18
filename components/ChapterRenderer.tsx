@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import type { Chapter } from "../types/hybridContent";
 import { SectionRenderer } from "./SectionRenderer";
@@ -7,9 +5,14 @@ import { CollapsibleSection } from "./ui/CollapsibleSection";
 
 interface ChapterRendererProps {
   chapter: Chapter;
+  /** 表示中の用語ページ slug（自己リンク化を避ける） */
+  currentTermSlug?: string;
 }
 
-export function ChapterRenderer({ chapter }: ChapterRendererProps): React.ReactElement {
+export function ChapterRenderer({
+  chapter,
+  currentTermSlug,
+}: ChapterRendererProps): React.ReactElement {
   if (process.env.NODE_ENV !== "production") {
     const sections = (chapter.sections ?? []).filter(Boolean);
     const ids = sections.map((s) => s.id);
@@ -52,6 +55,7 @@ export function ChapterRenderer({ chapter }: ChapterRendererProps): React.ReactE
           <SectionRenderer
             key={section.id || `section-${index}`}
             section={section}
+            currentTermSlug={currentTermSlug}
           />
         ))}
       </div>

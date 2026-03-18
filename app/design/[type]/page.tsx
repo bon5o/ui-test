@@ -5,6 +5,7 @@ import type { Reference } from "../../../types/hybridContent";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { HybridContentRenderer } from "../../../components/HybridContentRenderer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
+import { Toc } from "../../../components/Toc";
 
 export async function generateStaticParams() {
   const ids = getAllDesignIds();
@@ -61,10 +62,11 @@ export default async function DesignDetailPage({ params }: PageProps) {
         )}
       </header>
 
+      <Toc content={design} />
       <HybridContentRenderer content={design} />
 
       {Array.isArray(refs) && refs.length > 0 && (
-        <div className="mt-12">
+        <div id="references" className="mt-12 scroll-mt-4">
           <CollapsibleSection title="参考文献" defaultOpen={false}>
             <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
               {(refs as Reference[]).map((ref) => (

@@ -85,9 +85,15 @@ export interface SectionMeta {
   [key: string]: unknown;
 }
 
+export interface TocOptions {
+  hidden?: boolean;
+  label?: string;
+}
+
 export interface Section {
   id: string;
   title: string;
+  toc?: TocOptions;
   /** セクション全体の表示トーン（任意）。item 側に tone があれば item が優先。 */
   tone?: Tone;
   meta?: SectionMeta;
@@ -98,6 +104,7 @@ export interface Section {
 export interface Chapter {
   id: string;
   title: string;
+  toc?: TocOptions;
   sections: Section[];
 }
 
@@ -114,8 +121,15 @@ export type Reference = {
   reliability?: string;
 };
 
+export interface RootTocConfig {
+  mode?: "auto";
+  title?: string;
+  depth?: 1 | 2;
+}
+
 export interface HybridContent {
   meta?: MetaInfo;
+  toc?: RootTocConfig;
   chapters: Chapter[];
   references?: Reference[];
 }

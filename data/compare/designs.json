@@ -1,0 +1,267 @@
+{
+  "meta": {
+    "id": "design-comparison",
+    "title": "レンズ構成型比較",
+    "description": "各レンズ構成型の比較データ",
+    "version": 1,
+    "updated_at": "2026-03-18",
+    "default_selected_ids": ["double-gauss", "sonnar", "tessar", "planar"],
+    "default_axis": "rendering"
+  },
+  "axes": [
+    {
+      "id": "rendering",
+      "label": "描写特性",
+      "order": 1,
+      "value_type": "structured",
+      "fields": [
+        { "id": "summary", "label": "概要" },
+        { "id": "bokeh", "label": "ボケ" },
+        { "id": "contrast", "label": "コントラスト" },
+        { "id": "sharpness", "label": "シャープネス" },
+        { "id": "notes", "label": "補足" }
+      ]
+    },
+    {
+      "id": "optical_properties",
+      "label": "光学特性",
+      "order": 2,
+      "value_type": "structured",
+      "fields": [
+        { "id": "summary", "label": "概要" },
+        { "id": "aberration_correction", "label": "収差補正" },
+        { "id": "speed_potential", "label": "大口径化" },
+        { "id": "compactness", "label": "小型化" },
+        { "id": "design_flexibility", "label": "設計自由度" },
+        { "id": "notes", "label": "補足" }
+      ]
+    },
+    {
+      "id": "pros",
+      "label": "メリット",
+      "order": 3,
+      "value_type": "list"
+    },
+    {
+      "id": "cons",
+      "label": "デメリット",
+      "order": 4,
+      "value_type": "list"
+    },
+    {
+      "id": "history_adoption",
+      "label": "歴史・採用傾向",
+      "order": 5,
+      "value_type": "structured",
+      "fields": [
+        { "id": "summary", "label": "概要" },
+        { "id": "era", "label": "時代" },
+        { "id": "typical_use", "label": "主な用途" },
+        { "id": "adoption_trend", "label": "採用傾向" },
+        { "id": "notes", "label": "補足" }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "double-gauss",
+      "name": "ダブルガウス型",
+      "short_name": "ダブルガウス",
+      "aliases": ["Double Gauss"],
+      "order": 1,
+      "links": {
+        "detail_page": "/design/double-gauss"
+      },
+      "values": {
+        "rendering": {
+          "summary": "柔らかさとシャープさのバランスが取りやすく、標準域で汎用性が高い",
+          "bokeh": "比較的自然で破綻しにくい",
+          "contrast": "中〜高",
+          "sharpness": "中央は出しやすく、設計によって全体バランスも取りやすい",
+          "notes": [
+            "設計差や時代差による個性が出やすい",
+            "標準レンズで多様な派生が存在する"
+          ]
+        },
+        "optical_properties": {
+          "summary": "大口径化しやすく、総合バランスのよい設計に向く",
+          "aberration_correction": "総合的に補正しやすい",
+          "speed_potential": "高い",
+          "compactness": "中程度",
+          "design_flexibility": "高い",
+          "notes": [
+            "標準レンズでの完成度が高い",
+            "派生型の幅が広い"
+          ]
+        },
+        "pros": [
+          "大口径化しやすい",
+          "汎用性が高い",
+          "標準レンズで実績が豊富",
+          "描写バランスを取りやすい"
+        ],
+        "cons": [
+          "設計差による個性差が大きい",
+          "簡潔さより総合設計寄りになりやすい"
+        ],
+        "history_adoption": {
+          "summary": "標準レンズの定番として長期にわたり広く採用された",
+          "era": "20世紀以降に広く普及",
+          "typical_use": "標準レンズ",
+          "adoption_trend": "各社で多数の派生型が展開された",
+          "notes": [
+            "クラシックから近代まで連続性がある",
+            "比較対象の基準になりやすい構成型"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sonnar",
+      "name": "ゾナー型",
+      "short_name": "ゾナー",
+      "aliases": ["Sonnar"],
+      "order": 2,
+      "links": {
+        "detail_page": "/design/sonnar"
+      },
+      "values": {
+        "rendering": {
+          "summary": "高コントラストで締まりやすく、濃密な描写になりやすい",
+          "bokeh": "条件によって独特の滑らかさやクセが出る",
+          "contrast": "高め",
+          "sharpness": "中央は強く出しやすい",
+          "notes": [
+            "時代や派生によって描写傾向に幅がある"
+          ]
+        },
+        "optical_properties": {
+          "summary": "少ない枚数で高性能を狙いやすく、小型化とも相性がよい",
+          "aberration_correction": "条件次第で強みが出る",
+          "speed_potential": "高い",
+          "compactness": "高い",
+          "design_flexibility": "中",
+          "notes": [
+            "用途によって非常に魅力的なバランスを作りやすい"
+          ]
+        },
+        "pros": [
+          "高コントラストを得やすい",
+          "比較的小型にまとめやすい",
+          "高速レンズとの相性がよい"
+        ],
+        "cons": [
+          "条件によっては補正バランスに制約が出る",
+          "用途ごとの向き不向きが比較的はっきりする"
+        ],
+        "history_adoption": {
+          "summary": "中望遠や高速レンズで存在感が大きい",
+          "era": "戦前から著名",
+          "typical_use": "中望遠・高速系",
+          "adoption_trend": "特定分野で強い存在感を持った",
+          "notes": [
+            "ブランドイメージと強く結びつくことが多い"
+          ]
+        }
+      }
+    },
+    {
+      "id": "tessar",
+      "name": "テッサー型",
+      "short_name": "テッサー",
+      "aliases": ["Tessar"],
+      "order": 3,
+      "links": {
+        "detail_page": "/design/tessar"
+      },
+      "values": {
+        "rendering": {
+          "summary": "明快でシャープな印象を作りやすく、簡潔な設計らしい素直さがある",
+          "bokeh": "条件によってはやや硬さが出る",
+          "contrast": "中〜高",
+          "sharpness": "中心部は良好になりやすい",
+          "notes": [
+            "シンプルさが描写個性にもつながる"
+          ]
+        },
+        "optical_properties": {
+          "summary": "少ない枚数で性能を確保しやすく、簡潔な設計として優秀",
+          "aberration_correction": "制約の中でバランスを取るタイプ",
+          "speed_potential": "中",
+          "compactness": "高い",
+          "design_flexibility": "中〜低",
+          "notes": [
+            "簡潔さが長所であり制約でもある"
+          ]
+        },
+        "pros": [
+          "構成が比較的簡潔",
+          "小型化しやすい",
+          "明快な描写を得やすい"
+        ],
+        "cons": [
+          "大口径化には限界が出やすい",
+          "設計自由度は高くない"
+        ],
+        "history_adoption": {
+          "summary": "簡潔で実用的な構成として長く普及した",
+          "era": "20世紀前半から広範に普及",
+          "typical_use": "標準〜普及機",
+          "adoption_trend": "実用機やコンパクト機で広く使われた",
+          "notes": [
+            "コストと性能のバランスで評価された"
+          ]
+        }
+      }
+    },
+    {
+      "id": "planar",
+      "name": "プラナー型",
+      "short_name": "プラナー",
+      "aliases": ["Planar"],
+      "order": 4,
+      "links": {
+        "detail_page": "/design/planar"
+      },
+      "values": {
+        "rendering": {
+          "summary": "高い解像感と整った描写を狙いやすい",
+          "bokeh": "設計によっては整理された印象になりやすい",
+          "contrast": "中〜高",
+          "sharpness": "高解像寄りにまとめやすい",
+          "notes": [
+            "呼称と実際の派生設計のズレに注意が必要"
+          ]
+        },
+        "optical_properties": {
+          "summary": "高性能化に向くが、実装や派生の整理が必要",
+          "aberration_correction": "高性能寄りに設計しやすい",
+          "speed_potential": "高い",
+          "compactness": "中",
+          "design_flexibility": "高い",
+          "notes": [
+            "名称運用が広いため整理が必要"
+          ]
+        },
+        "pros": [
+          "高性能化しやすい",
+          "解像感を重視した設計に向く",
+          "標準域で評価が高い"
+        ],
+        "cons": [
+          "名称の使われ方が広く比較時に定義整理が必要",
+          "設計差を無視すると単純比較しづらい"
+        ],
+        "history_adoption": {
+          "summary": "高性能標準レンズ文脈で重要な位置を占める",
+          "era": "古典から近代まで重要",
+          "typical_use": "高性能標準レンズ",
+          "adoption_trend": "高級機や高性能志向で目立つ",
+          "notes": [
+            "ブランドや系列ごとの文脈を添えると理解しやすい"
+          ]
+        }
+      }
+    }
+  ]
+}

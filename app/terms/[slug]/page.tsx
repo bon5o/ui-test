@@ -12,6 +12,7 @@ import { SectionHeading } from "../../../components/ui/SectionHeading";
 import { AutoMediaRenderer } from "../../../components/AutoMediaRenderer";
 import { HybridContentRenderer } from "../../../components/HybridContentRenderer";
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
+import { Toc } from "../../../components/Toc";
 
 function renderTextWithTermLinks(text: string): React.ReactNode {
   const regex = new RegExp(`(${TERM_LINKS.map((t) => t.term).join("|")})`, "g");
@@ -149,10 +150,11 @@ export default async function TermPage({ params }: PageProps) {
             )}
           </header>
 
-          <HybridContentRenderer content={term} />
+          <Toc content={term} />
+          <HybridContentRenderer content={term} currentTermSlug={slug} />
 
           {Array.isArray(refs) && refs.length > 0 && (
-            <div className="mt-12">
+            <div id="references" className="mt-12 scroll-mt-4">
               <CollapsibleSection title="参考文献" defaultOpen={false}>
                 <ol className="space-y-3 text-base font-normal leading-relaxed text-gray-700">
                   {(refs as Reference[]).map((ref, index) => (

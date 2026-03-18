@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import {
@@ -24,6 +22,8 @@ interface ItemRendererProps {
   index?: number;
   /** section.tone などから継承するデフォルトトーン（item.tone があればそちらが優先） */
   inheritedTone?: Tone;
+  /** 表示中の用語ページ slug（自己リンク化を避ける） */
+  currentTermSlug?: string;
 }
 
 function assertNever(x: never): never {
@@ -112,11 +112,11 @@ function renderImageFigure(
  * テーブルセル用描画。string / type: "image" オブジェクト / それらの配列（縦並び）に対応。
  * 既存の \n 改行（whitespace-pre-line）は文字列セルで維持。
  */
-function renderTableCell(cell: unknown): React.ReactNode {
+function renderTableCell(cell: unknown, currentTermSlug?: string): React.ReactNode {
   if (typeof cell === "string") {
     return (
       <span className="whitespace-pre-line">
-        <TermLinkify text={cell} />
+        <TermLinkify text={cell} currentTermSlug={currentTermSlug} />
       </span>
     );
   }
@@ -124,7 +124,7 @@ function renderTableCell(cell: unknown): React.ReactNode {
     return (
       <div className="flex flex-col gap-2">
         {cell.map((item, i) => (
-          <React.Fragment key={i}>{renderTableCell(item)}</React.Fragment>
+          <React.Fragment key={i}>{renderTableCell(item, currentTermSlug)}</React.Fragment>
         ))}
       </div>
     );
@@ -143,7 +143,7 @@ function renderTableCell(cell: unknown): React.ReactNode {
   }
   return (
     <span className="whitespace-pre-line">
-      <TermLinkify text={String(cell ?? "")} />
+      <TermLinkify text={String(cell ?? "")} currentTermSlug={currentTermSlug} />
     </span>
   );
 }
@@ -152,7 +152,8 @@ function renderTableCell(cell: unknown): React.ReactNode {
 function renderSpecTable(
   t: TableItem,
   headers: string[],
-  index: number
+  index: number,
+  currentTermSlug?: string
 ): React.ReactElement {
   return (
     <div key={index} className="my-4 w-full">
@@ -176,10 +177,10 @@ function renderSpecTable(
               }
             >
               <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
-                {renderTableCell(row[0])}
+                {renderTableCell(row[0], currentTermSlug)}
               </td>
               <td className={`border-b border-gray-200 align-top text-sm text-gray-700 leading-6 break-words ${isImageCell(row[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
-                {renderTableCell(row[1])}
+                {renderTableCell(row[1], currentTermSlug)}
               </td>
             </tr>
           ))}
@@ -198,7 +199,8 @@ function renderSpecTable(
 function renderGridTable(
   t: TableItem,
   headers: string[],
-  index: number
+  index: number,
+  currentTermSlug?: string
 ): React.ReactElement {
   return (
     <div key={index} className="my-4">
@@ -232,7 +234,7 @@ function renderGridTable(
                     isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
                   }`}
                 >
-                  {renderTableCell(cell)}
+                  {renderTableCell(cell, currentTermSlug)}
                 </td>
               ))}
             </tr>
@@ -273,10 +275,11 @@ function renderResponsiveTable(
   cardRows: ResponsiveTableCardRow[],
   timelineItems: TimelineItem[] | null,
   specTable: boolean,
-  index: number
+  index: number,
+  currentTermSlug?: string
 ): React.ReactElement {
   if (specTable) {
-    return renderSpecTable(t, headers, index);
+    return renderSpecTable(t, headers, index, currentTermSlug);
   }
   // NOTE: 以前は「年表テーブル」を TimelineList で別描画していたが、
   // display: "responsive" の要件として「md未満=カード / md以上=表」を保証するため、
@@ -315,7 +318,7 @@ function renderResponsiveTable(
                       isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
                     }`}
                   >
-                    {renderTableCell(cell)}
+                    {renderTableCell(cell, currentTermSlug)}
                   </td>
                 ))}
               </tr>
@@ -336,7 +339,8 @@ function renderResponsiveTable(
 function renderTimelineTable(
   t: TableItem,
   headers: string[],
-  index: number
+  index: number,
+  currentTermSlug?: string
 ): React.ReactElement {
   const labelHeaders = headers.length > 0 ? headers : undefined;
   return (
@@ -353,7 +357,7 @@ function renderTimelineTable(
           return (
             <div key={ri} className="grid grid-cols-[50px_20px_1fr] gap-x-1">
               <div className="text-sm font-medium text-gray-800 whitespace-pre-line">
-                {renderTableCell(year)}
+                {renderTableCell(year, currentTermSlug)}
               </div>
 
               <div className="relative flex justify-center">
@@ -376,7 +380,7 @@ function renderTimelineTable(
                           {label}
                         </div>
                         <div className="text-sm text-gray-800 leading-6 break-words">
-                          {renderTableCell(cell)}
+                          {renderTableCell(cell, currentTermSlug)}
                         </div>
                       </div>
                     );
@@ -456,7 +460,8 @@ function isEmptyOrKeyless(obj: Record<string, unknown>): boolean {
 function renderItemContent(
   item: ContentItem,
   index: number,
-  inheritedTone?: Tone
+  inheritedTone?: Tone,
+  currentTermSlug?: string
 ): React.ReactNode {
   const raw = item as unknown as Record<string, unknown>;
 
@@ -516,7 +521,7 @@ function renderItemContent(
         : undefined;
       return (
         <p key={index} className="text-base font-normal leading-relaxed text-gray-700 whitespace-pre-line">
-          <TermLinkify text={text} />
+          <TermLinkify text={text} currentTermSlug={currentTermSlug} />
           {citations && citations.length > 0 && <Citation citations={citations} />}
         </p>
       );
@@ -546,7 +551,7 @@ function renderItemContent(
           : "";
       return (
         <p key={index} className={`font-normal whitespace-pre-line ${toneClass} ${highlightWrapClass}`.trim()}>
-          <TermLinkify text={p.text} />
+          <TermLinkify text={p.text} currentTermSlug={currentTermSlug} />
           {p.citations && p.citations.length > 0 && (
             <Citation citations={p.citations} />
           )}
@@ -589,7 +594,7 @@ function renderItemContent(
           <ul className={`list-disc pl-6 ${itemGapClass} font-normal ${toneClass} ${highlightWrapClass}`.trim()}>
             {entries.map((entry, i) => (
               <li key={i} className="whitespace-pre-line">
-                <TermLinkify text={String(entry)} />
+                <TermLinkify text={String(entry)} currentTermSlug={currentTermSlug} />
               </li>
             ))}
           </ul>
@@ -607,7 +612,7 @@ function renderItemContent(
       const q = item as QuoteItem;
       return (
         <blockquote key={index} className="border-l-2 border-[#7D9CD4]/50 pl-4 py-2 my-4 text-base text-gray-700 italic whitespace-pre-line">
-          <TermLinkify text={q.text} />
+          <TermLinkify text={q.text} currentTermSlug={currentTermSlug} />
           {q.citations && q.citations.length > 0 && (
             <Citation citations={q.citations} />
           )}
@@ -624,21 +629,21 @@ function renderItemContent(
           headers.length > 0
             ? headers.map((h, i) => ({
                 label: h,
-                value: renderTableCell(row[i]),
+                value: renderTableCell(row[i], currentTermSlug),
               }))
             : row.map((v, i) => ({
                 label: `列${i + 1}`,
-                value: renderTableCell(v),
+                value: renderTableCell(v, currentTermSlug),
               })),
       }));
       const displayMode = t.display ?? "responsive";
 
       if (displayMode === "timeline") {
-        return renderTimelineTable(t, headers, index);
+        return renderTimelineTable(t, headers, index, currentTermSlug);
       }
       if (displayMode === "table") {
-        if (specTable) return renderSpecTable(t, headers, index);
-        return renderGridTable(t, headers, index);
+        if (specTable) return renderSpecTable(t, headers, index, currentTermSlug);
+        return renderGridTable(t, headers, index, currentTermSlug);
       }
       if (displayMode === "cards") {
         return renderCardsTable(cardRows, t.citations, index);
@@ -649,7 +654,8 @@ function renderItemContent(
         cardRows,
         timelineItems,
         specTable,
-        index
+        index,
+        currentTermSlug
       );
     }
     default:
@@ -661,6 +667,7 @@ export function ItemRenderer({
   item,
   index = 0,
   inheritedTone,
+  currentTermSlug,
 }: ItemRendererProps): React.ReactNode {
-  return renderItemContent(item, index, inheritedTone);
+  return renderItemContent(item, index, inheritedTone, currentTermSlug);
 }

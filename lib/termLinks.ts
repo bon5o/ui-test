@@ -9,5 +9,8 @@ export const TERM_LINKS: { term: string; slug: string }[] = [
   { term: "枚", slug: "grp_elt" },
   { term: "群", slug: "grp_elt" },
   { term: "非球面", slug: "aspheric" },
+  { term: "コーティング", slug: "coating" },
+  { term: "収差", slug: "aberration" },
+  { term: "ダブルガウス", slug: "double-gauss" },
   { term: "Super-Takumar 55mm f1.8", slug: "super-takumar-55mm-f18" }
 ];

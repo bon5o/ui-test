@@ -1,0 +1,670 @@
+{
+  "meta": {
+    "id": "aberration_old_lens_focus",
+    "name": "収差",
+    "english_name": "Optical Aberrations (Old Lenses)",
+    "category": "光学現象",
+    "aliases": [
+      "光学収差",
+      "単色収差",
+      "色収差",
+      "モノクロマティック収差",
+      "クロマティックアバレーション",
+      "アナスチグマット"
+    ],
+    "summary": "収差は理想的な結像からのずれとして定義される光学系の像の欠陥であり、オールドレンズでは補正しきれない球面収差やコマ収差、非点収差、像面湾曲、歪曲および色収差が、柔らかさやグルグルボケ、ハロ、周辺減光など独特の描写を形作る主要因であった。",
+    "tags": [
+      "aberration",
+      "spherical_aberration",
+      "coma",
+      "astigmatism",
+      "field_curvature",
+      "distortion",
+      "chromatic_aberration",
+      "old_lens",
+      "soft_focus",
+      "swirl_bokeh"
+    ],
+    "updated_at": "2026-03-18"
+  },
+
+  "toc": {
+    "mode": "auto",
+    "title": "目次",
+    "depth": 2
+  },
+
+  "chapters": [
+    {
+      "id": "概要",
+      "title": "概要",
+      "sections": [
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "収差とは、光学系が理想的な結像条件から外れた結果として、点像が拡がったり形が崩れたり色が分離したりする現象の総称である。",
+              "citations": [
+                1,
+                2
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズにおいては、設計・ガラス・コーティングの制約から多くの収差が完全には補正されておらず、その残存収差がソフトフォーカスやグルグルボケ、周辺の流れなど、現代レンズとは異なる個性的な描写を形作る重要な要素である。",
+              "citations": [
+                6,
+                9,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "id": "quick_summary",
+          "title": "この記事全体の要約",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "収差は理想的な結像からのずれを指し、主要な単色収差（球面・コマ・歪曲等）と色収差（軸上・倍率）に分類される",
+                "レンズ設計の歴史は収差補正の歩みであり、アナスチグマット設計の登場から近代の多群レンズに至るまで高度な補正が追求されてきた",
+                "未補正な収差が残るオールドレンズは、独特のボケや空気感を生む表現要素として、現代のファンに再評価されている"
+              ],
+              "citations": [
+                1,
+                2,
+                6,
+                8,
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "収差の種類と特徴",
+      "title": "収差の種類と特徴",
+      "sections": [
+        {
+          "id": "monochromatic aberration",
+          "title": "単色収差",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "単色収差は、単一波長光に限定しても残る幾何学的な結像誤差であり、主に球面収差、コマ収差、非点収差、像面湾曲、歪曲の五つが代表的なタイプである。",
+              "citations": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "収差の名前",
+                "発生原因",
+                "描写上の特徴"
+              ],
+              "rows": [
+                [
+                  "球面収差",
+                  "球面レンズで周辺光線と軸近傍光線の焦点位置が異なることに起因する収差である",
+                  "像全体のコントラストが低下し、開放では柔らかいハロ状のにじみが乗る描写となる"
+                ],
+                [
+                  "コマ収差",
+                  "オフ軸光線がレンズの各ゾーンで異なる倍率で結像することに起因する収差である",
+                  "画面周辺の点光源が彗星状あるいは羽の生えた形に伸びる描写となる"
+                ],
+                [
+                  "非点収差",
+                  "接線方向と子午線方向で焦点位置が異なることに起因する収差である",
+                  "画面周辺의像が一方向に伸びた線状になり、特定の距離でだけ一方向がシャープになる描写となる"
+                ],
+                [
+                  "像面湾曲",
+                  "像面が理想的な平面ではなく曲面となる性質に起因する収差である",
+                  "中心は合焦しているが周辺はピントが前後にずれ、周辺部を優先すると中心が外れるような描写となる"
+                ],
+                [
+                  "歪曲収差",
+                  "倍率が画面位置によって変化することに起因する収差である",
+                  "直線が樽型や糸巻型に曲がって写るが、解像感には比較的影響が小さい場合が多い描写となる"
+                ]
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "id": "chromatic aberration",
+          "title": "色収差",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "色収差は、屈折率が波長依存であることにより、色ごとに焦点位置や像倍率が変化することで生じる収差であり、軸上色収差と倍率色収差に大別される。",
+              "citations": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "収差の名前",
+                "発生原因",
+                "描写上の特徴"
+              ],
+              "rows": [
+                [
+                  "軸上色収差",
+                  "波長ごとに焦点距離が異なるため、光軸上で色ごとに焦点位置が前後にずれることに起因する収差である",
+                  "ピント面前後や強いハイライトの周辺に紫や緑のにじみが生じ、開放ではハロを伴う柔らかさが現れる描写となる"
+                ],
+                [
+                  "倍率色収差",
+                  "波長ごとに像倍率が異なることにより、画面周辺で色ごとの位置がずれることに起因する収差である",
+                  "画面端の高コントラスト境界にシアンやマゼンタ方向の色ズレが現れる描写となる"
+                ]
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "id": "correction",
+          "title": "収差の補正と対策",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "収差の補正は、レンズ形状や配置、ガラス材や群構成を選ぶことで、各収差を相殺または低減することによって行われてきた。",
+              "citations": [
+                5,
+                8,
+                9
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "ペッツバールタイプなど、特定の収差（球面収差とコマ収差）を小さくするための対称配置やダブルガウス構成の利用",
+                "クック・トリプレットやテッサーなど、少数枚で球面収差、コマ、非点、像面湾曲、色収差をバランス良く補正するアナスチグマット設計",
+                "オールドレンズでは、絞りを絞ることで球面収差やコマ収差を抑え、実用的なシャープネスを確保する運用上の対策",
+                "貼り合わせレンズや異種ガラスの組み合わせによる軸上色収差と倍率色収差の補正",
+                "対称型レンズによる歪曲収差の相殺と、非点収差・像面湾曲のバランス調整",
+                "後年の多群ダブルガウスやレトロフォーカス設計による大口径や広角領域での収差補正の高度化"
+              ],
+              "citations": [
+                5,
+                8,
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "メリット・デメリット",
+      "title": "メリット・デメリット",
+      "sections": [
+        {
+          "id": "advantages",
+          "title": "メリット",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "収差は本来欠陥であるが、オールドレンズの文脈では、特定の収差が残されていることにより、柔らかさや立体感、絵画的なボケなど独特の表現的メリットが生まれると評価されることが多い傾向がある。",
+              "citations": [
+                6,
+                9,
+                10
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "わずかに残った球面収差によるソフトフォーカス効果が、ポートレートで肌を滑らかに見せる描写となることがある",
+                "コマ収差や非点収差が組み合わさったグルグルボケが、背景に独特の渦状ボケを生み、印象的な雰囲気を与える",
+                "像面湾曲により周辺がわずかにボケることで、中心被写体が浮き立つ立体感が強調されることがある",
+                "倍率色収差や残存色収差が、微妙な色のにじみとして空気感や奥行き感の演出に寄与するという評価がある傾向がある",
+                "収差が完全に抑え込まれていないことにより、レンズごとの個性が強く出て、機種ごとの描写キャラクターを楽しめる",
+                "ソフトフォーカスレンズでは、意図的に球面収差を残すことで、夢幻的な描写を実現する設計思想が確立している"
+              ],
+              "citations": [
+                6,
+                9,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "id": "disadvantages",
+          "title": "デメリット",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "収差が大きいオールドレンズは、特に開放付近で解像力とコントラストが低下し、現代的な基準から見ると画質面でのデメリットが多い。",
+              "citations": [
+                6,
+                9
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "球面収差が大きいと全体にベール状のハロがかかり、微細なディテールが失われる",
+                "コマ収差により夜景の点光源や星が彗星状に流れ、精密な点像再現が困難になる",
+                "非点収差と像面湾曲が強いと、周辺部のピントが合いにくく、風景撮影で隅まで解像させることが難しい",
+                "歪曲収差が大きいと建築物や直線被写体が不自然に曲がり、記録性が低下する",
+                "軸上色収差により開放で盛大な色にじみが発生し、ハイコントラストなシーンでにごった描写になることがある",
+                "倍率色収差が顕著だと、周辺部の色ズレが目立ち、大判プリントやデジタル撮影で違和感が増幅される",
+                "収差を絞りで抑える必要があるため、開放F値を十分に活かせない場合が多い"
+              ],
+              "citations": [
+                1,
+                2,
+                6,
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "歴史的発展",
+      "title": "歴史的発展",
+      "sections": [
+        {
+          "id": "prehistory_context",
+          "title": "前史・技術背景",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "初期の単レンズや単純な貼り合わせレンズでは、球面収差や色収差が大きく、わずかな像しか実用に耐えない状態であった。",
+              "citations": [
+                5,
+                8
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "19世紀後半から20世紀初頭にかけて、光学ガラスの種類が増え、計算技術が発達したことにより、収差を体系的に解析し補正する設計が可能になり、アナスチグマットレンズの登場につながった。",
+              "citations": [
+                5,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "id": "origin",
+          "title": "起源",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "収差補正の起源としては、ガウスやペッツバールによる理論的解析と、19世紀半ばから後半にかけての写真レンズ設計における球面収差・コマ収差・色収差の体系的な取り扱いが重要である。",
+              "citations": [
+                5,
+                8
+              ]
+            },
+            {
+              "type": "table",
+              "display": "timeline",
+              "headers": [
+                "年",
+                "人物/企業",
+                "出来事",
+                "意義"
+              ],
+              "rows": [
+                [
+                  "1840",
+                  "ヨーゼフ・ペッツバール",
+                  "ペッツバールレンズの設計",
+                  "ポートレート用高速レンズとして球面収差とコマ収差を大幅に改善した先駆的設計であった"
+                ],
+                [
+                  "1850年代",
+                  "各種レンズ設計者",
+                  "ダブレット・トリプレットによる色収差補正の進展",
+                  "異種ガラスの組み合わせで軸上色収差を抑えた写真レンズが登場した"
+                ],
+                [
+                  "1860〜1870年代",
+                  "理論光学者",
+                  "セイデルの三次収差理論の整備",
+                  "球面収差、コマ、非点、像面湾曲、歪曲の五大単色収差の理論的枠組みが整備された"
+                ]
+              ],
+              "citations": [
+                1,
+                5,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "id": "early_improvements",
+          "title": "初期改良期",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "19世紀末から20世紀初頭には、複数の収差を同時に良好に補正したアナスチグマットレンズが登場し、オールドレンズ史上大きな飛躍となった。",
+              "citations": [
+                5,
+                8,
+                9
+              ]
+            },
+            {
+              "type": "table",
+              "display": "timeline",
+              "headers": [
+                "年",
+                "人物/企業",
+                "出来事",
+                "意義"
+              ],
+              "rows": [
+                [
+                  "1890",
+                  "パウル・ルドルフ（ツァイス）",
+                  "プロター（アナスチグマット）設計",
+                  "球面収差、コマ、非点、像面湾曲を同時に良好に補正した初期のアナスチグマットレンズであった"
+                ],
+                [
+                  "1893",
+                  "デニス・テイラー（T. Cooke & Sons）",
+                  "クック・トリプレットの設計",
+                  "三枚構成で主要な七つの収差をバランス良く補正した単純で優れた設計であった"
+                ],
+                [
+                  "1902",
+                  "パウル・ルドルフ（ツァイス）",
+                  "テッサーレンズの開発",
+                  "トリプレットを発展させた四枚構成で、高いシャープネスと良好な収差補正を実現した"
+                ]
+              ],
+              "citations": [
+                5,
+                8,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "id": "major_breakthroughs",
+          "title": "主要転換点",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "20世紀前半から中盤にかけて、ダブルガウスタイプやレトロフォーカスタイプなどの多群レンズが登場し、大口径や広角での収差補正が飛躍的に進んだ。",
+              "citations": [
+                5,
+                8,
+                9
+              ]
+            },
+            {
+              "type": "table",
+              "display": "timeline",
+              "headers": [
+                "年",
+                "人物/企業",
+                "出来事",
+                "意義"
+              ],
+              "rows": [
+                [
+                  "1920年代",
+                  "ツァイス、ライツなど",
+                  "ダブルガウスタイプ標準レンズの普及",
+                  "対称性を利用して歪曲と色収差を抑えつつ、大口径と高解像を両立させた"
+                ],
+                [
+                  "1930年代",
+                  "複数メーカー",
+                  "高性能アナスチグマットの成熟",
+                  "非点収差と像面湾曲の改善により、画面全域で実用的なシャープネスを確保した"
+                ],
+                [
+                  "1950〜1960年代",
+                  "各社",
+                  "レトロフォーカス広角の発展",
+                  "一眼レフで必要なバックフォーカスを確保しつつ、広角域で歪曲やコマ収差を抑える設計が確立した"
+                ],
+                [
+                  "1960〜1970年代",
+                  "主要レンズメーカー",
+                  "大口径標準・中望遠の高度補正",
+                  "球面収差や色収差の補正が進み、開放から高コントラストな描写のレンズが登場した"
+                ]
+              ],
+              "citations": [
+                5,
+                8,
+                9,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "id": "modern_development",
+          "title": "現代的展開",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "1970年代以降はコンピュータ設計と新ガラス、マルチコーティングの発展により、従来オールドレンズで残っていた収差が大幅に低減され、いわゆる無収差に近い描写を目指す時代となった。",
+              "citations": [
+                5,
+                8,
+                9,
+                10
+              ]
+            },
+            {
+              "type": "table",
+              "display": "timeline",
+              "headers": [
+                "年",
+                "人物/企業",
+                "出来事",
+                "意義"
+              ],
+              "rows": [
+                [
+                  "1970年代",
+                  "主要レンズメーカー",
+                  "コンピュータ援用設計の本格導入",
+                  "第三次以降の高次収差まで考慮した最適化により、従来困難だった大口径・広角での高画質レンズが現れた"
+                ],
+                [
+                  "1980〜1990年代",
+                  "各社",
+                  "高屈折・低分散ガラスやEDガラスの導入",
+                  "軸上色収差と倍率色収差の大幅な抑制が進み、ズームレンズでも優れた色収差補正が可能になった"
+                ],
+                [
+                  "2000年代以降",
+                  "主要メーカー",
+                  "非球面レンズの普及",
+                  "球面収差とコマ収差を同時に抑えつつ、小型軽量化が可能になり、従来オールドレンズが持っていた収差的個性は減少した"
+                ],
+                [
+                  "2000年代以降",
+                  "オールドレンズ愛好家・メーカー",
+                  "意図的な収差を残したレンズの再評価",
+                  "ソフトフォーカスやクラシカルな描写を再現するために、収差をあえて残したレンズや復刻設計が注目されている"
+                ]
+              ],
+              "citations": [
+                6,
+                9,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "id": "historical_significance",
+          "title": "歴史的意義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "収差の理解と補正技術は、写真用レンズを含む光学系の性能向上における中心課題であり、その発展史は光学設計そのものの歴史とほぼ重なる。",
+              "citations": [
+                5,
+                8
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズにおいては、収差が単なる欠点から個性へと再解釈され、設計史と表現史の両面で、収差が果たしてきた役割の重要性が改めて認識されている。",
+              "citations": [
+                6,
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "references": [
+    {
+      "id": 1,
+      "title": "Optical Aberrations",
+      "author_or_source": "RP Photonics Encyclopedia",
+      "url": "https://www.rp-photonics.com/optical_aberrations.html",
+      "type": "technical_encyclopedia",
+      "reliability": "high",
+      "notes": "単色収差と色収差の分類と定義、代表的な収差の概要を説明する技術百科。"
+    },
+    {
+      "id": 2,
+      "title": "Optical aberration",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Optical_aberration",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "光学収差の基本的分類と歴史的背景の概説。"
+    },
+    {
+      "id": 3,
+      "title": "What are the Six Types of Optical Aberrations? A Comprehensive Overview",
+      "author_or_source": "ICO Optics",
+      "url": "https://www.ico-optics.org/what-are-the-six-types-of-optical-aberrations/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "主要な収差の原因と視覚的特徴を簡潔にまとめた解説記事。"
+    },
+    {
+      "id": 4,
+      "title": "Common Optical Defects in Lens Systems (Aberrations)",
+      "author_or_source": "Evident Scientific",
+      "url": "https://evidentscientific.com/en/microscope-resource/knowledge-hub/lightandcolor/opticalaberrations",
+      "type": "technical_article",
+      "reliability": "high",
+      "notes": "球面収差、コマ収差、非点収差、像面湾曲などの物理的説明。"
+    },
+    {
+      "id": 5,
+      "title": "History of photographic lens design",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/History_of_photographic_lens_design",
+      "type": "historical_reference",
+      "reliability": "medium",
+      "notes": "ペッツバール、プロター、クック・トリプレット、テッサーなど収差補正史上重要なレンズを網羅的に紹介。"
+    },
+    {
+      "id": 6,
+      "title": "Lens aberrations explained (Part 1)",
+      "author_or_source": "phillipreeve.net",
+      "url": "https://phillipreeve.net/blog/lens-aberrations-explained-part-1/",
+      "type": "practical_article",
+      "reliability": "medium",
+      "notes": "オールドレンズを含む実写例に基づき、収差が描写に与える影響を写真家向けに解説。"
+    },
+    {
+      "id": 7,
+      "title": "What Are the Types of Aberration? Understanding Optical Distortions and Their Effects",
+      "author_or_source": "ICO Optics",
+      "url": "https://www.ico-optics.org/what-are-the-types-of-aberration/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "色収差を含む主要収差の原因と一般的な見え方を説明。"
+    },
+    {
+      "id": 8,
+      "title": "astronomical optics, part 4: optical aberrations",
+      "author_or_source": "handprint.com",
+      "url": "https://www.handprint.com/ASTRO/ae4.html",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "セイデル収差理論と歴史的文脈を含む詳細な収差解説。"
+    },
+    {
+      "id": 9,
+      "title": "A Short History of Fast Normal Lenses",
+      "author_or_source": "Rangefinderforum",
+      "url": "https://rangefinderforum.com/threads/a-short-history-of-fast-normal-lenses.159507/",
+      "type": "historical_discussion",
+      "reliability": "medium",
+      "notes": "クック・トリプレットやテッサーなどの設計が収差補正に与えた影響についての要約。"
+    },
+    {
+      "id": 10,
+      "title": "5 Legendary Lenses That Changed Photography Forever",
+      "author_or_source": "Fstoppers",
+      "url": "https://fstoppers.com/historical/5-legendary-lenses-changed-photography-forever-715254",
+      "type": "popular_historical_article",
+      "reliability": "low",
+      "notes": "代表的な写真レンズの収差補正上のブレイクスルーと写真文化への影響を紹介。"
+    },
+    {
+      "id": 11,
+      "title": "Soft focus",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Soft_focus",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "ソフトフォーカスが球面収差や色収差に起因することや、古いカメラ用レンズでの設計例を解説。"
+    },
+    {
+      "id": 12,
+      "title": "What is this effect called & does it only exist on certain medium format lenses?",
+      "author_or_source": "Reddit r/AnalogCommunity",
+      "url": "https://www.reddit.com/r/AnalogCommunity/comments/zaqqjm/what_is_this_effect_called_does_it_only_exist_on/",
+      "type": "user_discussion",
+      "reliability": "low",
+      "notes": "グルグルボケが非点収差や収差残存と関連するという実務的観察。"
+    }
+  ]
+}
