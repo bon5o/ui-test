@@ -1,0 +1,374 @@
+{
+  "meta": {
+    "id": "optical_power",
+    "slug": "optical_power",
+    "name": "屈折力",
+    "english_name": "Optical power",
+    "category": "レンズ光学",
+    "aliases": [
+      "レンズパワー",
+      "光学パワー",
+      "度数",
+      "ディオプトリックパワー"
+    ],
+    "summary": "屈折力はレンズや光学系が光をどれだけ強く曲げるかを表す量であり、焦点距離の逆数として定義される物理量である。写真用オールドレンズでは、屈折力の配分と組み合わせが焦点距離や明るさだけでなく、球面収差や像面湾曲などの収差と描写傾向を決定する重要な設計パラメータであった。",
+    "tags": [
+      "屈折力",
+      "レンズ設計",
+      "焦点距離",
+      "オールドレンズ",
+      "ディオプター",
+      "光学収差"
+    ],
+    "updated_at": "2026-03-21"
+  },
+  "toc": {
+    "mode": "auto",
+    "title": "目次"
+  },
+  "chapters": [
+    {
+      "id": "overview",
+      "title": "概要",
+      "sections": [
+        {
+          "id": "spherical_aberration",
+          "title": "式",
+          "toc": {
+            "hidden": true
+          },
+          "items": [
+            {
+              "type": "image",
+              "src": "/images/terms/optical_power/optical_power_low.jpg",
+              "caption": ""
+            },
+            {
+              "type": "image",
+              "src": "/images/terms/optical_power/optical_power_high.jpg",
+              "caption": "同じ素材なら屈折力の高いレンズのほうが分厚くなる"
+            }
+          ]
+        },
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "屈折力とはレンズなどの光学系が光をどれだけ強く集光または発散させるかを表す量であり、焦点距離 f の逆数として定義される物理量である。",
+              "citations": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "通常、屈折力は国際単位としてディオプトリーを用い、屈折力 D と焦点距離 f の関係は D = 1 / f と表され、ここで f はメートル単位の焦点距離である。",
+              "citations": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズでは単レンズの屈折力だけでなく、複数のレンズ群の屈折力の分配と結合が、画角や明るさと同時に収差特性を決める基礎量であった。",
+              "citations": [
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "屈折力は焦点距離の逆数で定義され、D = 1 / f の関係を持つ。",
+                "屈折力の単位はディオプトリーであり、1メートルの焦点距離をもつレンズは 1D、0.5メートルなら 2D となる。",
+                "オールドレンズの設計では、各群の屈折力の和と配分が焦点距離、開放F値、収差バランスを決める中心的パラメータであった。",
+                "屈折率と曲率半径が同じでも、屈折力の配分の仕方によって描写の性格や収差の出方が大きく変化する。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        {
+          "id": "explanation",
+          "title": "解説",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "屈折力は幾何光学でレンズの働きを表す基本量であり、薄レンズ近似ではレンズの屈折力 φ が焦点距離 f と φ = 1 / f の関係で結び付けられる。",
+              "citations": [
+                1,
+                2,
+                3,
+                7
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "屈折力が大きいレンズほど短い焦点距離を持ち、広角かつ高倍率な像を形成しやすいが、同時に収差も増大しやすいため、オールドレンズの設計では屈折力の大きさと他の性能とのトレードオフが常に問題になった。",
+              "citations": [
+                4,
+                5,
+                6
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "同じ屈折率の材料を用いる場合、曲率が強いほど屈折力が増し、薄いが強力なレンズが得られる。",
+                "複数の薄レンズを近接配置した場合、全体の屈折力は個々の屈折力の和に近似できる。",
+                "オールドレンズの設計者は、正レンズと負レンズの屈折力を組み合わせて、全体の焦点距離を保ちつつ収差を打ち消す構成を試みた。",
+                "屈折力の考え方は眼鏡やコンタクトレンズの度数と共通しており、人間の目の光学系の理解にもそのまま適用できる。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                7
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "explanation",
+      "title": "専門的な解説",
+      "sections": [
+        {
+          "id": "professional_explanation",
+          "title": "より詳しく",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "屈折力 φ は焦点距離 f に対して φ = 1 / f と定義され、単位として 1/m が用いられるが、実務ではこれをディオプトリーと呼び D 単位で表す。",
+              "citations": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "近軸近似の薄レンズ公式では、屈折率 n と曲率半径 R1, R2 を用いて φ = (n − 1)(1/R1 − 1/R2) と表され、この式により材料の屈折率と形状設計から屈折力を計算できる。",
+              "citations": [
+                2,
+                3,
+                7,
+                8
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "複数の薄レンズが十分近接している場合、系全体の屈折力 Φ は各レンズの屈折力 φi の和として Φ ≈ Σφi と近似できるため、オールドレンズの基本構成では正レンズ群と負レンズ群の屈折力のバランスで全体の焦点距離と収差補正を決定した。",
+              "citations": [
+                2,
+                3,
+                6,
+                7
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "例えばオールドのテッサー型レンズでは、前群の正レンズと後群のダブレットの屈折力の和が全体の焦点距離を規定しつつ、負要素の屈折力によって球面収差やコマ収差、像面湾曲を部分的に打ち消す構成になっている。",
+              "citations": [
+                4,
+                5,
+                6
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "ペッツバールポートレートレンズでは、前群と後群の総屈折力が大きく、焦点距離に対して非常に明るい開放値を持つ一方で、周辺部の像面湾曲や非点収差が残るため、中心部は鋭く周辺部は流れる独特の描写を示す構造である。",
+              "citations": [
+                4,
+                5,
+                6
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "屈折力は光学収差との関係でも重要であり、一般に屈折力が大きいレンズほど球面収差やコマ収差が増大しやすく、またペッツバール和に対しても大きな寄与を持つため、オールドレンズ設計者は必要な明るさと画角を満たす最小限の屈折力配分を探る必要があった。",
+              "citations": [
+                4,
+                5,
+                6,
+                8
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "歴史的には、デカルトやスネルの屈折の法則の議論を経て、屈折率と曲率半径から屈折力を定式化する近軸理論が確立されたことで、望遠鏡や写真レンズの焦点距離設計が体系化され、オールドレンズの多様な光学系が生まれた。",
+              "citations": [
+                8,
+                9
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "実際のレンズは厚みを持つため、厚肉レンズでは主平面位置を考慮したより一般的な焦点距離の式が必要になるが、オールドレンズの設計においても、まず薄レンズの屈折力で概算設計を行い、その後厚みと空気間隔を含めた詳細設計で補正を詰めていく手順がとられていた。",
+              "citations": [
+                6,
+                7,
+                8
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "眼鏡レンズやコンタクトレンズでは、屈折力は視力補正の度数として直接表示され、例えば屈折力 −3D のレンズは焦点距離約 −0.333m の凹レンズであり、近視の目の過大な屈折力を打ち消して網膜上に焦点を結ばせる役割を持つ。",
+              "citations": [
+                1,
+                10
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "産業用レンズでは、撮像距離や拡大率が固定されることが多く、所望の像倍率や作動距離から必要な全系屈折力を逆算し、複数群の屈折力配分を決定したうえで、オールドレンズと同様に正負レンズの組み合わせで収差を補正していく設計手法が用いられる。",
+              "citations": [
+                6,
+                7,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "屈折力 φ は焦点距離 f の逆数 φ = 1 / f で定義され、ディオプトリー単位で扱う物理量である。",
+                "薄レンズでは φ = (n − 1)(1/R1 − 1/R2) により屈折率と曲率半径から屈折力を算出できるため、材料選択と形状設計の橋渡しとなる。",
+                "複数レンズ系では全体の屈折力が各レンズの屈折力の和で近似されることから、オールドレンズでは正負レンズ群の屈折力配分が焦点距離と収差補正の核となった。",
+                "屈折力が大きいほど短焦点で明るいレンズが実現できるが、収差やペッツバール和への寄与も大きくなり、描写の味と設計難度の両面に強く影響する。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "屈折“率”と屈折“力”",
+      "author_or_source": "プラオプ ハセガワ",
+      "url": "https://priority-opt.jp/archives/9390/",
+      "type": "technical_blog",
+      "reliability": "medium",
+      "notes": "屈折率と屈折力の違い、ディオプトリーと焦点距離の関係をわかりやすく説明した記事である。"
+    },
+    {
+      "id": 2,
+      "title": "屈折力 - 光学における定義",
+      "author_or_source": "Wikipedia日本語版",
+      "url": "https://ja.wikipedia.org/wiki/%E5%B1%88%E6%8A%98%E5%8A%9B",
+      "type": "reference",
+      "reliability": "medium",
+      "notes": "屈折力の基本定義と焦点距離との関係式、ディオプトリーの説明を含む。"
+    },
+    {
+      "id": 3,
+      "title": "光学系技術資料",
+      "author_or_source": "ジャパンセンサー株式会社",
+      "url": "https://www.japansensor.co.jp/manage/wp-content/uploads/2015/03/optics.pdf",
+      "type": "manufacturer_technical",
+      "reliability": "high",
+      "notes": "スネルの法則と近軸理論、薄レンズの焦点距離と屈折力の関係を解説した技術資料である。"
+    },
+    {
+      "id": 4,
+      "title": "第60話：オールドレンズの光学系に対する、まるでピュアな疑問ばかり",
+      "author_or_source": "pakira3 オールドレンズ記事",
+      "url": "https://pakira3.jp/pakira3.sakura.ne.jp/%E2%99%A6-%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%89%E3%83%AC%E3%83%B3%E3%82%BA%E3%81%AE%E5%85",
+      "type": "historical_article",
+      "reliability": "medium",
+      "notes": "オールドレンズの群構成と屈折力配分についての解説を含む日本語記事である。"
+    },
+    {
+      "id": 5,
+      "title": "History of photographic lens design",
+      "author_or_source": "光学史解説記事",
+      "url": "https://www.wikiwand.com/en/articles/History_of_photographic_lens_design",
+      "type": "reference",
+      "reliability": "medium",
+      "notes": "ペッツバールレンズやテッサーなど古典レンズの構成と屈折力のバランスに関する光学史的解説である。"
+    },
+    {
+      "id": 6,
+      "title": "The evolution of the landscape lens",
+      "author_or_source": "Pencil of Rays",
+      "url": "https://www.pencilofrays.com/landscape-lens-evolution/",
+      "type": "technical_blog",
+      "reliability": "medium",
+      "notes": "ランドスケープレンズや対称型レンズにおける正負レンズ群の屈折力分配の歴史的変遷を解説している。"
+    },
+    {
+      "id": 7,
+      "title": "現場で活かす光学設計の基本 理論と製造プロセスをつなぐ体系講義",
+      "author_or_source": "牛山善太",
+      "url": "https://www.symphotony.com/kokyoseminar/ushiyama-kogakusekkei/",
+      "type": "seminar_material",
+      "reliability": "high",
+      "notes": "近軸理論に基づく屈折力の式と複数レンズ系での屈折力合成の考え方を扱う講義資料である。"
+    },
+    {
+      "id": 8,
+      "title": "Field Guide to Geometrical Optics",
+      "author_or_source": "SPIE Press",
+      "url": "https://spie.org",
+      "type": "academic",
+      "reliability": "high",
+      "notes": "薄レンズの屈折力、厚肉レンズの主平面と焦点距離の取り扱いを解説する専門書である。"
+    },
+    {
+      "id": 9,
+      "title": "【デカルト『屈折光学』解説】視覚・理性・幾何学を結ぶ光学思想の革新",
+      "author_or_source": "斎藤貴之",
+      "url": "https://saitoutakayuki.com/philosophical-bias/descartes-la-dioptrique-analysis/",
+      "type": "historical_article",
+      "reliability": "medium",
+      "notes": "デカルトの屈折光学と望遠鏡設計の議論を通じて、屈折と焦点距離の理解の歴史的背景を解説した記事である。"
+    },
+    {
+      "id": 10,
+      "title": "コンタクトレンズの屈折力とは？視力を補正する仕組み",
+      "author_or_source": "nreal コンタクトレンズ解説記事",
+      "url": "https://nreal.jp/articles/1163/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "目の屈折力とコンタクトレンズ度数の関係、ディオプトリーの実用的意味を説明している。"
+    }
+  ]
+}

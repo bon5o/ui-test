@@ -1,0 +1,437 @@
+{
+  "meta": {
+    "id": "transmittance",
+    "slug": "transmittance",
+    "name": "透過率",
+    "english_name": "Optical Transmittance of Old Photographic and Industrial Lenses",
+    "category": "レンズ光学",
+    "aliases": [
+      "光線透過率",
+      "光学透過率",
+      "レンズ透過率",
+      "transmittance",
+      "light transmission",
+      "T-stop"
+    ],
+    "summary": "透過率はレンズや光学材料を通過して検出面に到達する光の割合を示す指標であり、オールドレンズではガラス材質やコーティング、経年変化により現代レンズより低く、波長依存性や黄変の影響を強く受ける特性である。",
+    "tags": [
+      "レンズ光学",
+      "写真レンズ",
+      "産業用レンズ",
+      "オールドレンズ",
+      "光学史",
+      "T値",
+      "コーティング",
+      "黄変",
+      "分光透過率"
+    ],
+    "updated_at": "2026-03-21T20:45:00+09:00"
+  },
+  "chapters": [
+    {
+      "id": "overview",
+      "title": "概要",
+      "sections": [
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "透過率とは、レンズやフィルタなどの光学素子に入射した光のうち、吸収や散乱、反射で失われずに通過して像面やセンサに到達する光の割合を示す物理量である。",
+              "citations": [
+                1,
+                3,
+                9
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "一般には入射光パワー P_in に対する出射光パワー P_out の比として定義され、T = P_out / P_in と表現され、百分率で表す場合も多い。",
+              "citations": [
+                3,
+                4,
+                9
+              ]
+            }
+          ]
+        },
+
+        {
+          "id": "supplement",
+          "title": "補足",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "「反射率」は、物体に入射した光を100％とした時、どれだけ反射して戻ってくるか\n「透過率」は、物体に入射した光を100%とした時、どれだけ透過するかの割合の値であって、\n「反射率」＋「透過率」＋「吸収率」＝100%　　（※入射光を100％とする）である",
+              "citations": [
+                17
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "僅か4％の反射率であっても、単レンズは表と裏にそれぞれ2面の反射面を持つため、たった4枚の単レンズを組み合わせただけで8つの反射面が出来てしまう。それぞれの反射面で4％の透過光を失ったとすると、4枚構成のレンズでは32％程度が反射によって失われてしまうことになる。",
+              "citations": [
+                16
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "写真レンズやシネレンズの文脈では、透過率を実測して絞り値に反映した指標がT値であり、同じF値でも実際の露光量の差を評価する基礎となる。",
+              "citations": [
+                6,
+                10,
+                14
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズではコーティング技術やガラス材質、経年による黄変や汚れなどが影響し、可視域全体の透過率が低下しつつ波長依存性も強くなる傾向がある。",
+              "citations": [
+                7,
+                11
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "透過率は入射光に対する出射光の比を示す基本量であり、0から1の無次元量として定義される。",
+                "写真レンズでは理論的なF値に対し、実効的な光量を示すT値が透過率と直接結びつく。",
+                "オールドレンズは未コート面や単層コートが多く、反射損失や吸収が大きいため、同じF値でも現代レンズより暗く写ることが多い。",
+                "ガラスの黄変やバルサム劣化、コーティングの経年変化は分光透過率の短波長側を中心に低下させ、色再現やコントラストにも影響を与える。"
+              ],
+              "citations": [
+                3,
+                5,
+                6,
+                7,
+                10,
+                11
+              ]
+            }
+          ]
+        },
+        {
+          "id": "explanation",
+          "title": "解説",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "透過率は材料の吸収、レンズ表面での反射、内部散乱などすべての損失を含めた総合的な通過効率を表す量であり、単一ガラス板から多群レンズまで同じ枠組みで扱える指標である。",
+              "citations": [
+                1,
+                3,
+                4,
+                9
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "写真レンズでは像面に到達する光束の絶対量が露出とノイズ特性を決めるため、透過率はF値だけでは説明できない実効感度の差を説明する鍵となる。",
+              "citations": [
+                6,
+                10,
+                14
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "単層コーティングの古いレンズは面反射率が高く、多枚数構成ほど透過率が急速に低下する。",
+                "トリウムガラスなど高屈折材料を用いたオールドレンズは、経年で黄変し青色光の透過率が顕著に低下することがある。",
+                "産業用レンズでは、分光透過率の安定性や紫外・近赤外の透過特性が、検査波長域のコントラストを決める重要パラメータになる。",
+                "透過率測定には分光光度計や積分球システムが利用され、トータル透過率とヘイズの分離評価が行われる。"
+              ],
+              "citations": [
+                5,
+                7,
+                11,
+                13,
+                15
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "explanation",
+      "title": "専門的な解説",
+      "sections": [
+        {
+          "id": "professional_explanation",
+          "title": "より詳しく",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "透過率 T は波長 λ と入射条件に依存する物理量であり、単純化した場合には T(λ) = P_out(λ) / P_in(λ) と定義される。材料の吸収係数を α(λ)、試料厚さを d とすると、内部吸収だけを考えた場合の理想化された透過率は T_int(λ) = exp(-α(λ) d) で近似できるが、実際のレンズではこれに複数面での反射と散乱損失が乗算的に加わる。",
+              "citations": [
+                3,
+                4,
+                9,
+                13
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "レンズ表面における単一界面のフレネル反射率を R とすると、反射防止コーティングがないガラス空気界面ではおおよそ R ≈ ((n - 1)/(n + 1))^2 であり、高屈折ガラスでは約4パーセント前後の反射損失となる。オールドレンズで多群多枚構成かつ未コート面が多い設計では、全透過率は各界面の透過率 t_i と内部吸収を掛け合わせた T_total ≈ T_int × ∏ t_i で表され、枚数が増えるほど指数的に低下する実用的意味を持つ。",
+              "citations": [
+                1,
+                4,
+                5,
+                8
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "写真レンズのT値は理論絞り値と透過率を結びつける指標であり、F値を N、透過率の平均値を τ とすると、T値は T_number = N / sqrt(τ) の形で定義されることが多い。透過率が100パーセントならば F値とT値は一致するが、実際のオールドレンズではτが0.7から0.9程度に低下する例があり、F1.4のレンズでもT1.6からT1.8程度に相当し、露出差として約三分の一から二分の一段の実用的な暗さとして現れる。",
+              "citations": [
+                6,
+                9,
+                10,
+                14
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "シネマ分野では複数レンズを交換しながら同一照明条件で撮影する必要があるため、透過率を実測してT値を刻印する文化が早くから定着した。これは特にモノクロフィルム時代からカラーネガ、デジタルシネマに至るまで、露出カット間の整合性と現像ラチチュードの確保に直結するためであり、オールドシネレンズのカタログには波長別透過率曲線やT値が明示される例が多い。",
+              "citations": [
+                10,
+                14
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "一方静止画用のオールドスチルカメラ用レンズでは、F値のみが表示されT値は明記されないことが一般的であった。これはスチルカメラのTTL測光やフィルムの露出寛容度により、透過率の差が実用上吸収されること、T値測定がコスト増になることが背景にある。結果として、同じ名目F値のオールドレンズでも、銘柄や時代、構成枚数により実効露光量がレンズごとに異なる実用上のばらつきが生じる。",
+              "citations": [
+                6,
+                10
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "分光透過率の観点では、オールドレンズのガラス材質やコーティングは波長依存性の強い特性を示すことが多い。トリウムガラスや一部の鉛ガラスは経年放射損傷で着色中心が形成され、特に短波長側で吸収係数が増大し、青から青緑域の透過率が低下する。これにより、撮影画像は暖色寄りの色味と低い青成分の彩度を示し、白色光下でもアンバー寄りの発色となる実用的な画作りの特徴として認識される。",
+              "citations": [
+                7,
+                11
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "レンズユニットとしての透過率評価には、積分球を用いた全透過測定が広く利用される。積分球内部は高反射率かつスペクトル的に中性な拡散面で覆われ、入射光を球内で多重反射させることで方向分布に依存しない総フォトン数を検出できる。この手法により、直進光だけでなくレンズ内部散乱によるヘイズ成分を含めたトータル透過率を測定し、別途リングセンサや角度制限を用いてヘイズを分離することで、オールドレンズ特有のフレアやコントラスト低下を定量評価できる。",
+              "citations": [
+                11,
+                15
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "産業用レンズにおける透過率は、検査対象の照明波長帯に対するシステム感度を決める設計パラメータである。マシンビジョン用レンズでは可視域だけでなく、近赤外や特定レーザ波長での透過率保証が求められ、レンズメーカーは用語集や技術資料で分光透過率の標準定義と測定条件を明示する。オールドFAレンズを現代の短波長LED照明や近赤外照明で流用すると、透過率カーブの不一致により感度落ちやコントラスト低下が発生するため、用途に応じた波長帯での透過特性確認が実用上重要になる。",
+              "citations": [
+                5,
+                8,
+                12,
+                13
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズの状態劣化も透過率に直接影響する。バルサムはく離やカビによる散乱成分の増加は、総透過率だけでなくヘイズ比率を増加させ、黒の締まりや微コントラストに顕著な影響を与える。積分球やヘイズメータによる測定では、総透過率が比較的保たれていても、ヘイズ値の上昇として劣化が検出されることがあり、外観では判断しにくいオールドレンズの状態評価指標として有効である。",
+              "citations": [
+                7,
+                11,
+                15
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "透過率は波長依存性をもつ入出射光パワー比であり、吸収、反射、散乱を含めた総合的通過効率として定義される。",
+                "レンズ全体の透過率は内部吸収と各面の透過率の積で表され、多枚数かつ未コート面の多いオールドレンズでは指数的に低下する。",
+                "写真レンズのT値はF値を透過率で補正した指標であり、オールドレンズでは名目F値より暗く写る実用的露出差を定量化できる。",
+                "分光透過率とヘイズ測定は、オールドレンズの黄変、コーティング劣化、カビやバルサム劣化によるコントラスト低下を定量評価する手段として有効である。"
+              ],
+              "citations": [
+                3,
+                4,
+                5,
+                6,
+                9,
+                10,
+                11,
+                15
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "SIGNIFICANCE OF OPTICAL TRANSMITTANCE",
+      "author_or_source": "Kohesi Bond",
+      "url": "https://www.kohesibond.com/significance-optical-transmittance/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "光学透過率の基礎定義と材料要因を解説した一般技術記事。"
+    },
+    {
+      "id": 2,
+      "title": "Optical Transmission: What is it, what it means, and how it is used",
+      "author_or_source": "Sequoia Scientific",
+      "url": "https://www.sequoiasci.com/article/optical-transmission-what-is-it/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "濁質媒質における光学透過の概念を説明。定義の補強用。"
+    },
+    {
+      "id": 3,
+      "title": "Optical Transmittance - Definition and Formula",
+      "author_or_source": "AZoOptics",
+      "url": "https://www.azooptics.com/Article.aspx?ArticleID=823",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "透過率の定義とT = P_out / P_in の式、百分率表示などを整理。"
+    },
+    {
+      "id": 4,
+      "title": "Introduction to Transmittance",
+      "author_or_source": "Stanford Advanced Materials",
+      "url": "https://www.samaterials.com/blog/introduction-to-transmittance.html",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "材料の透過率と光学素子への応用、基礎的説明。"
+    },
+    {
+      "id": 5,
+      "title": "What is the light transmittance of optical lenses and inspection considerations",
+      "author_or_source": "Cryligh / industry article",
+      "url": "https://www.crylight.com/what-is-the-light-transmittance-of-optical-lenses-and-inspection-considerations.html",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "レンズ透過率の定義と検査観点を説明。産業用レンズ文脈。"
+    },
+    {
+      "id": 6,
+      "title": "F-Stops vs T-Stops: The Difference Explained in Plain English",
+      "author_or_source": "PetaPixel",
+      "url": "https://petapixel.com/2016/12/30/f-stops-vs-t-stops-difference-explained-plain-english/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "F値とT値の違い、写真レンズにおける透過率の実効的影響を解説。"
+    },
+    {
+      "id": 7,
+      "title": "Examination of an Optical Transmittance Test for Photovoltaic Backsheets",
+      "author_or_source": "NREL",
+      "url": "https://www.nrel.gov/docs/fy13osti/60029.pdf",
+      "type": "research_report",
+      "reliability": "high",
+      "notes": "材料の黄変と透過率低下、分光測定手法について詳述。オールドレンズの経年黄変の類推に利用。"
+    },
+    {
+      "id": 8,
+      "title": "レンズ設計光学講座・光学用語集",
+      "author_or_source": "株式会社レンズ設計支援",
+      "url": "https://www.lenses-ds.co.jp/myweb11_29.html",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "レンズ仕様例や周辺光量など関連用語。日本語光学用語の整合に利用。"
+    },
+    {
+      "id": 9,
+      "title": "Transmittance",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Transmittance",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "透過率の一般定義、式、関連量の整理。"
+    },
+    {
+      "id": 10,
+      "title": "T-stop vs. F-stop In a Camera Lens",
+      "author_or_source": "PentaxForums.com",
+      "url": "https://www.pentaxforums.com/articles/photo-articles/t-stop-vs-f-stop-in-a-camera-lens.html",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "写真レンズにおけるT値とF値の違い、実効透過率との関係を解説。"
+    },
+    {
+      "id": 11,
+      "title": "Integrating Sphere Principle and Applications",
+      "author_or_source": "Unknown (technical white paper)",
+      "url": "https://img01.71360.com/w3/we11qv/20240703/d07e578069b4ec3a916da0f8b8634f4e.pdf",
+      "type": "technical_report",
+      "reliability": "high",
+      "notes": "積分球の原理、コーティング条件、黄変を避ける要件などを説明。透過率測定文脈で重要。"
+    },
+    {
+      "id": 12,
+      "title": "マシンビジョンレンズ用語120",
+      "author_or_source": "一般社団法人 日本インダストリアルイメージング協会（JIIA）",
+      "url": "https://www.tamron.com/jp/biz/technical/fa/glossary.html",
+      "type": "standards_glossary",
+      "reliability": "high",
+      "notes": "産業用レンズの標準用語集。透過率や関連光学用語の定義参照。"
+    },
+    {
+      "id": 13,
+      "title": "What is Transmittance Measurement? How to Measure",
+      "author_or_source": "Living Optics",
+      "url": "https://www.livingoptics.com/glossary/transmittance-measurement/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "透過率測定の概説と測定方法の整理。"
+    },
+    {
+      "id": 14,
+      "title": "Aperture, F-Stop, and T-Stop: Precision Cinema Production",
+      "author_or_source": "DZOFILM",
+      "url": "https://www.dzofilm.com/en/blog/wikis/73",
+      "type": "manufacturer_technical_note",
+      "reliability": "high",
+      "notes": "シネレンズにおけるT値の歴史と意義、露出一致の必要性についてのメーカー技術解説。"
+    },
+    {
+      "id": 15,
+      "title": "QC Solutions for Transparency – haze-gard i",
+      "author_or_source": "BYK Instruments",
+      "url": "https://media.byk-instruments.com/shop/Misc/Brochures/Solutions/EN/QC-Solutions-for-Transparency-2018-EN.pdf",
+      "type": "technical_brochure",
+      "reliability": "high",
+      "notes": "積分球とヘイズ測定によるトータル透過率と散乱成分の評価手法を解説。"
+    },
+    {
+      "id": 16,
+      "title": "【極私的カメラうんちく】第41回：コーティング技術が開放するレンズ設計技術",
+      "author_or_source": "マップカメラ",
+      "url": "https://x.gd/38NAF",
+      "type": "technical_brochure",
+      "reliability": "high",
+      "notes": "マップカメラ"
+    },
+    {
+      "id": 17,
+      "title": "コーティングに関する“光学の基礎”",
+      "author_or_source": "株式会社ニデック",
+      "url": "https://coating.nidek.co.jp/article/column/a53",
+      "type": "company",
+      "reliability": "high",
+      "notes": "コラム"
+    }
+  ]
+}

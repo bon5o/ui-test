@@ -1,0 +1,503 @@
+{
+  "meta": {
+    "id": "petzval_sum",
+    "slug": "petzval_sum",
+    "name": "ペッツバール和",
+    "english_name": "Petzval sum",
+    "category": "レンズ光学/収差理論",
+    "aliases": [
+      "ペッツバル和",
+      "ペッツバール条件",
+      "Petzval curvature sum"
+    ],
+    "summary": "ペッツバール和は、光学系の像面湾曲を一次近似で表す収差量であり、各屈折面または各薄レンズの屈折力と屈折率から定義される量である。ペッツバール和がゼロに近いほど像面湾曲は小さく、オールドレンズではこの和が十分補正されていないことが多く、画面周辺のボケや像の流れと密接に関係する量である。",
+    "tags": [
+      "レンズ設計",
+      "光学収差",
+      "像面湾曲",
+      "オールドレンズ",
+      "写真レンズ",
+      "産業用レンズ"
+    ],
+    "updated_at": "2026-03-21"
+  },
+  "toc": {
+    "mode": "auto",
+    "title": "目次"
+  },
+  "chapters": [
+    {
+      "id": "overview",
+      "title": "概要",
+      "sections": [
+        {
+          "id": "spherical_aberration",
+          "title": "式",
+          "toc": {
+            "hidden": true
+          },
+          "items": [
+            {
+              "type": "image",
+              "src": "/images/terms/petzval_sum/petzval_sum.jpg",
+              "caption": "各レンズとは、レンズ全体を構成している一枚一枚のレンズのことである。\nペッツバール和が小さいと像面湾曲も少ない。\n0なら像面湾曲がないレンズといえる。"
+            }
+          ]
+        },
+        {
+          "id": "what_it_is",
+          "title": "定義",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "ペッツバール和とは、光学系における像面湾曲の大きさを決める一次近似量であり、各レンズ要素の屈折力をその屈折率で割った量を全要素について加算した値である。",
+              "citations": [
+                1,
+                2,
+                4
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "この和がゼロに近い光学系では平坦な像面が得られやすく、絶対値が大きい系ではフィルムや撮像素子の平面に対して像面が強く湾曲し、周辺部のピントが中心と一致しなくなる。",
+              "citations": [
+                1,
+                2,
+                4,
+                10
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "ペッツバール和はヨーゼフ・マクシミリアン・ペッツバールが十九世紀半ばに導いた定理に基づき、古典的ポートレートレンズやランドスケープレンズなどオールドレンズの描写特性を理解するうえで重要な指標である。",
+              "citations": [
+                5,
+                7,
+                11,
+                15
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "ペッツバール和は像面湾曲の大きさと符号を決定する一次収差量である。",
+                "各屈折面または各薄レンズの屈折力を屈折率で割った値を足し合わせた量として定義される。",
+                "ペッツバール和がゼロに近いレンズは平坦な像面を持ち、値が大きいオールドレンズでは周辺が前後にピントを外して独特のボケや像の流れを生む。",
+                "他の収差と異なりペッツバール和は主に光学パワーの総和バランスに依存し、非球面加工などでは基本的に打ち消せない収差である。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                6,
+                9,
+                10,
+                12
+              ]
+            }
+          ]
+        },
+        {
+          "id": "explanation",
+          "title": "解説",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "屈折率はマイナスの値をとらないので、ペッツバール和をゼロにするためには焦点距離がマイナスのレンズ（凹レンズ）が必要なことが分かる。",
+              "citations": [
+                16
+              ]
+            },
+            {
+              "type": "image",
+              "src": "/images/terms/petzval_sum/focal_length _positive.jpg"
+            },
+            {
+              "type": "image",
+              "src": "/images/terms/petzval_sum/focal_length _negative.jpg"
+            },
+            {
+              "type": "paragraph",
+              "text": "一般的に、ペッツバール和は正になりやすい。そのため、焦点距離がプラスのレンズ(凸レンズ)には屈折率がなるべく大きなガラスを使用し、凹レンズには屈折率がなるべく小さなガラスを使用することがペッツバール和をゼロにするためには効果的である。",
+              "citations": [
+                16
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "薄レンズ近似では、ペッツバール和 P は各薄レンズの屈折力 φi と屈折率 ni を用いて P = Σ(φi / ni) と書け、この値が像面曲率半径の逆数に比例するため、P が大きいほど強い像面湾曲が発生する。",
+              "citations": [
+                1,
+                4,
+                6,
+                9,
+                12
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "より一般には屈折面ごとに Petzval sum = Σ{(n_{i+1} − n_i) / (n_{i+1} n_i ri)} と表され、各面の屈折力と屈折率の組み合わせから像面湾曲の符号と大きさを直接評価できる。",
+              "citations": [
+                2,
+                4,
+                9,
+                10
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "オールドレンズでは像面湾曲よりも球面収差やコマ収差、色収差の補正が優先されることが多く、結果としてペッツバール和が十分にはキャンセルされず、中心はシャープだが周辺にいくほどピントがずれた柔らかい描写になる傾向がある。",
+              "citations": [
+                5,
+                7,
+                11,
+                14,
+                15
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "ペッツバール和は光学系の設計段階でパワーバランスを決める指標として用いられる。",
+                "負レンズと正レンズの組み合わせによりペッツバール和を小さくすることができるが、同時に他の収差補正とのトレードオフが発生する。",
+                "ペッツバール和の式自体は単純だが薄レンズ近似に基づくため、大口径の実レンズでは高次効果や厚肉要素の影響も考慮する必要がある。",
+                "写真用レンズでは像面湾曲の許容値を被写界深度で吸収するか、完全にフラットフィールドを狙うかが設計思想の分かれ目となる。"
+              ],
+              "citations": [
+                1,
+                3,
+                6,
+                8,
+                9,
+                12,
+                13
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "explanation",
+      "title": "専門的な解説",
+      "sections": [
+        {
+          "id": "professional_explanation",
+          "title": "より詳しく",
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "ペッツバール和はペッツバールの像面湾曲定理に由来し、任意の光学系の像面曲率半径 RP が Petzval sum P と関係 RP ≈ −n'/P で与えられる近似が成り立つため、P の符号が像面の向きを、絶対値が曲率の強さを決定する。",
+              "citations": [
+                1,
+                2,
+                4,
+                9,
+                10,
+                12
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "屈折面表現ではペッツバール和 P は P = Σ{(n_{i+1} − n_i) / (n_{i+1} n_i ri)} であり、正パワー面では像面を一方向に、負パワー面では逆方向に曲げる寄与を持つため、正負パワーをうまく混在させることで像面湾曲を制御できる。",
+              "citations": [
+                2,
+                4,
+                9,
+                10,
+                13
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "薄レンズモデルでは各レンズの屈折力 φi が φi = (n_i − 1)(1/R1 − 1/R2) と表され、ペッツバール和 P = Σ(φi / n_i) となるため、高屈折率ガラスの強い正レンズはペッツバール和に大きく寄与し、これを相殺するために低屈折率の弱い負レンズを配置するなど、ガラス選択とパワー配分が実用設計の核心となる。",
+              "citations": [
+                1,
+                3,
+                4,
+                6,
+                9,
+                12,
+                13
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "非球面化や部分分散特性の制御は主として球面収差やコマ収差、色収差に有効であるが、ペッツバール和はあくまでパワーの一次和で決まるため、非球面を追加しても像面湾曲の一次成分は本質的には変わらないという特徴がある。",
+              "citations": [
+                1,
+                3,
+                9,
+                12,
+                13
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "そのため、ペッツバール和を小さく抑えた上で高次収差を整える設計プロセスと、あえてペッツバール和を残して周辺のアウトフォーカス描写を積極的に利用するオールドレンズ的設計思想の二つが存在する。",
+              "citations": [
+                5,
+                6,
+                7,
+                11,
+                14,
+                15
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "ペッツバールポートレートレンズは前群のダブレット正レンズと後群の分離ダブレットからなり、球面収差とコマ収差を良好に補正しながらもペッツバール和が比較的大きく、中心約15〜20度の範囲は高い解像力を保つが、それ以外の領域では像面湾曲と非点収差により像が急激にソフトになり、周辺が流れる描写を示す。",
+              "citations": [
+                5,
+                7,
+                10,
+                11,
+                15
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "ランドスケープレンズやシンメトリックなダブレット系では、正負パワーを前後対称に配置することでペッツバール和を部分的に相殺し、広い画角で相対的に平坦な像面を実現する一方、周辺光量や歪曲とのバランスを取る必要があった。",
+              "citations": [
+                1,
+                4,
+                9,
+                10,
+                14,
+                15
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "現代の高性能レトロフォーカス広角レンズでは、前群の強い負パワーと後群の強い正パワーを組み合わせることで全体の主点位置を調整しつつペッツバール和を小さく抑え、像面湾曲を被写界深度内に収めるよう設計されている。",
+              "citations": [
+                1,
+                3,
+                9,
+                10,
+                12
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "一方でオールドレンズ愛好家の間では、ペッツバール和が十分補正されていないレンズが画面周辺で特徴的な渦巻き状ボケやラジアル方向の像流れを生むため、デジタルセンサー時代においても独自の描写を楽しむ目的で高く評価されることが多い。",
+              "citations": [
+                6,
+                7,
+                11,
+                14,
+                15
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "産業用レンズではセンサー面のフラットネスと測定精度が重要であり、ペッツバール和を極力ゼロ付近に抑えた上で残存像面湾曲をセンサーのわずかな湾曲や被写界深度で吸収する設計が求められるため、オールドフォトレンズとは対照的な設計指針となる。",
+              "citations": [
+                1,
+                3,
+                8,
+                12
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "ペッツバール和は一次近似量であり、大口径で視野角の大きい系や高屈折率ガラスを多用した系では高次収差や厚肉効果が無視できず、実際の像面湾曲との間に差が生じるため、設計では光線追跡による像面形状評価と併用して用いる必要がある。",
+              "citations": [
+                1,
+                3,
+                8,
+                9,
+                12
+              ]
+            }
+          ]
+        },
+        {
+          "id": "main_points",
+          "title": "要点",
+          "items": [
+            {
+              "type": "list",
+              "items": [
+                "ペッツバール和 P は像面曲率半径 RP と RP ≈ −n'/P の関係を持ち、像面湾曲の向きと強さを直接決定する一次指標である。",
+                "P は屈折力と屈折率の単純な和で表されるため、正負レンズのパワーバランスとガラス選択がペッツバール補正の実用的鍵となる。",
+                "非球面化や高次収差補正だけではペッツバール和を根本的に変えられないため、設計初期段階で P を適切な範囲に収めることが重要である。",
+                "オールドレンズではペッツバール和が大きいことが多く、像面湾曲由来の周辺のピントズレとボケの流れが独特の描写として積極的に楽しまれている。"
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "Petzval Sum - an overview",
+      "author_or_source": "ScienceDirect Topics",
+      "url": "https://www.sciencedirect.com/topics/engineering/petzval-sum",
+      "type": "academic",
+      "reliability": "high",
+      "notes": "Petzval和の定義と薄レンズ近似での式、パワーバランス設計への言及を含む総説的解説である。"
+    },
+    {
+      "id": 2,
+      "title": "Petzval field curvature",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Petzval_field_curvature",
+      "type": "reference",
+      "reliability": "medium",
+      "notes": "像面湾曲とペッツバール和の関係式や一般形の式を示す入門的資料である。"
+    },
+    {
+      "id": 3,
+      "title": "Controlling the Petzval Sum",
+      "author_or_source": "SPIE Field Guide to Lens Design",
+      "url": "https://www.spiedigitallibrary.org/ebooks/FG/Field-Guide-to-Lens-Design/Controlling-the-Petzval-Sum",
+      "type": "academic",
+      "reliability": "high",
+      "notes": "ペッツバール和制御の実用的手法と他の収差とのトレードオフについて述べた専門的解説である。"
+    },
+    {
+      "id": 4,
+      "title": "Petzval Sum - OptoWiki Knowledge Base",
+      "author_or_source": "OptoWiki",
+      "url": "https://www.optowiki.info/glossary/petzval-sum/",
+      "type": "technical_article",
+      "reliability": "medium",
+      "notes": "ペッツバール和の屈折面表示と物理的意味を簡潔にまとめた技術記事である。"
+    },
+    {
+      "id": 5,
+      "title": "From Petzval's Sum to Abbe's Number",
+      "author_or_source": "Lensrentals Blog (Roger Cicala)",
+      "url": "https://www.lensrentals.com/blog/2010/10/from-petzvals-sum-to-abbes-number/",
+      "type": "technical_blog",
+      "reliability": "medium",
+      "notes": "ペッツバールの歴史的計算とポートレートレンズ設計における収差補正について写真家向けに解説した記事である。"
+    },
+    {
+      "id": 6,
+      "title": "Field Curvature - a Layman's Guide",
+      "author_or_source": "Tim Ashley",
+      "url": "https://tashley1.zenfolio.com/blog/2013/5/field-curvature---a-practical-guide",
+      "type": "technical_blog",
+      "reliability": "medium",
+      "notes": "ペッツバール和とフィールドカーブの実用的な関係を写真撮影の観点から説明している。"
+    },
+    {
+      "id": 7,
+      "title": "The history of Petzval Lenses",
+      "author_or_source": "Contrastique (archived PDF)",
+      "url": "https://contrastique.blog/wp-content/uploads/2011/06/the-history-of-petzval-lenses.pdf",
+      "type": "historical_article",
+      "reliability": "medium",
+      "notes": "ペッツバールポートレートレンズの歴史と光学的特徴、描写傾向についてまとめた歴史的解説である。"
+    },
+    {
+      "id": 8,
+      "title": "レンズの辞典＆事典 ペッツバルの条件に関する記述",
+      "author_or_source": "ニューガラスフォーラム",
+      "url": "https://www.newglass.jp/mag/TITL/maghtml/97-pdf/+97-p064.pdf",
+      "type": "technical_article",
+      "reliability": "high",
+      "notes": "日本語でペッツバル条件の式と近似としての性格を説明した専門的な資料である。"
+    },
+    {
+      "id": 9,
+      "title": "Petzval Theorem",
+      "author_or_source": "University of Florence lecture notes",
+      "url": "https://e-l.unifi.it/mod/resource/view.php?id=357550",
+      "type": "academic",
+      "reliability": "high",
+      "notes": "ペッツバール像面湾曲定理とその設計上の含意を扱う講義ノートである。"
+    },
+    {
+      "id": 10,
+      "title": "Field curvature",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Field_curvature",
+      "type": "reference",
+      "reliability": "medium",
+      "notes": "一般的な像面湾曲とペッツバールレンズのフィールド特性の解説を含む。"
+    },
+    {
+      "id": 11,
+      "title": "The history of Petzval Lenses (HTML version)",
+      "author_or_source": "Ksmt.com",
+      "url": "http://www.ksmt.com/eos10d/120131av230/petzvallens",
+      "type": "historical_article",
+      "reliability": "medium",
+      "notes": "Petzval Portrait lens の光学的シグネチャと画角、周辺描写についての記述を含む。"
+    },
+    {
+      "id": 12,
+      "title": "現場で活かす光学設計の基本 理論と製造プロセスをつなぐ体系講義",
+      "author_or_source": "牛山善太",
+      "url": "https://www.symphotony.com/kokyoseminar/ushiyama-kogakusekkei/",
+      "type": "seminar_material",
+      "reliability": "high",
+      "notes": "ペッツバール和の式の単純さと近似性、実務設計での位置付けを解説する講義資料である。"
+    },
+    {
+      "id": 13,
+      "title": "Why is Petzval curvature considered so hard to correct?",
+      "author_or_source": "Reddit r/Optics discussion",
+      "url": "https://www.reddit.com/r/Optics/comments/1d8h7bv/why_is_petzval_curvature_considered_so_hard_to/",
+      "type": "discussion",
+      "reliability": "low",
+      "notes": "パワーと屈折率の制約からペッツバール和と他収差のバランス取りが難しいことを示す実務者のコメントである。"
+    },
+    {
+      "id": 14,
+      "title": "The evolution of the landscape lens - from Wollaston to modern times",
+      "author_or_source": "Pencil of Rays",
+      "url": "https://www.pencilofrays.com/landscape-lens-evolution/",
+      "type": "technical_blog",
+      "reliability": "medium",
+      "notes": "ランドスケープレンズの設計史とペッツバール和が大きい場合のフィールドカーブの悪化について図付きで説明する。"
+    },
+    {
+      "id": 15,
+      "title": "History of photographic lens design",
+      "author_or_source": "Wikiwand",
+      "url": "https://www.wikiwand.com/en/articles/History_of_photographic_lens_design",
+      "type": "reference",
+      "reliability": "medium",
+      "notes": "ペッツバールポートレートレンズを含む写真レンズ設計史と収差特性の概要を示す。"
+    },
+    {
+      "id": 16,
+      "title": "コプトン光学設計",
+      "author_or_source": "kopton",
+      "url": "https://www.kopton.jp/column/?itm=3",
+      "type": "reference",
+      "reliability": "medium",
+      "notes": "設計者コラム"
+    }
+  ]
+}
