@@ -385,6 +385,7 @@ function TreeRootBlock({
 const DEFAULT_MAX_DEPTH = 32;
 const MOBILE_INDENT_STEP = 10;
 const MOBILE_INDENT_MAX = 28;
+const MOBILE_AXIS_OFFSET_PX = 7;
 
 function pickMobileSupplementary(
   rows: TreeNodeSupplementaryRow[]
@@ -409,14 +410,12 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
-  isLastSibling,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
-  isLastSibling: boolean;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
@@ -428,14 +427,7 @@ function MobileTreeNode({
       <div className="flex min-w-0 gap-0.5">
         {showConnector ? (
           <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-            {!isLastSibling ? (
-              <div className={`absolute ${TREE_AXIS_LEFT} top-0 bottom-0 w-px ${TREE_LINE}`} />
-            ) : (
-              <div
-                className={`absolute ${TREE_AXIS_LEFT} top-0 w-px ${TREE_LINE}`}
-                style={{ height: TREE_ELBOW_Y_PX }}
-              />
-            )}
+            {/* 縦線は子リスト側で連続描画。ここでは横線（カードへ入る部分）のみ描画 */}
             <div
               className={`absolute ${TREE_AXIS_LEFT} h-px w-[10px] ${TREE_LINE}`}
               style={{ top: TREE_ELBOW_Y_PX }}
@@ -499,21 +491,57 @@ function MobileTreeNode({
       </div>
 
       {node.children.length > 0 && depth < maxDepth && (
-        <ul className="mt-2 space-y-2 p-0">
-          {node.children.map((child, index) => (
-            <MobileTreeNode
-              key={child.id}
-              node={child}
-              headers={headers}
-              renderCell={renderCell}
-              depth={depth + 1}
-              maxDepth={maxDepth}
-              isLastSibling={index === node.children.length - 1}
-            />
-          ))}
-        </ul>
+        <MobileTreeChildren
+          nodes={node.children}
+          headers={headers}
+          renderCell={renderCell}
+          depth={depth}
+          maxDepth={maxDepth}
+        />
       )}
     </li>
+  );
+}
+
+function MobileTreeChildren({
+  nodes,
+  headers,
+  renderCell,
+  depth,
+  maxDepth,
+}: {
+  nodes: TableTreeNode[];
+  headers: string[];
+  renderCell: (cell: unknown) => React.ReactNode;
+  /** 親の depth（children は depth+1 になる） */
+  depth: number;
+  maxDepth: number;
+}): React.ReactElement {
+  const childDepth = depth + 1;
+  const padLeft = Math.min(childDepth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
+  // [子ノード li の paddingLeft] + [コネクタ lane 内の縦線 X]
+  const trunkLeftPx = padLeft + MOBILE_AXIS_OFFSET_PX;
+
+  return (
+    <div className="relative mt-2">
+      <div
+        className={`pointer-events-none absolute top-0 bottom-0 w-px ${TREE_LINE}`}
+        style={{ left: trunkLeftPx }}
+        aria-hidden
+      />
+      <ul className="relative z-[1] m-0 list-none p-0 space-y-2">
+        {nodes.map((child) => (
+          <MobileTreeNode
+            key={child.id}
+            node={child}
+            headers={headers}
+            renderCell={renderCell}
+            depth={childDepth}
+            maxDepth={maxDepth}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -568,7 +596,6 @@ export function TreeTableRenderer({
               renderCell={renderCell}
               depth={0}
               maxDepth={DEFAULT_MAX_DEPTH}
-              isLastSibling
             />
           ))}
         </ul>
