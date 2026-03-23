@@ -55,10 +55,14 @@ export function MobileTreeParentTrunk({
     // 横線（L字腕）の始点までを確実に含めて交わる
     const height = Math.max(1, firstHorizontalRect.bottom - startRect.top);
 
-    const padLeftPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
+    const parentDepth = Math.max(0, childDepth - 1);
+    const padLeftChildPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
+    const padLeftParentPx = Math.min(parentDepth * INDENT_STEP_PX, INDENT_MAX_PX);
+    // wrapper は親 li の padding-left 後に配置されるため、相対位置は差分で計算する
+    const padLeftDeltaPx = padLeftChildPx - padLeftParentPx;
     setTrunk({
       // 縦線は connector 軸（MobileTreeNode の横線）と同じ x に揃える
-      left: padLeftPx + CONNECTOR_AXIS_X_PX,
+      left: padLeftDeltaPx + CONNECTOR_AXIS_X_PX,
       top,
       height,
     });
