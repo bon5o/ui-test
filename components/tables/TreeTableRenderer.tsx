@@ -10,6 +10,7 @@ import {
 } from "@/lib/parseTreeTableNode";
 import { Citation } from "@/components/Citation";
 import { MobileTreeSiblingTrunk } from "./MobileTreeSiblingTrunk";
+import { MobileTreeParentTrunk } from "./MobileTreeParentTrunk";
 
 /** ノード見出し行と横枝の交点（px）。コンパクトカードと揃える */
 const TREE_ELBOW_Y_PX = 13;
@@ -433,6 +434,7 @@ function MobileTreeNode({
             className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
             style={{ top: TREE_ELBOW_Y_PX }}
             data-mobile-tree-elbow-marker=""
+            data-mobile-tree-elbow-role="node"
             data-mobile-tree-elbow-depth={String(depth)}
           />
           {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
@@ -441,6 +443,7 @@ function MobileTreeNode({
               className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
               style={{ top: TREE_ELBOW_Y_PX }}
               data-mobile-tree-elbow-marker=""
+              data-mobile-tree-elbow-role="parent"
               data-mobile-tree-elbow-depth={String(childDepth)}
             />
           )}
@@ -522,12 +525,12 @@ function MobileTreeNode({
   return (
     <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
       {hasChildren ? (
-        <MobileTreeSiblingTrunk childDepth={childDepth}>
+        <MobileTreeParentTrunk childDepth={childDepth}>
           <>
             {nodeRow}
             {childrenList}
           </>
-        </MobileTreeSiblingTrunk>
+        </MobileTreeParentTrunk>
       ) : (
         <>
           {nodeRow}
@@ -554,18 +557,20 @@ function MobileTreeChildren({
 }): React.ReactElement {
   const childDepth = depth + 1;
   return (
-    <ul className="m-0 list-none p-0 space-y-0">
-      {nodes.map((child) => (
-        <MobileTreeNode
-          key={child.id}
-          node={child}
-          headers={headers}
-          renderCell={renderCell}
-          depth={childDepth}
-          maxDepth={maxDepth}
-        />
-      ))}
-    </ul>
+    <MobileTreeSiblingTrunk childDepth={childDepth}>
+      <ul className="m-0 list-none p-0 space-y-0">
+        {nodes.map((child) => (
+          <MobileTreeNode
+            key={child.id}
+            node={child}
+            headers={headers}
+            renderCell={renderCell}
+            depth={childDepth}
+            maxDepth={maxDepth}
+          />
+        ))}
+      </ul>
+    </MobileTreeSiblingTrunk>
   );
 }
 

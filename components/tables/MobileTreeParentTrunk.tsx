@@ -10,10 +10,11 @@ type TrunkStyle = {
   height: number;
 };
 
-export function MobileTreeSiblingTrunk({
+export function MobileTreeParentTrunk({
   childDepth,
   children,
 }: {
+  /** 親→children への接続で、子側は depth=childDepth の elbow が対象 */
   childDepth: number;
   children: React.ReactNode;
 }): React.ReactElement {
@@ -24,24 +25,34 @@ export function MobileTreeSiblingTrunk({
     const containerEl = containerRef.current;
     if (!containerEl) return;
 
-    const markers = Array.from(
+    const startMarkers = Array.from(
+      containerEl.querySelectorAll<HTMLElement>(
+        `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(childDepth)}"][data-mobile-tree-elbow-role="parent"]`
+      )
+    );
+
+    const nodeMarkers = Array.from(
       containerEl.querySelectorAll<HTMLElement>(
         `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(childDepth)}"][data-mobile-tree-elbow-role="node"]`
       )
     );
-    if (markers.length === 0) {
+
+    if (startMarkers.length === 0 || nodeMarkers.length === 0) {
       setTrunk(null);
       return;
     }
 
     const containerRect = containerEl.getBoundingClientRect();
-    const firstRect = markers[0].getBoundingClientRect();
-    const lastRect = markers[markers.length - 1].getBoundingClientRect();
+    const startRect = startMarkers[0].getBoundingClientRect();
+    const firstChildRect = nodeMarkers[0].getBoundingClientRect();
+
+    const top = startRect.top - containerRect.top;
+    const height = Math.max(1, firstChildRect.top - startRect.top);
 
     setTrunk({
-      left: firstRect.left - containerRect.left,
-      top: firstRect.top - containerRect.top,
-      height: lastRect.bottom - firstRect.top,
+      left: startRect.left - containerRect.left,
+      top,
+      height,
     });
   };
 
@@ -53,7 +64,6 @@ export function MobileTreeSiblingTrunk({
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-
     const ro = new ResizeObserver(() => recalc());
     ro.observe(el);
     return () => ro.disconnect();
