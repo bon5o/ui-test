@@ -17,8 +17,6 @@ const TREE_ELBOW_Y_PX = 13;
 const TREE_LINE = "bg-[#7D9CD4]/25";
 const TREE_AXIS_LEFT = "left-[7px]";
 const TREE_CONNECTOR_WIDTH = "w-4 sm:w-[18px]";
-// Temporary debug: color-code line sources
-const DEBUG_MOBILE_TREE_LINE_COLORS = true;
 /**
  * 左側3領域: [枝線][年代列][カード]
  * - 年代は列内左寄せ、右 padding でカードとの呼吸感を確保
@@ -413,30 +411,44 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
-  incomingNodeElbowMarkerId,
+  idPrefix,
+  incomingGroupParentId,
+  incomingGroupSubtreeId,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
-  /** first direct child の role="node" elbow 用に id を注入する */
-  incomingNodeElbowMarkerId?: string;
+  /** TreeTableRenderer インスタンス単位でユニークにするための prefix */
+  idPrefix: string;
+  /**
+   * この node の「role=node elbow」(incoming elbow marker) が属する
+   * 親 subtree グループの識別子。
+   *
+   * MobileTreeSiblingTrunk はこの値で marker を絞るため、
+   * subtree を跨いで絶対に拾わないために必須。
+   */
+  incomingGroupParentId?: string;
+  incomingGroupSubtreeId?: string;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
   const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
   const hasChildren = node.children.length > 0 && depth < maxDepth;
   const startElbowMarkerId = hasChildren
-    ? `mobile-tree-parent-elbow-${node.id}`
+    ? `${idPrefix}-mobile-tree-parent-elbow-${node.id}`
     : undefined;
   const endElbowMarkerId =
     hasChildren && node.children[0]?.id != null
-      ? `mobile-tree-node-elbow-${node.children[0].id}`
+      ? `${idPrefix}-mobile-tree-node-elbow-${node.children[0].id}`
       : undefined;
   const showIncoming = depth > 0;
   const showOutgoing = hasChildren;
   const showConnector = showIncoming || showOutgoing;
+  const incomingNodeElbowMarkerId = showIncoming
+    ? `${idPrefix}-mobile-tree-node-elbow-${node.id}`
+    : undefined;
   const childDepth = depth + 1;
 
   const nodeRow = (
@@ -449,15 +461,13 @@ function MobileTreeNode({
             <>
               {/* ノード自身の elbow（同階層の幹線計測用） */}
               <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px ${
-                  DEBUG_MOBILE_TREE_LINE_COLORS
-                    ? "bg-green-400/70"
-                    : "bg-transparent"
-                }`}
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
                 style={{ top: TREE_ELBOW_Y_PX }}
                 data-mobile-tree-elbow-marker=""
                 data-mobile-tree-elbow-role="node"
                 data-mobile-tree-elbow-depth={String(depth)}
+                data-mobile-tree-elbow-parent-id={incomingGroupParentId}
+                data-mobile-tree-elbow-subtree-id={incomingGroupSubtreeId}
                 id={incomingNodeElbowMarkerId}
               />
             </>
@@ -467,31 +477,28 @@ function MobileTreeNode({
             <>
               {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
               <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px ${
-                  DEBUG_MOBILE_TREE_LINE_COLORS
-                    ? "bg-green-400/70"
-                    : "bg-transparent"
-                }`}
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
                 style={{ top: TREE_ELBOW_Y_PX }}
                 data-mobile-tree-elbow-marker=""
                 data-mobile-tree-elbow-role="parent"
                 data-mobile-tree-elbow-depth={String(childDepth)}
+                data-debug-outgoing-elbow=""
+                data-debug-outgoing-node={node.id}
                 id={startElbowMarkerId}
               />
             </>
           )}
 
-          {/* 横枝（カードへ入る線）: incoming/outgoing のどちらがある場合も表示 */}
-          <div
-            className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${
-              DEBUG_MOBILE_TREE_LINE_COLORS
-                ? "bg-green-400/60"
-                : TREE_LINE
-            }`}
-            style={{ top: TREE_ELBOW_Y_PX }}
-            data-mobile-tree-elbow-horizontal=""
-            data-mobile-tree-elbow-horizontal-depth={String(depth)}
-          />
+          {/* 横枝（カードへ入る線）: PC版に合わせて incoming のときだけ描画 */}
+          {showIncoming && (
+            <div
+              data-debug-line="elbow-line"
+              className={`absolute ${TREE_AXIS_LEFT} z-[99999] opacity-100 h-[3px] w-[9px] sm:w-[10px]`}
+              style={{ top: TREE_ELBOW_Y_PX, backgroundColor: "rgba(0, 255, 0, 1)" }}
+              data-mobile-tree-elbow-horizontal=""
+              data-mobile-tree-elbow-horizontal-depth={String(depth)}
+            />
+          )}
         </div>
       ) : (
         <div className="w-4 shrink-0" aria-hidden />
@@ -551,6 +558,8 @@ function MobileTreeNode({
     </div>
   );
 
+  const subtreeId = `${idPrefix}-mobile-tree-subtree-${node.id}`;
+
   const childrenList =
     hasChildren ? (
       <MobileTreeChildren
@@ -559,7 +568,9 @@ function MobileTreeNode({
         renderCell={renderCell}
         depth={depth}
         maxDepth={maxDepth}
-        firstChildIncomingNodeElbowMarkerId={endElbowMarkerId}
+        parentId={node.id}
+        subtreeId={subtreeId}
+        idPrefix={idPrefix}
       />
     ) : null;
 
@@ -570,6 +581,8 @@ function MobileTreeNode({
           childDepth={childDepth}
           startElbowMarkerId={startElbowMarkerId!}
           endElbowMarkerId={endElbowMarkerId!}
+          parentId={node.id}
+          subtreeId={subtreeId}
           parentRow={nodeRow}
           childrenBlock={childrenList}
         />
@@ -589,7 +602,9 @@ function MobileTreeChildren({
   renderCell,
   depth,
   maxDepth,
-  firstChildIncomingNodeElbowMarkerId,
+  parentId,
+  subtreeId,
+  idPrefix,
 }: {
   nodes: TableTreeNode[];
   headers: string[];
@@ -597,28 +612,47 @@ function MobileTreeChildren({
   /** 親の depth（children は depth+1 になる） */
   depth: number;
   maxDepth: number;
-  firstChildIncomingNodeElbowMarkerId?: string;
+  /** 直上の親 node id（同一子 group 絞り込み用） */
+  parentId: string;
+  /** この children block の subtree 識別子（同一子 group 絞り込み用） */
+  subtreeId: string;
+  idPrefix: string;
 }): React.ReactElement {
   const childDepth = depth + 1;
+  const childrenList = (
+    <ul className="m-0 list-none p-0 space-y-0">
+      {nodes.map((child) => (
+        <MobileTreeNode
+          key={child.id}
+          node={child}
+          headers={headers}
+          renderCell={renderCell}
+          depth={childDepth}
+          maxDepth={maxDepth}
+          incomingGroupParentId={parentId}
+          incomingGroupSubtreeId={subtreeId}
+          idPrefix={idPrefix}
+        />
+      ))}
+    </ul>
+  );
+
+  // sibling trunk は兄弟が2人以上の subtree でのみ出す
+  if (nodes.length < 2) {
+    return (
+      <div className="relative mt-1.5 min-w-0 sm:mt-2">
+        {childrenList}
+      </div>
+    );
+  }
+
   return (
-    <MobileTreeSiblingTrunk childDepth={childDepth}>
-      <ul
-        className="m-0 list-none p-0 space-y-0"
-      >
-        {nodes.map((child, idx) => (
-          <MobileTreeNode
-            key={child.id}
-            node={child}
-            headers={headers}
-            renderCell={renderCell}
-            depth={childDepth}
-            maxDepth={maxDepth}
-            incomingNodeElbowMarkerId={
-              idx === 0 ? firstChildIncomingNodeElbowMarkerId : undefined
-            }
-          />
-        ))}
-      </ul>
+    <MobileTreeSiblingTrunk
+      childDepth={childDepth}
+      parentId={parentId}
+      subtreeId={subtreeId}
+    >
+      {childrenList}
     </MobileTreeSiblingTrunk>
   );
 }
@@ -674,6 +708,7 @@ export function TreeTableRenderer({
               renderCell={renderCell}
               depth={0}
               maxDepth={DEFAULT_MAX_DEPTH}
+              idPrefix={`mobile-tree-${index}`}
             />
           ))}
         </ul>

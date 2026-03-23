@@ -2,14 +2,21 @@
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-const TREE_LINE = "bg-[#7D9CD4]/25";
-// Temporary debug: color-code line sources
-const DEBUG_MOBILE_TREE_LINE_COLORS = true;
+const DEBUG_MOBILE_TREE_TRUNK = process.env.NODE_ENV !== "production";
+const DEBUG_PARENT_TRUNK_COLOR = "rgba(255, 0, 0, 1)";
 
 const INDENT_STEP_PX = 10;
 const INDENT_MAX_PX = 28;
 /** TREE_AXIS_LEFT: left-[7px] と揃える（connector lane 内の軸） */
 const CONNECTOR_AXIS_X_PX = 7;
+/**
+ * PC版の `TreeParentStem` 相当の「短い縦幹」。
+ * sibling trunk は `MobileTreeSiblingTrunk` が担当し、
+ * ここ（parent trunk）は「長い幹」にならないように固定長にする。
+ */
+const PARENT_STEM_HEIGHT_PX = 12;
+const PARENT_STEM_TOP_OFFSET_PX = 1;
+const PARENT_STEM_WIDTH_PX = 3;
 
 type TrunkStyle = {
   left: number;
@@ -21,30 +28,39 @@ export function MobileTreeParentTrunk({
   childDepth,
   startElbowMarkerId,
   endElbowMarkerId,
+  parentId,
+  subtreeId,
   parentRow,
   childrenBlock,
 }: {
   childDepth: number;
   /**
-   * 親 elbow 中心（role="parent"）の id
+   * 親 elbow（role="parent"）の id
    * trunk はここから開始する
    */
   startElbowMarkerId: string;
   /**
-   * 直下最初の子 elbow 中心（role="node"）の id
+   * 直下最初の子 elbow（role="node"）の id
    * trunk はここで停止する
    */
   endElbowMarkerId: string;
+  parentId?: string;
+  subtreeId?: string;
   parentRow: React.ReactNode;
   childrenBlock: React.ReactNode;
 }): React.ReactElement {
-  const parentDepth = Math.max(0, childDepth - 1);
-  const padLeftChildPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
-  const padLeftParentPx = Math.min(parentDepth * INDENT_STEP_PX, INDENT_MAX_PX);
-  const left = padLeftChildPx - padLeftParentPx + CONNECTOR_AXIS_X_PX;
+  // left/top は outgoing elbow marker（startElbowMarkerId）の実測座標から決める。
+  // ここで理論計算（indent/connector lane など）をしない。
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [trunk, setTrunk] = useState<TrunkStyle | null>(null);
+  const lastLogRef = useRef<{
+    left: number;
+    top: number;
+    height: number;
+    startId: string;
+    endId: string;
+  } | null>(null);
 
   const recalc = () => {
     const wrapperEl = wrapperRef.current;
@@ -59,15 +75,56 @@ export function MobileTreeParentTrunk({
 
     const wrapperRect = wrapperEl.getBoundingClientRect();
     const startRect = startEl.getBoundingClientRect();
-    const endRect = endEl.getBoundingClientRect();
 
-    const startCenterY =
-      startRect.top - wrapperRect.top + startRect.height / 2;
-    const endCenterY = endRect.top - wrapperRect.top + endRect.height / 2;
+    // 親カードの接続点（elbow）直下からだけ描く
+    const top = startRect.top - wrapperRect.top + PARENT_STEM_TOP_OFFSET_PX;
+    const height = PARENT_STEM_HEIGHT_PX;
 
-    const top = startCenterY - 0.5;
-    // 1px 線なので end 中心までを確実に含める
-    const height = Math.max(1, endCenterY - startCenterY + 1);
+    // outgoing marker の中心に揃える（w-px=1px 前提だが実測 width を使う）
+    const markerCenterXWithinWrapper =
+      startRect.left - wrapperRect.left + startRect.width / 2;
+    const left = markerCenterXWithinWrapper - PARENT_STEM_WIDTH_PX / 2;
+
+    if (DEBUG_MOBILE_TREE_TRUNK && typeof window !== "undefined") {
+      const prev = lastLogRef.current;
+      const shouldLog =
+        prev == null ||
+        prev.startId !== startElbowMarkerId ||
+        prev.endId !== endElbowMarkerId ||
+        Math.abs(prev.left - left) > 0.5 ||
+        Math.abs(prev.top - top) > 0.5 ||
+        Math.abs(prev.height - height) > 0.5;
+
+      if (shouldLog) {
+        // eslint-disable-next-line no-console
+        console.log("[MobileTreeParentTrunk]", {
+          childDepth,
+          parentId,
+          subtreeId,
+          wrapperNodeId: wrapperEl.dataset.debugNodeWrapper,
+          startElbowMarkerId,
+          endElbowMarkerId,
+          left,
+          top,
+          height,
+          wrapperRectTop: wrapperRect.top,
+          wrapperRectLeft: wrapperRect.left,
+          startRectTop: startRect.top,
+          startRectLeft: startRect.left,
+          outgoingMarkerNodeId: startEl.dataset.debugOutgoingNode,
+          markerWidth: startRect.width,
+          startDataset: {
+            role: startEl.dataset.mobileTreeElbowRole,
+            depth: startEl.dataset.mobileTreeElbowDepth,
+          },
+          endDataset: {
+            role: endEl.dataset.mobileTreeElbowRole,
+            depth: endEl.dataset.mobileTreeElbowDepth,
+          },
+        });
+        lastLogRef.current = { left, top, height, startId: startElbowMarkerId, endId: endElbowMarkerId };
+      }
+    }
 
     setTrunk({ left, top, height });
   };
@@ -88,22 +145,30 @@ export function MobileTreeParentTrunk({
   }, [childDepth, startElbowMarkerId, endElbowMarkerId]);
 
   return (
-    <div ref={wrapperRef} className="relative">
-      {trunk && (
-        <div
-          aria-hidden
-          data-debug-mobile-tree-line="parent-trunk"
-          className={`pointer-events-none absolute z-[2] ${
-            DEBUG_MOBILE_TREE_LINE_COLORS ? "bg-red-500/60" : TREE_LINE
-          } w-px`}
-          style={{
-            left: trunk.left,
-            top: trunk.top,
-            height: trunk.height,
-          }}
-        />
-      )}
-      {parentRow}
+    <div>
+      <div
+        ref={wrapperRef}
+        className="relative"
+        data-debug-line-wrapper="parent-trunk-wrapper"
+        data-mobile-tree-parent-trunk-wrapper=""
+        data-debug-node-wrapper={parentId ?? ""}
+        data-debug-parent-trunk-wrapper={parentId ?? ""}
+      >
+        {trunk && (
+          <div
+            aria-hidden
+            data-debug-line="parent-trunk"
+            className={`pointer-events-none absolute z-[99999] opacity-100 w-[3px]`}
+            style={{
+              left: trunk.left,
+              top: trunk.top,
+              height: trunk.height,
+              backgroundColor: DEBUG_PARENT_TRUNK_COLOR,
+            }}
+          />
+        )}
+        {parentRow}
+      </div>
       {childrenBlock}
     </div>
   );
