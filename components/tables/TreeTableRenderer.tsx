@@ -409,74 +409,98 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
+  isLastSibling,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
+  isLastSibling: boolean;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
   const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
+  const showConnector = depth > 0;
 
   return (
     <li className="list-none" style={{ paddingLeft: `${padLeft}px` }}>
-      <article
-        className={`rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
-        data-mobile-tree-node=""
-        data-depth={depth}
-      >
-        {parsed.externalYearCell != null &&
-          !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
-            <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
-              {renderCell(parsed.externalYearCell)}
-            </div>
-          )}
-
-        <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
-          {parsed.titleCell != null ? (
-            renderCell(parsed.titleCell)
-          ) : (
-            <span className="font-normal text-gray-400">（無題）</span>
-          )}
-        </div>
-
-        {featureRow != null && (
-          <div className="mt-2 space-y-0.5">
-            <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
-            <div className="text-[12px] leading-snug text-gray-700">
-              {renderCell(featureRow.cell)}
-            </div>
+      <div className="flex min-w-0 gap-0.5">
+        {showConnector ? (
+          <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
+            {!isLastSibling ? (
+              <div className={`absolute ${TREE_AXIS_LEFT} top-0 bottom-0 w-px ${TREE_LINE}`} />
+            ) : (
+              <div
+                className={`absolute ${TREE_AXIS_LEFT} top-0 w-px ${TREE_LINE}`}
+                style={{ height: TREE_ELBOW_Y_PX }}
+              />
+            )}
+            <div
+              className={`absolute ${TREE_AXIS_LEFT} h-px w-[10px] ${TREE_LINE}`}
+              style={{ top: TREE_ELBOW_Y_PX }}
+            />
           </div>
+        ) : (
+          <div className="w-4 shrink-0" aria-hidden />
         )}
 
-        {otherRows.length > 0 && (
-          <details className="mt-2">
-            <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
-            <div className="mt-1.5 space-y-1.5">
-              {otherRows.map(({ label, cell }, i) => (
-                <div key={`${label}-${i}`} className="space-y-0.5">
-                  <div className="text-[10px] font-normal text-gray-400">{label}</div>
-                  <div className="text-[12px] leading-snug text-gray-700">
-                    {renderCell(cell)}
+        <article
+          className={`min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
+          data-mobile-tree-node=""
+          data-depth={depth}
+        >
+          {parsed.externalYearCell != null &&
+            !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
+              <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
+                {renderCell(parsed.externalYearCell)}
+              </div>
+            )}
+
+          <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
+            {parsed.titleCell != null ? (
+              renderCell(parsed.titleCell)
+            ) : (
+              <span className="font-normal text-gray-400">（無題）</span>
+            )}
+          </div>
+
+          {featureRow != null && (
+            <div className="mt-2 space-y-0.5">
+              <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
+              <div className="text-[12px] leading-snug text-gray-700">
+                {renderCell(featureRow.cell)}
+              </div>
+            </div>
+          )}
+
+          {otherRows.length > 0 && (
+            <details className="mt-2">
+              <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
+              <div className="mt-1.5 space-y-1.5">
+                {otherRows.map(({ label, cell }, i) => (
+                  <div key={`${label}-${i}`} className="space-y-0.5">
+                    <div className="text-[10px] font-normal text-gray-400">{label}</div>
+                    <div className="text-[12px] leading-snug text-gray-700">
+                      {renderCell(cell)}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </details>
-        )}
+                ))}
+              </div>
+            </details>
+          )}
 
-        {node.citations.length > 0 && (
-          <div className="mt-2">
-            <Citation citations={node.citations} />
-          </div>
-        )}
-      </article>
+          {node.citations.length > 0 && (
+            <div className="mt-2">
+              <Citation citations={node.citations} />
+            </div>
+          )}
+        </article>
+      </div>
 
       {node.children.length > 0 && depth < maxDepth && (
-        <ul className="mt-2 space-y-2 border-l border-[#7D9CD4]/20 pl-2">
-          {node.children.map((child) => (
+        <ul className="mt-2 space-y-2 p-0">
+          {node.children.map((child, index) => (
             <MobileTreeNode
               key={child.id}
               node={child}
@@ -484,6 +508,7 @@ function MobileTreeNode({
               renderCell={renderCell}
               depth={depth + 1}
               maxDepth={maxDepth}
+              isLastSibling={index === node.children.length - 1}
             />
           ))}
         </ul>
@@ -543,6 +568,7 @@ export function TreeTableRenderer({
               renderCell={renderCell}
               depth={0}
               maxDepth={DEFAULT_MAX_DEPTH}
+              isLastSibling
             />
           ))}
         </ul>
