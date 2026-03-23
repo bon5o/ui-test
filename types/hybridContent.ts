@@ -73,13 +73,6 @@ export interface TableItem {
   citations?: number[];
 }
 
-export type ContentItem =
-  | ParagraphItem
-  | ListItem
-  | ImageItem
-  | QuoteItem
-  | TableItem;
-
 export interface SectionMeta {
   title?: string;
   [key: string]: unknown;
@@ -91,15 +84,39 @@ export interface TocOptions {
 }
 
 export interface Section {
-  id: string;
-  title: string;
+  /** 未指定時はレンダラー側でフォールバックキーを使用 */
+  id?: string;
+  title?: string;
   toc?: TocOptions;
   /** セクション全体の表示トーン（任意）。item 側に tone があれば item が優先。 */
   tone?: Tone;
   meta?: SectionMeta;
   citations?: number[];
-  items: ContentItem[];
+  /** 子セクション（再帰）。未指定時は空配列扱い */
+  sections?: Section[];
+  /** 未指定時は空配列扱い（後方互換） */
+  items?: ContentItem[];
 }
+
+/**
+ * 任意の item に付与できるネスト（後方互換: 未指定なら従来どおりフラット）
+ */
+export interface ContentItemNesting {
+  id?: string;
+  /** item 直下の見出し（任意） */
+  title?: string;
+  /** 子アイテム（再帰） */
+  children?: ContentItem[];
+  /** item 直下の子セクション（再帰） */
+  sections?: Section[];
+}
+
+export type ContentItem =
+  | (ParagraphItem & ContentItemNesting)
+  | (ListItem & ContentItemNesting)
+  | (ImageItem & ContentItemNesting)
+  | (QuoteItem & ContentItemNesting)
+  | (TableItem & ContentItemNesting);
 
 export interface Chapter {
   id: string;

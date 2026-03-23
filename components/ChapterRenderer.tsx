@@ -7,11 +7,13 @@ interface ChapterRendererProps {
   chapter: Chapter;
   /** 表示中の用語ページ slug（自己リンク化を避ける） */
   currentTermSlug?: string;
+  currentPathname?: string;
 }
 
 export function ChapterRenderer({
   chapter,
   currentTermSlug,
+  currentPathname,
 }: ChapterRendererProps): React.ReactElement {
   if (process.env.NODE_ENV !== "production") {
     const sections = (chapter.sections ?? []).filter(Boolean);
@@ -49,14 +51,15 @@ export function ChapterRenderer({
   }
 
   return (
-    <CollapsibleSection defaultOpen={true} title={chapter.title}>
-      <div id={chapter.id} className="space-y-8">
+    <CollapsibleSection defaultOpen={false} title={chapter.title}>
+      <div id={chapter.id} className="space-y-6">
         {(chapter.sections ?? []).filter(Boolean).map((section, index) => (
           <SectionRenderer
             // section.id が重複しても兄弟要素の key がユニークになるよう index を併用
             key={`${section.id ?? "section"}-${index}`}
             section={section}
             currentTermSlug={currentTermSlug}
+            currentPathname={currentPathname}
           />
         ))}
       </div>

@@ -42,7 +42,7 @@ export function CollapsibleSection({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="group flex w-full cursor-pointer items-center justify-between py-6 pl-5 pr-2 text-left transition-colors hover:bg-[#7D9CD4]/[0.05]"
+        className="group flex w-full cursor-pointer items-center justify-between py-5 pl-5 pr-2 text-left transition-colors hover:bg-[#7D9CD4]/[0.05]"
         aria-expanded={isOpen}
       >
         <h2 className="text-2xl font-medium tracking-tight text-gray-900">
@@ -69,8 +69,19 @@ export function CollapsibleSection({
         style={{ height: height !== undefined ? `${height}px` : "auto" }}
         className="overflow-hidden transition-[height] duration-300 ease-in-out"
       >
-        <div ref={contentRef} className="pb-10 pl-5 pr-2 pt-1">
+        <div ref={contentRef} className="pb-8 pl-5 pr-2 pt-1">
           {children}
+          {isOpen && (
+            <div className="mt-6 border-t border-gray-200/60 pt-3">
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="border-0 bg-transparent p-0 text-sm font-normal text-gray-600 underline decoration-gray-400/70 underline-offset-[5px] transition-colors hover:text-gray-800 hover:decoration-gray-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fcfcf9] rounded-sm"
+              >
+                このセクションを閉じる
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

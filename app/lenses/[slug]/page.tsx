@@ -141,7 +141,7 @@ export default async function LensDetailPage({ params }: PageProps) {
       </header>
 
       <Toc content={content} />
-      <HybridContentRenderer content={content} />
+      <HybridContentRenderer content={content} currentPathname={`/lenses/${slug}`} />
 
       {rawRefs && rawRefs.length > 0 && (
         <section id="references" className="mt-12 mb-8 scroll-mt-4">

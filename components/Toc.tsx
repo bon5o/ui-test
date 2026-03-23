@@ -43,10 +43,7 @@ export function Toc({ content }: TocProps): React.ReactNode {
   if (current) groups.push(current);
 
   return (
-    <details
-      className="group mb-8 rounded-md border border-slate-200/80 bg-slate-50/70 px-4 py-3 text-slate-700"
-      open
-    >
+    <details className="group mb-8 rounded-md border border-slate-200/80 bg-slate-50/70 px-4 py-3 text-slate-700">
       <summary
         className="flex cursor-pointer list-none items-center gap-2 select-none py-1 text-[15px] font-semibold text-slate-700 outline-none"
         aria-label={title}

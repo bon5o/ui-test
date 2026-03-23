@@ -41,21 +41,27 @@ export function buildToc(root: HybridContent): BuiltToc | null {
     entries.push({ level: 1, id: chapter.id, label: chapterLabel });
 
     if (depth === 2) {
-      for (const section of chapter.sections ?? []) {
-        if (!section?.id) continue;
-        if (section.toc?.hidden === true) continue;
-        const sectionLabel =
-          normalizeLabel(section.toc?.label) ??
-          normalizeLabel(section.title) ??
-          normalizeLabel(section.id);
-        if (!sectionLabel) continue;
-        entries.push({
-          level: 2,
-          id: section.id,
-          parentId: chapter.id,
-          label: sectionLabel,
-        });
-      }
+      const appendSections = (sections: typeof chapter.sections): void => {
+        for (const section of sections ?? []) {
+          if (!section?.id) continue;
+          if (section.toc?.hidden === true) continue;
+          const sectionLabel =
+            normalizeLabel(section.toc?.label) ??
+            normalizeLabel(section.title) ??
+            normalizeLabel(section.id);
+          if (!sectionLabel) continue;
+          entries.push({
+            level: 2,
+            id: section.id,
+            parentId: chapter.id,
+            label: sectionLabel,
+          });
+          if (section.sections?.length) {
+            appendSections(section.sections);
+          }
+        }
+      };
+      appendSections(chapter.sections);
     }
   }
 

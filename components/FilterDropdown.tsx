@@ -65,7 +65,7 @@ export function FilterDropdown({
         let changed = false;
         for (const g of groupedOptions) {
           if (!(g.label in next)) {
-            next[g.label] = true;
+            next[g.label] = false;
             changed = true;
           }
         }
@@ -94,7 +94,7 @@ export function FilterDropdown({
   const toggleGroup = useCallback((groupLabel: string) => {
     setOpenGroups((prev) => ({
       ...prev,
-      [groupLabel]: !(prev[groupLabel] ?? true),
+      [groupLabel]: !(prev[groupLabel] ?? false),
     }));
   }, []);
 

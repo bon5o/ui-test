@@ -8,6 +8,7 @@ import {
   type QuoteItem,
   type TableItem,
   type Tone,
+  type Section,
 } from "../types/hybridContent";
 import { Citation } from "./Citation";
 import { TermLinkify } from "./TermLinkify";
@@ -24,7 +25,16 @@ interface ItemRendererProps {
   inheritedTone?: Tone;
   /** 表示中の用語ページ slug（自己リンク化を避ける） */
   currentTermSlug?: string;
+  /** 現在のパス（設計型・レンズ詳細などでの用語リンク抑制用） */
+  currentPathname?: string;
+  /** item の children / sections ネストの深さ（0=最上位） */
+  nestingDepth?: number;
 }
+
+type TermRenderContext = {
+  currentTermSlug?: string;
+  currentPathname?: string;
+};
 
 function assertNever(x: never): never {
   throw new Error(`Unknown item type: ${String(x)}`);
@@ -112,11 +122,11 @@ function renderImageFigure(
  * テーブルセル用描画。string / type: "image" オブジェクト / それらの配列（縦並び）に対応。
  * 既存の \n 改行（whitespace-pre-line）は文字列セルで維持。
  */
-function renderTableCell(cell: unknown, currentTermSlug?: string): React.ReactNode {
+function renderTableCell(cell: unknown, ctx: TermRenderContext): React.ReactNode {
   if (typeof cell === "string") {
     return (
       <span className="whitespace-pre-line">
-        <TermLinkify text={cell} currentTermSlug={currentTermSlug} />
+        <TermLinkify text={cell} {...ctx} />
       </span>
     );
   }
@@ -124,7 +134,7 @@ function renderTableCell(cell: unknown, currentTermSlug?: string): React.ReactNo
     return (
       <div className="flex flex-col gap-2">
         {cell.map((item, i) => (
-          <React.Fragment key={i}>{renderTableCell(item, currentTermSlug)}</React.Fragment>
+          <React.Fragment key={i}>{renderTableCell(item, ctx)}</React.Fragment>
         ))}
       </div>
     );
@@ -143,7 +153,7 @@ function renderTableCell(cell: unknown, currentTermSlug?: string): React.ReactNo
   }
   return (
     <span className="whitespace-pre-line">
-      <TermLinkify text={String(cell ?? "")} currentTermSlug={currentTermSlug} />
+      <TermLinkify text={String(cell ?? "")} {...ctx} />
     </span>
   );
 }
@@ -153,7 +163,7 @@ function renderSpecTable(
   t: TableItem,
   headers: string[],
   index: number,
-  currentTermSlug?: string
+  ctx: TermRenderContext
 ): React.ReactElement {
   return (
     <div key={index} className="my-4 w-full">
@@ -177,10 +187,10 @@ function renderSpecTable(
               }
             >
               <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
-                {renderTableCell(row[0], currentTermSlug)}
+                {renderTableCell(row[0], ctx)}
               </td>
               <td className={`border-b border-gray-200 align-top text-sm text-gray-700 leading-6 break-words ${isImageCell(row[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
-                {renderTableCell(row[1], currentTermSlug)}
+                {renderTableCell(row[1], ctx)}
               </td>
             </tr>
           ))}
@@ -200,7 +210,7 @@ function renderGridTable(
   t: TableItem,
   headers: string[],
   index: number,
-  currentTermSlug?: string
+  ctx: TermRenderContext
 ): React.ReactElement {
   return (
     <div key={index} className="my-4">
@@ -234,7 +244,7 @@ function renderGridTable(
                     isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
                   }`}
                 >
-                  {renderTableCell(cell, currentTermSlug)}
+                  {renderTableCell(cell, ctx)}
                 </td>
               ))}
             </tr>
@@ -276,10 +286,10 @@ function renderResponsiveTable(
   timelineItems: TimelineItem[] | null,
   specTable: boolean,
   index: number,
-  currentTermSlug?: string
+  ctx: TermRenderContext
 ): React.ReactElement {
   if (specTable) {
-    return renderSpecTable(t, headers, index, currentTermSlug);
+    return renderSpecTable(t, headers, index, ctx);
   }
   // NOTE: 以前は「年表テーブル」を TimelineList で別描画していたが、
   // display: "responsive" の要件として「md未満=カード / md以上=表」を保証するため、
@@ -318,7 +328,7 @@ function renderResponsiveTable(
                       isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
                     }`}
                   >
-                    {renderTableCell(cell, currentTermSlug)}
+                    {renderTableCell(cell, ctx)}
                   </td>
                 ))}
               </tr>
@@ -340,7 +350,7 @@ function renderTimelineTable(
   t: TableItem,
   headers: string[],
   index: number,
-  currentTermSlug?: string
+  ctx: TermRenderContext
 ): React.ReactElement {
   const labelHeaders = headers.length > 0 ? headers : undefined;
   return (
@@ -357,7 +367,7 @@ function renderTimelineTable(
           return (
             <div key={ri} className="grid grid-cols-[50px_20px_1fr] gap-x-1">
               <div className="text-sm font-medium text-gray-800 whitespace-pre-line">
-                {renderTableCell(year, currentTermSlug)}
+                {renderTableCell(year, ctx)}
               </div>
 
               <div className="relative flex justify-center">
@@ -380,7 +390,7 @@ function renderTimelineTable(
                           {label}
                         </div>
                         <div className="text-sm text-gray-800 leading-6 break-words">
-                          {renderTableCell(cell, currentTermSlug)}
+                          {renderTableCell(cell, ctx)}
                         </div>
                       </div>
                     );
@@ -460,8 +470,8 @@ function isEmptyOrKeyless(obj: Record<string, unknown>): boolean {
 function renderItemContent(
   item: ContentItem,
   index: number,
-  inheritedTone?: Tone,
-  currentTermSlug?: string
+  inheritedTone: Tone | undefined,
+  ctx: TermRenderContext
 ): React.ReactNode {
   const raw = item as unknown as Record<string, unknown>;
 
@@ -521,7 +531,7 @@ function renderItemContent(
         : undefined;
       return (
         <p key={index} className="text-base font-normal leading-relaxed text-gray-700 whitespace-pre-line">
-          <TermLinkify text={text} currentTermSlug={currentTermSlug} />
+          <TermLinkify text={text} {...ctx} />
           {citations && citations.length > 0 && <Citation citations={citations} />}
         </p>
       );
@@ -551,7 +561,7 @@ function renderItemContent(
           : "";
       return (
         <p key={index} className={`font-normal whitespace-pre-line ${toneClass} ${highlightWrapClass}`.trim()}>
-          <TermLinkify text={p.text} currentTermSlug={currentTermSlug} />
+          <TermLinkify text={p.text} {...ctx} />
           {p.citations && p.citations.length > 0 && (
             <Citation citations={p.citations} />
           )}
@@ -594,7 +604,7 @@ function renderItemContent(
           <ul className={`list-disc pl-6 ${itemGapClass} font-normal ${toneClass} ${highlightWrapClass}`.trim()}>
             {entries.map((entry, i) => (
               <li key={i} className="whitespace-pre-line">
-                <TermLinkify text={String(entry)} currentTermSlug={currentTermSlug} />
+                <TermLinkify text={String(entry)} {...ctx} />
               </li>
             ))}
           </ul>
@@ -612,7 +622,7 @@ function renderItemContent(
       const q = item as QuoteItem;
       return (
         <blockquote key={index} className="border-l-2 border-[#7D9CD4]/50 pl-4 py-2 my-4 text-base text-gray-700 italic whitespace-pre-line">
-          <TermLinkify text={q.text} currentTermSlug={currentTermSlug} />
+          <TermLinkify text={q.text} {...ctx} />
           {q.citations && q.citations.length > 0 && (
             <Citation citations={q.citations} />
           )}
@@ -629,21 +639,21 @@ function renderItemContent(
           headers.length > 0
             ? headers.map((h, i) => ({
                 label: h,
-                value: renderTableCell(row[i], currentTermSlug),
+                value: renderTableCell(row[i], ctx),
               }))
             : row.map((v, i) => ({
                 label: `列${i + 1}`,
-                value: renderTableCell(v, currentTermSlug),
+                value: renderTableCell(v, ctx),
               })),
       }));
       const displayMode = t.display ?? "responsive";
 
       if (displayMode === "timeline") {
-        return renderTimelineTable(t, headers, index, currentTermSlug);
+        return renderTimelineTable(t, headers, index, ctx);
       }
       if (displayMode === "table") {
-        if (specTable) return renderSpecTable(t, headers, index, currentTermSlug);
-        return renderGridTable(t, headers, index, currentTermSlug);
+        if (specTable) return renderSpecTable(t, headers, index, ctx);
+        return renderGridTable(t, headers, index, ctx);
       }
       if (displayMode === "cards") {
         return renderCardsTable(cardRows, t.citations, index);
@@ -655,7 +665,7 @@ function renderItemContent(
         timelineItems,
         specTable,
         index,
-        currentTermSlug
+        ctx
       );
     }
     default:
@@ -663,11 +673,169 @@ function renderItemContent(
   }
 }
 
+const ITEM_SUBHEADING_CLASS: Record<number, string> = {
+  0: "text-base font-semibold text-gray-800",
+  1: "text-[15px] font-semibold text-gray-800",
+  2: "text-sm font-semibold text-gray-700",
+};
+
 export function ItemRenderer({
   item,
   index = 0,
   inheritedTone,
   currentTermSlug,
+  currentPathname,
+  nestingDepth = 0,
 }: ItemRendererProps): React.ReactNode {
-  return renderItemContent(item, index, inheritedTone, currentTermSlug);
+  const ctx: TermRenderContext = { currentTermSlug, currentPathname };
+  const main = renderItemContent(item, index, inheritedTone, ctx);
+
+  const withNesting = item as ContentItem & {
+    title?: string;
+    children?: ContentItem[];
+    sections?: Section[];
+  };
+  const childItems = Array.isArray(withNesting.children)
+    ? withNesting.children.filter((c): c is ContentItem => c != null)
+    : [];
+  const childSections = Array.isArray(withNesting.sections) ? withNesting.sections.filter(Boolean) : [];
+  const subTitle =
+    withNesting.title != null && String(withNesting.title).trim() !== ""
+      ? String(withNesting.title)
+      : null;
+
+  const subHeadingClass =
+    ITEM_SUBHEADING_CLASS[Math.min(nestingDepth, 2)] ?? ITEM_SUBHEADING_CLASS[2];
+  const nestWrapClass =
+    nestingDepth > 0
+      ? "mt-4 space-y-4 border-l border-[#7D9CD4]/25 pl-3 sm:ml-1 sm:pl-4"
+      : "mt-4 space-y-4 rounded-md border border-gray-200/70 bg-[#fafaf4] p-3 sm:p-4";
+
+  if (childItems.length === 0 && childSections.length === 0) {
+    if (subTitle == null) return main;
+    return (
+      <>
+        <p className={`mb-2 ${subHeadingClass}`}>{subTitle}</p>
+        {main}
+      </>
+    );
+  }
+
+  return (
+    <>
+      {subTitle != null && <p className={`mb-2 ${subHeadingClass}`}>{subTitle}</p>}
+      {main}
+      <div className={nestWrapClass}>
+        {childSections.map((sec, i) => (
+          <SectionRenderer
+            key={sec.id != null && sec.id !== "" ? sec.id : `item-${index}-sec-${i}`}
+            section={sec}
+            currentTermSlug={currentTermSlug}
+            currentPathname={currentPathname}
+            sectionDepth={nestingDepth + 1}
+          />
+        ))}
+        {childItems.map((child, i) => (
+          <ItemRenderer
+            key={i}
+            item={child}
+            index={i}
+            inheritedTone={inheritedTone}
+            currentTermSlug={currentTermSlug}
+            currentPathname={currentPathname}
+            nestingDepth={nestingDepth + 1}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+export interface SectionRendererProps {
+  section: Section | null | undefined;
+  currentTermSlug?: string;
+  currentPathname?: string;
+  /** 章直下=0。ネストするごとに +1 */
+  sectionDepth?: number;
+}
+
+export function SectionRenderer({
+  section,
+  currentTermSlug,
+  currentPathname,
+  sectionDepth = 0,
+}: SectionRendererProps): React.ReactElement | null {
+  if (!section) return null;
+
+  const nestedSections = Array.isArray(section.sections) ? section.sections.filter(Boolean) : [];
+  const items = Array.isArray(section.items) ? section.items : [];
+  const sectionTone: Tone = section.tone ?? "normal";
+  const titleToneClass =
+    sectionTone === "highlight_note"
+      ? "text-base text-gray-600"
+      : sectionTone === "note"
+        ? "text-base text-gray-600"
+        : sectionTone === "muted"
+          ? sectionDepth >= 1
+            ? "text-[15px] text-gray-700"
+            : "text-lg text-gray-700"
+          : sectionDepth >= 1
+            ? "text-[15px] text-gray-800"
+            : "text-lg text-gray-800";
+  const bodyToneClass =
+    sectionTone === "highlight_note"
+      ? "text-gray-600"
+      : sectionTone === "note"
+        ? "text-gray-600"
+        : sectionTone === "muted"
+          ? "text-gray-700"
+          : "";
+  const sectionWrapClass =
+    sectionTone === "highlight_note"
+      ? "bg-[#F7F8F9] border-1 border-[#a4bfd9] rounded px-3 py-2"
+      : "";
+  const depthBoxClass =
+    sectionDepth > 0
+      ? "mt-4 rounded-md border border-gray-200/90 bg-white/50 py-3 pl-3 pr-2 sm:pl-4"
+      : "";
+
+  const HeadingTag = (["h3", "h4", "h5", "h6"] as const)[Math.min(sectionDepth, 3)];
+
+  return (
+    <section
+      {...(section.id != null && String(section.id).trim() !== "" ? { id: String(section.id) } : {})}
+      className={`mb-6 ${sectionWrapClass} ${depthBoxClass}`.trim()}
+    >
+      {section.title != null && String(section.title) !== "" && (
+        <HeadingTag className={`mb-2.5 font-semibold ${titleToneClass}`}>{section.title}</HeadingTag>
+      )}
+
+      {nestedSections.length > 0 && (
+        <div className={`space-y-6 ${bodyToneClass}`.trim()}>
+          {nestedSections.map((sub, i) => (
+            <SectionRenderer
+              key={sub.id != null && sub.id !== "" ? sub.id : `nested-${sectionDepth}-${i}`}
+              section={sub}
+              currentTermSlug={currentTermSlug}
+              currentPathname={currentPathname}
+              sectionDepth={sectionDepth + 1}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className={`space-y-3 ${bodyToneClass} ${nestedSections.length > 0 ? "mt-4" : ""}`.trim()}>
+        {items.filter((it): it is ContentItem => it != null).map((it, i) => (
+          <ItemRenderer
+            key={i}
+            item={it}
+            inheritedTone={sectionTone}
+            currentTermSlug={currentTermSlug}
+            currentPathname={currentPathname}
+            nestingDepth={sectionDepth}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }

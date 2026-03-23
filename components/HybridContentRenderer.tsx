@@ -6,11 +6,14 @@ interface HybridContentRendererProps {
   content: HybridContent;
   /** 表示中の用語ページ slug（自己リンク化を避ける） */
   currentTermSlug?: string;
+  /** 現在のパス（設計型詳細などで用語リンクを抑制） */
+  currentPathname?: string;
 }
 
 export function HybridContentRenderer({
   content,
   currentTermSlug,
+  currentPathname,
 }: HybridContentRendererProps): React.ReactElement {
   if (process.env.NODE_ENV !== "production") {
     const ids = content.chapters.map((c) => c.id);
@@ -45,12 +48,13 @@ export function HybridContentRenderer({
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-10">
       {content.chapters.map((chapter, index) => (
         <ChapterRenderer
           key={chapter.id || `chapter-${index}`}
           chapter={chapter}
           currentTermSlug={currentTermSlug}
+          currentPathname={currentPathname}
         />
       ))}
     </div>

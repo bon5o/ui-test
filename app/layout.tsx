@@ -39,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" suppressHydrationWarning className="overflow-x-hidden">
-      <body className={`min-h-screen min-w-0 max-w-full overflow-x-hidden bg-white text-[#111111] ${sawarabiMincho.className}`}>
+      <body className={`min-h-screen min-w-0 max-w-full overflow-x-hidden bg-[#fcfcf9] text-[#111111] ${sawarabiMincho.className}`}>
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>

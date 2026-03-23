@@ -63,7 +63,7 @@ export default async function DesignDetailPage({ params }: PageProps) {
       </header>
 
       <Toc content={design} />
-      <HybridContentRenderer content={design} />
+      <HybridContentRenderer content={design} currentPathname={`/design/${type}`} />
 
       {Array.isArray(refs) && refs.length > 0 && (
         <div id="references" className="mt-12 scroll-mt-4">

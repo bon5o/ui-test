@@ -1,11 +1,13 @@
+import type React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTermBySlug, getAllTerms, type CitedText, type Term } from "../../../lib/terms";
 import { getDesignById } from "../../../lib/designs";
 import { isHybridContent } from "../../../lib/isHybridContent";
-import { TERM_LINKS } from "../../../lib/termLinks";
 import type { Reference } from "../../../types/hybridContent";
+import { TermLinkify } from "../../../components/TermLinkify";
+import { Citation } from "../../../components/Citation";
 import { BackButton } from "../../../components/ui/BackButton";
 import { PageContainer } from "../../../components/ui/PageContainer";
 import { SectionHeading } from "../../../components/ui/SectionHeading";
@@ -14,54 +16,37 @@ import { HybridContentRenderer } from "../../../components/HybridContentRenderer
 import { CollapsibleSection } from "../../../components/ui/CollapsibleSection";
 import { Toc } from "../../../components/Toc";
 
-function renderTextWithTermLinks(text: string): React.ReactNode {
-  const regex = new RegExp(`(${TERM_LINKS.map((t) => t.term).join("|")})`, "g");
-  const parts: React.ReactNode[] = [];
-  let lastIndex = 0;
-  let match;
-  let key = 0;
-  while ((match = regex.exec(text)) !== null) {
-    parts.push(<span key={key++}>{text.slice(lastIndex, match.index)}</span>);
-    const term = match[0];
-    const linkDef = TERM_LINKS.find((t) => t.term === term);
-    parts.push(
-      <Link
-        key={key++}
-        href={`/terms/${linkDef?.slug ?? ""}`}
-        className="text-[#7D9CD4] underline decoration-[#7D9CD4]/30 underline-offset-2 transition-colors hover:text-[#5E7AB8] hover:decoration-[#7D9CD4]/55"
-      >
-        {term}
-      </Link>
-    );
-    lastIndex = regex.lastIndex;
-  }
-  parts.push(<span key={key++}>{text.slice(lastIndex)}</span>);
-  return <>{parts}</>;
+function renderTextWithTermLinks(text: string, termSlug: string): React.ReactNode {
+  return (
+    <TermLinkify
+      text={text}
+      currentTermSlug={termSlug}
+      currentPathname={`/terms/${termSlug}`}
+    />
+  );
 }
 
 function renderCitations(citations: number[] | undefined): React.ReactNode {
   if (!citations?.length) return null;
   const filtered = citations.filter((n): n is number => typeof n === "number");
   if (filtered.length === 0) return null;
-  return (
-    <span className="ml-1 whitespace-nowrap">
-      {filtered.map((n) => (
-        <sup key={n} className="text-xs align-super text-[#7D9CD4] hover:text-[#5E7AB8]">
-          <a href={`#ref-${n}`} className="no-underline hover:underline">
-            [{n}]
-          </a>
-        </sup>
-      ))}
-    </span>
-  );
+  return <Citation citations={filtered} />;
 }
 
-function CitedTextList({ items, className = "" }: { items: CitedText[]; className?: string }) {
+function CitedTextList({
+  items,
+  className = "",
+  termSlug,
+}: {
+  items: CitedText[];
+  className?: string;
+  termSlug: string;
+}) {
   return (
     <ul className={className || "space-y-2 text-base font-normal leading-relaxed text-gray-700"}>
       {items.map((item, i) => (
         <li key={i}>
-          {renderTextWithTermLinks(item.text)}
+          {renderTextWithTermLinks(item.text, termSlug)}
           {renderCitations(item.citations)}
         </li>
       ))}
@@ -69,12 +54,12 @@ function CitedTextList({ items, className = "" }: { items: CitedText[]; classNam
   );
 }
 
-function StringList({ items }: { items: string[] }) {
+function StringList({ items, termSlug }: { items: string[]; termSlug: string }) {
   if (!items?.length) return null;
   return (
     <ul className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700">
         {items.map((s, i) => (
-          <li key={i}>{renderTextWithTermLinks(s)}</li>
+          <li key={i}>{renderTextWithTermLinks(s, termSlug)}</li>
         ))}
       </ul>
   );
@@ -151,7 +136,11 @@ export default async function TermPage({ params }: PageProps) {
           </header>
 
           <Toc content={term} />
-          <HybridContentRenderer content={term} currentTermSlug={slug} />
+          <HybridContentRenderer
+            content={term}
+            currentTermSlug={slug}
+            currentPathname={`/terms/${slug}`}
+          />
 
           {Array.isArray(refs) && refs.length > 0 && (
             <div id="references" className="mt-12 scroll-mt-4">
@@ -285,7 +274,7 @@ export default async function TermPage({ params }: PageProps) {
         {termData.overview && termData.overview.length > 0 && (
           <Section title={LABELS.overview}>
             <AutoMediaRenderer data={termData.overview}>
-              <CitedTextList items={termData.overview} />
+              <CitedTextList items={termData.overview} termSlug={slug} />
             </AutoMediaRenderer>
           </Section>
         )}
@@ -293,7 +282,7 @@ export default async function TermPage({ params }: PageProps) {
         {termData.principle && termData.principle.length > 0 && (
           <Section title={LABELS.principle}>
             <AutoMediaRenderer data={termData.principle}>
-              <CitedTextList items={termData.principle} />
+              <CitedTextList items={termData.principle} termSlug={slug} />
             </AutoMediaRenderer>
           </Section>
         )}
@@ -321,7 +310,7 @@ export default async function TermPage({ params }: PageProps) {
                     <div>
                       <ul className="list-disc pl-6 space-y-1">
                         {termData.structure.typical_combination.map((s, i) => (
-                          <li key={i}>{renderTextWithTermLinks(s)}</li>
+                          <li key={i}>{renderTextWithTermLinks(s, slug)}</li>
                         ))}
                       </ul>
                     </div>
@@ -335,7 +324,7 @@ export default async function TermPage({ params }: PageProps) {
         {termData.correction_target && termData.correction_target.length > 0 && (
           <Section title={LABELS.correction_target}>
             <AutoMediaRenderer data={termData.correction_target}>
-              <StringList items={termData.correction_target} />
+              <StringList items={termData.correction_target} termSlug={slug} />
             </AutoMediaRenderer>
           </Section>
         )}
@@ -343,7 +332,7 @@ export default async function TermPage({ params }: PageProps) {
         {termData.uncorrected_aberrations && termData.uncorrected_aberrations.length > 0 && (
           <Section title={LABELS.uncorrected_aberrations}>
             <AutoMediaRenderer data={termData.uncorrected_aberrations}>
-              <StringList items={termData.uncorrected_aberrations} />
+              <StringList items={termData.uncorrected_aberrations} termSlug={slug} />
             </AutoMediaRenderer>
           </Section>
         )}
@@ -354,6 +343,7 @@ export default async function TermPage({ params }: PageProps) {
               <CitedTextList
                 items={termData.advantages}
                 className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
+                termSlug={slug}
               />
             </AutoMediaRenderer>
           </Section>
@@ -365,6 +355,7 @@ export default async function TermPage({ params }: PageProps) {
               <CitedTextList
                 items={termData.disadvantages}
                 className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
+                termSlug={slug}
               />
             </AutoMediaRenderer>
           </Section>
@@ -378,7 +369,7 @@ export default async function TermPage({ params }: PageProps) {
                   <h3 className="text-base font-medium text-gray-800">初出・発展</h3>
                   <AutoMediaRenderer data={termData.historical_background.first_developed}>
                     <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(termData.historical_background.first_developed.text)}
+                      {renderTextWithTermLinks(termData.historical_background.first_developed.text, slug)}
                       {renderCitations(termData.historical_background.first_developed.citations)}
                     </p>
                   </AutoMediaRenderer>
@@ -389,7 +380,7 @@ export default async function TermPage({ params }: PageProps) {
                   <h3 className="text-base font-medium text-gray-800">発明者</h3>
                   <AutoMediaRenderer data={termData.historical_background.inventor}>
                     <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(termData.historical_background.inventor.text)}
+                      {renderTextWithTermLinks(termData.historical_background.inventor.text, slug)}
                       {renderCitations(termData.historical_background.inventor.citations)}
                     </p>
                   </AutoMediaRenderer>
@@ -400,7 +391,7 @@ export default async function TermPage({ params }: PageProps) {
                   <h3 className="text-base font-medium text-gray-800">備考</h3>
                   <AutoMediaRenderer data={termData.historical_background.notes}>
                     <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                      {renderTextWithTermLinks(termData.historical_background.notes.text)}
+                      {renderTextWithTermLinks(termData.historical_background.notes.text, slug)}
                       {renderCitations(termData.historical_background.notes.citations)}
                     </p>
                   </AutoMediaRenderer>
@@ -416,6 +407,7 @@ export default async function TermPage({ params }: PageProps) {
               <CitedTextList
                 items={termData.applications}
                 className="list-disc pl-6 space-y-1 text-base font-normal leading-relaxed text-gray-700"
+                termSlug={slug}
               />
             </AutoMediaRenderer>
           </Section>
@@ -432,7 +424,7 @@ export default async function TermPage({ params }: PageProps) {
                     <h3 className="text-base font-medium text-gray-800">{label}</h3>
                     <AutoMediaRenderer data={val}>
                       <p className="mt-1 text-base font-normal leading-relaxed text-gray-700">
-                        {renderTextWithTermLinks(val.text)}
+                        {renderTextWithTermLinks(val.text, slug)}
                         {renderCitations(val.citations)}
                       </p>
                     </AutoMediaRenderer>
@@ -499,7 +491,7 @@ export default async function TermPage({ params }: PageProps) {
                   <AutoMediaRenderer data={d}>
                     <>
                       {d.type && <span className="font-medium text-gray-800">{d.type}: </span>}
-                      {d.description && renderTextWithTermLinks(d.description)}
+                      {d.description && renderTextWithTermLinks(d.description, slug)}
                       {renderCitations(d.citations)}
                     </>
                   </AutoMediaRenderer>

@@ -31,7 +31,7 @@ function MailIcon({ className }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="isolate static relative w-full min-w-0 overflow-hidden overflow-x-clip bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-white">
+    <header className="isolate static relative w-full min-w-0 overflow-hidden overflow-x-clip bg-gradient-to-b from-[#a8b4d8] via-[#cad6f0] to-[#fcfcf9]">
       {/* 背景レイヤー。absolute 子はこのラッパー内でクリップ（blur のはみ出し対策） */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         {/* 前玉っぽい楕円。位置固定。モバイルで blur 弱め + max-w-full で右はみ出し防止 */}
@@ -39,7 +39,7 @@ export function Header() {
         {/* コーティング反射（右側）。モバイルでは translate なしで右端に揃え、PC でだけ少し右に */}
         <div className="absolute -top-24 right-0 h-[380px] w-[380px] max-w-full translate-x-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.12),rgba(99,102,241,0.08),rgba(255,255,255,0)_62%)] blur-2xl opacity-55 md:max-w-none md:translate-x-1/4" />
         {/* ガラス面のごく薄いハイライト */}
-        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/40 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#fcfcf9]/45 to-transparent" />
       </div>
 
       <div className="relative z-10 container-page flex flex-col gap-2 py-2 sm:flex-row sm:items-center sm:justify-between sm:py-4 md:gap-3 lg:py-5">
