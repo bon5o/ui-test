@@ -400,26 +400,30 @@ export function TreeTableRenderer({
   return (
     <div
       key={index}
-      className="tree-table-renderer my-4 w-full max-w-full overflow-x-hidden"
+      className="tree-table-renderer my-4 w-full max-w-full"
       data-table-display="tree"
     >
-      <ul className="m-0 list-none space-y-5 p-0 sm:space-y-5">
-        {roots.map((node) => (
-          <TreeRootBlock
-            key={node.id}
-            node={node}
-            headers={effectiveHeaders}
-            renderCell={renderCell}
-            maxDepth={DEFAULT_MAX_DEPTH}
-            hasYearColumn={hasYearColumn}
-          />
-        ))}
-      </ul>
-      {table.citations && table.citations.length > 0 && (
-        <div className="mt-2">
-          <Citation citations={table.citations} />
+      <div className="-mx-1 overflow-x-auto overscroll-x-contain pb-1 sm:mx-0 sm:overflow-visible sm:pb-0">
+        <div className="min-w-[44rem] px-1 sm:min-w-0 sm:px-0">
+          <ul className="m-0 list-none space-y-5 p-0 sm:space-y-5">
+            {roots.map((node) => (
+              <TreeRootBlock
+                key={node.id}
+                node={node}
+                headers={effectiveHeaders}
+                renderCell={renderCell}
+                maxDepth={DEFAULT_MAX_DEPTH}
+                hasYearColumn={hasYearColumn}
+              />
+            ))}
+          </ul>
+          {table.citations && table.citations.length > 0 && (
+            <div className="mt-2">
+              <Citation citations={table.citations} />
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
