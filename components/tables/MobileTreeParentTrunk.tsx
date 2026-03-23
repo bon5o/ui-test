@@ -47,10 +47,12 @@ export function MobileTreeParentTrunk({
     const firstChildRect = nodeMarkers[0].getBoundingClientRect();
 
     const top = startRect.top - containerRect.top;
-    const height = Math.max(1, firstChildRect.top - startRect.top);
+    // 末端は子 elbow(marker) の 1px 分を含めて、横線と確実に交わる
+    const height = Math.max(1, firstChildRect.bottom - startRect.top);
 
     setTrunk({
-      left: startRect.left - containerRect.left,
+      // 縦線（parent trunk）は子側の横線と同じ x に揃える
+      left: firstChildRect.left - containerRect.left,
       top,
       height,
     });
