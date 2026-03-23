@@ -426,26 +426,23 @@ function MobileTreeNode({
 
   return (
     <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
-      {showConnector &&
-        (!isLastSibling ? (
-          <div
-            className={`pointer-events-none absolute top-0 bottom-0 w-px ${TREE_LINE}`}
-            style={{ left: MOBILE_AXIS_OFFSET_PX }}
-            aria-hidden
-          />
-        ) : (
-          <div
-            className={`pointer-events-none absolute top-0 w-px ${TREE_LINE}`}
-            style={{ left: MOBILE_AXIS_OFFSET_PX, height: TREE_ELBOW_Y_PX }}
-            aria-hidden
-          />
-        ))}
-
       <div className="flex min-w-0 gap-0.5">
         {showConnector ? (
           <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
+            {/* 幹（縦線）: ノードカードの高さの範囲だけで描き、兄弟間の隙間は少しオーバーラップさせる */}
+            {!isLastSibling ? (
+              <div
+                className={`absolute ${TREE_AXIS_LEFT} top-0 bottom-[-8px] w-px ${TREE_LINE}`}
+              />
+            ) : (
+              <div
+                className={`absolute ${TREE_AXIS_LEFT} top-0 w-px ${TREE_LINE}`}
+                style={{ height: TREE_ELBOW_Y_PX + 1 }}
+              />
+            )}
+            {/* 横枝（カードへ入る線）: 縦線の同じ座標（left）と同じ高さ（elbow）で接続 */}
             <div
-              className={`absolute ${TREE_AXIS_LEFT} h-px w-[10px] ${TREE_LINE}`}
+              className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
               style={{ top: TREE_ELBOW_Y_PX }}
             />
           </div>
