@@ -421,33 +421,43 @@ function MobileTreeNode({
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
   const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
-  const showConnector = depth > 0;
   const hasChildren = node.children.length > 0 && depth < maxDepth;
+  const showIncoming = depth > 0;
+  const showOutgoing = hasChildren;
+  const showConnector = showIncoming || showOutgoing;
   const childDepth = depth + 1;
 
   const nodeRow = (
     <div className="flex min-w-0 gap-0.5 pb-2">
       {showConnector ? (
         <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-          {/* ノード自身の elbow（同階層の幹線計測用） */}
-          <div
-            className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
-            style={{ top: TREE_ELBOW_Y_PX }}
-            data-mobile-tree-elbow-marker=""
-            data-mobile-tree-elbow-role="node"
-            data-mobile-tree-elbow-depth={String(depth)}
-          />
-          {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
-          {hasChildren && (
-            <div
-              className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
-              style={{ top: TREE_ELBOW_Y_PX }}
-              data-mobile-tree-elbow-marker=""
-              data-mobile-tree-elbow-role="parent"
-              data-mobile-tree-elbow-depth={String(childDepth)}
-            />
+          {showIncoming && (
+            <>
+              {/* ノード自身の elbow（同階層の幹線計測用） */}
+              <div
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
+                style={{ top: TREE_ELBOW_Y_PX }}
+                data-mobile-tree-elbow-marker=""
+                data-mobile-tree-elbow-role="node"
+                data-mobile-tree-elbow-depth={String(depth)}
+              />
+            </>
           )}
-          {/* 横枝（カードへ入る線） */}
+
+          {showOutgoing && (
+            <>
+              {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
+              <div
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
+                style={{ top: TREE_ELBOW_Y_PX }}
+                data-mobile-tree-elbow-marker=""
+                data-mobile-tree-elbow-role="parent"
+                data-mobile-tree-elbow-depth={String(childDepth)}
+              />
+            </>
+          )}
+
+          {/* 横枝（カードへ入る線）: incoming/outgoing のどちらがある場合も表示 */}
           <div
             className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
             style={{ top: TREE_ELBOW_Y_PX }}
