@@ -430,7 +430,6 @@ function MobileTreeNode({
   const nodeRow = (
     <div
       className="flex min-w-0 gap-0.5 pb-2"
-      data-mobile-tree-node-row=""
     >
       {showConnector ? (
         <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
@@ -540,12 +539,11 @@ function MobileTreeNode({
   return (
     <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
       {hasChildren ? (
-        <MobileTreeParentTrunk childDepth={childDepth}>
-          <>
-            {nodeRow}
-            {childrenList}
-          </>
-        </MobileTreeParentTrunk>
+        <MobileTreeParentTrunk
+          childDepth={childDepth}
+          parentRow={nodeRow}
+          childrenBlock={childrenList}
+        />
       ) : (
         <>
           {nodeRow}
@@ -575,7 +573,6 @@ function MobileTreeChildren({
     <MobileTreeSiblingTrunk childDepth={childDepth}>
       <ul
         className="m-0 list-none p-0 space-y-0"
-        data-mobile-tree-children-root=""
       >
         {nodes.map((child) => (
           <MobileTreeNode

@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React from "react";
 
 const TREE_LINE = "bg-[#7D9CD4]/25";
-
-type TrunkStyle = {
-  left: number;
-  top: number;
-  height: number;
-};
+const TREE_ELBOW_Y_PX = 13;
 
 const INDENT_STEP_PX = 10;
 const INDENT_MAX_PX = 28;
@@ -17,108 +12,37 @@ const CONNECTOR_AXIS_X_PX = 7;
 
 export function MobileTreeParentTrunk({
   childDepth,
-  children,
+  parentRow,
+  childrenBlock,
 }: {
-  /** 親→children への接続で、子側は depth=childDepth の elbow が対象 */
+  /** 親→children の接続。子側の connector lane は depth=childDepth に揃う */
   childDepth: number;
-  children: React.ReactNode;
+  parentRow: React.ReactNode;
+  childrenBlock: React.ReactNode;
 }): React.ReactElement {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [trunk, setTrunk] = useState<TrunkStyle | null>(null);
-
-  const recalc = () => {
-    const containerEl = containerRef.current;
-    if (!containerEl) return;
-
-    // start は「この trunk が描く親 nodeRow」直下だけに限定する（descendants 混入を防止）
-    const directNodeRowEl = Array.from(containerEl.children).find(
-      (el): el is HTMLElement =>
-        el instanceof HTMLElement && el.hasAttribute("data-mobile-tree-node-row")
-    );
-
-    const startMarker = directNodeRowEl?.querySelector<HTMLElement>(
-      `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(
-        childDepth
-      )}"][data-mobile-tree-elbow-role="parent"]`
-    );
-
-    if (!startMarker) {
-      setTrunk(null);
-      return;
-    }
-
-    const containerRect = containerEl.getBoundingClientRect();
-    const startRect = startMarker.getBoundingClientRect();
-
-    // 直下 children の「最初の子」だけを end にする（descendants 混入を防ぐ）
-    const childrenRoot = containerEl.querySelector<HTMLElement>(
-      '[data-mobile-tree-children-root]'
-    );
-    const firstChildLi = childrenRoot?.firstElementChild;
-    if (!(firstChildLi instanceof HTMLElement)) {
-      setTrunk(null);
-      return;
-    }
-
-    const firstChildNodeMarker = firstChildLi.querySelector<HTMLElement>(
-      `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(
-        childDepth
-      )}"][data-mobile-tree-elbow-role="node"]`
-    );
-    if (!firstChildNodeMarker) {
-      setTrunk(null);
-      return;
-    }
-
-    const firstEndRect = firstChildNodeMarker.getBoundingClientRect();
-
-    // 1px線なので start/end は中心ではなく「矩形の上下端」で確定させる
-    // （top/height の丸めズレで止まり位置が伸びすぎるのを防ぐ）
-    const top = startRect.top - containerRect.top;
-    const height = Math.max(0, firstEndRect.bottom - startRect.top);
-
-    const parentDepth = Math.max(0, childDepth - 1);
-    const padLeftChildPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
-    const padLeftParentPx = Math.min(parentDepth * INDENT_STEP_PX, INDENT_MAX_PX);
-    // wrapper は親 li の padding-left 後に配置されるため、相対位置は差分で計算する
-    const padLeftDeltaPx = padLeftChildPx - padLeftParentPx;
-    setTrunk({
-      // 縦線は connector 軸（MobileTreeNode の横線）と同じ x に揃える
-      left: padLeftDeltaPx + CONNECTOR_AXIS_X_PX,
-      top,
-      height,
-    });
-  };
-
-  useLayoutEffect(() => {
-    recalc();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [childDepth]);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => recalc());
-    ro.observe(el);
-    return () => ro.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [childDepth]);
+  const parentDepth = Math.max(0, childDepth - 1);
+  const padLeftChildPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
+  const padLeftParentPx = Math.min(parentDepth * INDENT_STEP_PX, INDENT_MAX_PX);
+  const left = padLeftChildPx - padLeftParentPx + CONNECTOR_AXIS_X_PX;
 
   return (
-    <div ref={containerRef} className="relative mt-0">
-      {trunk && (
+    <>
+      {/* 親 card row の高さに連動し、子の最初の接続点までの短い縦線だけ描く */}
+      <div className="relative">
         <div
           aria-hidden
           className={`pointer-events-none absolute z-[1] ${TREE_LINE} w-px`}
           style={{
-            left: trunk.left,
-            top: trunk.top,
-            height: trunk.height,
+            left,
+            top: TREE_ELBOW_Y_PX,
+            // 子の elbow（= TREE_ELBOW_Y_PX）を含めるため、1px分だけ余裕を持たせて終端を作る
+            bottom: -(TREE_ELBOW_Y_PX + 1),
           }}
         />
-      )}
-      {children}
-    </div>
+        {parentRow}
+      </div>
+      {childrenBlock}
+    </>
   );
 }
 
