@@ -386,6 +386,7 @@ const DEFAULT_MAX_DEPTH = 32;
 const MOBILE_INDENT_STEP = 10;
 const MOBILE_INDENT_MAX = 28;
 const MOBILE_AXIS_OFFSET_PX = 7;
+const MOBILE_TRUNK_OVERLAP_BOTTOM_PX = 10;
 
 function pickMobileSupplementary(
   rows: TreeNodeSupplementaryRow[]
@@ -432,12 +433,16 @@ function MobileTreeNode({
             {/* 幹（縦線）: ノードカードの高さの範囲だけで描き、兄弟間の隙間は少しオーバーラップさせる */}
             {!isLastSibling ? (
               <div
-                className={`absolute ${TREE_AXIS_LEFT} top-0 bottom-[-8px] w-px ${TREE_LINE}`}
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px ${TREE_LINE}`}
+                style={{
+                  top: TREE_ELBOW_Y_PX,
+                  bottom: -MOBILE_TRUNK_OVERLAP_BOTTOM_PX,
+                }}
               />
             ) : (
               <div
-                className={`absolute ${TREE_AXIS_LEFT} top-0 w-px ${TREE_LINE}`}
-                style={{ height: TREE_ELBOW_Y_PX + 1 }}
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px ${TREE_LINE}`}
+                style={{ top: TREE_ELBOW_Y_PX, height: 2 }}
               />
             )}
             {/* 横枝（カードへ入る線）: 縦線の同じ座標（left）と同じ高さ（elbow）で接続 */}
