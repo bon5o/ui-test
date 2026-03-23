@@ -9,6 +9,7 @@ import {
   type TreeNodeSupplementaryRow,
 } from "@/lib/parseTreeTableNode";
 import { Citation } from "@/components/Citation";
+import { MobileTreeSiblingTrunk } from "./MobileTreeSiblingTrunk";
 
 /** ノード見出し行と横枝の交点（px）。コンパクトカードと揃える */
 const TREE_ELBOW_Y_PX = 13;
@@ -385,8 +386,6 @@ function TreeRootBlock({
 const DEFAULT_MAX_DEPTH = 32;
 const MOBILE_INDENT_STEP = 10;
 const MOBILE_INDENT_MAX = 28;
-const MOBILE_AXIS_OFFSET_PX = 7;
-const MOBILE_NODE_BOTTOM_PAD_PX = 8;
 
 function pickMobileSupplementary(
   rows: TreeNodeSupplementaryRow[]
@@ -411,14 +410,12 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
-  isLastSibling,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
-  isLastSibling: boolean;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
@@ -430,21 +427,14 @@ function MobileTreeNode({
       <div className="flex min-w-0 gap-0.5 pb-2">
         {showConnector ? (
           <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-            {!isLastSibling ? (
-              <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px ${TREE_LINE}`}
-                style={{
-                  top: 0,
-                  bottom: 0,
-                }}
-              />
-            ) : (
-              <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px ${TREE_LINE}`}
-                style={{ top: 0, height: TREE_ELBOW_Y_PX + 1 }}
-              />
-            )}
-            {/* 横枝（カードへ入る線）: 縦線の同じ座標（left）と同じ高さ（elbow）で接続 */}
+            {/* 幹線描画用: elbow 位置の目印（幹は children 側で描く） */}
+            <div
+              className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
+              style={{ top: TREE_ELBOW_Y_PX }}
+              data-mobile-tree-elbow-marker=""
+              data-mobile-tree-elbow-depth={String(depth)}
+            />
+            {/* 横枝（カードへ入る線）: elbow を基準に短く接続 */}
             <div
               className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
               style={{ top: TREE_ELBOW_Y_PX }}
@@ -535,11 +525,10 @@ function MobileTreeChildren({
   maxDepth: number;
 }): React.ReactElement {
   const childDepth = depth + 1;
-
   return (
-    <div className="mt-0">
+    <MobileTreeSiblingTrunk childDepth={childDepth}>
       <ul className="m-0 list-none p-0 space-y-0">
-        {nodes.map((child, index) => (
+        {nodes.map((child) => (
           <MobileTreeNode
             key={child.id}
             node={child}
@@ -547,11 +536,10 @@ function MobileTreeChildren({
             renderCell={renderCell}
             depth={childDepth}
             maxDepth={maxDepth}
-            isLastSibling={index === nodes.length - 1}
           />
         ))}
       </ul>
-    </div>
+    </MobileTreeSiblingTrunk>
   );
 }
 
@@ -606,7 +594,6 @@ export function TreeTableRenderer({
               renderCell={renderCell}
               depth={0}
               maxDepth={DEFAULT_MAX_DEPTH}
-              isLastSibling
             />
           ))}
         </ul>
