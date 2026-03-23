@@ -10,6 +10,11 @@ type TrunkStyle = {
   height: number;
 };
 
+const INDENT_STEP_PX = 10;
+const INDENT_MAX_PX = 28;
+/** TREE_AXIS_LEFT: left-[7px] と揃える（connector lane 内の軸） */
+const CONNECTOR_AXIS_X_PX = 7;
+
 export function MobileTreeParentTrunk({
   childDepth,
   children,
@@ -50,9 +55,10 @@ export function MobileTreeParentTrunk({
     // 横線（L字腕）の始点までを確実に含めて交わる
     const height = Math.max(1, firstHorizontalRect.bottom - startRect.top);
 
+    const padLeftPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
     setTrunk({
-      // 縦線は子側の横線（L字腕）と同じ x に揃える
-      left: firstHorizontalRect.left - containerRect.left,
+      // 縦線は connector 軸（MobileTreeNode の横線）と同じ x に揃える
+      left: padLeftPx + CONNECTOR_AXIS_X_PX,
       top,
       height,
     });

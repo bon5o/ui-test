@@ -3,6 +3,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const TREE_LINE = "bg-[#7D9CD4]/25";
+const INDENT_STEP_PX = 10;
+const INDENT_MAX_PX = 28;
+/** TREE_AXIS_LEFT: left-[7px] と揃える（connector lane 内の軸） */
+const CONNECTOR_AXIS_X_PX = 7;
 
 type TrunkStyle = {
   left: number;
@@ -38,8 +42,11 @@ export function MobileTreeSiblingTrunk({
     const firstRect = markers[0].getBoundingClientRect();
     const lastRect = markers[markers.length - 1].getBoundingClientRect();
 
+    const padLeftPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
+    const left = padLeftPx + CONNECTOR_AXIS_X_PX;
+
     setTrunk({
-      left: firstRect.left - containerRect.left,
+      left,
       top: firstRect.top - containerRect.top,
       height: lastRect.bottom - firstRect.top,
     });
