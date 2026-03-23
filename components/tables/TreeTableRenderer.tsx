@@ -386,7 +386,7 @@ const DEFAULT_MAX_DEPTH = 32;
 const MOBILE_INDENT_STEP = 10;
 const MOBILE_INDENT_MAX = 28;
 const MOBILE_AXIS_OFFSET_PX = 7;
-const MOBILE_TRUNK_OVERLAP_BOTTOM_PX = 10;
+const MOBILE_NODE_BOTTOM_PAD_PX = 8;
 
 function pickMobileSupplementary(
   rows: TreeNodeSupplementaryRow[]
@@ -427,22 +427,21 @@ function MobileTreeNode({
 
   return (
     <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
-      <div className="flex min-w-0 gap-0.5">
+      <div className="flex min-w-0 gap-0.5 pb-2">
         {showConnector ? (
           <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-            {/* 幹（縦線）: ノードカードの高さの範囲だけで描き、兄弟間の隙間は少しオーバーラップさせる */}
             {!isLastSibling ? (
               <div
                 className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px ${TREE_LINE}`}
                 style={{
-                  top: TREE_ELBOW_Y_PX,
-                  bottom: -MOBILE_TRUNK_OVERLAP_BOTTOM_PX,
+                  top: 0,
+                  bottom: 0,
                 }}
               />
             ) : (
               <div
                 className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px ${TREE_LINE}`}
-                style={{ top: TREE_ELBOW_Y_PX, height: 2 }}
+                style={{ top: 0, height: TREE_ELBOW_Y_PX + 1 }}
               />
             )}
             {/* 横枝（カードへ入る線）: 縦線の同じ座標（left）と同じ高さ（elbow）で接続 */}
@@ -538,8 +537,8 @@ function MobileTreeChildren({
   const childDepth = depth + 1;
 
   return (
-    <div className="mt-2">
-      <ul className="m-0 list-none p-0 space-y-2">
+    <div className="mt-0">
+      <ul className="m-0 list-none p-0 space-y-0">
         {nodes.map((child, index) => (
           <MobileTreeNode
             key={child.id}
