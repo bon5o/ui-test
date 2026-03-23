@@ -30,42 +30,52 @@ export function MobileTreeParentTrunk({
     const containerEl = containerRef.current;
     if (!containerEl) return;
 
-    const startMarkers = Array.from(
-      containerEl.querySelectorAll<HTMLElement>(
-        `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(childDepth)}"][data-mobile-tree-elbow-role="parent"]`
-      )
+    // start は「この trunk が描く親 nodeRow」直下だけに限定する（descendants 混入を防止）
+    const directNodeRowEl = Array.from(containerEl.children).find(
+      (el): el is HTMLElement =>
+        el instanceof HTMLElement && el.hasAttribute("data-mobile-tree-node-row")
     );
 
-    // 最初の子の「幹線への接続点（elbow marker）」に厳密に合わせる
-    const endMarkers = Array.from(
-      containerEl.querySelectorAll<HTMLElement>(
-        `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(childDepth)}"][data-mobile-tree-elbow-role="node"]`
-      )
+    const startMarker = directNodeRowEl?.querySelector<HTMLElement>(
+      `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(
+        childDepth
+      )}"][data-mobile-tree-elbow-role="parent"]`
     );
 
-    if (startMarkers.length === 0 || endMarkers.length === 0) {
+    if (!startMarker) {
       setTrunk(null);
       return;
     }
 
     const containerRect = containerEl.getBoundingClientRect();
-    const startRect = startMarkers[0].getBoundingClientRect();
+    const startRect = startMarker.getBoundingClientRect();
 
-    // DOM上で最上段にある子を「最初の子」とみなす
-    let firstEndRect = endMarkers[0].getBoundingClientRect();
-    for (let i = 1; i < endMarkers.length; i++) {
-      const r = endMarkers[i].getBoundingClientRect();
-      if (r.top < firstEndRect.top) firstEndRect = r;
+    // 直下 children の「最初の子」だけを end にする（descendants 混入を防ぐ）
+    const childrenRoot = containerEl.querySelector<HTMLElement>(
+      '[data-mobile-tree-children-root]'
+    );
+    const firstChildLi = childrenRoot?.firstElementChild;
+    if (!(firstChildLi instanceof HTMLElement)) {
+      setTrunk(null);
+      return;
     }
 
-    // 1px線なので centerY から top/height を作る（両端の center を確実に含める）
-    const startCenterY =
-      startRect.top - containerRect.top + startRect.height / 2;
-    const endCenterY =
-      firstEndRect.top - containerRect.top + firstEndRect.height / 2;
+    const firstChildNodeMarker = firstChildLi.querySelector<HTMLElement>(
+      `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(
+        childDepth
+      )}"][data-mobile-tree-elbow-role="node"]`
+    );
+    if (!firstChildNodeMarker) {
+      setTrunk(null);
+      return;
+    }
 
-    const top = startCenterY - 0.5;
-    const height = Math.max(0, endCenterY - startCenterY + 1);
+    const firstEndRect = firstChildNodeMarker.getBoundingClientRect();
+
+    // 1px線なので start/end は中心ではなく「矩形の上下端」で確定させる
+    // （top/height の丸めズレで止まり位置が伸びすぎるのを防ぐ）
+    const top = startRect.top - containerRect.top;
+    const height = Math.max(0, firstEndRect.bottom - startRect.top);
 
     const parentDepth = Math.max(0, childDepth - 1);
     const padLeftChildPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
