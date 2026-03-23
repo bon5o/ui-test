@@ -410,12 +410,14 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
+  isLastSibling,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
+  isLastSibling: boolean;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
@@ -423,11 +425,25 @@ function MobileTreeNode({
   const showConnector = depth > 0;
 
   return (
-    <li className="list-none" style={{ paddingLeft: `${padLeft}px` }}>
+    <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
+      {showConnector &&
+        (!isLastSibling ? (
+          <div
+            className={`pointer-events-none absolute top-0 bottom-0 w-px ${TREE_LINE}`}
+            style={{ left: MOBILE_AXIS_OFFSET_PX }}
+            aria-hidden
+          />
+        ) : (
+          <div
+            className={`pointer-events-none absolute top-0 w-px ${TREE_LINE}`}
+            style={{ left: MOBILE_AXIS_OFFSET_PX, height: TREE_ELBOW_Y_PX }}
+            aria-hidden
+          />
+        ))}
+
       <div className="flex min-w-0 gap-0.5">
         {showConnector ? (
           <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-            {/* 縦線は子リスト側で連続描画。ここでは横線（カードへ入る部分）のみ描画 */}
             <div
               className={`absolute ${TREE_AXIS_LEFT} h-px w-[10px] ${TREE_LINE}`}
               style={{ top: TREE_ELBOW_Y_PX }}
@@ -518,19 +534,11 @@ function MobileTreeChildren({
   maxDepth: number;
 }): React.ReactElement {
   const childDepth = depth + 1;
-  const padLeft = Math.min(childDepth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
-  // [子ノード li の paddingLeft] + [コネクタ lane 内の縦線 X]
-  const trunkLeftPx = padLeft + MOBILE_AXIS_OFFSET_PX;
 
   return (
-    <div className="relative mt-2">
-      <div
-        className={`pointer-events-none absolute top-0 bottom-0 w-px ${TREE_LINE}`}
-        style={{ left: trunkLeftPx }}
-        aria-hidden
-      />
-      <ul className="relative z-[1] m-0 list-none p-0 space-y-2">
-        {nodes.map((child) => (
+    <div className="mt-2">
+      <ul className="m-0 list-none p-0 space-y-2">
+        {nodes.map((child, index) => (
           <MobileTreeNode
             key={child.id}
             node={child}
@@ -538,6 +546,7 @@ function MobileTreeChildren({
             renderCell={renderCell}
             depth={childDepth}
             maxDepth={maxDepth}
+            isLastSibling={index === nodes.length - 1}
           />
         ))}
       </ul>
@@ -596,6 +605,7 @@ export function TreeTableRenderer({
               renderCell={renderCell}
               depth={0}
               maxDepth={DEFAULT_MAX_DEPTH}
+              isLastSibling
             />
           ))}
         </ul>
