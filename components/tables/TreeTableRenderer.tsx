@@ -38,6 +38,8 @@ const TREE_CARD_MEDIA =
   "[&_figure]:mx-0 [&_figure]:mt-0 [&_figure]:mb-1.5 [&_figure]:max-w-full [&_figure]:bg-white [&_figure]:border-gray-200/80 [&_figure]:p-1.5 [&_figure]:last:mb-0";
 /** 名称行: 全深度・ルートとも同一（通常ウェイト）。ルートの強調は枠色のみ */
 const TREE_TITLE = "text-[15px] font-normal leading-snug text-gray-900";
+const MOBILE_TREE_CARD_MEDIA =
+  "[&_figure]:mx-auto [&_figure]:mt-0 [&_figure]:mb-1.5 [&_figure]:max-w-[12.5rem] [&_figure]:bg-white [&_figure]:border-gray-200/80 [&_figure]:p-1 [&_figure]:last:mb-0";
 
 function isExternalHref(href: string): boolean {
   return /^https?:\/\//i.test(href);
@@ -381,6 +383,114 @@ function TreeRootBlock({
 }
 
 const DEFAULT_MAX_DEPTH = 32;
+const MOBILE_INDENT_STEP = 10;
+const MOBILE_INDENT_MAX = 28;
+
+function pickMobileSupplementary(
+  rows: TreeNodeSupplementaryRow[]
+): {
+  featureRow: TreeNodeSupplementaryRow | null;
+  otherRows: TreeNodeSupplementaryRow[];
+} {
+  const filled = rows.filter(({ cell }) => {
+    return !(cell == null || (typeof cell === "string" && cell.trim() === ""));
+  });
+  const featureIdx = filled.findIndex(({ label }) => label === "特徴");
+  if (featureIdx < 0) return { featureRow: null, otherRows: filled };
+  return {
+    featureRow: filled[featureIdx],
+    otherRows: filled.filter((_, i) => i !== featureIdx),
+  };
+}
+
+function MobileTreeNode({
+  node,
+  headers,
+  renderCell,
+  depth,
+  maxDepth,
+}: {
+  node: TableTreeNode;
+  headers: string[];
+  renderCell: (cell: unknown) => React.ReactNode;
+  depth: number;
+  maxDepth: number;
+}): React.ReactElement {
+  const parsed = parseTreeNodeColumns(headers, node.cells);
+  const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
+  const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
+
+  return (
+    <li className="list-none" style={{ paddingLeft: `${padLeft}px` }}>
+      <article
+        className={`rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
+        data-mobile-tree-node=""
+        data-depth={depth}
+      >
+        {parsed.externalYearCell != null &&
+          !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
+            <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
+              {renderCell(parsed.externalYearCell)}
+            </div>
+          )}
+
+        <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
+          {parsed.titleCell != null ? (
+            renderCell(parsed.titleCell)
+          ) : (
+            <span className="font-normal text-gray-400">（無題）</span>
+          )}
+        </div>
+
+        {featureRow != null && (
+          <div className="mt-2 space-y-0.5">
+            <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
+            <div className="text-[12px] leading-snug text-gray-700">
+              {renderCell(featureRow.cell)}
+            </div>
+          </div>
+        )}
+
+        {otherRows.length > 0 && (
+          <details className="mt-2">
+            <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
+            <div className="mt-1.5 space-y-1.5">
+              {otherRows.map(({ label, cell }, i) => (
+                <div key={`${label}-${i}`} className="space-y-0.5">
+                  <div className="text-[10px] font-normal text-gray-400">{label}</div>
+                  <div className="text-[12px] leading-snug text-gray-700">
+                    {renderCell(cell)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </details>
+        )}
+
+        {node.citations.length > 0 && (
+          <div className="mt-2">
+            <Citation citations={node.citations} />
+          </div>
+        )}
+      </article>
+
+      {node.children.length > 0 && depth < maxDepth && (
+        <ul className="mt-2 space-y-2 border-l border-[#7D9CD4]/20 pl-2">
+          {node.children.map((child) => (
+            <MobileTreeNode
+              key={child.id}
+              node={child}
+              headers={headers}
+              renderCell={renderCell}
+              depth={depth + 1}
+              maxDepth={maxDepth}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
 
 export function TreeTableRenderer({
   table,
@@ -403,26 +513,44 @@ export function TreeTableRenderer({
       className="tree-table-renderer my-4 w-full max-w-full"
       data-table-display="tree"
     >
-      <div className="-mx-1 overflow-x-auto overscroll-x-contain pb-1 sm:mx-0 sm:overflow-visible sm:pb-0">
-        <div className="min-w-[44rem] px-1 sm:min-w-0 sm:px-0">
-          <ul className="m-0 list-none space-y-5 p-0 sm:space-y-5">
-            {roots.map((node) => (
-              <TreeRootBlock
-                key={node.id}
-                node={node}
-                headers={effectiveHeaders}
-                renderCell={renderCell}
-                maxDepth={DEFAULT_MAX_DEPTH}
-                hasYearColumn={hasYearColumn}
-              />
-            ))}
-          </ul>
-          {table.citations && table.citations.length > 0 && (
-            <div className="mt-2">
-              <Citation citations={table.citations} />
-            </div>
-          )}
-        </div>
+      <div className="hidden md:block">
+        <ul className="m-0 list-none space-y-5 p-0 sm:space-y-5">
+          {roots.map((node) => (
+            <TreeRootBlock
+              key={node.id}
+              node={node}
+              headers={effectiveHeaders}
+              renderCell={renderCell}
+              maxDepth={DEFAULT_MAX_DEPTH}
+              hasYearColumn={hasYearColumn}
+            />
+          ))}
+        </ul>
+        {table.citations && table.citations.length > 0 && (
+          <div className="mt-2">
+            <Citation citations={table.citations} />
+          </div>
+        )}
+      </div>
+
+      <div className="md:hidden">
+        <ul className="m-0 list-none space-y-2.5 p-0">
+          {roots.map((node) => (
+            <MobileTreeNode
+              key={node.id}
+              node={node}
+              headers={effectiveHeaders}
+              renderCell={renderCell}
+              depth={0}
+              maxDepth={DEFAULT_MAX_DEPTH}
+            />
+          ))}
+        </ul>
+        {table.citations && table.citations.length > 0 && (
+          <div className="mt-2">
+            <Citation citations={table.citations} />
+          </div>
+        )}
       </div>
     </div>
   );
