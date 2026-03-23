@@ -17,6 +17,8 @@ import {
   type ResponsiveTableCardRow,
 } from "./ui/ResponsiveTableCards";
 import { TimelineList, type TimelineItem } from "./sections/TimelineList";
+import { getTableRowCells } from "@/lib/tableRowCells";
+import { TreeTableRenderer } from "./tables/TreeTableRenderer";
 
 interface ItemRendererProps {
   item: ContentItem;
@@ -179,7 +181,9 @@ function renderSpecTable(
           </tr>
         </thead>
         <tbody>
-          {t.rows.map((row, ri) => (
+          {t.rows.map((row, ri) => {
+            const cells = getTableRowCells(row);
+            return (
             <tr
               key={ri}
               className={
@@ -187,13 +191,14 @@ function renderSpecTable(
               }
             >
               <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
-                {renderTableCell(row[0], ctx)}
+                {renderTableCell(cells[0], ctx)}
               </td>
-              <td className={`border-b border-gray-200 align-top text-sm text-gray-700 leading-6 break-words ${isImageCell(row[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
-                {renderTableCell(row[1], ctx)}
+              <td className={`border-b border-gray-200 align-top text-sm text-gray-700 leading-6 break-words ${isImageCell(cells[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
+                {renderTableCell(cells[1], ctx)}
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
       {t.citations && t.citations.length > 0 && (
@@ -230,14 +235,16 @@ function renderGridTable(
           </thead>
         )}
         <tbody>
-          {t.rows.map((row, ri) => (
+          {t.rows.map((row, ri) => {
+            const cells = getTableRowCells(row);
+            return (
             <tr
               key={ri}
               className={
                 ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
               }
             >
-              {row.map((cell, ci) => (
+              {cells.map((cell, ci) => (
                 <td
                   key={ci}
                   className={`border-b border-gray-100 text-gray-700 break-words align-top ${
@@ -248,7 +255,8 @@ function renderGridTable(
                 </td>
               ))}
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
       {t.citations && t.citations.length > 0 && (
@@ -314,14 +322,16 @@ function renderResponsiveTable(
             </thead>
           )}
           <tbody>
-            {t.rows.map((row, ri) => (
+            {t.rows.map((row, ri) => {
+              const cells = getTableRowCells(row);
+              return (
               <tr
                 key={ri}
                 className={
                   ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
                 }
               >
-                {row.map((cell, ci) => (
+                {cells.map((cell, ci) => (
                   <td
                     key={ci}
                     className={`border-b border-gray-100 text-gray-700 break-words align-top ${
@@ -332,7 +342,8 @@ function renderResponsiveTable(
                   </td>
                 ))}
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -360,8 +371,9 @@ function renderTimelineTable(
         {/* 年と丸点を隣に寄せる: 年 50px + gap 4px + 中央カラム中心 10px = 64px */}
         <div className="pointer-events-none absolute inset-y-0 left-[64px] w-px bg-gray-200 z-0" />
         {t.rows.map((row, ri) => {
-          const year = row[0];
-          const details = row.slice(1);
+          const cells = getTableRowCells(row);
+          const year = cells[0];
+          const details = cells.slice(1);
           const detailLabels = labelHeaders ? labelHeaders.slice(1) : [];
 
           return (
@@ -433,17 +445,18 @@ function tableToTimelineItems(t: TableItem): TimelineItem[] | null {
 
   return t.rows
     .map((row) => {
+      const cells = getTableRowCells(row);
       const year =
-        yearIdx >= 0 && row[yearIdx] != null && typeof row[yearIdx] === "string" && row[yearIdx].trim() !== ""
-          ? row[yearIdx]
+        yearIdx >= 0 && cells[yearIdx] != null && typeof cells[yearIdx] === "string" && cells[yearIdx].trim() !== ""
+          ? cells[yearIdx]
           : undefined;
       const title =
-        titleIdx >= 0 && row[titleIdx] != null && typeof row[titleIdx] === "string" && row[titleIdx].trim() !== ""
-          ? row[titleIdx]
+        titleIdx >= 0 && cells[titleIdx] != null && typeof cells[titleIdx] === "string" && cells[titleIdx].trim() !== ""
+          ? cells[titleIdx]
           : undefined;
       const bullets: Array<{ label: string; value: string }> = [];
       for (const i of bulletHeaderIndices) {
-        const val = row[i];
+        const val = cells[i];
         if (val != null && typeof val === "string" && val.trim() !== "") {
           bullets.push({ label: headers[i], value: val });
         }
@@ -632,21 +645,36 @@ function renderItemContent(
     case "table": {
       const t = item as TableItem;
       const headers = t.headers ?? [];
+      const displayMode = t.display ?? "responsive";
+
+      if (displayMode === "tree") {
+        return (
+          <TreeTableRenderer
+            table={t}
+            headers={headers}
+            index={index}
+            renderCell={(cell) => renderTableCell(cell, ctx)}
+          />
+        );
+      }
+
       const specTable = isSpecTable(headers);
       const timelineItems = specTable ? null : tableToTimelineItems(t);
-      const cardRows: ResponsiveTableCardRow[] = t.rows.map((row) => ({
-        cells:
-          headers.length > 0
-            ? headers.map((h, i) => ({
-                label: h,
-                value: renderTableCell(row[i], ctx),
-              }))
-            : row.map((v, i) => ({
-                label: `列${i + 1}`,
-                value: renderTableCell(v, ctx),
-              })),
-      }));
-      const displayMode = t.display ?? "responsive";
+      const cardRows: ResponsiveTableCardRow[] = t.rows.map((row) => {
+        const cells = getTableRowCells(row);
+        return {
+          cells:
+            headers.length > 0
+              ? headers.map((h, i) => ({
+                  label: h,
+                  value: renderTableCell(cells[i], ctx),
+                }))
+              : cells.map((v, i) => ({
+                  label: `列${i + 1}`,
+                  value: renderTableCell(v, ctx),
+                })),
+        };
+      });
 
       if (displayMode === "timeline") {
         return renderTimelineTable(t, headers, index, ctx);
@@ -708,8 +736,8 @@ export function ItemRenderer({
     ITEM_SUBHEADING_CLASS[Math.min(nestingDepth, 2)] ?? ITEM_SUBHEADING_CLASS[2];
   const nestWrapClass =
     nestingDepth > 0
-      ? "mt-4 space-y-4 border-l border-[#7D9CD4]/25 pl-3 sm:ml-1 sm:pl-4"
-      : "mt-4 space-y-4 rounded-md border border-gray-200/70 bg-[#fafaf4] p-3 sm:p-4";
+      ? "mt-3 space-y-3 border-l border-[#7D9CD4]/25 pl-3 sm:ml-1 sm:pl-4"
+      : "mt-3 space-y-3 rounded-md border border-gray-200/70 bg-[#fafaf4] p-3 sm:p-4";
 
   if (childItems.length === 0 && childSections.length === 0) {
     if (subTitle == null) return main;
@@ -796,7 +824,7 @@ export function SectionRenderer({
       : "";
   const depthBoxClass =
     sectionDepth > 0
-      ? "mt-4 rounded-md border border-gray-200/90 bg-white/50 py-3 pl-3 pr-2 sm:pl-4"
+      ? "mt-3 rounded-md border border-gray-200/90 bg-white/50 py-2.5 pl-3 pr-2 sm:pl-4"
       : "";
 
   const HeadingTag = (["h3", "h4", "h5", "h6"] as const)[Math.min(sectionDepth, 3)];
@@ -804,14 +832,14 @@ export function SectionRenderer({
   return (
     <section
       {...(section.id != null && String(section.id).trim() !== "" ? { id: String(section.id) } : {})}
-      className={`mb-6 ${sectionWrapClass} ${depthBoxClass}`.trim()}
+      className={`mb-5 ${sectionWrapClass} ${depthBoxClass}`.trim()}
     >
       {section.title != null && String(section.title) !== "" && (
         <HeadingTag className={`mb-2.5 font-semibold ${titleToneClass}`}>{section.title}</HeadingTag>
       )}
 
       {nestedSections.length > 0 && (
-        <div className={`space-y-6 ${bodyToneClass}`.trim()}>
+        <div className={`space-y-4 ${bodyToneClass}`.trim()}>
           {nestedSections.map((sub, i) => (
             <SectionRenderer
               key={sub.id != null && sub.id !== "" ? sub.id : `nested-${sectionDepth}-${i}`}

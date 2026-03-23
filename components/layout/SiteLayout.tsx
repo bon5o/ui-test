@@ -7,20 +7,23 @@
  * - sm:, md:, lg: でレスポンシブ対応
  */
 import { Header } from "./Header";
+import { AccordionNavProvider } from "@/components/nav/AccordionNavProvider";
 
 export const SiteLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="flex min-h-screen min-w-0 max-w-full flex-col bg-[#fcfcf9]">
       <Header />
 
-      <main className="min-w-0 flex-1 bg-[#fcfcf9]">{children}</main>
+      <AccordionNavProvider>
+        <main className="min-w-0 flex-1 bg-[#fcfcf9]">{children}</main>
 
-      <footer className="mt-auto min-w-0 border-t border-gray-300/80 bg-[#fcfcf9] py-6 text-xs text-gray-600">
-        <div className="container-page flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} 沼便り。</p>
-          <p>このサイトはオールドレンズ研究の個人的なノートを兼ねた非公式リファレンスです。</p>
-        </div>
-      </footer>
+        <footer className="mt-auto min-w-0 border-t border-gray-300/80 bg-[#fcfcf9] py-6 text-xs text-gray-600">
+          <div className="container-page flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <p>© {new Date().getFullYear()} 沼便り。</p>
+            <p>このサイトはオールドレンズ研究の個人的なノートを兼ねた非公式リファレンスです。</p>
+          </div>
+        </footer>
+      </AccordionNavProvider>
     </div>
   );
 }

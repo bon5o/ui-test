@@ -22,15 +22,75 @@
     ],
     "updated_at": "2026-03-23T02:19:00+09:00"
   },
+
+  "toc": {
+    "mode": "auto",
+    "title": "目次"
+  },
+
   "chapters": [
+    
     {
       "id": "overview",
       "title": "概要",
       "sections": [
         {
+              "id": "double_gauss_genealogy",
+              "title": "ダブルガウス系の系譜",
+              "items": [
+                {
+                  "type": "table",
+                  "display": "tree",
+                  "headers": ["名称", "図","年代", "特徴"],
+                  "rows": [
+                    {
+                      "id": "gauss",
+                      "parentId": null,
+                      "cells": ["ガウス型", "a","1817", "対称型レンズの原型"]
+                    },
+                    {
+                      "id": "double_gauss",
+                      "parentId": "gauss",
+                      "cells": ["ダブルガウス型", {
+              "type": "image",
+              "src": "/images/lens-types/double-gauss/double-gauss.jpg",
+              "scale": 0.5
+            },"1890年代", "高速標準レンズの基盤"]
+                    },
+                    {
+                      "id": "g",
+                      "parentId": "double_gauss",
+                      "cells": ["ガ型", "a","1817", "対称型レンズの原型"]
+                    },
+                    {
+                      "id": "ga",
+                      "parentId": "g",
+                      "cells": ["ガウ型", "a","1817", "対称型レンズの原型"]
+                    },
+                    {
+                      "id": "gau",
+                      "parentId": "ga",
+                      "cells": ["ガウス型", "a","1817", "対称型レンズの原型"]
+                    },
+                    {
+                      "id": "double_gauss",
+                      "parentId": "gauss",
+                      "cells": ["ダブルガウス型","a", "1890年代", "高速標準レンズの基盤"]
+                    },
+                    {
+                      "id": "gaus",
+                      "parentId": "gau",
+                      "cells": ["ガウ-型", "a","1817", "対称型レンズの原型"]
+                    }
+                  ]
+                }
+              ]
+            },
+        {
           "id": "what_it_is",
           "title": "定義",
           "items": [
+            
             {
               "type": "paragraph",
               "text": "ダブルガウス型レンズは、1817年にガウスが提案した正負メニスカスから成るガウス型対物レンズを二つ背中合わせに配置した構成を起源とし、1888年にAlvan G. Clarkが対称型写真レンズとして特許化したものである。20世紀前半から中盤にかけて、この構成を基礎とするBiotar型やPlanar型が高性能な標準レンズとして発展し、35mm判スチルカメラ用の高速標準レンズの主流となった。オールドレンズ時代のダブルガウス型は、6枚構成から7〜8枚構成へと発展する過程で収差補正と高速化のバランスを追求しつつ、未コートや単層コートに起因するフレアや柔らかい描写が独自の魅力として評価されてきた。",
@@ -113,6 +173,7 @@
           "items": [
             {
               "type": "table",
+              "display": "table",
               "headers": [
                 "系統/呼称",
                 "構成図",

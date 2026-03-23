@@ -6,8 +6,7 @@ const navItems: { href: string; label: string }[] = [
   { href: "/maker", label: "メーカー" },
   { href: "/terms", label: "用語集" },
   { href: "/compare", label: "比較一覧" },
-  { href: "/references", label: "参考文献" },
-  { href: "/about", label: "このサイトについて" }
+  { href: "/thought", label: "思想" },
 ];
 
 /** メール（封筒）由来のシンプルなアイコン */

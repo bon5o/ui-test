@@ -61,15 +61,34 @@ export type TableCellValue =
   | Array<string | ImageItem>;
 
 /** テーブルの表示モード。未指定時は "responsive"（既存挙動） */
-export type TableDisplayMode = "responsive" | "cards" | "table" | "timeline";
+export type TableDisplayMode =
+  | "responsive"
+  | "cards"
+  | "table"
+  | "timeline"
+  | "tree";
+
+/**
+ * display: "tree" 用。cells が headers と対応。
+ * id / parentId / href はすべて任意（既存の行配列のみの rows も後方互換）
+ */
+export interface TreeTableRowRecord {
+  id?: string;
+  parentId?: string | null;
+  href?: string;
+  cells: TableCellValue[];
+}
+
+/** 1 行分: 従来のセル配列、または tree 用オブジェクト */
+export type TableRowInput = TableCellValue[] | TreeTableRowRecord;
 
 export interface TableItem {
   type: "table";
-  /** 表示形式: responsive=画面幅で切替 / cards=常にカード / table=常に表。未指定は "responsive" */
+  /** 表示形式: responsive=画面幅で切替 / cards=常にカード / table=常に表 / tree=樹形図風。未指定は "responsive" */
   display?: TableDisplayMode;
   headers?: string[];
-  /** 各セルは string / image オブジェクト / (string | image)[] のいずれか */
-  rows: (string | ImageItem | Array<string | ImageItem>)[][];
+  /** 各セルは string / image オブジェクト / (string | image)[] のいずれか。tree 時は TreeTableRowRecord も可 */
+  rows: TableRowInput[];
   citations?: number[];
 }
 

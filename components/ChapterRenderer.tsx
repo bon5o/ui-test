@@ -52,7 +52,7 @@ export function ChapterRenderer({
 
   return (
     <CollapsibleSection defaultOpen={false} title={chapter.title}>
-      <div id={chapter.id} className="space-y-6">
+      <div id={chapter.id} className="space-y-5">
         {(chapter.sections ?? []).filter(Boolean).map((section, index) => (
           <SectionRenderer
             // section.id が重複しても兄弟要素の key がユニークになるよう index を併用

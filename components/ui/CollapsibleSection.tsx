@@ -1,6 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect, type ReactNode } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  type ReactNode,
+} from "react";
+import { useAccordionNav } from "@/components/nav/AccordionNavProvider";
+import { ACCORDION_HEIGHT_TRANSITION_MS } from "@/lib/accordionNavConstants";
 
 interface CollapsibleSectionProps {
   title: string;
@@ -15,9 +23,19 @@ export function CollapsibleSection({
 }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement | null>(null);
+  const headingButtonRef = useRef<HTMLButtonElement>(null);
   const [height, setHeight] = useState<number | undefined>(
     defaultOpen ? undefined : 0
   );
+
+  const nav = useAccordionNav();
+  const expand = useCallback(() => setIsOpen(true), []);
+
+  useEffect(() => {
+    if (!nav) return;
+    return nav.register({ rootRef, expand });
+  }, [nav, expand]);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -33,13 +51,29 @@ export function CollapsibleSection({
     }
   }, [isOpen]);
 
+  const scrollHeadingToCenter = useCallback(() => {
+    headingButtonRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, []);
+
+  const handleCloseSection = () => {
+    setIsOpen(false);
+    window.setTimeout(() => {
+      scrollHeadingToCenter();
+    }, ACCORDION_HEIGHT_TRANSITION_MS);
+  };
+
   return (
     <section
+      ref={rootRef}
       className={`relative transition-colors duration-200 ${
         isOpen ? "border-l-[1.5px] border-l-[#7D9CD4]/40" : "border-l-[1.5px] border-l-transparent"
       }`}
     >
       <button
+        ref={headingButtonRef}
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className="group flex w-full cursor-pointer items-center justify-between py-5 pl-5 pr-2 text-left transition-colors hover:bg-[#7D9CD4]/[0.05]"
@@ -69,13 +103,13 @@ export function CollapsibleSection({
         style={{ height: height !== undefined ? `${height}px` : "auto" }}
         className="overflow-hidden transition-[height] duration-300 ease-in-out"
       >
-        <div ref={contentRef} className="pb-8 pl-5 pr-2 pt-1">
+        <div ref={contentRef} className="pb-7 pl-5 pr-2 pt-1">
           {children}
           {isOpen && (
-            <div className="mt-6 border-t border-gray-200/60 pt-3">
+            <div className="mt-5 border-t border-gray-200/60 pt-3">
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={handleCloseSection}
                 className="border-0 bg-transparent p-0 text-sm font-normal text-gray-600 underline decoration-gray-400/70 underline-offset-[5px] transition-colors hover:text-gray-800 hover:decoration-gray-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fcfcf9] rounded-sm"
               >
                 このセクションを閉じる

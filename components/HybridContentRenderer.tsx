@@ -48,7 +48,7 @@ export function HybridContentRenderer({
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       {content.chapters.map((chapter, index) => (
         <ChapterRenderer
           key={chapter.id || `chapter-${index}`}
