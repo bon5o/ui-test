@@ -461,6 +461,8 @@ function MobileTreeNode({
           <div
             className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
             style={{ top: TREE_ELBOW_Y_PX }}
+            data-mobile-tree-elbow-horizontal=""
+            data-mobile-tree-elbow-horizontal-depth={String(depth)}
           />
         </div>
       ) : (

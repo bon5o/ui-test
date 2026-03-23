@@ -31,28 +31,28 @@ export function MobileTreeParentTrunk({
       )
     );
 
-    const nodeMarkers = Array.from(
+    const horizontals = Array.from(
       containerEl.querySelectorAll<HTMLElement>(
-        `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(childDepth)}"][data-mobile-tree-elbow-role="node"]`
+        `[data-mobile-tree-elbow-horizontal][data-mobile-tree-elbow-horizontal-depth="${String(childDepth)}"]`
       )
     );
 
-    if (startMarkers.length === 0 || nodeMarkers.length === 0) {
+    if (startMarkers.length === 0 || horizontals.length === 0) {
       setTrunk(null);
       return;
     }
 
     const containerRect = containerEl.getBoundingClientRect();
     const startRect = startMarkers[0].getBoundingClientRect();
-    const firstChildRect = nodeMarkers[0].getBoundingClientRect();
+    const firstHorizontalRect = horizontals[0].getBoundingClientRect();
 
     const top = startRect.top - containerRect.top;
-    // 末端は子 elbow(marker) の 1px 分を含めて、横線と確実に交わる
-    const height = Math.max(1, firstChildRect.bottom - startRect.top);
+    // 横線（L字腕）の始点までを確実に含めて交わる
+    const height = Math.max(1, firstHorizontalRect.bottom - startRect.top);
 
     setTrunk({
-      // 縦線（parent trunk）は子側の横線と同じ x に揃える
-      left: firstChildRect.left - containerRect.left,
+      // 縦線は子側の横線（L字腕）と同じ x に揃える
+      left: firstHorizontalRect.left - containerRect.left,
       top,
       height,
     });
