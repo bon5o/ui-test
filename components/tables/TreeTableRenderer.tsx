@@ -421,90 +421,118 @@ function MobileTreeNode({
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
   const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
   const showConnector = depth > 0;
+  const hasChildren = node.children.length > 0 && depth < maxDepth;
+  const childDepth = depth + 1;
 
-  return (
-    <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
-      <div className="flex min-w-0 gap-0.5 pb-2">
-        {showConnector ? (
-          <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-            {/* 幹線描画用: elbow 位置の目印（幹は children 側で描く） */}
+  const nodeRow = (
+    <div className="flex min-w-0 gap-0.5 pb-2">
+      {showConnector ? (
+        <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
+          {/* ノード自身の elbow（同階層の幹線計測用） */}
+          <div
+            className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
+            style={{ top: TREE_ELBOW_Y_PX }}
+            data-mobile-tree-elbow-marker=""
+            data-mobile-tree-elbow-depth={String(depth)}
+          />
+          {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
+          {hasChildren && (
             <div
               className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
               style={{ top: TREE_ELBOW_Y_PX }}
               data-mobile-tree-elbow-marker=""
-              data-mobile-tree-elbow-depth={String(depth)}
+              data-mobile-tree-elbow-depth={String(childDepth)}
             />
-            {/* 横枝（カードへ入る線）: elbow を基準に短く接続 */}
-            <div
-              className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
-              style={{ top: TREE_ELBOW_Y_PX }}
-            />
+          )}
+          {/* 横枝（カードへ入る線） */}
+          <div
+            className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
+            style={{ top: TREE_ELBOW_Y_PX }}
+          />
+        </div>
+      ) : (
+        <div className="w-4 shrink-0" aria-hidden />
+      )}
+
+      <article
+        className={`min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
+        data-mobile-tree-node=""
+        data-depth={depth}
+      >
+        {parsed.externalYearCell != null &&
+          !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
+            <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
+              {renderCell(parsed.externalYearCell)}
+            </div>
+          )}
+
+        <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
+          {parsed.titleCell != null ? (
+            renderCell(parsed.titleCell)
+          ) : (
+            <span className="font-normal text-gray-400">（無題）</span>
+          )}
+        </div>
+
+        {featureRow != null && (
+          <div className="mt-2 space-y-0.5">
+            <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
+            <div className="text-[12px] leading-snug text-gray-700">
+              {renderCell(featureRow.cell)}
+            </div>
           </div>
-        ) : (
-          <div className="w-4 shrink-0" aria-hidden />
         )}
 
-        <article
-          className={`min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
-          data-mobile-tree-node=""
-          data-depth={depth}
-        >
-          {parsed.externalYearCell != null &&
-            !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
-              <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
-                {renderCell(parsed.externalYearCell)}
-              </div>
-            )}
-
-          <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
-            {parsed.titleCell != null ? (
-              renderCell(parsed.titleCell)
-            ) : (
-              <span className="font-normal text-gray-400">（無題）</span>
-            )}
-          </div>
-
-          {featureRow != null && (
-            <div className="mt-2 space-y-0.5">
-              <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
-              <div className="text-[12px] leading-snug text-gray-700">
-                {renderCell(featureRow.cell)}
-              </div>
-            </div>
-          )}
-
-          {otherRows.length > 0 && (
-            <details className="mt-2">
-              <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
-              <div className="mt-1.5 space-y-1.5">
-                {otherRows.map(({ label, cell }, i) => (
-                  <div key={`${label}-${i}`} className="space-y-0.5">
-                    <div className="text-[10px] font-normal text-gray-400">{label}</div>
-                    <div className="text-[12px] leading-snug text-gray-700">
-                      {renderCell(cell)}
-                    </div>
+        {otherRows.length > 0 && (
+          <details className="mt-2">
+            <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
+            <div className="mt-1.5 space-y-1.5">
+              {otherRows.map(({ label, cell }, i) => (
+                <div key={`${label}-${i}`} className="space-y-0.5">
+                  <div className="text-[10px] font-normal text-gray-400">{label}</div>
+                  <div className="text-[12px] leading-snug text-gray-700">
+                    {renderCell(cell)}
                   </div>
-                ))}
-              </div>
-            </details>
-          )}
-
-          {node.citations.length > 0 && (
-            <div className="mt-2">
-              <Citation citations={node.citations} />
+                </div>
+              ))}
             </div>
-          )}
-        </article>
-      </div>
+          </details>
+        )}
 
-      {node.children.length > 0 && depth < maxDepth && (
-        <MobileTreeChildren
-          nodes={node.children}
-          headers={headers}
-          renderCell={renderCell}
-          depth={depth}
-          maxDepth={maxDepth}
-        />
+        {node.citations.length > 0 && (
+          <div className="mt-2">
+            <Citation citations={node.citations} />
+          </div>
+        )}
+      </article>
+    </div>
+  );
+
+  const childrenList =
+    hasChildren ? (
+      <MobileTreeChildren
+        nodes={node.children}
+        headers={headers}
+        renderCell={renderCell}
+        depth={depth}
+        maxDepth={maxDepth}
+      />
+    ) : null;
+
+  return (
+    <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
+      {hasChildren ? (
+        <MobileTreeSiblingTrunk childDepth={childDepth}>
+          <>
+            {nodeRow}
+            {childrenList}
+          </>
+        </MobileTreeSiblingTrunk>
+      ) : (
+        <>
+          {nodeRow}
+          {childrenList}
+        </>
       )}
     </li>
   );
@@ -526,20 +554,18 @@ function MobileTreeChildren({
 }): React.ReactElement {
   const childDepth = depth + 1;
   return (
-    <MobileTreeSiblingTrunk childDepth={childDepth}>
-      <ul className="m-0 list-none p-0 space-y-0">
-        {nodes.map((child) => (
-          <MobileTreeNode
-            key={child.id}
-            node={child}
-            headers={headers}
-            renderCell={renderCell}
-            depth={childDepth}
-            maxDepth={maxDepth}
-          />
-        ))}
-      </ul>
-    </MobileTreeSiblingTrunk>
+    <ul className="m-0 list-none p-0 space-y-0">
+      {nodes.map((child) => (
+        <MobileTreeNode
+          key={child.id}
+          node={child}
+          headers={headers}
+          renderCell={renderCell}
+          depth={childDepth}
+          maxDepth={maxDepth}
+        />
+      ))}
+    </ul>
   );
 }
 
