@@ -17,6 +17,8 @@ const TREE_ELBOW_Y_PX = 13;
 const TREE_LINE = "bg-[#7D9CD4]/25";
 const TREE_AXIS_LEFT = "left-[7px]";
 const TREE_CONNECTOR_WIDTH = "w-4 sm:w-[18px]";
+// Temporary debug: color-code line sources
+const DEBUG_MOBILE_TREE_LINE_COLORS = true;
 /**
  * 左側3領域: [枝線][年代列][カード]
  * - 年代は列内左寄せ、右 padding でカードとの呼吸感を確保
@@ -447,7 +449,11 @@ function MobileTreeNode({
             <>
               {/* ノード自身の elbow（同階層の幹線計測用） */}
               <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px ${
+                  DEBUG_MOBILE_TREE_LINE_COLORS
+                    ? "bg-green-400/70"
+                    : "bg-transparent"
+                }`}
                 style={{ top: TREE_ELBOW_Y_PX }}
                 data-mobile-tree-elbow-marker=""
                 data-mobile-tree-elbow-role="node"
@@ -461,7 +467,11 @@ function MobileTreeNode({
             <>
               {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
               <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
+                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px ${
+                  DEBUG_MOBILE_TREE_LINE_COLORS
+                    ? "bg-green-400/70"
+                    : "bg-transparent"
+                }`}
                 style={{ top: TREE_ELBOW_Y_PX }}
                 data-mobile-tree-elbow-marker=""
                 data-mobile-tree-elbow-role="parent"
@@ -473,7 +483,11 @@ function MobileTreeNode({
 
           {/* 横枝（カードへ入る線）: incoming/outgoing のどちらがある場合も表示 */}
           <div
-            className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${TREE_LINE}`}
+            className={`absolute ${TREE_AXIS_LEFT} z-[1] h-px w-[10px] ${
+              DEBUG_MOBILE_TREE_LINE_COLORS
+                ? "bg-green-400/60"
+                : TREE_LINE
+            }`}
             style={{ top: TREE_ELBOW_Y_PX }}
             data-mobile-tree-elbow-horizontal=""
             data-mobile-tree-elbow-horizontal-depth={String(depth)}

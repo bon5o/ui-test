@@ -3,6 +3,8 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const TREE_LINE = "bg-[#7D9CD4]/25";
+// Temporary debug: color-code line sources
+const DEBUG_MOBILE_TREE_LINE_COLORS = true;
 const INDENT_STEP_PX = 10;
 const INDENT_MAX_PX = 28;
 /** TREE_AXIS_LEFT: left-[7px] と揃える（connector lane 内の軸） */
@@ -72,7 +74,10 @@ export function MobileTreeSiblingTrunk({
       {trunk && (
         <div
           aria-hidden
-          className={`pointer-events-none absolute z-[1] ${TREE_LINE} w-px`}
+          data-debug-mobile-tree-line="sibling-trunk"
+          className={`pointer-events-none absolute z-[2] ${
+            DEBUG_MOBILE_TREE_LINE_COLORS ? "bg-blue-500/60" : TREE_LINE
+          } w-px`}
           style={{
             left: trunk.left,
             top: trunk.top,
