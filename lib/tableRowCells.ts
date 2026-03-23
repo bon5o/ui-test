@@ -1,6 +1,11 @@
-import type { TableCellValue, TableRowInput, TreeTableRowRecord } from "@/types/hybridContent";
+import type {
+  TableCellValue,
+  TableRowInput,
+  TableRowCellsRecord,
+  TreeTableRowRecord,
+} from "@/types/hybridContent";
 
-function isTreeRowRecord(row: TableRowInput): row is TreeTableRowRecord {
+function isCellsRowRecord(row: TableRowInput): row is TreeTableRowRecord | TableRowCellsRecord {
   return (
     row != null &&
     typeof row === "object" &&
@@ -15,8 +20,16 @@ export function getTableRowCells(row: TableRowInput): TableCellValue[] {
   if (Array.isArray(row)) {
     return row;
   }
-  if (isTreeRowRecord(row)) {
+  if (isCellsRowRecord(row)) {
     return row.cells;
   }
   return [];
+}
+
+export function getTableRowCitations(row: TableRowInput): number[] {
+  if (Array.isArray(row)) return [];
+  if (!isCellsRowRecord(row)) return [];
+  const citations = (row as { citations?: unknown }).citations;
+  if (!Array.isArray(citations)) return [];
+  return citations.filter((n): n is number => typeof n === "number");
 }

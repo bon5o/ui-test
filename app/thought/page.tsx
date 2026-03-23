@@ -10,7 +10,7 @@ export default function ThoughtIndexPage() {
       <header className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">思想</h1>
         <p className="mt-3 text-[15px] leading-relaxed text-gray-600">
-          写真に対する考え方・向き合い方のメモです（仮置きの文章を含みます）。
+          文章はすべて仮です。日付も適当です。
         </p>
       </header>
 

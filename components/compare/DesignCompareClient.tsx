@@ -210,7 +210,7 @@ export function DesignCompareClient({ data }: { data: DesignComparisonData }) {
           レンズ構成型比較
         </h1>
         <p className="mt-2 text-[15px] text-gray-600">
-          比較対象と比較軸を選ぶと、構成型ごとの差異を一覧で確認できます。
+          比較対象と比較軸を選ぶと、構成型ごとの差異を一覧で確認できます。内容はいったん仮です。そのため、内容は正しくないと思われます。
         </p>
       </header>
 

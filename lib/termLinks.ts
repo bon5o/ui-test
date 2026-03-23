@@ -27,6 +27,9 @@ export const TERM_LINKS: { term: string; slug: string }[] = [
   { term: "透過率", slug: "transmittance" },
   { term: "屈折力", slug: "optical_power" },
   { term: "ダブルガウス", slug: "double-gauss" },
+  { term: "トリプレット", slug: "triplet" },
+  { term: "テッサー", slug: "tessar" },
+  { term: "プラナー", slug: "planar" },
   { term: "コーティング全史", slug: "coating_complete_history" },
   { term: "Super-Takumar 55mm f1.8", slug: "super-takumar-55mm-f18" }
 ];

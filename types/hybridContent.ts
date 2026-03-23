@@ -77,10 +77,20 @@ export interface TreeTableRowRecord {
   parentId?: string | null;
   href?: string;
   cells: TableCellValue[];
+  citations?: number[];
 }
 
-/** 1 行分: 従来のセル配列、または tree 用オブジェクト */
-export type TableRowInput = TableCellValue[] | TreeTableRowRecord;
+/** cells を持つ row（tree 以外でも利用可能） */
+export interface TableRowCellsRecord {
+  cells: TableCellValue[];
+  citations?: number[];
+}
+
+/** 1 行分: 従来のセル配列、または cells/citations を持つオブジェクト */
+export type TableRowInput =
+  | TableCellValue[]
+  | TableRowCellsRecord
+  | TreeTableRowRecord;
 
 export interface TableItem {
   type: "table";

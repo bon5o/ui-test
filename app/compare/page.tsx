@@ -10,7 +10,7 @@ const items = [
   {
     href: "/compare/designs",
     title: "構成型比較",
-    description: "構成型の比較",
+    description: "構成型の比較、機能だけ実装されていて内容は仮です。",
   },
   {
     href: "/compare/makers",

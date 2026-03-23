@@ -17,7 +17,7 @@ import {
   type ResponsiveTableCardRow,
 } from "./ui/ResponsiveTableCards";
 import { TimelineList, type TimelineItem } from "./sections/TimelineList";
-import { getTableRowCells } from "@/lib/tableRowCells";
+import { getTableRowCells, getTableRowCitations } from "@/lib/tableRowCells";
 import { TreeTableRenderer } from "./tables/TreeTableRenderer";
 
 interface ItemRendererProps {
@@ -43,6 +43,11 @@ function assertNever(x: never): never {
 }
 
 const KNOWN_TYPES = ["paragraph", "list", "image", "quote", "table"] as const;
+
+const BODY_TEXT_SIZE = "text-[16px] leading-relaxed";
+const BODY_TEXT_MUTED_SIZE = "text-[14px] leading-relaxed";
+const BODY_TEXT_NOTE_SIZE = "text-[13px] leading-snug";
+const TABLE_BODY_TEXT_SIZE = "text-[13px] leading-6";
 
 /** 2列仕様表かどうか（項目/仕様など短文ラベル＋値） */
 function isSpecTable(headers: string[]): boolean {
@@ -169,7 +174,7 @@ function renderSpecTable(
 ): React.ReactElement {
   return (
     <div key={index} className="my-4 w-full">
-      <table className="w-full table-fixed border-separate border-spacing-0 border border-gray-200 rounded overflow-hidden text-sm">
+      <table className="w-full table-fixed border-separate border-spacing-0 border border-gray-200 rounded overflow-hidden text-[13px]">
         <thead>
           <tr className="bg-gray-50">
             <th className="border-b border-gray-200 px-3 py-2 text-left text-xs font-semibold text-gray-600 whitespace-pre-line">
@@ -183,6 +188,7 @@ function renderSpecTable(
         <tbody>
           {t.rows.map((row, ri) => {
             const cells = getTableRowCells(row);
+        const rowCitations = getTableRowCitations(row);
             return (
             <tr
               key={ri}
@@ -190,11 +196,16 @@ function renderSpecTable(
                 ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
               }
             >
-              <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-sm font-medium text-gray-800 sm:w-40 whitespace-nowrap">
+              <td className="w-32 border-b border-gray-200 px-3 py-2 align-top text-[13px] font-medium text-gray-800 sm:w-40 whitespace-nowrap">
                 {renderTableCell(cells[0], ctx)}
               </td>
-              <td className={`border-b border-gray-200 align-top text-sm text-gray-700 leading-6 break-words ${isImageCell(cells[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
+              <td className={`border-b border-gray-200 align-top ${TABLE_BODY_TEXT_SIZE} text-gray-700 break-words ${isImageCell(cells[1]) ? "px-2 py-2" : "px-3 py-2"}`}>
                 {renderTableCell(cells[1], ctx)}
+                {rowCitations.length > 0 && (
+                  <div className="mt-2">
+                    <Citation citations={rowCitations} />
+                  </div>
+                )}
               </td>
             </tr>
             );
@@ -219,14 +230,14 @@ function renderGridTable(
 ): React.ReactElement {
   return (
     <div key={index} className="my-4">
-      <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
+      <table className="w-full border border-gray-200 rounded overflow-hidden text-[13px]">
         {headers.length > 0 && (
           <thead>
             <tr className="bg-gray-50">
               {headers.map((h, i) => (
                 <th
                   key={i}
-                  className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
+                  className="px-4 py-2 text-left text-sm font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
                 >
                   {h}
                 </th>
@@ -237,6 +248,7 @@ function renderGridTable(
         <tbody>
           {t.rows.map((row, ri) => {
             const cells = getTableRowCells(row);
+          const rowCitations = getTableRowCitations(row);
             return (
             <tr
               key={ri}
@@ -247,11 +259,16 @@ function renderGridTable(
               {cells.map((cell, ci) => (
                 <td
                   key={ci}
-                  className={`border-b border-gray-100 text-gray-700 break-words align-top ${
+                  className={`border-b border-gray-100 ${TABLE_BODY_TEXT_SIZE} text-gray-700 break-words align-top ${
                     isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
                   }`}
                 >
                   {renderTableCell(cell, ctx)}
+                {ci === cells.length - 1 && rowCitations.length > 0 && (
+                  <div className="mt-2">
+                    <Citation citations={rowCitations} />
+                  </div>
+                )}
                 </td>
               ))}
             </tr>
@@ -306,14 +323,14 @@ function renderResponsiveTable(
     <div key={index} className="my-4">
       <ResponsiveTableCards rows={cardRows} />
       <div className="hidden md:block">
-        <table className="w-full border border-gray-200 rounded overflow-hidden text-sm">
+        <table className="w-full border border-gray-200 rounded overflow-hidden text-[13px]">
           {headers.length > 0 && (
             <thead>
               <tr className="bg-gray-50">
                 {headers.map((h, i) => (
                   <th
                     key={i}
-                    className="px-4 py-2 text-left font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
+                    className="px-4 py-2 text-left text-sm font-medium text-gray-800 border-b border-gray-200 whitespace-pre-line"
                   >
                     {h}
                   </th>
@@ -324,6 +341,7 @@ function renderResponsiveTable(
           <tbody>
             {t.rows.map((row, ri) => {
               const cells = getTableRowCells(row);
+              const rowCitations = getTableRowCitations(row);
               return (
               <tr
                 key={ri}
@@ -334,11 +352,16 @@ function renderResponsiveTable(
                 {cells.map((cell, ci) => (
                   <td
                     key={ci}
-                    className={`border-b border-gray-100 text-gray-700 break-words align-top ${
+                    className={`border-b border-gray-100 ${TABLE_BODY_TEXT_SIZE} text-gray-700 break-words align-top ${
                       isImageCell(cell) ? "px-2 py-2" : "px-4 py-2"
                     }`}
                   >
                     {renderTableCell(cell, ctx)}
+                    {ci === cells.length - 1 && rowCitations.length > 0 && (
+                      <div className="mt-2">
+                        <Citation citations={rowCitations} />
+                      </div>
+                    )}
                   </td>
                 ))}
               </tr>
@@ -368,26 +391,27 @@ function renderTimelineTable(
     <div key={index} className="my-4">
       {/* タイムライン全体に対して縦線を1本だけ描画（row間のgapでも途切れない） */}
       <div className="relative space-y-4">
-        {/* 年と丸点を隣に寄せる: 年 50px + gap 4px + 中央カラム中心 10px = 64px */}
-        <div className="pointer-events-none absolute inset-y-0 left-[64px] w-px bg-gray-200 z-0" />
+        {/* 年列・カード列は据え置き。○と縦線だけ約10px左へ寄せる */}
+        <div className="pointer-events-none absolute inset-y-0 left-[51px] w-px bg-gray-200 z-0" />
         {t.rows.map((row, ri) => {
           const cells = getTableRowCells(row);
+          const rowCitations = getTableRowCitations(row);
           const year = cells[0];
           const details = cells.slice(1);
           const detailLabels = labelHeaders ? labelHeaders.slice(1) : [];
 
           return (
-            <div key={ri} className="grid grid-cols-[50px_20px_1fr] gap-x-1">
-              <div className="text-sm font-medium text-gray-800 whitespace-pre-line">
+            <div key={ri} className="grid grid-cols-[50px_18px_1fr] gap-x-0.5">
+              <div className="text-[13px] font-medium text-gray-800 whitespace-pre-line">
                 {renderTableCell(year, ctx)}
               </div>
 
-              <div className="relative flex justify-center">
+              <div className="relative flex justify-center -translate-x-[10px]">
                 {/* 丸点（線より前面・輪っか） */}
                 <div className="mt-1 h-3 w-3 rounded-full bg-white border-2 border-[#7D9CD4] z-10" />
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-white px-3 py-2">
+              <div className="relative -left-1 rounded-lg border border-gray-200 bg-white px-3 py-2">
                 <div className="space-y-2">
                   {details.map((cell, ci) => {
                     const label = detailLabels[ci] ?? `列${ci + 2}`;
@@ -401,13 +425,18 @@ function renderTimelineTable(
                         <div className="text-[11px] font-medium text-gray-500">
                           {label}
                         </div>
-                        <div className="text-sm text-gray-800 leading-6 break-words">
+                        <div className="text-[13px] text-gray-800 leading-6 break-words">
                           {renderTableCell(cell, ctx)}
                         </div>
                       </div>
                     );
                   })}
                 </div>
+                {rowCitations.length > 0 && (
+                  <div className="mt-1">
+                    <Citation citations={rowCitations} />
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -543,7 +572,7 @@ function renderItemContent(
         ? (raw.citations as unknown[]).filter((n): n is number => typeof n === "number")
         : undefined;
       return (
-        <p key={index} className="text-base font-normal leading-relaxed text-gray-700 whitespace-pre-line">
+        <p key={index} className="text-[15px] font-normal leading-relaxed text-gray-700 whitespace-pre-line">
           <TermLinkify text={text} {...ctx} />
           {citations && citations.length > 0 && <Citation citations={citations} />}
         </p>
@@ -562,12 +591,12 @@ function renderItemContent(
       const resolvedTone = p.tone ?? inheritedTone ?? "normal";
       const toneClass =
         resolvedTone === "highlight_note"
-          ? "text-sm text-gray-500 leading-snug"
+          ? `${BODY_TEXT_NOTE_SIZE} text-gray-500`
           : resolvedTone === "note"
-            ? "text-sm text-gray-500 leading-snug"
+            ? `${BODY_TEXT_NOTE_SIZE} text-gray-500`
             : resolvedTone === "muted"
-              ? "text-[15px] text-gray-600 leading-relaxed"
-              : "text-base text-gray-700 leading-relaxed";
+              ? `${BODY_TEXT_MUTED_SIZE} text-gray-600`
+              : `${BODY_TEXT_SIZE} text-gray-700`;
       const highlightWrapClass =
         resolvedTone === "highlight_note"
           ? "bg-[#F7F8F9] border-1 border-[#a4bfd9] rounded px-3 py-2"
@@ -598,12 +627,12 @@ function renderItemContent(
       const resolvedTone = list.tone ?? inheritedTone ?? "normal";
       const toneClass =
         resolvedTone === "highlight_note"
-          ? "text-sm text-gray-500 leading-snug"
+          ? `${BODY_TEXT_NOTE_SIZE} text-gray-500`
           : resolvedTone === "note"
-            ? "text-sm text-gray-500 leading-snug"
+            ? `${BODY_TEXT_NOTE_SIZE} text-gray-500`
           : resolvedTone === "muted"
-            ? "text-[15px] text-gray-600 leading-relaxed"
-            : "text-base text-gray-700 leading-relaxed";
+            ? `${BODY_TEXT_MUTED_SIZE} text-gray-600`
+            : `${BODY_TEXT_SIZE} text-gray-700`;
       const itemGapClass =
         resolvedTone === "note" || resolvedTone === "highlight_note"
           ? "space-y-0.5"
@@ -634,7 +663,7 @@ function renderItemContent(
     case "quote": {
       const q = item as QuoteItem;
       return (
-        <blockquote key={index} className="border-l-2 border-[#7D9CD4]/50 pl-4 py-2 my-4 text-base text-gray-700 italic whitespace-pre-line">
+        <blockquote key={index} className="border-l-2 border-[#7D9CD4]/50 pl-4 py-2 my-4 text-[15px] leading-relaxed text-gray-700 italic whitespace-pre-line">
           <TermLinkify text={q.text} {...ctx} />
           {q.citations && q.citations.length > 0 && (
             <Citation citations={q.citations} />
@@ -662,6 +691,7 @@ function renderItemContent(
       const timelineItems = specTable ? null : tableToTimelineItems(t);
       const cardRows: ResponsiveTableCardRow[] = t.rows.map((row) => {
         const cells = getTableRowCells(row);
+        const citations = getTableRowCitations(row);
         return {
           cells:
             headers.length > 0
@@ -673,6 +703,7 @@ function renderItemContent(
                   label: `列${i + 1}`,
                   value: renderTableCell(v, ctx),
                 })),
+          citations: citations.length > 0 ? citations : undefined,
         };
       });
 

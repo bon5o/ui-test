@@ -3,12 +3,41 @@ import Link from "next/link";
 import type { TableItem } from "@/types/hybridContent";
 import type { TableTreeNode } from "@/lib/buildTreeTable";
 import { buildTreeTableModel } from "@/lib/buildTreeTable";
+import {
+  parseTreeNodeColumns,
+  treeHeadersHaveYearColumn,
+  type TreeNodeSupplementaryRow,
+} from "@/lib/parseTreeTableNode";
 import { Citation } from "@/components/Citation";
 
 /** ノード見出し行と横枝の交点（px）。コンパクトカードと揃える */
 const TREE_ELBOW_Y_PX = 13;
 const TREE_LINE = "bg-[#7D9CD4]/25";
-const TREE_AXIS_LEFT = "left-[9px]";
+const TREE_AXIS_LEFT = "left-[7px]";
+const TREE_CONNECTOR_WIDTH = "w-4 sm:w-[18px]";
+/**
+ * 左側3領域: [枝線][年代列][カード]
+ * - 年代は列内左寄せ、右 padding でカードとの呼吸感を確保
+ * - 列は w-max + min-w で 4 桁・「1890年代」程度が 1 行に収まる幅を確保（ラベルは whitespace-nowrap）
+ */
+const TREE_YEAR_LANE_WIDTH =
+  "flex w-max min-w-[3.4rem] max-w-[7rem] shrink-0 sm:min-w-[3.8rem] sm:max-w-[7.2rem]";
+const TREE_YEAR_LANE_PAD_LEFT = "pl-0 sm:pl-0.5";
+const TREE_YEAR_LANE_PAD_RIGHT = "pr-2.5 sm:pr-3.5";
+
+/** 全 tree ノードカード共通（白・影なし・同一パディング）。ルートは枠色だけ差す */
+const TREE_CARD_PADDING =
+  "py-2 pl-2.5 pr-2.5 sm:py-2 sm:pl-3 sm:pr-3";
+const TREE_CARD_BASE = `min-w-0 rounded-md border bg-white ${TREE_CARD_PADDING}`;
+const TREE_CARD_BORDER = "border-gray-200/90";
+const TREE_CARD_BORDER_ROOT = "border-gray-300/80";
+const TREE_CARD_HOVER =
+  "transition-colors duration-150 ease-out hover:border-[#7D9CD4]/40";
+/** セル内の画像 figure がカードをはみ出さないよう制御 */
+const TREE_CARD_MEDIA =
+  "[&_figure]:mx-0 [&_figure]:mt-0 [&_figure]:mb-1.5 [&_figure]:max-w-full [&_figure]:bg-white [&_figure]:border-gray-200/80 [&_figure]:p-1.5 [&_figure]:last:mb-0";
+/** 名称行: 全深度・ルートとも同一（通常ウェイト）。ルートの強調は枠色のみ */
+const TREE_TITLE = "text-[15px] font-normal leading-snug text-gray-900";
 
 function isExternalHref(href: string): boolean {
   return /^https?:\/\//i.test(href);
@@ -16,39 +45,68 @@ function isExternalHref(href: string): boolean {
 
 type PanelVariant = "root" | "child" | "grandchild";
 
+/** 枝の肘付近に寄せた小さな年代ラベル（カード外） */
+function TreeYearLane({
+  cell,
+  renderCell,
+  hasYearColumn,
+  laneAlign,
+}: {
+  cell: unknown;
+  renderCell: (cell: unknown) => React.ReactNode;
+  hasYearColumn: boolean;
+  laneAlign: "root" | "child";
+}): React.ReactElement | null {
+  if (!hasYearColumn) return null;
+
+  /** カードの pt-2 と揃える / 子行は枝の肘付近に合わせる */
+  const ptClass =
+    laneAlign === "root" ? "pt-2 sm:pt-2" : "pt-[11px] sm:pt-3";
+
+  const showContent =
+    cell != null &&
+    !(typeof cell === "string" && cell.trim() === "");
+
+  return (
+    <div
+      className={`${TREE_YEAR_LANE_WIDTH} flex-col items-start ${ptClass} pb-0.5 ${TREE_YEAR_LANE_PAD_LEFT} ${TREE_YEAR_LANE_PAD_RIGHT} text-left`}
+      data-tree-year-lane=""
+      aria-hidden={!showContent}
+    >
+      {showContent ? (
+        <span className="inline-block max-w-full whitespace-nowrap text-left text-[13px] font-normal leading-none text-gray-500 tabular-nums sm:text-[13px] sm:leading-none [&_*]:whitespace-nowrap [&_*]:text-[length:inherit] [&_*]:leading-none">
+          {typeof cell === "string" ? cell : renderCell(cell)}
+        </span>
+      ) : (
+        <span className="inline-block min-h-[1em] w-px shrink-0" aria-hidden />
+      )}
+    </div>
+  );
+}
+
 function TreeNodePanel({
   node,
-  headers,
+  titleCell,
+  supplementary,
   renderCell,
   variant,
 }: {
   node: TableTreeNode;
-  headers: string[];
+  titleCell: unknown;
+  supplementary: TreeNodeSupplementaryRow[];
   renderCell: (cell: unknown) => React.ReactNode;
   variant: PanelVariant;
 }): React.ReactElement {
-  const cells = node.cells;
-  const titleCell = cells[0];
-  const restHeaders = headers.slice(1);
+  const titleClasses = TREE_TITLE;
 
-  const titleClasses =
-    variant === "root"
-      ? "text-base font-semibold leading-snug tracking-tight text-gray-900"
-      : variant === "child"
-        ? "text-[15px] font-semibold leading-snug text-gray-900"
-        : "text-sm font-medium leading-snug text-gray-800";
-
-  const shellClasses =
-    variant === "root"
-      ? "rounded-lg border border-gray-300/70 bg-white/95 py-2.5 pl-3 pr-3 shadow-sm ring-1 ring-gray-200/30 sm:py-3 sm:pl-3.5 sm:pr-3.5"
-      : variant === "child"
-        ? "rounded-md border border-gray-200/90 bg-[#fcfcf9]/95 py-1.5 pl-2.5 pr-2.5 sm:py-2 sm:pl-3 sm:pr-3"
-        : "rounded-md border border-gray-200/70 bg-white/70 py-1.5 pl-2.5 pr-2 sm:pl-2.5 sm:pr-2.5";
+  const borderClass =
+    variant === "root" ? TREE_CARD_BORDER_ROOT : TREE_CARD_BORDER;
+  const shellClasses = `${TREE_CARD_BASE} ${borderClass} ${TREE_CARD_MEDIA}`;
 
   const inner = (
     <>
       <div
-        className={`${titleClasses} ${node.href ? "group-hover/tree-node:decoration-[#7D9CD4]/45 underline decoration-transparent underline-offset-2" : ""}`}
+        className={`${titleClasses} font-normal [&_*]:font-normal ${node.href ? "group-hover/tree-node:decoration-[#7D9CD4]/45 underline decoration-transparent underline-offset-2" : ""}`}
         data-tree-title
       >
         {titleCell != null ? (
@@ -57,8 +115,7 @@ function TreeNodePanel({
           <span className="font-normal text-gray-400">（無題）</span>
         )}
       </div>
-      {restHeaders.map((label, i) => {
-        const cell = cells[i + 1];
+      {supplementary.map(({ label, cell }, i) => {
         const empty =
           cell == null || (typeof cell === "string" && cell.trim() === "");
         if (empty) return null;
@@ -67,22 +124,27 @@ function TreeNodePanel({
             key={`${label}-${i}`}
             className="flex flex-col gap-y-0.5 sm:flex-row sm:items-baseline sm:gap-x-2"
           >
-            <span className="shrink-0 text-[10px] font-medium text-gray-400 sm:w-[4.5rem] sm:text-[11px]">
+            <span className="shrink-0 text-[10px] font-normal text-gray-400 sm:w-[4.5rem] sm:text-[10.5px]">
               {label}
             </span>
-            <div className="min-w-0 text-xs leading-snug text-gray-600 sm:text-[13px] sm:leading-snug">
+            <div className="min-w-0 text-[12px] leading-snug text-gray-600 sm:text-[12.5px] sm:leading-snug">
               {renderCell(cell)}
             </div>
           </div>
         );
       })}
+      {node.citations.length > 0 && (
+        <div className="pt-1.5">
+          <Citation citations={node.citations} />
+        </div>
+      )}
     </>
   );
 
-  const panelClass = `group/tree-node min-w-0 space-y-1 ${shellClasses} transition-colors duration-150 ease-out hover:border-[#7D9CD4]/40 hover:bg-white`;
+  const panelClass = `group/tree-node space-y-1 ${shellClasses} ${TREE_CARD_HOVER}`;
 
   const linkExtra =
-    "block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7D9CD4]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fcfcf9]";
+    "block min-w-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7D9CD4]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
 
   if (node.href != null) {
     return isExternalHref(node.href) ? (
@@ -137,7 +199,7 @@ function TreeBranchConnector({
 }): React.ReactElement {
   return (
     <div
-      className="relative w-5 shrink-0 self-stretch sm:w-[22px]"
+      className={`relative ${TREE_CONNECTOR_WIDTH} shrink-0 self-stretch`}
       aria-hidden
     >
       {!isLastSibling ? (
@@ -151,7 +213,7 @@ function TreeBranchConnector({
         />
       )}
       <div
-        className={`absolute ${TREE_AXIS_LEFT} h-px w-[11px] sm:w-3 ${TREE_LINE}`}
+        className={`absolute ${TREE_AXIS_LEFT} h-px w-[9px] sm:w-[10px] ${TREE_LINE}`}
         style={{ top: TREE_ELBOW_Y_PX }}
       />
     </div>
@@ -166,6 +228,7 @@ function TreeSubtreeRow({
   renderCell,
   depth,
   maxDepth,
+  hasYearColumn,
 }: {
   node: TableTreeNode;
   index: number;
@@ -174,10 +237,12 @@ function TreeSubtreeRow({
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
+  hasYearColumn: boolean;
 }): React.ReactElement {
   const isLast = index === siblingCount - 1;
   const childVariant: PanelVariant =
     depth <= 1 ? "child" : "grandchild";
+  const parsed = parseTreeNodeColumns(headers, node.cells);
 
   return (
     <li
@@ -187,10 +252,17 @@ function TreeSubtreeRow({
       data-node-id={node.id}
     >
       <TreeBranchConnector isLastSibling={isLast} />
+      <TreeYearLane
+        cell={parsed.externalYearCell}
+        renderCell={renderCell}
+        hasYearColumn={hasYearColumn}
+        laneAlign="child"
+      />
       <div className="min-w-0 flex-1 pb-2 sm:pb-2.5">
         <TreeNodePanel
           node={node}
-          headers={headers}
+          titleCell={parsed.titleCell}
+          supplementary={parsed.supplementary}
           renderCell={renderCell}
           variant={childVariant}
         />
@@ -202,6 +274,7 @@ function TreeSubtreeRow({
             depth={depth + 1}
             maxDepth={maxDepth}
             showParentStem={false}
+            hasYearColumn={hasYearColumn}
           />
         )}
       </div>
@@ -216,6 +289,7 @@ function TreeChildrenBlock({
   depth,
   maxDepth,
   showParentStem,
+  hasYearColumn,
 }: {
   nodes: TableTreeNode[];
   headers: string[];
@@ -223,6 +297,7 @@ function TreeChildrenBlock({
   depth: number;
   maxDepth: number;
   showParentStem: boolean;
+  hasYearColumn: boolean;
 }): React.ReactElement {
   return (
     <div className="relative mt-1.5 min-w-0 sm:mt-2">
@@ -242,6 +317,7 @@ function TreeChildrenBlock({
             renderCell={renderCell}
             depth={depth}
             maxDepth={maxDepth}
+            hasYearColumn={hasYearColumn}
           />
         ))}
       </ul>
@@ -254,30 +330,52 @@ function TreeRootBlock({
   headers,
   renderCell,
   maxDepth,
+  hasYearColumn,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   maxDepth: number;
+  hasYearColumn: boolean;
 }): React.ReactElement {
+  const parsed = parseTreeNodeColumns(headers, node.cells);
+
   return (
     <li className="list-none" data-tree-root="">
-      <TreeNodePanel
-        node={node}
-        headers={headers}
-        renderCell={renderCell}
-        variant="root"
-      />
-      {node.children.length > 0 && maxDepth > 0 && (
-        <TreeChildrenBlock
-          nodes={node.children}
-          headers={headers}
+      <div className="flex min-w-0 gap-0">
+        {hasYearColumn && (
+          <div
+            className={`${TREE_CONNECTOR_WIDTH} shrink-0 self-stretch`}
+            aria-hidden
+          />
+        )}
+        <TreeYearLane
+          cell={parsed.externalYearCell}
           renderCell={renderCell}
-          depth={1}
-          maxDepth={maxDepth}
-          showParentStem
+          hasYearColumn={hasYearColumn}
+          laneAlign="root"
         />
-      )}
+        <div className="min-w-0 flex-1 pb-2 sm:pb-2.5">
+          <TreeNodePanel
+            node={node}
+            titleCell={parsed.titleCell}
+            supplementary={parsed.supplementary}
+            renderCell={renderCell}
+            variant="root"
+          />
+          {node.children.length > 0 && maxDepth > 0 && (
+            <TreeChildrenBlock
+              nodes={node.children}
+              headers={headers}
+              renderCell={renderCell}
+              depth={1}
+              maxDepth={maxDepth}
+              showParentStem
+              hasYearColumn={hasYearColumn}
+            />
+          )}
+        </div>
+      </div>
     </li>
   );
 }
@@ -297,6 +395,7 @@ export function TreeTableRenderer({
 }): React.ReactElement {
   const roots = buildTreeTableModel(table.rows);
   const effectiveHeaders = headers.length > 0 ? headers : ["名称"];
+  const hasYearColumn = treeHeadersHaveYearColumn(effectiveHeaders);
 
   return (
     <div
@@ -304,7 +403,7 @@ export function TreeTableRenderer({
       className="tree-table-renderer my-4 w-full max-w-full overflow-x-hidden"
       data-table-display="tree"
     >
-      <ul className="m-0 list-none space-y-5 p-0 sm:space-y-6">
+      <ul className="m-0 list-none space-y-5 p-0 sm:space-y-5">
         {roots.map((node) => (
           <TreeRootBlock
             key={node.id}
@@ -312,6 +411,7 @@ export function TreeTableRenderer({
             headers={effectiveHeaders}
             renderCell={renderCell}
             maxDepth={DEFAULT_MAX_DEPTH}
+            hasYearColumn={hasYearColumn}
           />
         ))}
       </ul>

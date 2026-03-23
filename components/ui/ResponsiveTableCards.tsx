@@ -1,4 +1,5 @@
 import React from "react";
+import { Citation } from "@/components/Citation";
 
 export type ResponsiveTableCardCell = {
   label: React.ReactNode;
@@ -7,6 +8,7 @@ export type ResponsiveTableCardCell = {
 
 export type ResponsiveTableCardRow = {
   cells: ResponsiveTableCardCell[];
+  citations?: number[];
 };
 
 interface ResponsiveTableCardsProps {
@@ -57,6 +59,11 @@ export function ResponsiveTableCards({
               </div>
             ))}
           </div>
+          {row.citations != null && row.citations.length > 0 && (
+            <div className="mt-3">
+              <Citation citations={row.citations} />
+            </div>
+          )}
         </div>
       ))}
     </div>

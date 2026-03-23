@@ -1,9 +1,10 @@
 {
   "meta": {
-    "id": "double_gauss_overview",
-    "name": "ダブルガウス型写真レンズ総論（オールドレンズ中心）",
-    "english_name": "Double-Gauss photographic lenses (classic era focus)",
-    "category": "photographic_lens_design",
+    "id": "double_gauss",
+    "slug": "double_gauss",
+    "name": "ダブルガウス型",
+    "english_name": "Double-Gauss type",
+    "category": "レンズ構成型",
     "aliases": [
       "ダブルガウス",
       "Gauss type",
@@ -34,66 +35,48 @@
       "id": "overview",
       "title": "概要",
       "sections": [
-        {
-              "id": "double_gauss_genealogy",
-              "title": "ダブルガウス系の系譜",
-              "items": [
                 {
-                  "type": "table",
-                  "display": "tree",
-                  "headers": ["名称", "図","年代", "特徴"],
-                  "rows": [
-                    {
-                      "id": "gauss",
-                      "parentId": null,
-                      "cells": ["ガウス型", "a","1817", "対称型レンズの原型"]
-                    },
-                    {
-                      "id": "double_gauss",
-                      "parentId": "gauss",
-                      "cells": ["ダブルガウス型", {
+          "id": "optical_formula",
+          "title": "光学構成図",
+          "toc": {
+            "hidden": true
+          },
+                  "items": [
+            {
               "type": "image",
               "src": "/images/lens-types/double-gauss/double-gauss.jpg",
-              "scale": 0.5
-            },"1890年代", "高速標準レンズの基盤"]
-                    },
-                    {
-                      "id": "g",
-                      "parentId": "double_gauss",
-                      "cells": ["ガ型", "a","1817", "対称型レンズの原型"]
-                    },
-                    {
-                      "id": "ga",
-                      "parentId": "g",
-                      "cells": ["ガウ型", "a","1817", "対称型レンズの原型"]
-                    },
-                    {
-                      "id": "gau",
-                      "parentId": "ga",
-                      "cells": ["ガウス型", "a","1817", "対称型レンズの原型"]
-                    },
-                    {
-                      "id": "double_gauss",
-                      "parentId": "gauss",
-                      "cells": ["ダブルガウス型","a", "1890年代", "高速標準レンズの基盤"]
-                    },
-                    {
-                      "id": "gaus",
-                      "parentId": "gau",
-                      "cells": ["ガウ-型", "a","1817", "対称型レンズの原型"]
-                    }
-                  ]
-                }
-              ]
-            },
+              "caption": "ダブルガウス型の基本構成図"
+            }
+          ]
+        },
+        {
+          "id": "Note",
+          "title": "",
+          "toc": {
+            "hidden": true
+          },
+          "items":[
+            {
+              "type": "paragraph",
+              "tone": "highlight_note",
+              "text": "注意）\n以下の記事はプラナー型、ビオター型にダブルガウス型として共通する内容が書かれている。それぞれの型について詳しく知りたい場合はそれぞれの専用ページへ飛んでいただきたい。"
+            }
+          ]
+        },
         {
           "id": "what_it_is",
           "title": "定義",
           "items": [
-            
             {
               "type": "paragraph",
-              "text": "ダブルガウス型レンズは、1817年にガウスが提案した正負メニスカスから成るガウス型対物レンズを二つ背中合わせに配置した構成を起源とし、1888年にAlvan G. Clarkが対称型写真レンズとして特許化したものである。20世紀前半から中盤にかけて、この構成を基礎とするBiotar型やPlanar型が高性能な標準レンズとして発展し、35mm判スチルカメラ用の高速標準レンズの主流となった。オールドレンズ時代のダブルガウス型は、6枚構成から7〜8枚構成へと発展する過程で収差補正と高速化のバランスを追求しつつ、未コートや単層コートに起因するフレアや柔らかい描写が独自の魅力として評価されてきた。",
+              "text": "ダブルガウス型は、対称配置のガウス型を基礎とした写真用標準レンズの代表的構成である。",
+              "citations": [
+                0
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "1817年にガウスが提案した正負メニスカスから成るガウス型対物レンズを二つ背中合わせに配置した構成を起源とし、1888年にAlvan G. Clarkが対称型写真レンズとして特許化したものである。20世紀前半から中盤にかけて、この構成を基礎とするBiotar型やPlanar型が高性能な標準レンズとして発展し、35mm判スチルカメラ用の高速標準レンズの主流となった。オールドレンズ時代のダブルガウス型は、6枚構成から7〜8枚構成へと発展する過程で収差補正と高速化のバランスを追求しつつ、未コートや単層コートに起因するフレアや柔らかい描写が独自の魅力として評価されてきた。",
               "citations": [
                 1,
                 2,
@@ -168,100 +151,96 @@
       "title": "分類",
       "sections": [
         {
-          "id": "family_tree",
-          "title": "派生構成型",
+          "id": "double_gauss_genealogy",
+          "title": "ダブルガウス系の系譜",
           "items": [
             {
               "type": "table",
-              "display": "table",
-              "headers": [
-                "系統/呼称",
-                "構成図",
-                "ダブルガウスとの関係",
-                "設計上の要点",
-                "初出",
-                "代表的なレンズ",
-                "注意点"
-              ],
+              "display": "tree",
+              "headers": ["名称", "図","年代", "特徴","初出","代表的なレンズ"],
               "rows": [
-                [
-                  "原型ダブルガウス",
-                  "4枚4群対称構成",
-                  "ガウス型を二つ対称に配置した最初期の形態",
-                  "対称性による歪曲・コマの抑制を重視し、F値は比較的暗い。",
-                  "1888年 Alvan G. Clark特許",
-                  "初期Bausch & Lombダブルガウス",
-                  "写真用としては収差補正が不十分であり、後の6枚型に比べると実用性が低い。"
-                ],
-                [
-                  "Planar型",
-                  "6枚4群または6枚6群のほぼ対称構成",
-                  "Paul RudolphによるPlanar設計に由来するダブルガウスの基本派生形",
-                  "貼り合わせ消失によりゴーストは増えるが、収差補正自由度が高く高性能化に向く。",
-                  "1896年 Zeiss Planar特許",
-                  "Carl Zeiss Planar 50mm F2、Leitz Summicron 50mm",
-                  "未コート期では面数増加によるフレアが問題になり、Tコート以降に真価を発揮した。"
-                ],
-                [
-                  "Biotar型",
-                  "6枚4群で後群が強めの非対称構成",
-                  "ダブルガウスを基礎としつつ後群に強い収差制御を割り当てた派生形",
-                  "大口径化と周辺像質向上を狙い、開放での残存コマと像面湾曲が渦巻きボケを生む。",
-                  "1927年頃 シネ用Biotar 50mm F1.4、1936年 Biotar 58mm F2",
-                  "Carl Zeiss Jena Biotar 58mm F2、Meyer-Optik Biotar 75mm F1.5",
-                  "開放では周辺の流れと渦巻きボケが顕著であり、一般的な解像重視用途には向かない。"
-                ],
-                [
-                  "Xenon/Ultron系",
-                  "7枚6群など非対称化・枚数増加型",
-                  "ダブルガウスをベースに前後群の枚数や屈折力配分を変化させた高速派生形",
-                  "F1.5〜F1.4級の高速化と画面周辺の収差補正のバランスを重視する。",
-                  "1930年代 Schneider Xenon、後にVoigtländer Ultron",
-                  "Schneider Xenon 50mm F1.5、Voigtländer Ultron 50mm F1.8",
-                  "設計自由度が高い反面、製造公差と組立精度への要求が高くコストも上がる。"
-                ],
-                [
-                  "高速標準F1.2系",
-                  "7〜8枚構成の変形ダブルガウス",
-                  "ダブルガウスを基礎にしつつ開放F1.2前後を実現するために非対称化と高屈折ガラスを導入した系統",
-                  "大口径化に伴う球面収差・コマを高屈折低分散ガラスとレンズ枚数増加で抑制する。",
-                  "1960年代以降",
-                  "Canon FL/FD 55mm F1.2、Nikkor 55mm F1.2、Minolta MC Rokkor 58mm F1.2",
-                  "開放描写は収差の味とトレードオフになり、周辺像質や軸上色収差の残り方に個体差が大きい。"
-                ],
-                [
-                  "広角ダブルガウス",
-                  "35mm前後、6〜8枚の変形構成",
-                  "標準用ダブルガウスを短焦点化した設計で、非対称性が強くなる派生",
-                  "像側テレフォト化や高屈折ガラスを併用し、35mm F2などを実現する。",
-                  "1950年代以降",
-                  "Leitz Summaron 35mm、Canon 35mm F2、Nikkor 35mm F2",
-                  "像面湾曲と周辺コマの制御が難しく、オールド個体では周辺像質の低下が残る傾向がある。"
-                ],
-                [
-                  "シネ用Panchro系",
-                  "ダブルガウス派生のシネ用大口径",
-                  "Cooke Speed Panchroなど、シネ撮影に特化してチューニングされたダブルガウス派生系統",
-                  "高速性能と被写界深度コントロールを重視し、フレアとハロをある程度残した設計が多い。",
-                  "1920〜1930年代 Cooke Speed Panchro",
-                  "Taylor-Hobson Cooke Speed Panchro各種",
-                  "映画用としては色収差やフォーカスシフトのバランスが重要であり、写真用と評価軸がやや異なる。"
-                ]
+                {
+                  "id": "gauss",
+                  "parentId": null,
+                  "cells": ["ガウス型", 
+                  {
+                    "type": "image",
+                    "src": "/images/lens-types/gauss/gauss_16-9.jpg",
+                    "scale": 0.5
+                  },
+                  "1817", "正負メニスカスが組み合わさった形、始まり","ドイツの数学者カール・フリードリヒ・ガウス（1777-1855)(等差数列の和の公式の逸話が有名)が1817年に考案した望遠鏡用レンズ。","たぶん無い"]
+                },
+                {
+                  "id": "double_gauss",
+                  "parentId": "gauss",
+                  "cells": ["ダブルガウス型", 
+                  {
+                    "type": "image",
+                    "src": "/images/lens-types/double-gauss/double-gauss_16-9.jpg",
+                    "scale": 0.5
+                  },
+                  "1888", "写真用としては収差補正が不十分であり、後の6枚型に比べると実用性が低い。","1888年 Alvan G. Clark特許","初期Bausch & Lombダブルガウス?"]
+                },
+                {
+                  "id": "planar",
+                  "parentId": "double_gauss",
+                  "cells": ["プラナー型", 
+                  {
+                    "type": "image",
+                    "src": "/images/lens-types/planar/planar_16-9.jpg",
+                    "scale": 0.5
+                  },"1896", "未コート期では空気界面数増加によるフレアが問題になり、Tコート以降に真価を発揮した。","1896年 Zeiss Planar特許","Carl Zeiss Planar 50mm F2、Leitz Summicron 50mm"]
+                },
+                {
+                  "id": "biotar",
+                  "parentId": "planar",
+                  "cells": ["ビオター型", 
+                  {
+                    "type": "image",
+                    "src": "/images/lens-types/biotar/biotar_3-2.jpg",
+                    "scale": 0.5
+                  },
+                  "1927", "開放では周辺の流れと渦巻きボケが顕著なことが多い。","1927年頃 シネ用Biotar 50mm F1.4","Carl Zeiss Jena Biotar 58mm F2、Meyer-Optik Biotar 75mm F1.5"]
+                },
+                {
+                  "id": "xenon",
+                  "parentId": "biotar",
+                  "cells": ["クセノン型", "-"
+                  ,"1930", "設計自由度が高い反面、製造公差と組立精度への要求が高くコストも上がる。","1930年代 Schneider Xenon型","Schneider Xenon 50mm F1.5"]
+                },
+                {
+                  "id": "ultoron",
+                  "parentId": "biotar",
+                  "cells": ["ウルトロン型", "-"
+                  ,"1930", "-","-","Voigtländer Ultron 50mm F1.8"]
+                },
+                {
+                  "id": "double_gauss_wide",
+                  "parentId": "double_gauss",
+                  "cells": ["広角ダブルガウス型","-"
+                  , "1950~","標準用ダブルガウスを短焦点化した設計で、非対称性が強くなる派生\n像面湾曲と周辺コマの制御が難しく、オールド個体では周辺像質の低下が残る傾向がある。", "-","Leitz Summaron 35mm、Canon 35mm F2、Nikkor 35mm F2"]
+                },
+                {
+                  "id": "double_gauss_highspeed",
+                  "parentId": "double_gauss",
+                  "cells": ["高速ダブルガウス型","-"
+                  , "1960~","ダブルガウスを基礎にしつつ開放F1.2前後を実現するために非対称化と高屈折ガラスを導入した系統\n開放描写は収差の味とトレードオフになり、周辺像質や軸上色収差の残り方に個体差が大きい。", "-","Canon FL/FD 55mm F1.2、Nikkor 55mm F1.2、Minolta MC Rokkor 58mm F1.2"]
+                }
               ],
               "citations": [
-                1,
-                2,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                16,
-                18,
-                20,
-                22
-              ]
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            16,
+            18,
+            20,
+            22
+          ]
             }
           ]
         },
@@ -356,10 +335,12 @@
         },
         {
           "id": "naming_conventions",
-          "title": "呼称の揺れ（メーカー呼び/学術呼び/俗称）",
+          "tone": "note",
+          "title": "呼称の揺れ",
           "items": [
             {
               "type": "paragraph",
+              "tone": "highlight_note",
               "text": "学術的には対称配置のガウス型を基礎とする構成がダブルガウス型と呼ばれ、Biotar型やPlanar型も広義にはダブルガウス派生に含まれる。メーカーは商標としてPlanar、Biotar、Xenon、Ultron、Summar、Summitar、Summicronなど固有名を用いるが、その多くは実質的にダブルガウス系であり、商品名から構成を読み取るには歴史的資料の参照が必要である。俗称としては「ガウスタイプ」「ガウス型標準レンズ」「Biotar系」「Planar系」などが混在し、同じダブルガウス起源でもボケの性格や年代に応じて別系統のように語られることが多い。",
               "citations": [
                 1,
@@ -377,6 +358,7 @@
             },
             {
               "type": "list",
+              "tone": "highlight_note",
               "items": [
                 "学術呼称：double-Gauss lens、Gauss-type lens などが用いられ、Planar型やBiotar型もこの一族に含まれる。",
                 "メーカー呼称：Planar、Biotar、Xenon、Ultron、Summar、Summitar、Summicron、Takumarなど商標名が構成型の違いと混在して用いられる。",
@@ -1419,6 +1401,7 @@
           "items": [
             {
               "type": "table",
+              "display":"timeline",
               "headers": [
                 "年",
                 "人物/企業",

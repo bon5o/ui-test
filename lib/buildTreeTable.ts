@@ -1,11 +1,12 @@
 import type { TableCellValue, TableRowInput, TreeTableRowRecord } from "@/types/hybridContent";
-import { getTableRowCells } from "@/lib/tableRowCells";
+import { getTableRowCells, getTableRowCitations } from "@/lib/tableRowCells";
 
 export type NormalizedTableTreeRow = {
   id: string;
   parentId: string | null;
   href?: string;
   cells: TableCellValue[];
+  citations: number[];
   sourceIndex: number;
 };
 
@@ -15,12 +16,14 @@ export type TableTreeNode = NormalizedTableTreeRow & {
 
 function rowMeta(row: TableRowInput, rowIndex: number): NormalizedTableTreeRow {
   const cells = getTableRowCells(row);
+  const citations = getTableRowCitations(row);
   if (Array.isArray(row)) {
     return {
       id: `__row_${rowIndex}`,
       parentId: null,
       href: undefined,
       cells,
+      citations,
       sourceIndex: rowIndex,
     };
   }
@@ -36,7 +39,7 @@ function rowMeta(row: TableRowInput, rowIndex: number): NormalizedTableTreeRow {
   }
   const href =
     typeof o.href === "string" && o.href.trim() !== "" ? o.href.trim() : undefined;
-  return { id, parentId, href, cells, sourceIndex: rowIndex };
+  return { id, parentId, href, cells, citations, sourceIndex: rowIndex };
 }
 
 function sortChildrenRecursive(nodes: TableTreeNode[]): void {
