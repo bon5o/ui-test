@@ -36,24 +36,36 @@ export function MobileTreeParentTrunk({
       )
     );
 
-    const horizontals = Array.from(
+    // 最初の子の「幹線への接続点（elbow marker）」に厳密に合わせる
+    const endMarkers = Array.from(
       containerEl.querySelectorAll<HTMLElement>(
-        `[data-mobile-tree-elbow-horizontal][data-mobile-tree-elbow-horizontal-depth="${String(childDepth)}"]`
+        `[data-mobile-tree-elbow-marker][data-mobile-tree-elbow-depth="${String(childDepth)}"][data-mobile-tree-elbow-role="node"]`
       )
     );
 
-    if (startMarkers.length === 0 || horizontals.length === 0) {
+    if (startMarkers.length === 0 || endMarkers.length === 0) {
       setTrunk(null);
       return;
     }
 
     const containerRect = containerEl.getBoundingClientRect();
     const startRect = startMarkers[0].getBoundingClientRect();
-    const firstHorizontalRect = horizontals[0].getBoundingClientRect();
 
-    const top = startRect.top - containerRect.top;
-    // 横線（L字腕）の始点までを確実に含めて交わる
-    const height = Math.max(1, firstHorizontalRect.bottom - startRect.top);
+    // DOM上で最上段にある子を「最初の子」とみなす
+    let firstEndRect = endMarkers[0].getBoundingClientRect();
+    for (let i = 1; i < endMarkers.length; i++) {
+      const r = endMarkers[i].getBoundingClientRect();
+      if (r.top < firstEndRect.top) firstEndRect = r;
+    }
+
+    // 1px線なので centerY から top/height を作る（両端の center を確実に含める）
+    const startCenterY =
+      startRect.top - containerRect.top + startRect.height / 2;
+    const endCenterY =
+      firstEndRect.top - containerRect.top + firstEndRect.height / 2;
+
+    const top = startCenterY - 0.5;
+    const height = Math.max(0, endCenterY - startCenterY + 1);
 
     const parentDepth = Math.max(0, childDepth - 1);
     const padLeftChildPx = Math.min(childDepth * INDENT_STEP_PX, INDENT_MAX_PX);
