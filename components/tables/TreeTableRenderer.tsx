@@ -411,17 +411,27 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
+  incomingNodeElbowMarkerId,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
+  /** first direct child の role="node" elbow 用に id を注入する */
+  incomingNodeElbowMarkerId?: string;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
   const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
   const hasChildren = node.children.length > 0 && depth < maxDepth;
+  const startElbowMarkerId = hasChildren
+    ? `mobile-tree-parent-elbow-${node.id}`
+    : undefined;
+  const endElbowMarkerId =
+    hasChildren && node.children[0]?.id != null
+      ? `mobile-tree-node-elbow-${node.children[0].id}`
+      : undefined;
   const showIncoming = depth > 0;
   const showOutgoing = hasChildren;
   const showConnector = showIncoming || showOutgoing;
@@ -442,6 +452,7 @@ function MobileTreeNode({
                 data-mobile-tree-elbow-marker=""
                 data-mobile-tree-elbow-role="node"
                 data-mobile-tree-elbow-depth={String(depth)}
+                id={incomingNodeElbowMarkerId}
               />
             </>
           )}
@@ -455,6 +466,7 @@ function MobileTreeNode({
                 data-mobile-tree-elbow-marker=""
                 data-mobile-tree-elbow-role="parent"
                 data-mobile-tree-elbow-depth={String(childDepth)}
+                id={startElbowMarkerId}
               />
             </>
           )}
@@ -533,6 +545,7 @@ function MobileTreeNode({
         renderCell={renderCell}
         depth={depth}
         maxDepth={maxDepth}
+        firstChildIncomingNodeElbowMarkerId={endElbowMarkerId}
       />
     ) : null;
 
@@ -541,6 +554,8 @@ function MobileTreeNode({
       {hasChildren ? (
         <MobileTreeParentTrunk
           childDepth={childDepth}
+          startElbowMarkerId={startElbowMarkerId!}
+          endElbowMarkerId={endElbowMarkerId!}
           parentRow={nodeRow}
           childrenBlock={childrenList}
         />
@@ -560,6 +575,7 @@ function MobileTreeChildren({
   renderCell,
   depth,
   maxDepth,
+  firstChildIncomingNodeElbowMarkerId,
 }: {
   nodes: TableTreeNode[];
   headers: string[];
@@ -567,6 +583,7 @@ function MobileTreeChildren({
   /** 親の depth（children は depth+1 になる） */
   depth: number;
   maxDepth: number;
+  firstChildIncomingNodeElbowMarkerId?: string;
 }): React.ReactElement {
   const childDepth = depth + 1;
   return (
@@ -574,7 +591,7 @@ function MobileTreeChildren({
       <ul
         className="m-0 list-none p-0 space-y-0"
       >
-        {nodes.map((child) => (
+        {nodes.map((child, idx) => (
           <MobileTreeNode
             key={child.id}
             node={child}
@@ -582,6 +599,9 @@ function MobileTreeChildren({
             renderCell={renderCell}
             depth={childDepth}
             maxDepth={maxDepth}
+            incomingNodeElbowMarkerId={
+              idx === 0 ? firstChildIncomingNodeElbowMarkerId : undefined
+            }
           />
         ))}
       </ul>
