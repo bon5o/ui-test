@@ -33,7 +33,7 @@
               "type": "table",
               "initialEmpty": true,
               "alwaysVisibleHeaders": ["年", "メーカー名", "国名/地域"],
-              "selectableHeaders": [ "創業者","活動時期（創業～終息/現存）","重要な転機","技術的特徴","当時の評価","代表的レンズ"],
+              "selectableHeaders": [ "創業者","活動時期（創業〜終息/現存）","重要な転機","技術的特徴","当時の評価","代表的レンズ、カメラ"],
               "display": "timeline",
               "headers": [
                 "年",
