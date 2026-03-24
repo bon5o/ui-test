@@ -9,9 +9,6 @@ import {
   type TreeNodeSupplementaryRow,
 } from "@/lib/parseTreeTableNode";
 import { Citation } from "@/components/Citation";
-import { MobileTreeSiblingTrunk } from "./MobileTreeSiblingTrunk";
-import { MobileTreeParentTrunk } from "./MobileTreeParentTrunk";
-
 /** ノード見出し行と横枝の交点（px）。コンパクトカードと揃える */
 const TREE_ELBOW_Y_PX = 13;
 const TREE_LINE = "bg-[#7D9CD4]/25";
@@ -385,8 +382,6 @@ function TreeRootBlock({
 }
 
 const DEFAULT_MAX_DEPTH = 32;
-const MOBILE_INDENT_STEP = 10;
-const MOBILE_INDENT_MAX = 28;
 
 function pickMobileSupplementary(
   rows: TreeNodeSupplementaryRow[]
@@ -411,154 +406,77 @@ function MobileTreeNode({
   renderCell,
   depth,
   maxDepth,
-  idPrefix,
-  incomingGroupParentId,
-  incomingGroupSubtreeId,
+  isLastSibling,
+  hasYearColumn,
 }: {
   node: TableTreeNode;
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
   depth: number;
   maxDepth: number;
-  /** TreeTableRenderer インスタンス単位でユニークにするための prefix */
-  idPrefix: string;
-  /**
-   * この node の「role=node elbow」(incoming elbow marker) が属する
-   * 親 subtree グループの識別子。
-   *
-   * MobileTreeSiblingTrunk はこの値で marker を絞るため、
-   * subtree を跨いで絶対に拾わないために必須。
-   */
-  incomingGroupParentId?: string;
-  incomingGroupSubtreeId?: string;
+  /** depth > 0 のとき、兄弟中の最終要素か（PC版 `TreeBranchConnector` と同一） */
+  isLastSibling?: boolean;
+  hasYearColumn: boolean;
 }): React.ReactElement {
   const parsed = parseTreeNodeColumns(headers, node.cells);
   const { featureRow, otherRows } = pickMobileSupplementary(parsed.supplementary);
-  const padLeft = Math.min(depth * MOBILE_INDENT_STEP, MOBILE_INDENT_MAX);
   const hasChildren = node.children.length > 0 && depth < maxDepth;
-  const startElbowMarkerId = hasChildren
-    ? `${idPrefix}-mobile-tree-parent-elbow-${node.id}`
-    : undefined;
-  const endElbowMarkerId =
-    hasChildren && node.children[0]?.id != null
-      ? `${idPrefix}-mobile-tree-node-elbow-${node.children[0].id}`
-      : undefined;
-  const showIncoming = depth > 0;
-  const showOutgoing = hasChildren;
-  const showConnector = showIncoming || showOutgoing;
-  const incomingNodeElbowMarkerId = showIncoming
-    ? `${idPrefix}-mobile-tree-node-elbow-${node.id}`
-    : undefined;
   const childDepth = depth + 1;
 
-  const nodeRow = (
-    <div
-      className="flex min-w-0 gap-0.5 pb-2"
+  /** モバイル専用カード本文（詳細の details 含む）。線構造とは切り離す。 */
+  const mobileCardArticle = (
+    <article
+      className={`min-w-0 rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
+      data-mobile-tree-node=""
+      data-depth={depth}
     >
-      {showConnector ? (
-        <div className="relative w-4 shrink-0 self-stretch pointer-events-none" aria-hidden>
-          {showIncoming && (
-            <>
-              {/* ノード自身の elbow（同階層の幹線計測用） */}
-              <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
-                style={{ top: TREE_ELBOW_Y_PX }}
-                data-mobile-tree-elbow-marker=""
-                data-mobile-tree-elbow-role="node"
-                data-mobile-tree-elbow-depth={String(depth)}
-                data-mobile-tree-elbow-parent-id={incomingGroupParentId}
-                data-mobile-tree-elbow-subtree-id={incomingGroupSubtreeId}
-                id={incomingNodeElbowMarkerId}
-              />
-            </>
-          )}
+      {parsed.externalYearCell != null &&
+        !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
+          <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
+            {renderCell(parsed.externalYearCell)}
+          </div>
+        )}
 
-          {showOutgoing && (
-            <>
-              {/* 親→子の接続用: 子リストの幹線計測（childDepth）に含める目印 */}
-              <div
-                className={`absolute ${TREE_AXIS_LEFT} z-[1] w-px h-px bg-transparent`}
-                style={{ top: TREE_ELBOW_Y_PX }}
-                data-mobile-tree-elbow-marker=""
-                data-mobile-tree-elbow-role="parent"
-                data-mobile-tree-elbow-depth={String(childDepth)}
-                data-debug-outgoing-elbow=""
-                data-debug-outgoing-node={node.id}
-                id={startElbowMarkerId}
-              />
-            </>
-          )}
+      <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
+        {parsed.titleCell != null ? (
+          renderCell(parsed.titleCell)
+        ) : (
+          <span className="font-normal text-gray-400">（無題）</span>
+        )}
+      </div>
 
-          {/* 横枝（カードへ入る線）: PC版に合わせて incoming のときだけ描画 */}
-          {showIncoming && (
-            <div
-              data-debug-line="elbow-line"
-              className={`absolute ${TREE_AXIS_LEFT} z-[99999] opacity-100 h-[3px] w-[9px] sm:w-[10px]`}
-              style={{ top: TREE_ELBOW_Y_PX, backgroundColor: "rgba(0, 255, 0, 1)" }}
-              data-mobile-tree-elbow-horizontal=""
-              data-mobile-tree-elbow-horizontal-depth={String(depth)}
-            />
-          )}
+      {featureRow != null && (
+        <div className="mt-2 space-y-0.5">
+          <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
+          <div className="text-[12px] leading-snug text-gray-700">
+            {renderCell(featureRow.cell)}
+          </div>
         </div>
-      ) : (
-        <div className="w-4 shrink-0" aria-hidden />
       )}
 
-      <article
-        className={`min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 py-2.5 ${MOBILE_TREE_CARD_MEDIA}`}
-        data-mobile-tree-node=""
-        data-depth={depth}
-      >
-        {parsed.externalYearCell != null &&
-          !(typeof parsed.externalYearCell === "string" && parsed.externalYearCell.trim() === "") && (
-            <div className="mb-1 text-[11px] leading-none text-gray-500 tabular-nums">
-              {renderCell(parsed.externalYearCell)}
-            </div>
-          )}
-
-        <div className="text-[15px] font-normal leading-snug text-gray-900 [&_*]:font-normal">
-          {parsed.titleCell != null ? (
-            renderCell(parsed.titleCell)
-          ) : (
-            <span className="font-normal text-gray-400">（無題）</span>
-          )}
-        </div>
-
-        {featureRow != null && (
-          <div className="mt-2 space-y-0.5">
-            <div className="text-[10px] font-normal text-gray-400">{featureRow.label}</div>
-            <div className="text-[12px] leading-snug text-gray-700">
-              {renderCell(featureRow.cell)}
-            </div>
-          </div>
-        )}
-
-        {otherRows.length > 0 && (
-          <details className="mt-2">
-            <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
-            <div className="mt-1.5 space-y-1.5">
-              {otherRows.map(({ label, cell }, i) => (
-                <div key={`${label}-${i}`} className="space-y-0.5">
-                  <div className="text-[10px] font-normal text-gray-400">{label}</div>
-                  <div className="text-[12px] leading-snug text-gray-700">
-                    {renderCell(cell)}
-                  </div>
+      {otherRows.length > 0 && (
+        <details className="mt-2">
+          <summary className="cursor-pointer text-[11px] text-gray-500">詳細</summary>
+          <div className="mt-1.5 space-y-1.5">
+            {otherRows.map(({ label, cell }, i) => (
+              <div key={`${label}-${i}`} className="space-y-0.5">
+                <div className="text-[10px] font-normal text-gray-400">{label}</div>
+                <div className="text-[12px] leading-snug text-gray-700">
+                  {renderCell(cell)}
                 </div>
-              ))}
-            </div>
-          </details>
-        )}
-
-        {node.citations.length > 0 && (
-          <div className="mt-2">
-            <Citation citations={node.citations} />
+              </div>
+            ))}
           </div>
-        )}
-      </article>
-    </div>
-  );
+        </details>
+      )}
 
-  const subtreeId = `${idPrefix}-mobile-tree-subtree-${node.id}`;
+      {node.citations.length > 0 && (
+        <div className="mt-2">
+          <Citation citations={node.citations} />
+        </div>
+      )}
+    </article>
+  );
 
   const childrenList =
     hasChildren ? (
@@ -568,92 +486,92 @@ function MobileTreeNode({
         renderCell={renderCell}
         depth={depth}
         maxDepth={maxDepth}
-        parentId={node.id}
-        subtreeId={subtreeId}
-        idPrefix={idPrefix}
+        showParentStem={depth === 0}
+        hasYearColumn={hasYearColumn}
       />
     ) : null;
 
+  /** PC版 `TreeRootBlock` と同型（年代列はモバイルではカード内表示のためここでは出さない） */
+  if (depth === 0) {
+    return (
+      <li className="list-none" data-tree-root="">
+        <div className="flex min-w-0 gap-0">
+          {hasYearColumn && (
+            <div
+              className={`${TREE_CONNECTOR_WIDTH} shrink-0 self-stretch`}
+              aria-hidden
+            />
+          )}
+          <div className="min-w-0 flex-1 pb-2 sm:pb-2.5">
+            {mobileCardArticle}
+            {childrenList}
+          </div>
+        </div>
+      </li>
+    );
+  }
+
+  /** PC版 `TreeSubtreeRow` と同型 */
   return (
-    <li className="relative list-none" style={{ paddingLeft: `${padLeft}px` }}>
-      {hasChildren ? (
-        <MobileTreeParentTrunk
-          childDepth={childDepth}
-          startElbowMarkerId={startElbowMarkerId!}
-          endElbowMarkerId={endElbowMarkerId!}
-          parentId={node.id}
-          subtreeId={subtreeId}
-          parentRow={nodeRow}
-          childrenBlock={childrenList}
-        />
-      ) : (
-        <>
-          {nodeRow}
-          {childrenList}
-        </>
-      )}
+    <li
+      className="flex min-w-0 list-none gap-0"
+      data-tree-node=""
+      data-depth={depth}
+      data-node-id={node.id}
+    >
+      <TreeBranchConnector isLastSibling={isLastSibling ?? true} />
+      <div className="min-w-0 flex-1 pb-2 sm:pb-2.5">
+        {mobileCardArticle}
+        {childrenList}
+      </div>
     </li>
   );
 }
 
+/**
+ * PC版 `TreeChildrenBlock` と同型（`TreeParentStem` + `ul`）。
+ * 子は `MobileTreeNode`（モバイルカード UI 維持）。
+ */
 function MobileTreeChildren({
   nodes,
   headers,
   renderCell,
   depth,
   maxDepth,
-  parentId,
-  subtreeId,
-  idPrefix,
+  showParentStem,
+  hasYearColumn,
 }: {
   nodes: TableTreeNode[];
   headers: string[];
   renderCell: (cell: unknown) => React.ReactNode;
-  /** 親の depth（children は depth+1 になる） */
   depth: number;
   maxDepth: number;
-  /** 直上の親 node id（同一子 group 絞り込み用） */
-  parentId: string;
-  /** この children block の subtree 識別子（同一子 group 絞り込み用） */
-  subtreeId: string;
-  idPrefix: string;
+  showParentStem: boolean;
+  hasYearColumn: boolean;
 }): React.ReactElement {
   const childDepth = depth + 1;
-  const childrenList = (
-    <ul className="m-0 list-none p-0 space-y-0">
-      {nodes.map((child) => (
-        <MobileTreeNode
-          key={child.id}
-          node={child}
-          headers={headers}
-          renderCell={renderCell}
-          depth={childDepth}
-          maxDepth={maxDepth}
-          incomingGroupParentId={parentId}
-          incomingGroupSubtreeId={subtreeId}
-          idPrefix={idPrefix}
-        />
-      ))}
-    </ul>
-  );
-
-  // sibling trunk は兄弟が2人以上の subtree でのみ出す
-  if (nodes.length < 2) {
-    return (
-      <div className="relative mt-1.5 min-w-0 sm:mt-2">
-        {childrenList}
-      </div>
-    );
-  }
-
   return (
-    <MobileTreeSiblingTrunk
-      childDepth={childDepth}
-      parentId={parentId}
-      subtreeId={subtreeId}
-    >
-      {childrenList}
-    </MobileTreeSiblingTrunk>
+    <div className="relative mt-1.5 min-w-0 sm:mt-2">
+      {showParentStem && <TreeParentStem />}
+      <ul
+        className="relative z-[1] m-0 list-none p-0"
+        data-tree-children=""
+        data-depth={childDepth}
+      >
+        {nodes.map((child, index) => (
+          <MobileTreeNode
+            key={child.id}
+            node={child}
+            headers={headers}
+            renderCell={renderCell}
+            depth={childDepth}
+            maxDepth={maxDepth}
+            isLastSibling={index === nodes.length - 1}
+            hasYearColumn={hasYearColumn}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -708,7 +626,7 @@ export function TreeTableRenderer({
               renderCell={renderCell}
               depth={0}
               maxDepth={DEFAULT_MAX_DEPTH}
-              idPrefix={`mobile-tree-${index}`}
+              hasYearColumn={hasYearColumn}
             />
           ))}
         </ul>
