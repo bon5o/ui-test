@@ -19,6 +19,7 @@ import {
 import { TimelineList, type TimelineItem } from "./sections/TimelineList";
 import { getTableRowCells, getTableRowCitations } from "@/lib/tableRowCells";
 import { TreeTableRenderer } from "./tables/TreeTableRenderer";
+import { SelectableTable } from "./tables/SelectableTable";
 
 interface ItemRendererProps {
   item: ContentItem;
@@ -72,6 +73,16 @@ function isImageCell(val: unknown): val is ImageItem {
     "type" in val &&
     (val as ImageItem).type === "image" &&
     typeof (val as ImageItem).src === "string"
+  );
+}
+
+/** セル値が ListItem かどうか */
+function isListCell(val: unknown): val is ListItem {
+  return (
+    typeof val === "object" &&
+    val != null &&
+    "type" in val &&
+    (val as ListItem).type === "list"
   );
 }
 
@@ -150,6 +161,23 @@ function renderTableCell(cell: unknown, ctx: TermRenderContext): React.ReactNode
     const img = cell;
     // NOTE: table 内でも scale を「画像本体」に効かせるため、高さ固定はしない（表外 image と挙動統一）
     return renderImageFigure(img);
+  }
+  if (isListCell(cell)) {
+    const entries =
+      Array.isArray(cell.items) ? cell.items :
+      Array.isArray(cell.entries) ? cell.entries :
+      Array.isArray(cell.bullets) ? cell.bullets :
+      Array.isArray(cell.text) ? cell.text :
+      [];
+    return (
+      <ul className="list-disc pl-4 space-y-0.5">
+        {entries.map((entry, i) => (
+          <li key={i} className="whitespace-pre-line">
+            <TermLinkify text={String(entry)} {...ctx} />
+          </li>
+        ))}
+      </ul>
+    );
   }
   if (cell != null && typeof cell === "object") {
     return (
@@ -675,6 +703,21 @@ function renderItemContent(
       const t = item as TableItem;
       const headers = t.headers ?? [];
       const displayMode = t.display ?? "responsive";
+
+      // alwaysVisibleHeaders が指定されていれば SelectableTable で描画
+      if (t.alwaysVisibleHeaders && t.alwaysVisibleHeaders.length > 0) {
+        return (
+          <SelectableTable
+            headers={headers}
+            rows={t.rows}
+            alwaysVisibleHeaders={t.alwaysVisibleHeaders}
+            selectableHeaders={t.selectableHeaders ?? []}
+            citations={t.citations}
+            display={displayMode}
+            initialEmpty={t.initialEmpty}
+          />
+        );
+      }
 
       if (displayMode === "tree") {
         return (

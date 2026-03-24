@@ -54,11 +54,12 @@ export interface QuoteItem {
   citations?: number[];
 }
 
-/** テーブルセルに指定できる値。文字列・画像オブジェクト・それらの配列（縦並び） */
+/** テーブルセルに指定できる値。文字列・画像・リスト・それらの配列（縦並び） */
 export type TableCellValue =
   | string
   | ImageItem
-  | Array<string | ImageItem>;
+  | ListItem
+  | Array<string | ImageItem | ListItem>;
 
 /** テーブルの表示モード。未指定時は "responsive"（既存挙動） */
 export type TableDisplayMode =
@@ -100,6 +101,12 @@ export interface TableItem {
   /** 各セルは string / image オブジェクト / (string | image)[] のいずれか。tree 時は TreeTableRowRecord も可 */
   rows: TableRowInput[];
   citations?: number[];
+  /** 常に表示する列ヘッダー。指定時は SelectableTable として描画 */
+  alwaysVisibleHeaders?: string[];
+  /** チェックボックスで選択できる列ヘッダー。未選択列は詳細ボタンで展開 */
+  selectableHeaders?: string[];
+  /** true のとき selectableHeaders の初期選択をすべて未選択にする */
+  initialEmpty?: boolean;
 }
 
 export interface SectionMeta {

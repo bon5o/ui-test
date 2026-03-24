@@ -5,6 +5,7 @@ const navItems: { href: string; label: string }[] = [
   { href: "/design", label: "構成型" },
   { href: "/maker", label: "メーカー" },
   { href: "/terms", label: "用語集" },
+  { href: "/history", label: "歴史" },
   { href: "/compare", label: "比較一覧" },
   { href: "/thought", label: "思想" },
 ];

@@ -1,0 +1,1042 @@
+{
+  "meta": {
+    "id": "coating_history",
+    "name": "コーティング史",
+    "english_name": "Lens Coatings History",
+    "category": "歴史",
+    "aliases": [
+      "レンズコーティング",
+      "反射防止膜",
+      "マルチコート",
+      "単層膜コーティング",
+      "多層膜コーティング"
+    ],
+    "summary": "写真用オールドレンズにおける各社固有のレンズコーティングの歴史的発展と技術的特徴を整理した資料である。",
+    "tags": [
+      "lens",
+      "coating",
+      "vintage",
+      "antireflection",
+      "photography",
+      "optics",
+      "history"
+    ],
+    "updated_at": "2026-03-24"
+  },
+  "chapters": [
+    {
+      "id": "history",
+      "title": "歴史",
+      "sections": [
+        {
+          "id": "coating_history",
+          "title": "コーティング全史",
+          "meta": {
+            "note": "ここでは写真用オールドレンズに関連が深い代表的コーティングと、その初出年・メーカーを年代順に整理している。特定メーカーに紐づかない理論的・特許的起源も含める。要求された全メーカーについては個別名が判明した場合のみ明示し、情報が乏しい場合は不確実である旨を示す。"
+          },
+          "items": [
+            {
+              "type": "paragraph",
+              "text": "以下の表は、写真用オールドレンズに関係するレンズコーティングの主要な発明と各社固有名の初出を、可能な範囲で年代順にまとめたものである。個々のコーティングについては、反射防止性能、描写の色味、設計上の意義、および代表的レンズを示す。",
+              "citations": [
+                1,
+                3,
+                5,
+                13
+              ]
+            },
+            {
+              "type": "table",
+              "initialEmpty": true,
+              "alwaysVisibleHeaders": ["年", "メーカー/企業名", "具体的なコーティング名"],
+              "selectableHeaders": ["効果", "色味", "意義", "代表的レンズ"],
+              "display": "timeline",
+              "headers": [
+                "年",
+                "メーカー/企業名",
+                "具体的なコーティング名",
+                "効果",
+                "色味",
+                "意義",
+                "代表的レンズ"
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1935",
+                    "Carl Zeiss Jena",
+                    "T コーティング（単層反射防止膜）",
+                    "四分の一波長厚の単層干渉膜により、ガラス面ごとの反射率を従来の約4％から約1％前後まで低減し、要素数の多いレンズ全体での透過率を約70％台から80％台後半に向上させたとされる。",
+                    "反射光は青紫から深い紫色であり、描写上はコントラストが高く、フレアが大きく減少し、発色はやや中性的からわずかにクール寄りであった。",
+                    "世界で初めて干渉を利用した実用的なレンズ用反射防止膜を確立したことにより、複雑なガウスタイプや望遠レンズの設計自由度を大きく押し上げた歴史的意義を持つ。",
+                    "Carl Zeiss Jena Sonnar 5cm f/1.5 T（軍用として先行採用されたと考えられる）"
+                  ],
+                  "citations": [
+                    1,
+                    9,
+                    13,
+                    14
+                  ]
+                },
+                {
+                  "cells": [
+                    "1937",
+                    "Bausch & Lomb（Turner らの研究）",
+                    "多層反射防止膜の三層設計（理論的多層コーティング）",
+                    "基板側から中間層・高屈折率層・低屈折率層の三層構成で、可視域全体にわたり反射率を1％以下に抑える設計を提示し、広帯域での平均透過率を90％以上に高めることを可能にした。",
+                    "反射光は波長帯ごとに変化するが、理想設計では残留反射がごく薄いニュートラルな色調となり、描写上の色味はよりフラットで忠実再現性が高い方向に向かう。",
+                    "後の多層コーティングの理論的基盤を確立し、戦後の写真用多層コーティング実用化に直接つながる重要なステップであった。",
+                    "当時は主に軍需光学系で用いられたと考えられ、具体的な民生写真レンズ名は特定しにくい状況である"
+                  ],
+                  "citations": [
+                    3
+                  ]
+                },
+                {
+                  "cells": [
+                    "1938",
+                    "Katharine Burr Blodgett（General Electric）",
+                    "LB（Langmuir–Blodgett）単分子膜多層コーティング",
+                    "単分子膜を数十層堆積することで、理論上は表面反射率をほぼ0％まで下げることができ、透過率を99％以上に高めることが可能であると実証した。",
+                    "反射光は非常に薄い緑・紫の干渉色を示すことが多いが、写真レンズでの実用例は限定的であり、描写色はほぼニュートラルであった。",
+                    "干渉を用いた多層反射防止膜の実験的実現例として重要であり、後の真空蒸着式多層コーティングの性能目標を与えた。",
+                    "主に実験用光学系であり、具体的な写真レンズ商品名は知られていない"
+                  ],
+                  "citations": [
+                    5
+                  ]
+                },
+                {
+                  "cells": [
+                    "1938",
+                    "Eastman Kodak",
+                    "Hecta lens coating（単層反射防止膜）",
+                    "真空蒸着による単層マグネシウムフッ化物コーティングを採用し、レンズ面ごとの反射率を約1％台まで低減、軍用レンズ全体として透過率をおよそ80％台後半まで高めた。",
+                    "反射色は青紫から青であり、描写はコントラストが高く、モノクロ用途でのベールフレア低減効果が顕著であった。",
+                    "アメリカにおける最初期の工業的レンズコーティングプロセスであり、第二次大戦期の軍用光学系を通じて後の民生カメラレンズ・コーティングに直接つながった。",
+                    "軍用 Kodak Ektar レンズ群（軍用航空カメラ用レンズ）"
+                  ],
+                  "citations": [
+                    11
+                  ]
+                },
+                {
+                  "cells": [
+                    "1939",
+                    "Schott（Carl Zeiss グループ）",
+                    "二層コーティング（ダブルコート）",
+                    "二層干渉膜により、単層膜に比べて広い波長帯での反射抑制が向上し、平均反射率をおよそ0.7％程度まで低減、透過率を90％近くに引き上げたと報告されている。",
+                    "反射色はよりニュートラルに近い薄い紫から青緑に変化し、描写上はハイライトのベールフレアがさらに減少し、階調再現が改善した。",
+                    "工業的な多層コーティングへの橋渡しとなる二層コーティングを世界で最初期に実現した点で重要である。",
+                    "当時の改良型 Sonnar や双眼鏡など Zeiss 系レンズの一部試験品"
+                  ],
+                  "citations": [
+                    4
+                  ]
+                },
+                {
+                  "cells": [
+                    "1943",
+                    "Schott（Carl Zeiss グループ）",
+                    "三層コーティング（トリプルコート）",
+                    "三層構成により、可視光域全体での反射率を約0.5％以下に抑えることが可能になり、レンズ全体として透過率を90％台前半から中盤に到達させたとされる。",
+                    "反射光はごく薄い紫やシアンなど複雑な干渉色となり、描写上は逆光耐性が大きく向上し、黒の締まりと色の飽和が増した。",
+                    "第二次大戦中における多層コーティング技術の成熟を示す到達点であり、戦後の T* やマルチコーティングの基盤となった。",
+                    "戦時中の高性能軍用双眼鏡・照準器などの光学系"
+                  ],
+                  "citations": [
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "cells": [
+                    "1944",
+                    "Wollensak",
+                    "Wocote（マグネシウムフッ化物単層ハードコート）",
+                    "硬質マグネシウムフッ化物単層コーティングにより、レンズ面の反射率を約1.5％程度に抑えつつ、耐擦傷性を向上させ、総合透過率を大きく改善した。",
+                    "反射色は青紫寄りであり、描写はコントラストが向上し、古い無コート期の柔らかい描写に比べるとやや硬質でクリアな印象となった。",
+                    "アメリカ製大判・中判用レンズで比較的早期にハードコートを採用した事例であり、戦後商業写真業界におけるコーティング普及の一翼を担った。",
+                    "Wollensak Raptar シリーズ全般（Velostigmat からの移行期レンズを含む）"
+                  ],
+                  "citations": [
+                    16,
+                    17
+                  ]
+                },
+                {
+                  "cells": [
+                    "1946",
+                    "Wollensak",
+                    "Wocote（市販開始）",
+                    "既存の Wocote を一般向けに追加料金オプションとして提供し、ユーザーが同一光学設計で無コートとコート付きを選択できるようにしたことで、対比すると反射率の差やコントラストの向上を体感しやすくなった。",
+                    "反射色は同じく青紫であり、無コート品に比べるとゴーストが少なく、描写の色はやや冷たく透明感が増した傾向がある。",
+                    "商業カメラ用レンズにおけるコーティングの価値を市場に広く認知させる役割を果たした。",
+                    "Wollensak Raptar、Velostigmat Series II 後期モデル"
+                  ],
+                  "citations": [
+                    16
+                  ]
+                },
+                {
+                  "cells": [
+                    "1947",
+                    "Wollensak",
+                    "Wocote（標準装備化）",
+                    "全量にコーティングを適用することで、当時の Wollensak 製写真レンズの多くが面反射率約1〜1.5％程度の性能を持ち、実用上のフレアを大きく低減した。",
+                    "反射色は青紫で統一され、描写はシリーズを通じて似たコントラストと色味を持つようになった。",
+                    "中判・大判用レンズにおいてコーティングを当たり前の仕様とした点で、アメリカ市場の標準化に寄与した。",
+                    "Wollensak Raptar Series II など戦後型"
+                  ],
+                  "citations": [
+                    16,
+                    17
+                  ]
+                },
+                {
+                  "cells": [
+                    "1948",
+                    "Carl Zeiss（西側 Zeiss Ikon 系）",
+                    "改良型 T コーティング",
+                    "戦後改良された単層 T コーティングにより、反射率を約1％近くまで抑えつつ製造ばらつきを減らし、実効透過率と量産性を高めた。",
+                    "反射色は赤紫から青紫までやや幅があり、描写は高コントラストで、特に Sonnar 系望遠レンズで逆光性能が評価された。",
+                    "戦時中の軍事機密技術を民生用レンズに全面展開したことにより、高性能標準レンズ・望遠レンズの画質を一段押し上げた。",
+                    "Contax 用 Carl Zeiss Sonnar 50mm f/1.5 T 戦後版"
+                  ],
+                  "citations": [
+                    9,
+                    14
+                  ]
+                },
+                {
+                  "cells": [
+                    "1950",
+                    "Voigtländer",
+                    "単層コーティング（Color-Skopar 系）",
+                    "単層マグネシウムフッ化物コーティングにより、反射率を約1〜1.5％に抑制し、当時としては高いコントラストと透過率を実現した。",
+                    "反射色は青から紫で、描写は彩度がやや高く、クラシカルながらも抜けの良い色再現で知られている。",
+                    "戦後ドイツの高級レンズメーカーとして、カラーフィルム時代を見据えたコーティングを全面的に採用した点が重要である。",
+                    "Voigtländer Color-Skopar 50mm f/3.5"
+                  ],
+                  "citations": [
+                    2
+                  ]
+                },
+                {
+                  "cells": [
+                    "1950",
+                    "Jos. Schneider Optische Werke GmbH（Schneider-Kreuznach）",
+                    "単層コーティング（通称“ブルーコーティング”）",
+                    "単層コーティングにより反射率を約1.5％前後に抑え、レンズ全体の透過率を80％台後半に引き上げた。",
+                    "反射色は明るい青色が強く、描写はやや暖色寄りの発色傾向と高いコントラストを持つと評価されることが多い。",
+                    "Retina 用 Xenon などで知られる戦後ドイツ製レンズの代表的コーティングとして、世界的に普及した。",
+                    "Schneider-Kreuznach Retina-Xenon C 50mm f/2"
+                  ],
+                  "citations": [
+                    2,
+                    25
+                  ]
+                },
+                {
+                  "cells": [
+                    "1950",
+                    "Kodak",
+                    "Lumenized Coating（単層反射防止膜）",
+                    "単層反射防止膜により表面反射率を約1％台に低減し、当時の無コートレンズに比べてレンズ全体の透過率を10％以上改善した。",
+                    "反射色は青〜青紫で、描写はやや暖色寄りでコントラストが高いとされる。",
+                    "アメリカの民生用カメラレンズにおいてコーティングを明確な商品価値として訴求した初期の例である。",
+                    "Kodak Retina レンズ各種（Ektar 系を含む）"
+                  ],
+                  "citations": [
+                    8,
+                    11
+                  ]
+                },
+                {
+                  "cells": [
+                    "1953",
+                    "Canon",
+                    "単層アンチリフレクションコーティング（L コーティング前史）",
+                    "初期の単層コートとして、反射率を約1.5％前後に抑え、無コート期レンズに比べてフレアを顕著に低減した。",
+                    "反射色は青〜青紫で、描写は少しだけ暖色寄りでありながらもコントラストは高い傾向であった。",
+                    "国産35mmレンジファインダーレンズとして欧米製品と肩を並べる性能を確保する上で重要であった。",
+                    "Canon Serenar 50mm f/1.8 コーティング付き前期型"
+                  ],
+                  "citations": [
+                    8,
+                    21
+                  ]
+                },
+                {
+                  "cells": [
+                    "1954",
+                    "Nikon",
+                    "ニッコール単層コーティング（“C”表記の前段階）",
+                    "反射率を約1〜1.5％に抑え、特に高開放レンズでのフレアを改善し、解像度とコントラストを高めた。",
+                    "反射色は濃い青から紫で、描写の色味はニュートラル寄りからややクール寄りであった。",
+                    "戦後日本製レンズが報道用として世界的評価を得る基盤を築いた。",
+                    "Nikkor-S 5cm f/1.4 コーティング付きレンジファインダーレンズ"
+                  ],
+                  "citations": [
+                    2,
+                    9
+                  ]
+                },
+                {
+                  "cells": [
+                    "1955",
+                    "Ross（ロッス）",
+                    "単層コーティング（Ross Coated）",
+                    "単層アンチリフレクション膜により、面反射率を約1.5％程度に低減し、古い英国製無コートレンズからの大きな進歩をもたらした。",
+                    "反射色は青もしくは青紫で、描写の色味はやや暖かく、柔らかめながらもコントラストが増した印象である。",
+                    "イギリスの大判・シネ用レンズにおけるコーティング普及を象徴する存在である。",
+                    "Ross Xpres 105mm f/3.8 コーティング付きレンズ"
+                  ],
+                  "citations": [
+                    13
+                  ]
+                },
+                {
+                  "cells": [
+                    "1956",
+                    "Angénieux",
+                    "単層コーティング（初期 Angénieux コート）",
+                    "高屈折ガラスを多用する設計と組み合わせて単層コートを施し、面反射率を約1〜1.5％に抑えつつ高い解像とコントラストを確保した。",
+                    "反射色は濃い紫や青で、描写は彩度が高く、やや暖色寄りで立体感のあるトーンを持つと評価されることが多い。",
+                    "映画・テレビ用ズームレンズ分野で高性能の代名詞となり、コーティング技術も含めて他社のベンチマークとなった。",
+                    "Angénieux 25mm f/0.95 シネレンズ"
+                  ],
+                  "citations": [
+                    13
+                  ]
+                },
+                {
+                  "cells": [
+                    "1958",
+                    "Minolta（千代田光学）",
+                    "Achromatic Coating（アクロマチックコーティング）",
+                    "二層の厚さ変化を持つマグネシウムフッ化物蒸着膜により、単層コートより広い波長域での反射率低減を実現し、実測で約1段分に近いフレア低減効果が報告されている。",
+                    "反射色は紫と青が混ざったような色調で、描写上はコントラストが高まり、色再現の一貫性を各焦点距離間で揃えることを狙った設計であった。",
+                    "国産メーカーとして多層コーティングの嚆矢となる技術であり、のちの MC および MD レンズ群の基盤となった。",
+                    "Chiyoko（Minolta）Auto Rokkor 55mm f/1.8 初期 Achromatic コート版"
+                  ],
+                  "citations": [
+                    24
+                  ]
+                },
+                {
+                  "cells": [
+                    "1960",
+                    "Meyer-Optik Görlitz",
+                    "単層コーティング（Domiplan 等）",
+                    "単層コートにより反射率を約1.5％前後に抑え、東独製レンズとしては十分なコントラストと透過率を得ていた。",
+                    "反射色は紫寄りで、描写はコントラストがやや低めで柔らかさが残るが、色味はわずかに暖色寄りであった。",
+                    "東独レンズにおけるコーティング普及の初期例として重要である。",
+                    "Meyer-Optik Domiplan 50mm f/2.8"
+                  ],
+                  "citations": [
+                    2
+                  ]
+                },
+                {
+                  "cells": [
+                    "1963",
+                    "Pentacon（VEB Pentacon Dresden）",
+                    "単層コーティング（Carl Zeiss Jena 系技術）",
+                    "単層コーティングにより反射率を約1〜1.5％に抑制し、東独製一眼レフレンズのコントラストを改善した。",
+                    "反射色は紫から青で、描写はやや低コントラストながらも、色味はニュートラル寄りで落ち着いたトーンであった。",
+                    "東独の量産一眼レフシステムでコーティングを標準化した点が重要である。",
+                    "Pentacon 50mm f/1.8"
+                  ],
+                  "citations": [
+                    2
+                  ]
+                },
+                {
+                  "cells": [
+                    "1965",
+                    "Nikon",
+                    "Nikon Integrated Coating（NIC、マルチコートの前身）",
+                    "複数層から成る統合コーティングにより、可視光全域で平均反射率を約0.5〜1％程度に抑え、従来単層コートに比べて逆光時のコントラストを明確に向上させた。",
+                    "反射色は紫・シアン・琥珀など複数色が角度により変化し、描写の色味は比較的ニュートラルだが、彩度とコントラストが高い。",
+                    "報道用途で評価の高かったニッコールレンズ群の耐逆光性をさらに向上させ、ブランドイメージを確立した。",
+                    "Nikkor-H 85mm f/1.8（後期多層コート版）"
+                  ],
+                  "citations": [
+                    23,
+                    28
+                  ]
+                },
+                {
+                  "cells": [
+                    "1966",
+                    "Minolta",
+                    "MC（Meter-Coupled）レンズにおける全面マルチコーティング",
+                    "全ての空気接触面に少なくとも二層以上のコーティングを施し、従来よりおよそ1段分に相当するフレア低減と、透過率の向上を達成したとされる。",
+                    "反射色は紫・緑・シアンなど多彩で、描写はコントラストが高く、比較的ニュートラルながらもわずかに暖色寄りの発色となることが多い。",
+                    "国産メーカーとしてシステム全体でマルチコーティング化を進めた先駆例であり、のちの Super Achromatic Coating の基礎となった。",
+                    "Minolta MC Rokkor 55mm f/1.7 初期 MC レンズ"
+                  ],
+                  "citations": [
+                    24
+                  ]
+                },
+                {
+                  "cells": [
+                    "1968",
+                    "Russia / 旧ソ連（LOMO, KMZ, GOMZ 等）",
+                    "単層および簡易多層コーティング（ロシア語表記コート）",
+                    "戦後しばらくは単層コートが中心で、面反射率を約1.5％前後に抑えた一方、一部高級レンズでは簡易的な多層コーティングにより逆光耐性を向上させたとされる。",
+                    "反射色は赤紫や青などバラつきがあり、描写の色味も個体差が大きいが、一般には暖色寄りである傾向がある。",
+                    "大量生産された Industar, Jupiter, Helios 系レンズにより、安価なコーティング付きレンズを世界に供給した意義がある。",
+                    "Industar-61 L/Z 50mm f/2.8、Helios-44-2 58mm f/2"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1970",
+                    "Canon",
+                    "S.C.（Spectra Coating、単層高性能コート）",
+                    "単層ながら材料と厚さ制御を最適化し、画角やレンズタイプに応じた反射率最小化を行うことで、従来単層コートに比べて実効コントラストを改善した。",
+                    "反射色は濃い紫やシアンで、描写は高コントラストかつややクール寄りの色調となる傾向がある。",
+                    "FD マウント初期レンズに採用され、後の S.S.C. マルチコートへの布石となった。",
+                    "Canon FD 28mm f/3.5 S.C.（いわゆるクロームノーズ）"
+                  ],
+                  "citations": [
+                    21,
+                    26
+                  ]
+                },
+                {
+                  "cells": [
+                    "1971",
+                    "Asahi Optical（PENTAX）",
+                    "Super-Multi-Coating（SMC、スーパーマルチコーティング）",
+                    "7層前後の多層膜により、可視域全体で平均反射率を約0.2〜0.3％程度にまで抑え、レンズ全体の透過率を約98〜99％に高めた設計である。",
+                    "反射色は紫・緑・琥珀などが角度により変化し、描写は高コントラストで彩度が高く、ニュートラル寄りだが僅かに暖色寄りと評価されることが多い。",
+                    "世界初クラスの本格的量産マルチコーティングとして知られ、逆光耐性と色再現性において当時の業界標準を塗り替えた。",
+                    "Super-Multi-Coated Takumar 50mm f/1.4、SMC Takumar 35mm f/3.5"
+                  ],
+                  "citations": [
+                    22,
+                    27,
+                    5
+                  ]
+                },
+                {
+                  "cells": [
+                    "1971",
+                    "Canon",
+                    "S.S.C.（Super Spectra Coating、多層コーティング）",
+                    "複数層から成る多層コーティングにより、反射率を視覚域全体で約0.3〜0.5％程度まで抑え、逆光時のコントラストと色の飽和を大きく向上させた。",
+                    "反射色は紫、緑、オレンジが混在し、描写の色味はニュートラル寄りだが鮮やかさが増し、黒の締まりが良い。",
+                    "FD システムを高性能として印象づけた要素の一つであり、プロユーザーにも広く受け入れられた。",
+                    "Canon FD 50mm f/1.4 S.S.C.、FD 24mm f/2.8 S.S.C."
+                  ],
+                  "citations": [
+                    21,
+                    26
+                  ]
+                },
+                {
+                  "cells": [
+                    "1972",
+                    "Carl Zeiss（西独・コンタックス向け）",
+                    "T*（ティースター）マルチコーティング",
+                    "7層前後の多層膜で各波長帯に最適化したコーティングを施し、表面反射率を約0.2％程度に抑え、反射光を位相差で打ち消すことで内部迷光を大きく削減した。",
+                    "反射色は深い紫・赤・琥珀が角度により強く現れ、描写は非常に高いコントラストと深い色の飽和、クール寄りのニュートラルな色再現が特徴である。",
+                    "オールドレンズ期の完成度が高いマルチコーティングの代表例であり、現在まで続く Zeiss T* ブランドの原点である。",
+                    "Contax Carl Zeiss Planar 50mm f/1.4 T*、Distagon 28mm f/2.8 T*"
+                  ],
+                  "citations": [
+                    9,
+                    10,
+                    14
+                  ]
+                },
+                {
+                  "cells": [
+                    "1973",
+                    "Minolta",
+                    "MC-X（Super Achromatic Coating）",
+                    "Achromatic Coating を発展させ、層数と材料を増やすことで、MC 以前に比べて実用的に約1段分ほどフレア耐性を向上させたと報告されている。",
+                    "反射色は紫・緑・オレンジなどの多色干渉で、描写は高コントラストで彩度が高く、やや暖色寄りのトーンであることが多い。",
+                    "国産マルチコーティングの成熟段階を示すものであり、後の MD シリーズへの移行に際しても基礎技術として継承された。",
+                    "Minolta MC Rokkor-X 50mm f/1.4（北米向け表記）"
+                  ],
+                  "citations": [
+                    24
+                  ]
+                },
+                {
+                  "cells": [
+                    "1973",
+                    "Tamron",
+                    "BBAR（Broad-Band Anti-Reflection）コーティング",
+                    "広帯域にわたる多層コーティングにより、ズームレンズを含む多群レンズ全体で平均反射率を大幅に低減し、特に望遠ズームでの逆光時のコントラストを改善した。",
+                    "反射色は緑・紫・琥珀が混在し、描写の色味はニュートラル寄りで彩度が高く、ズーム全域で安定した発色を示す傾向がある。",
+                    "アダプトール方式ズームレンズにおける画質向上に大きく貢献し、サードパーティ製としての競争力を高めた。",
+                    "Tamron 80-210mm f/3.8-4 BBAR マルチコート版"
+                  ],
+                  "citations": [
+                    8,
+                    15
+                  ]
+                },
+                {
+                  "cells": [
+                    "1974",
+                    "Tokina（Sankyo Kohki 由来の系譜と関連）",
+                    "多層マルチコーティング（HMC に先行する広帯域コート）",
+                    "多層構成で可視全域の反射率を0.5％前後まで抑え、低価格ズームレンズにおいても高いコントラストを実現した。",
+                    "反射色は紫と緑が主体で、描写はやや暖色寄りでコントラストが高い。",
+                    "サードパーティ製ズームの画質を底上げし、後の Hoya/Tokina 系コーティング技術の発展に寄与した。",
+                    "Tokina 80-200mm f/4 マルチコート版"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1975",
+                    "FujiFilm（富士フイルム）",
+                    "EBC（Electron Beam Coating）",
+                    "電子ビーム蒸着による多層コーティングで、レンズ面反射率を約0.2〜0.3％にまで抑え、ズームレンズを含む複雑な光学系で高いコントラストと透過率を実現した。",
+                    "反射色は緑・紫・琥珀が強く現れ、描写の色味はニュートラル寄りからやや暖色寄りで、彩度が高く地味すぎない発色となる。",
+                    "中判カメラや35mmズームで高性能レンズの代名詞となり、日本メーカーのコーティング技術の高さを示す象徴的存在である。",
+                    "Fujinon EBC 55mm f/1.8、Fujinon EBC 50-135mm ズーム"
+                  ],
+                  "citations": [
+                    8,
+                    15
+                  ]
+                },
+                {
+                  "cells": [
+                    "1975",
+                    "Olympus",
+                    "Zuiko マルチコーティング（OM システム）",
+                    "多層コーティングにより、軽量コンパクトなレンズ設計でありながら逆光耐性とコントラストを高め、広角から望遠まで均質な画質を実現した。",
+                    "反射色は紫・緑系で、描写の色味はニュートラル寄りで自然な色乗りとされることが多い。",
+                    "小型軽量と高画質を両立させた OM システムの実現において、コーティング技術が重要な役割を担った。",
+                    "Zuiko 50mm f/1.8 OM、Zuiko 28mm f/3.5 OM"
+                  ],
+                  "citations": [
+                    2,
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1976",
+                    "Yashica",
+                    "ML マルチコーティング",
+                    "多層膜により表面反射率を約0.5％前後に抑え、Contax マウント系と組み合わせて高いコントラストと良好な色再現を実現した。",
+                    "反射色は紫や緑で、描写はニュートラル寄りで Zeiss T* よりやや柔らかい発色傾向がある。",
+                    "Zeiss T* レンズと組み合わせて使用されることが多く、システム全体として高い画質を維持する役割を果たした。",
+                    "Yashica ML 50mm f/1.7"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1977",
+                    "Minolta",
+                    "MD-I / MD-II / MD-III（改良マルチコーティング）",
+                    "MC-X 期からさらに層構成を最適化し、ゴーストの出方を抑制することで、実用上は一段階上の逆光耐性と安定した色再現を達成した。",
+                    "反射色は紫・緑・オレンジがより薄く均一になり、描写は高コントラストながら過度に派手ではないナチュラルな色味を示す。",
+                    "コンパクトな MD レンズ群において、広角から望遠まで同一の色再現性を目指した完成度の高いマルチコーティングである。",
+                    "Minolta MD 50mm f/1.7、MD 35-70mm f/3.5"
+                  ],
+                  "citations": [
+                    24
+                  ]
+                },
+                {
+                  "cells": [
+                    "1977",
+                    "Pentax（Asahi Optical）",
+                    "SMC（K マウント版への展開）",
+                    "ねじ込みマウント期と同様の7層前後の多層膜を K マウントレンズ全般に展開し、広角から望遠、ズームに至るまで高い透過率と低反射を維持した。",
+                    "反射色は紫・緑・オレンジで、描写は高コントラストかつ高彩度で、やや暖色寄りであることが多い。",
+                    "一眼レフ用バヨネットマウント時代においても SMC のブランド価値を継承し、オールドレンズとしての評価を高めた。",
+                    "SMC Pentax-M 50mm f/1.7、SMC Pentax 28mm f/3.5"
+                  ],
+                  "citations": [
+                    27,
+                    22
+                  ]
+                },
+                {
+                  "cells": [
+                    "1978",
+                    "Konica",
+                    "Hexar / Hexanon マルチコーティング",
+                    "多層膜により高いコントラストと低フレアを実現し、特に広角レンズでの周辺コントラストを改善した。",
+                    "反射色は緑と紫が主体で、描写はニュートラルからやや暖色寄りの色味となることが多い。",
+                    "一眼レフ Hexanon レンズ群における画質向上に寄与し、オールドレンズとしても発色の良さで評価されている。",
+                    "Konica Hexanon AR 40mm f/1.8"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1979",
+                    "Chinon",
+                    "マルチコーティング（Multicoated, MC 表記）",
+                    "多層コーティングにより、低価格帯ながらフレアを抑えた描写を実現し、競合他社の標準レンズと比較して遜色ないコントラストを確保した。",
+                    "反射色は緑や紫が主体で、描写はやや暖色寄りでコントラストが高い。",
+                    "サードパーティ供給も含めて、多くのブランドに同等コーティングが採用され、普及価格帯レンズの画質底上げに寄与した。",
+                    "Chinon 50mm f/1.7 MC"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1980",
+                    "Cosina / Voigtländer（後年の系譜を含む）",
+                    "マルチレイヤーコーティング（後年は一般に“MC”表記）",
+                    "多層膜によって反射率を低減し、特に廉価ズームレンズにおける逆光時のコントラストを改善した。",
+                    "反射色は緑と紫が主体で、描写はニュートラル寄りからやや暖色寄りであることが多い。",
+                    "OEM 供給を通じて多くのブランドのレンズにコーティング技術を提供し、後年のフォクトレンダー銘レンズにも応用された。",
+                    "Cosina MC 50mm f/1.7、初期 Cosina 製 Voigtländer レンズ"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1980",
+                    "Topcon（東京光学）",
+                    "RE トプコール期のマルチコーティング",
+                    "多層コーティングにより、軍需光学の経験を応用した高いコントラストと低フレアを実現していた。",
+                    "反射色は紫や緑で、描写の色味はニュートラル寄りで、シャープネスが高い。",
+                    "レンズ自体は1960年代に登場しているが、後期モデルでは改良されたマルチコーティングが組み合わされ、オールドレンズとしての人気を支える要素となっている。",
+                    "Topcon RE Auto-Topcor 58mm f/1.4"
+                  ],
+                  "citations": [
+                    2,
+                    13
+                  ]
+                },
+                {
+                  "cells": [
+                    "1980",
+                    "Mamiya",
+                    "Sekor マルチコーティング",
+                    "中判用を中心とした多層コーティングにより、スタジオライティング下でもフレアを抑え、豊かな階調と高いコントラストを両立した。",
+                    "反射色は緑と紫で、描写はニュートラル寄りで、肌色の再現性が良い。",
+                    "プロフェッショナル用中判システムで高い評価を得た要因の一つであり、オールドレンズとしても逆光耐性と色再現で評価されている。",
+                    "Mamiya-Sekor C 80mm f/2.8（6×4.5, 6×7 用）"
+                  ],
+                  "citations": [
+                    8,
+                    15
+                  ]
+                },
+                {
+                  "cells": [
+                    "1982",
+                    "Ricoh",
+                    "Rikenon マルチコーティング",
+                    "多層膜により、普及価格帯レンズでの反射率低減とコントラスト向上を達成した。",
+                    "反射色は紫・緑で、描写はやや暖色寄りでコントラストが高い。",
+                    "廉価ながら性能の高いレンズを多数供給し、オールドレンズ市場でのコストパフォーマンスの高い選択肢となっている。",
+                    "Rikenon 50mm f/1.7 マルチコート版"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1983",
+                    "Soligor",
+                    "C/D マルチコーティング（Computer Designed, multicoated）",
+                    "多層コーティングによって、特に望遠ズームでのフレアとゴーストを抑え、コントラストを向上させた。",
+                    "反射色は緑と紫で、描写の色味はニュートラルからわずかに暖色寄りである。",
+                    "サードパーティズームレンズの高性能化に寄与し、オールドズームとして現在も一定の評価を受けている。",
+                    "Soligor C/D 70-210mm f/3.5"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "1985",
+                    "Nikon",
+                    "NIC（Nikon Integrated Coating）の改良版と多層化",
+                    "改良されたインテグレーテッドコーティングにより、マニュアルフォーカスおよび初期 AF ニッコールで広帯域の低反射を達成し、平均反射率を約0.3〜0.5％程度にまで抑えた。",
+                    "反射色は紫・緑・琥珀が混在し、描写の色味はニュートラルからわずかにクール寄りで、彩度が高い。",
+                    "AIS 期以降のオールドニッコールが逆光に強い理由の一つであり、現代まで継承されるコーティング哲学の中核である。",
+                    "AI-S Nikkor 50mm f/1.8、AI-S 28mm f/2.8"
+                  ],
+                  "citations": [
+                    23,
+                    28
+                  ]
+                },
+                {
+                  "cells": [
+                    "2000",
+                    "Nikon",
+                    "SIC（Super Integrated Coating）",
+                    "レンズごとに設計された多層膜を全ての空気接触面に適用し、ズームレンズを含めた実使用条件でのフレアとゴーストを大幅に低減した。",
+                    "反射色は薄い紫と緑で、描写はニュートラルな色再現と高いコントラストを持つ。",
+                    "オールドレンズ時代を越えた現代の技術ではあるが、従来 NIC の発展形としてニッコール・コーティング史を締めくくる重要技術である。",
+                    "AF Nikkor 50mm f/1.8D（後期ロット SIC 適用品）"
+                  ],
+                  "citations": [
+                    23,
+                    28
+                  ]
+                },
+                {
+                  "cells": [
+                    "2007",
+                    "Nikon",
+                    "Nano Crystal Coat",
+                    "ナノサイズの微粒子を用いた多孔質層により、特定面での反射率を従来の多層膜よりさらに低く抑え、広角・超望遠レンズでの逆光時ゴーストを大幅に低減した。",
+                    "反射色はごく薄い淡緑もしくは淡紫で、描写は非常に高いコントラストとクリアな色再現を持つ。",
+                    "オールドレンズとは世代が異なるが、マルチコーティング技術の到達点の一つとして位置づけられる。",
+                    "AF-S Nikkor 14-24mm f/2.8G ED"
+                  ],
+                  "citations": [
+                    23
+                  ]
+                },
+                {
+                  "cells": [
+                    "2010",
+                    "MS-OPTICS（宮崎光学）",
+                    "独自多層コーティング（少層マルチコート）",
+                    "比較的少数の層数とクラシカルな設計を組み合わせ、必要十分な逆光耐性を確保しながらクラシカルな描写を意図的に残しているとされる。",
+                    "反射色は紫と緑が主体で、描写の色味はやや暖色寄りで、コントラストは現代レンズより控えめであることが多い。",
+                    "クラシックな光学設計と現代のコーティング技術を折衷したオールド風モダンレンズの代表例である。",
+                    "MS-Optics Perar 35mm f/3.5"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "2015",
+                    "中国（複数メーカー）",
+                    "マルチコーティング（現代中国製オールド風レンズ）",
+                    "多層コーティングにより、低価格ながらフレアとゴーストを抑え、平均反射率を0.5％前後に抑制しているとされる。",
+                    "反射色は紫・緑・琥珀で、描写の色味はやや暖色寄りからニュートラルまでメーカーごとに差が大きい。",
+                    "オールドレンズ風の外観とコーティング付き光学系を組み合わせた廉価レンズが多数登場し、オールドレンズ市場に新たな選択肢を提供している。",
+                    "中国製 35mm f/1.4 や 50mm f/1.1 クラシックスタイルレンズ各種"
+                  ],
+                  "citations": [
+                    8
+                  ]
+                },
+                {
+                  "cells": [
+                    "備考",
+                    "複数メーカー（Dallmeyer, Ducati, Kiev, JENOPTIK, Ernst Ludwig, Argus, Steinheil, Kern, Som Berthiot, ハンガリー諸社など）",
+                    "固有名称不詳または一般的な単層・多層コーティング",
+                    "これらのメーカーは戦後に単層もしくは簡易多層コーティングを採用したと考えられるが、コーティングの固有商標名や厳密な初出年、層構成、反射率の詳細は公開情報からは特定困難である。",
+                    "反射色は青・紫・緑など一般的なコーティング色が観察されるが、系統的なデータが乏しく、描写色との厳密な相関を定量化することは難しい。",
+                    "オールドレンズ市場では個々の銘柄ごとに描写傾向が語られているが、コーティング名と性能を厳密に結びつける一次資料が不足しているため、ここでは「不確実」「要追加調査」と位置づける。",
+                    "Dallmeyer, Steinheil München, Som Berthiot, Kern, Argus Cintar など多数のレンズでコーティング付き個体が確認されているが、詳細は個別調査が必要である。"
+                  ],
+                  "citations": [
+                    2,
+                    8,
+                    13
+                  ]
+                }
+              ],
+              "citations": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                8,
+                9,
+                13,
+                14,
+                16,
+                21,
+                22,
+                23,
+                24,
+                25
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": 1,
+      "title": "All About Lens Coatings",
+      "author_or_source": "Roger Cicala, Canon Rumors",
+      "url": "https://www.canonrumors.com/tech-articles/all-about-lens-coatings/",
+      "type": "technical article",
+      "reliability": "high",
+      "notes": "Smakula による 1935 年 Zeiss 単層コーティングの概要と透過率向上に関する解説。"
+    },
+    {
+      "id": 2,
+      "title": "History of photographic lens design",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/History_of_photographic_lens_design",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "戦後レンズ設計とコーティング普及の時系列的背景。"
+    },
+    {
+      "id": 3,
+      "title": "Anti-reflection coatings in the mid-20th century",
+      "author_or_source": "Optica / OSA history PDF (Turner & Cartwright)",
+      "url": "https://opticaorgdev.blob.core.windows.net/$web/optica/media/osa.history/century_of_optics/1941-1959/68.pdf",
+      "type": "academic",
+      "reliability": "high",
+      "notes": "多層反射防止膜（三層設計など）の理論と歴史的背景。"
+    },
+    {
+      "id": 4,
+      "title": "Development of Anti-Reflective Lens Coatings",
+      "author_or_source": "BirdForum discussion summarizing historical articles",
+      "url": "https://www.birdforum.net/threads/development-of-anti-reflective-lens-coatings.387562/",
+      "type": "specialist discussion",
+      "reliability": "medium",
+      "notes": "Schott による 1939 年の二層コート、1943 年の三層コートに関する情報。一次文献の要約として利用。"
+    },
+    {
+      "id": 5,
+      "title": "Glass, Metal and Silicium: Lenses coating dates back from 1935",
+      "author_or_source": "Gabriel (blog)",
+      "url": "http://gabriel.mp3-tech.org/blog/index.php?entry=entry090203-153355",
+      "type": "specialist blog",
+      "reliability": "medium",
+      "notes": "Smakula コーティングおよび Blodgett の多層単分子膜コーティングに関する概要。"
+    },
+    {
+      "id": 6,
+      "title": "Zeiss T* Anti-Reflective Coating Explained",
+      "author_or_source": "Zeiss representative (video)",
+      "url": "https://www.youtube.com/watch?v=mtmQgoOZ3cw",
+      "type": "manufacturer media",
+      "reliability": "high",
+      "notes": "T および T* コーティングに関する Zeiss 公式系統の口頭解説。"
+    },
+    {
+      "id": 7,
+      "title": "Zeiss Lens Coatings (forum summary of T*)",
+      "author_or_source": "FredMiranda forum",
+      "url": "https://www.fredmiranda.com/forum/topic/215494/",
+      "type": "user forum",
+      "reliability": "medium",
+      "notes": "Zeiss T* の層数や動作原理に関する概要。メーカー資料の引用を含む。"
+    },
+    {
+      "id": 8,
+      "title": "【図でわかる】写真用レンズのコーティングとは？ 発展の歴史と最新技術",
+      "author_or_source": "レンズレビュー（高山仁）",
+      "url": "https://lensreview.xyz/coating/",
+      "type": "technical article (Japanese)",
+      "reliability": "medium",
+      "notes": "各社コーティングや歴史の概説。具体的な商標名や時系列の補完に利用。"
+    },
+    {
+      "id": 9,
+      "title": "Photographic lens design",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Photographic_lens_design",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "Zeiss T コーティングの位置づけなどを記載。"
+    },
+    {
+      "id": 10,
+      "title": "Zeiss explains the science behind its famous T* coating technology",
+      "author_or_source": "Imaging Resource",
+      "url": "https://www.imaging-resource.com/news/2016/04/13/begone-reflections-zeiss-explains-the-science-behind-its-famous-t-coating",
+      "type": "manufacturer interview / technical article",
+      "reliability": "high",
+      "notes": "Zeiss T および T* コーティングの歴史と技術解説。"
+    },
+    {
+      "id": 11,
+      "title": "Early Kodak Lens Coating (Hecta, Lumenized)",
+      "author_or_source": "Eastman Kodak historical notes / secondary summaries",
+      "url": "https://www.instagram.com/p/CYsXwEaM6WH/",
+      "type": "historical snippet",
+      "reliability": "medium",
+      "notes": "Hecta プロセスおよび Kodak の戦時コーティング導入に関する概要。"
+    },
+    {
+      "id": 12,
+      "title": "オプティカルコーティング入門",
+      "author_or_source": "Edmund Optics Japan",
+      "url": "https://www.edmundoptics.jp/knowledge-center/application-notes/lasers/an-introduction-to-optical-coatings/",
+      "type": "technical note",
+      "reliability": "high",
+      "notes": "光学薄膜一般の原理説明に利用（具体的なオールドレンズ銘柄には直接言及せず）。"
+    },
+    {
+      "id": 13,
+      "title": "Anti-reflection coatings",
+      "author_or_source": "Mark Allen Group (technical PDF)",
+      "url": "http://assets.markallengroup.com/article-images/image-library/147/uploads/importedimages/c18814-anti-reflection-coatings.pdf",
+      "type": "technical article",
+      "reliability": "high",
+      "notes": "Zeiss 1935 特許や戦後における各社コートの位置づけなどの歴史を概説。"
+    },
+    {
+      "id": 14,
+      "title": "Zeiss T coating history and brand",
+      "author_or_source": "Imaging Resource and Zeiss materials",
+      "url": "https://www.imaging-resource.com/news/2016/04/13/begone-reflections-zeiss-explains-the-science-behind-its-famous-t-coating",
+      "type": "technical article",
+      "reliability": "high",
+      "notes": "T と T* の歴史的意義とコーティング原理。"
+    },
+    {
+      "id": 15,
+      "title": "General introduction to optical coatings and camera lenses",
+      "author_or_source": "Edmund Optics, Fujifilm and others (secondary synthesis)",
+      "url": "https://www.edmundoptics.com/knowledge-center/application-notes/lasers/an-introduction-to-optical-coatings/",
+      "type": "technical synthesis",
+      "reliability": "medium",
+      "notes": "BBAR や EBC など具体的な商標に関する詳細はメーカー資料を補完的に利用。"
+    },
+    {
+      "id": 16,
+      "title": "Wollensak Lens and Shutter Compendium",
+      "author_or_source": "Alphax Betax Shutter Services",
+      "url": "https://alphaxbetax.com/wollensak-lens-and-shutter-compendium/",
+      "type": "specialist database",
+      "reliability": "high",
+      "notes": "Wocote の導入年（1944）、市販開始（1946）、標準化（1947）に関する一次的整理。"
+    },
+    {
+      "id": 17,
+      "title": "The Wollensak Velostigmat Series II",
+      "author_or_source": "Western Photographic Historical Society",
+      "url": "https://www.wphsociety.org/post/the-wollensak-velostigmat-series-ii",
+      "type": "historical article",
+      "reliability": "medium",
+      "notes": "Velostigmat Series II が戦後にシングルコート化され Raptar として継続した経緯。"
+    },
+    {
+      "id": 18,
+      "title": "Wollensak Velostigmat Series II - Tim Layton Fine Art",
+      "author_or_source": "Tim Layton",
+      "url": "https://timlaytonfineart.com/velostigmat/",
+      "type": "user article",
+      "reliability": "low",
+      "notes": "Velostigmat の使用感に関する記述。歴史についてはより信頼度の高い資料で補完。"
+    },
+    {
+      "id": 19,
+      "title": "Velostigmat Series II F:4.5 Lens",
+      "author_or_source": "Port Wing Area Historical Society",
+      "url": "https://portwingmuseum.org/velostigmat-series-ii-f4-5-lens/",
+      "type": "museum article",
+      "reliability": "medium",
+      "notes": "Velostigmat の設計と時代背景に関する説明。"
+    },
+    {
+      "id": 20,
+      "title": "Wollensak Serial Numbers",
+      "author_or_source": "Alphax Betax Shutter Services",
+      "url": "https://alphaxbetax.com/wollensak-serial-numbers/",
+      "type": "specialist database",
+      "reliability": "medium",
+      "notes": "シリアルと年代対応。コーティング導入タイミングの補足に利用。"
+    },
+    {
+      "id": 21,
+      "title": "Canon FD lens mount",
+      "author_or_source": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Canon_FD_lens_mount",
+      "type": "encyclopedia",
+      "reliability": "medium",
+      "notes": "FD マウント初期の S.C. および S.S.C. コーティングに関する基本情報。"
+    },
+    {
+      "id": 22,
+      "title": "1971: Super-Multi-Coated Takumar",
+      "author_or_source": "Pentax SLR (archived page)",
+      "url": "https://web.archive.org/web/20210619123650/http:/www.pentax-slr.com/71760572",
+      "type": "historical web article",
+      "reliability": "medium",
+      "notes": "1971 年 S-M-C Takumar と Super-Multi-Coating の導入説明。"
+    },
+    {
+      "id": 23,
+      "title": "Nikon AiS SIC Coating vs Pre-SIC",
+      "author_or_source": "FredMiranda forum",
+      "url": "https://www.fredmiranda.com/forum/topic/1403368",
+      "type": "user forum",
+      "reliability": "medium",
+      "notes": "SIC と NIC の区別、導入年代に関する整理。公式資料の補足として利用。"
+    },
+    {
+      "id": 24,
+      "title": "Chiyoko 35mm 1:3.5 Rokkor – review",
+      "author_or_source": "Lens QA Works",
+      "url": "https://minolta.su/chiyoko-35mm-f3-5-rokkor/",
+      "type": "specialist article",
+      "reliability": "high",
+      "notes": "Minolta Achromatic Coating、MC、MC-X、MD 期のコーティング変遷について具体的に記述。"
+    },
+    {
+      "id": 25,
+      "title": "LENSES - Pacific Rim Camera",
+      "author_or_source": "Pacific Rim Camera",
+      "url": "https://www.pacificrimcamera.com/rl/00317/00317.pdf",
+      "type": "historical catalog (PDF)",
+      "reliability": "high",
+      "notes": "Schneider-Kreuznach などのカタログに基づくコーティング記述。"
+    },
+    {
+      "id": 26,
+      "title": "Canon FD 28mm f3.5 S.C. Chrome Nose - Lens Info",
+      "author_or_source": "Vasko Obscura",
+      "url": "https://www.vaskoobscura.com/blog/canon-fd-28mm-f35-sc-chrome-nose-lens-info",
+      "type": "specialist blog",
+      "reliability": "medium",
+      "notes": "FD 初期 S.C. コーティングと S.S.C. への移行タイミング（1971〜1973 年）の補足情報。"
+    },
+    {
+      "id": 27,
+      "title": "About Super-Multi Coating (SMC)",
+      "author_or_source": "The K-Mount Page",
+      "url": "http://kmp.pentaxians.eu/technology/smc/",
+      "type": "technical history",
+      "reliability": "high",
+      "notes": "SMC の特許・初出年（1971）および Takumar からの名称変更に関する詳細。"
+    },
+    {
+      "id": 28,
+      "title": "Version history of Nikon AF Nikkor 180mm and coatings",
+      "author_or_source": "Mir.com.my",
+      "url": "https://www.mir.com.my/rb/photography/companies/nikon/nikkoresources/AFNikkor/AF180mm/index1.htm",
+      "type": "historical article",
+      "reliability": "medium",
+      "notes": "NIC から SIC への移行など、コーティング名称の変遷を説明。"
+    }
+  ]
+}
